@@ -1,0 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class DownForceWing : MonoBehaviour
+{
+    public float wingAngle;
+    public float width;
+    public float height;
+    private Rigidbody rb;
+
+    private void Start()
+    {
+        rb = transform.root.GetComponent<Rigidbody>();
+    }
+
+    public float GetArea()
+    {
+        return width * height;
+    }
+
+    public float CalculateLiftforce(float airDensity)
+    {
+        float cof = 2 * Mathf.PI * wingAngle * Mathf.Deg2Rad;
+        float forwardPointVelocity = transform.InverseTransformDirection(rb.GetPointVelocity(transform.position)).z;
+        float lift = (cof * airDensity * Mathf.Sqrt(forwardPointVelocity) * GetArea()) / 2;
+
+        if (float.IsNaN(lift))
+            return 0f;
+
+        return lift;
+    }
+}
