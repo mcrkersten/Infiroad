@@ -142,6 +142,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7462173990552286132, guid: 02aac36aee7eefc4b8e11a06aeff8b1d, type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 895eee81f15233e4da0553fec4e1b8e3, type: 2}
     - target: {fileID: 7462173990552286133, guid: 02aac36aee7eefc4b8e11a06aeff8b1d, type: 3}
       propertyPath: m_Name
       value: Post-Process Volume

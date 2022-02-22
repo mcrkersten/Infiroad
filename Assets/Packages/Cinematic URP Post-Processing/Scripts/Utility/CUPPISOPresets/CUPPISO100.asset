@@ -27,58 +27,39 @@ MonoBehaviour:
   m_Name: PRISMEffects
   m_EditorClassIdentifier: 
   active: 1
-  m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0
-    min: 0
-    max: 1
+    m_Value: 1
   colorTemperature:
     m_OverrideState: 1
     m_Value: 6500
-    min: 1000
-    max: 40000
   colorTint:
     m_OverrideState: 1
     m_Value: 0
-    min: -1
-    max: 1
   exposure:
     m_OverrideState: 1
     m_Value: 0
-    min: 0
-    max: 1
   useLinearSpace:
     m_OverrideState: 1
     m_Value: 0
   lightness:
     m_OverrideState: 1
     m_Value: {x: 0, y: 1}
-    min: 0
-    max: 1
   lightnessSlope:
     m_OverrideState: 1
     m_Value: 0
-    min: 0
-    max: 1
   labA_GreenAndMagenta:
     m_OverrideState: 1
     m_Value: 0
-    min: 0
-    max: 1
   labB_YellowAndBlue:
     m_OverrideState: 1
     m_Value: 0
-    min: 0
-    max: 1
   useLensDistortion:
     m_OverrideState: 1
     m_Value: 0
   barrelDistortion:
     m_OverrideState: 1
     m_Value: 0
-    min: 0
-    max: 1
   useChromaticAberration:
     m_OverrideState: 1
     m_Value: 0
@@ -88,8 +69,6 @@ MonoBehaviour:
   petzvalDistortionValue:
     m_OverrideState: 1
     m_Value: 0
-    min: 0
-    max: 2
   chromaticColorWeights:
     m_OverrideState: 1
     m_Value: {x: 0, y: 0, z: 1}
@@ -105,23 +84,15 @@ MonoBehaviour:
   bloomStrength:
     m_OverrideState: 1
     m_Value: 0.05
-    min: 0
-    max: 1
   bloomThreshold:
     m_OverrideState: 1
     m_Value: 2
-    min: 0
-    max: 1
   bloomSaturation:
     m_OverrideState: 1
     m_Value: 1.5
-    min: 0
-    max: 2
   bloomRadius:
     m_OverrideState: 1
     m_Value: 2
-    min: 0.2
-    max: 3
   useLensDirt:
     m_OverrideState: 1
     m_Value: 0
@@ -131,8 +102,6 @@ MonoBehaviour:
   lensDirtExposure:
     m_OverrideState: 1
     m_Value: 1
-    min: 0
-    max: 1
   increaseBloomClarity:
     m_OverrideState: 1
     m_Value: 1
@@ -157,41 +126,27 @@ MonoBehaviour:
   noiseRedSaturation:
     m_OverrideState: 1
     m_Value: 1
-    min: 0
-    max: 1
   noiseGreenSaturation:
     m_OverrideState: 1
     m_Value: 1
-    min: 0
-    max: 1
   noiseBlueSaturation:
     m_OverrideState: 1
     m_Value: 1
-    min: 0
-    max: 1
   sensorPixelSize:
     m_OverrideState: 1
     m_Value: 0.2
-    min: 0
-    max: 1
   useTVNoise:
     m_OverrideState: 1
     m_Value: 0
   noiseTVSpeed:
     m_OverrideState: 1
     m_Value: 0.2
-    min: 0
-    max: 1
   noiseTVWidth:
     m_OverrideState: 1
     m_Value: 0.2
-    min: 0
-    max: 1
   noiseTVAngle:
     m_OverrideState: 1
     m_Value: 0
-    min: 0
-    max: 1
   useDither:
     m_OverrideState: 1
     m_Value: 0
@@ -201,8 +156,6 @@ MonoBehaviour:
   vignetteStrength:
     m_OverrideState: 1
     m_Value: 0.5
-    min: 0
-    max: 1
   useColorCorrection:
     m_OverrideState: 1
     m_Value: 1
@@ -222,13 +175,9 @@ MonoBehaviour:
   colorVibrance:
     m_OverrideState: 1
     m_Value: 0
-    min: 0
-    max: 0.2
   contrast:
     m_OverrideState: 1
     m_Value: 0
-    min: -1
-    max: 1
   useCubeLUTs:
     m_OverrideState: 1
     m_Value: 0
@@ -241,8 +190,6 @@ MonoBehaviour:
   lutLerpAmount:
     m_OverrideState: 1
     m_Value: 0
-    min: -1
-    max: 1
   useSecondLut:
     m_OverrideState: 1
     m_Value: 0
@@ -252,21 +199,15 @@ MonoBehaviour:
   secondaryLutLerpAmount:
     m_OverrideState: 1
     m_Value: 0
-    min: 0
-    max: 1
   tonemap:
     m_OverrideState: 1
     m_Value: 0
   gammaOffset:
     m_OverrideState: 1
     m_Value: 0
-    min: -0.4
-    max: 0.4
   fsOverlayTexture:
     m_OverrideState: 1
     m_Value: {fileID: 0}
   fsOverlayColorContribution:
     m_OverrideState: 1
     m_Value: 0
-    min: 0
-    max: 1
