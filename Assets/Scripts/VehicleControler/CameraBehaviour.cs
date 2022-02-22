@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraBehaviour : MonoBehaviour
 {
+    public float physicsPower;
     public Vector3 maxAngle;
     [SerializeField]
     private Rigidbody rb;
@@ -23,18 +24,29 @@ public class CameraBehaviour : MonoBehaviour
 
         if(rb.velocity.magnitude > 3f)
         {
-            speed = rb.velocity.magnitude * 3.6f;
-            speed = (speed * speed) / 1000000f;
-            Vector3 offset = transform.TransformPoint(new Vector3(0, 0, 3f));
-            lookAtTransform.position = rb.velocity.normalized + this.transform.position + (offset - transform.position);
+            Vector3 t = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
+            Vector3 direction = t.normalized * physicsPower;
+
+            Vector3 offset = transform.TransformPoint(new Vector3(0, 0, 1));
+            lookAtTransform.position = direction + this.transform.position + (offset - transform.position);
+
             cameraTransform.LookAt(lookAtTransform);
         }
 
-        float m = (transform.root.GetComponent<VehicleController>().vehicleInputActions.Vehicle.Acceleration.ReadValue<float>() + 1f) / 2;
+
+
+        transform.localEulerAngles = CameraShake();
+    }
+
+    private Vector3 CameraShake()
+    {
+        speed = rb.velocity.magnitude * 3.6f;
+        speed = (speed * speed) / 1000000f;
+        float m = (transform.root.GetComponent<VehicleController>().vehicleInputActions.SteeringWheel.Acceleration.ReadValue<float>() + 1f) / 2;
         float yaw = maxAngle.y * speed * Random.Range(0f, 1f) * m;
         float pitch = maxAngle.x * speed * Random.Range(0f, 1f) * m;
         float roll = maxAngle.z * speed * Random.Range(0f, 1f) * m;
-        Vector3 rotation = startRotation + new Vector3(pitch, yaw, roll);
-        transform.localEulerAngles = rotation;
+        Vector3 shake = startRotation + new Vector3(pitch, yaw, roll);
+        return shake;
     }
 }

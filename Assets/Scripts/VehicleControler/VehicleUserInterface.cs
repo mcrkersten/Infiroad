@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+//Clamps around vehicle/Engine to grab data of that Engine/Vehicle data.
 public class VehicleUserInterface : MonoBehaviour
 {
     public TextMeshProUGUI speedometer;
@@ -24,7 +25,7 @@ public class VehicleUserInterface : MonoBehaviour
         acceleration_MaskSize = acceleration_Mask.rectTransform.rect.size;
         braking_MaskSize = braking_Mask.rectTransform.rect.size;
 
-        data = transform.root.GetComponent<VehicleController>().data;
+        data = transform.root.GetComponent<VehicleController>().userInterface;
     }
 
     private void Update()

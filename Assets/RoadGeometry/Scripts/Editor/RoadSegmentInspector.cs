@@ -31,6 +31,7 @@ public class RoadSegmentInspector : Editor {
 	const string UNDO_STR_ADJUST = "adjust béziér tangent";
 
 	void OnSceneGUI() {
+		RoadSegment t = target as RoadSegment;
 
 		// Generate IDs for the UI controls
 		int arrowIDFrw  = GUIUtility.GetControlID( "Arrow Frw".GetHashCode(),  FocusType.Passive );
@@ -60,7 +61,7 @@ public class RoadSegmentInspector : Editor {
 		if( changedFrw || changedBack ) {
 			Undo.RecordObject( target, UNDO_STR_ADJUST );
 			road.tangentLength = newDistance;
-			road.RoadChain?.UpdateMeshes();
+			//road.RoadChain?.CreateMeshes();
 		}
 		
 	}

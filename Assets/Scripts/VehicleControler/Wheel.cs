@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Wheel : MonoBehaviour
 {
+    public float staticFrictionalForce;
+
+    public float collisionStrenght;
     public WheelPosition wheelType;
+    public LayerMask layerMask;
     private Rigidbody rb;
     [Header("Suspension")]
     public float restLength;
@@ -33,13 +37,11 @@ public class Wheel : MonoBehaviour
     public AnimationCurve slipCurve;
 
     [Header("Braking Slip")]
-    public AnimationCurve speedCurve;
     public AnimationCurve brakePedalCurve;
     public AnimationCurve brakeSlipCurve;
 
     [Header("Acceleration Slip")]
     public float maxAccelerationPull;
-    public AnimationCurve accelerationSlipCurve;
 
     private void Start()
     {
@@ -57,42 +59,53 @@ public class Wheel : MonoBehaviour
 
     public void SimulatePhysics(float brakeInput ,Engine engine, bool isDriveWheel)
     {
-        float wheelBrakeSlip = 0f;
-        float wheelTractionSlip = 0f;
-        if (Physics.SphereCast(transform.position, wheelRadius, -transform.up, out RaycastHit hit, maxLength))
+        float wheelSlipAnimate = 0f;
+        if (Physics.SphereCast(transform.position, wheelRadius, -transform.up, out RaycastHit hit, maxLength, layerMask))
         {
+
             Debug.DrawLine(this.transform.position, this.transform.position + rb.GetPointVelocity(hit.point).normalized);
             Debug.DrawLine(this.transform.position, this.transform.position + this.transform.forward, Color.green);
             wheelModel.transform.position = transform.position + (-this.transform.up * (hit.distance));
 
             wheelVelocityLocalSpace = transform.InverseTransformDirection(rb.GetPointVelocity(hit.point));
-            if (isDriveWheel)
-            {
-                Vector3 accelerationForce = AccelerateWheel(engine, out wheelTractionSlip);
-                rb.AddForceAtPosition(accelerationForce, hit.point + new Vector3(0, wheelRadius, 0));
-            }
 
-            Vector3 suspensionForce = CalculateSuspensionForce(hit, out float springforce);
+            Vector3 suspensionForce = CalculateSuspensionForce(hit);
             rb.AddForceAtPosition(suspensionForce, hit.point);
-
-            Vector3 brakeSlipForce = BrakeWheel(brakeInput, out wheelBrakeSlip);
-            rb.AddForceAtPosition(brakeSlipForce, hit.point);
-
-            Vector3 sidewaysGripForce = CalculateSidewaysGripForce(springforce, wheelTractionSlip, wheelBrakeSlip);
-            rb.AddForceAtPosition(sidewaysGripForce, hit.point);
+            float downForce = suspensionForce.magnitude;
 
 
-            //Vector3 brakingForce = 
+            float accelerationForce = isDriveWheel ? CalculateAccelerationForce(engine) : 0f;
+            float brakeForce = -VehicleConstants.BRAKE_FORCE * brakeInput;
+            float sidewaysForce = -wheelVelocityLocalSpace.x * downForce;
+
+            Vector3 calculatedForce = CalculateForces(accelerationForce, brakeForce, sidewaysForce, downForce);
+
+            rb.AddForceAtPosition(calculatedForce, hit.point);
+
             Debug.DrawRay(transform.position, -this.transform.up * hit.distance, Color.red);
         }
         else
         {
             wheelForce = (1);
         }
-        RotateWheel(wheelBrakeSlip);
+        //Technical debt
+        RotateWheel(wheelSlipAnimate);
     }
 
-    private Vector3 CalculateSuspensionForce(RaycastHit hit, out float springForce)
+    private Vector2 CalculateForces(float accelerationForce, float brakeForce, float sidewaysForce, float downForce)
+    {
+        Vector2 a = new Vector2(0f, accelerationForce + brakeForce);
+        Vector2 b = new Vector2(sidewaysForce, 0f);
+        float c = Vector2.Distance(a, b);
+
+        float p = c / downForce;
+        p = slipCurve.Evaluate(p);
+        a = a * p;
+        b = b * p;
+        return a + b;
+    }
+
+    private Vector3 CalculateSuspensionForce(RaycastHit hit)
     {
         lastLength = springLength;
 
@@ -100,74 +113,31 @@ public class Wheel : MonoBehaviour
 
         springLength = Mathf.Clamp(springLength, minLength, maxLength);
         float springVelocity = (lastLength - springLength) / Time.fixedDeltaTime;
-        springForce = springtStiffness * (restLength - springLength);
+        float springForce = springtStiffness * (restLength - springLength);
         float damperForce = damperStiffness * springVelocity;
         if (springForce + damperForce > 0f)
         {
             Debug.DrawLine(this.transform.position, this.transform.position + this.transform.up * ((springForce + damperForce) / 2000f), Color.cyan);
             return (springForce + damperForce) * this.transform.up;
         }
-        else
-        {
-            springForce = 0;
-            return Vector3.zero;
-        }
+        return Vector3.zero;
     }
 
-    private Vector3 CalculateSidewaysGripForce(float springForce, float wheelTractionSlip, float wheelBrakeSlip)
+    private float CalculateSidewaysForce(float newtonDownforce)
     {
-        springForce = Mathf.Clamp(springForce, 0, 7000f);
-        float yawSpeed = VehicleConstants.WHEEL_BASE * .5f * rb.angularVelocity.y;
-        float rot_angle = Mathf.Atan2(yawSpeed, wheelVelocityLocalSpace.z);
-        float sideSlip = Mathf.Atan2(wheelVelocityLocalSpace.x, wheelVelocityLocalSpace.z) * Mathf.Rad2Deg;
+        float kgDownforce = Mathf.Max(0f, newtonDownforce);
+        float gripForce = Mathf.Clamp((wheelVelocityLocalSpace.x * kgDownforce), -kgDownforce, kgDownforce);
 
-        //Slip angles front and rear
-        float slipAngle;
-        if (wheelType == WheelPosition.FrontLeft || wheelType == WheelPosition.FrontRight)
-            slipAngle = sideSlip + rot_angle - steerAngle;
-        else
-            slipAngle = sideSlip - rot_angle;
-
-        float sidewaysForce = Mathf.Clamp(wheelVelocityLocalSpace.x/30F, -1f, 1f); //Sideways force of vehicle
-        float slip = 1f -  (Mathf.Abs(slipCurve.Evaluate(sidewaysForce)) * speedCurve.Evaluate(rb.velocity.magnitude * 3.6f));
-
-        float brakeSlipPercentage = 1f - (wheelBrakeSlip / brakeSlipCurve.keys[2].value);
-        wheelForce = 1f - slipCurve.Evaluate(sidewaysForce) * (speedCurve.Evaluate(rb.velocity.magnitude));
-        Vector3 output = (wheelVelocityLocalSpace.x * springForce) * (-transform.right * slip) * brakeSlipPercentage * ( 1f - wheelTractionSlip );
-        return output;
+        wheelForce = gripForce; //Force feedback value
+        return gripForce;
     }
 
-    private Vector3 AccelerateWheel(Engine engine, out float wheelTractionSlip)
+    private float CalculateAccelerationForce(Engine engine)
     {
-        wheelTractionSlip = accelerationSlipCurve.Evaluate(engine.pullMultiplier / maxAccelerationPull);
-        if (float.IsNaN(wheelTractionSlip))
-            wheelTractionSlip = 0f;
-        Vector3 rawForce = transform.forward * (engine.horsePower) * engine.EnergyOutput * (1f - wheelTractionSlip);
-        return rawForce;
+        float power = (engine.horsePower) * engine.EnergyOutput;
+        return power;
     }
 
-    private Vector3 BrakeWheel(float brakeInput, out float wheelBrakeSlip)
-    {
-        float brakeEnergy = VehicleConstants.BRAKE_FORCE * brakePedalCurve.Evaluate(brakeInput); //Energy of brakes
-        wheelBrakeSlip = brakeSlipCurve.Evaluate(brakePedalCurve.Evaluate(brakeInput));
-
-        Vector3 brakeVelocity;
-        if (Mathf.Abs(wheelVelocityLocalSpace.z) < 7f)
-        {
-            if (wheelVelocityLocalSpace.z > .01f)
-                brakeVelocity = -transform.forward * brakeEnergy;
-            else
-                brakeVelocity = transform.forward * brakeEnergy;
-        }
-        else
-        {
-            if (wheelVelocityLocalSpace.z > .01f)
-                brakeVelocity = (-transform.forward * brakeEnergy) * (1f - wheelBrakeSlip);
-            else
-                brakeVelocity = (transform.forward * brakeEnergy) * (1f - wheelBrakeSlip);
-        }
-        return brakeVelocity;
-    }
 
     public float CalculateBaseRPM()
     {
@@ -196,17 +166,26 @@ public class Wheel : MonoBehaviour
 
         if(speed > 7f)
         {
-            wheelModel.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-            wheelModel.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+            BlurWheel();
         }
         else
         {
-            wheelModel.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
-            wheelModel.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+            UnBlurWheel();
         }
 
         float meterPerSecond = wheelVelocityLocalSpace.z;
         RPM = meterPerSecond / wheelRadius;
+    }
+
+    private void BlurWheel()
+    {
+        wheelModel.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+        wheelModel.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+    }
+    private void UnBlurWheel()
+    {
+        wheelModel.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+        wheelModel.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
     }
 }
 

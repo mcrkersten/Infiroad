@@ -12,19 +12,14 @@ public class SteeringWheelInput
     // Update is called once per frame
     public void Update()
     {
-        if(LogitechGSDK.LogiUpdate() && LogitechGSDK.LogiIsConnected(0))
+        if (LogitechGSDK.LogiUpdate() && LogitechGSDK.LogiIsConnected(0))
         {
             rec = LogitechGSDK.LogiGetStateUnity(0);
         }
     }
 
-    public float GetSteeringWheelPosition()
-    {
-        return rec.lX/32768f;
-    }
-
     public void SetWheelForce(int slideVector)
     {
-        LogitechGSDK.LogiPlayConstantForce(0, slideVector);
+        LogitechGSDK.LogiPlayConstantForce(0, slideVector/10);
     }
 }
