@@ -2,7 +2,7 @@
     "name": "VehicleInputActions",
     "maps": [
         {
-            "name": "Vehicle",
+            "name": "Default",
             "id": "3165492c-09f6-4833-a3da-0255ebcee1d5",
             "actions": [
                 {
@@ -11,7 +11,8 @@
                     "id": "9ac870d3-fc4a-4823-af27-033be7b5c295",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Braking",
@@ -19,7 +20,8 @@
                     "id": "60732a60-f93c-4182-8da6-b4606b15086e",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Acceleration",
@@ -27,7 +29,8 @@
                     "id": "0b6bfa0f-2068-4b47-9c52-13899dd4442d",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Clutch",
@@ -35,7 +38,8 @@
                     "id": "2569e045-4d67-4d60-96fd-f06ae46828a4",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "StartEngine",
@@ -43,7 +47,8 @@
                     "id": "17f2383c-40db-40af-9e9c-0d5e70cd9243",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "ShiftUP",
@@ -51,7 +56,8 @@
                     "id": "b6945e8a-e13b-4e90-b12e-9b25b4e5bab8",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "ShiftDOWN",
@@ -59,7 +65,8 @@
                     "id": "8dcb1d5e-7e88-4d08-8b8d-e2ae6403b12d",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -131,34 +138,12 @@
                 },
                 {
                     "name": "",
-                    "id": "4d30236c-aa05-4c59-b6f1-43f3bb2922d5",
-                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/rz",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Braking",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "c0cf47cc-cc89-464a-a430-248e4c65d582",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Braking",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9a98d459-15df-4ae6-b4b3-3a4f8473c22f",
-                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/z",
-                    "interactions": "",
-                    "processors": "Invert",
-                    "groups": "",
-                    "action": "Acceleration",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -186,45 +171,12 @@
                 },
                 {
                     "name": "",
-                    "id": "15b2144a-627f-4f8e-b645-fde31ec56dcd",
-                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/stick/y",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Clutch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9c9c493c-b0ab-4953-a0d6-981ec1e9b726",
-                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button5",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ShiftUP",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "0448a37b-5f9a-439d-bca7-a037706ceba4",
                     "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "ShiftUP",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f23ccedf-aabe-4cfa-a90f-e2a0331c2e88",
-                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button6",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ShiftDOWN",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -242,27 +194,126 @@
             ]
         },
         {
-            "name": "New action map",
-            "id": "d7d295d2-aa13-4859-8fec-62bd2a9dfc12",
+            "name": "SteeringWheel",
+            "id": "ec4c0ef8-5c85-4345-8d74-cdbfbdb092f9",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "Steering",
+                    "type": "PassThrough",
+                    "id": "f434c636-5008-4afd-8c38-e77abeef483b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Braking",
+                    "type": "Value",
+                    "id": "68a923f8-44e1-4e47-8fee-d2f3528dc681",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Acceleration",
+                    "type": "Value",
+                    "id": "12a87ce8-8051-43e0-bf3d-dee89cb079cc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Clutch",
+                    "type": "Value",
+                    "id": "7f98a29f-feb3-47db-b37d-688837bb0ea9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "StartEngine",
                     "type": "Button",
-                    "id": "9e10c162-f755-4e2e-99a0-4317ebba2ae3",
+                    "id": "82cf9a1e-6f31-4058-86cc-0b815136baba",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ShiftUP",
+                    "type": "Button",
+                    "id": "c5197b52-0ad2-4968-8678-358dc9d4338e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ShiftDOWN",
+                    "type": "Button",
+                    "id": "ce8ad70d-bcf7-4acb-a954-07b2932b8259",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
-                    "id": "01b2d4c4-74fc-4f92-b1df-57e8aaef9105",
-                    "path": "",
+                    "id": "359f5655-a0f0-4412-ad70-b3d6cb2b1eb1",
+                    "path": "<Logitech G HUB G29 Driving Force Racing Wheel USB•{80441800-D376-11EB-8003-444553540000}>/X",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Steering",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "984446b7-2492-4326-b007-85c550ed98cd",
+                    "path": "<Logitech G HUB G29 Driving Force Racing Wheel USB•{80441800-D376-11EB-8003-444553540000}>/RZ",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Braking",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0cea6fee-c649-49b0-86f3-232d91c50d24",
+                    "path": "<Logitech G HUB G29 Driving Force Racing Wheel USB•{80441800-D376-11EB-8003-444553540000}>/Y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Acceleration",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aa404ff1-814b-451b-a2f4-aad3281f2826",
+                    "path": "<Logitech G HUB G29 Driving Force Racing Wheel USB•{80441800-D376-11EB-8003-444553540000}>/Button004",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftUP",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7e23b331-85f6-4105-b582-196f3e0deb40",
+                    "path": "<Logitech G HUB G29 Driving Force Racing Wheel USB•{80441800-D376-11EB-8003-444553540000}>/Button005",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftDOWN",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
