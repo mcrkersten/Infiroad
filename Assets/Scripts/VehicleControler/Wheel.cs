@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ public class Wheel : MonoBehaviour
     public float staticFrictionalForce;
 
     public float collisionStrenght;
-    public WheelPosition wheelType;
+    public WheelPosition wheelPosition;
     public LayerMask layerMask;
     private Rigidbody rb;
     [Header("Suspension")]
@@ -43,6 +44,10 @@ public class Wheel : MonoBehaviour
     [Header("Acceleration Slip")]
     public float maxAccelerationPull;
 
+    [HideInInspector] public Vector3 forceDirectionDebug;
+    [HideInInspector] public float gripDebug;
+
+
     private void Start()
     {
         rb = transform.root.GetComponent<Rigidbody>();
@@ -71,18 +76,21 @@ public class Wheel : MonoBehaviour
 
             Vector3 suspensionForce = CalculateSuspensionForce(hit);
             rb.AddForceAtPosition(suspensionForce, hit.point);
-            float downForce = suspensionForce.magnitude;
+            float downForce = suspensionForce.y + 300;
 
 
             float accelerationForce = isDriveWheel ? CalculateAccelerationForce(engine) : 0f;
-            float brakeForce = -VehicleConstants.BRAKE_FORCE * brakeInput;
+
+            float brakeForce = CalculateBrakingForce(brakeInput);
             float sidewaysForce = -wheelVelocityLocalSpace.x * downForce;
 
-            Vector3 calculatedForce = CalculateForces(accelerationForce, brakeForce, sidewaysForce, downForce);
-
+            Vector3 calculatedForce = transform.TransformDirection(CalculateForces(accelerationForce, brakeForce, sidewaysForce, downForce));
             rb.AddForceAtPosition(calculatedForce, hit.point);
 
             Debug.DrawRay(transform.position, -this.transform.up * hit.distance, Color.red);
+
+            if (wheelPosition == WheelPosition.FrontLeft)
+                Debug.Log(downForce);
         }
         else
         {
@@ -92,17 +100,26 @@ public class Wheel : MonoBehaviour
         RotateWheel(wheelSlipAnimate);
     }
 
-    private Vector2 CalculateForces(float accelerationForce, float brakeForce, float sidewaysForce, float downForce)
+    private float CalculateBrakingForce(float brakeInput)
+    {
+        return Mathf.Clamp(wheelVelocityLocalSpace.z, -1, 1) * -VehicleConstants.BRAKE_FORCE * brakeInput;
+    }
+
+    private Vector3 CalculateForces(float accelerationForce, float brakeForce, float sidewaysForce, float downForce)
     {
         Vector2 a = new Vector2(0f, accelerationForce + brakeForce);
         Vector2 b = new Vector2(sidewaysForce, 0f);
         float c = Vector2.Distance(a, b);
 
         float p = c / downForce;
-        p = slipCurve.Evaluate(p);
-        a = a * p;
-        b = b * p;
-        return a + b;
+        p = slipCurve.Evaluate(Mathf.Abs(p));
+        downForce = downForce * p;
+
+        Vector2 result = a + b;
+        wheelForce = -result.x;
+        gripDebug = p;
+        forceDirectionDebug = new Vector3(Mathf.Clamp(result.x, -downForce, downForce), 0f, Mathf.Clamp(result.y, -downForce, downForce));
+        return forceDirectionDebug;
     }
 
     private Vector3 CalculateSuspensionForce(RaycastHit hit)
@@ -159,7 +176,7 @@ public class Wheel : MonoBehaviour
             speed = 0;
         }
 
-        if (wheelType == WheelPosition.FrontRight || wheelType == WheelPosition.RearRight)
+        if (wheelPosition == WheelPosition.FrontRight || wheelPosition == WheelPosition.RearRight)
             wheelModel.transform.GetChild(0).Rotate(Vector3.left, speed);
         else 
             wheelModel.transform.GetChild(0).Rotate(Vector3.left, -speed);

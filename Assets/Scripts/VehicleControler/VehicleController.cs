@@ -202,9 +202,9 @@ public class VehicleController : MonoBehaviour
     {
         foreach (Wheel w in wheels)
         {
-            if (w.wheelType == WheelPosition.FrontLeft)
+            if (w.wheelPosition == WheelPosition.FrontLeft)
                 w.steerAngle = ackermannAngleLeft;
-            if (w.wheelType == WheelPosition.FrontRight)
+            if (w.wheelPosition == WheelPosition.FrontRight)
                 w.steerAngle = ackermannAngleRight;
         }
     }
@@ -215,13 +215,13 @@ public class VehicleController : MonoBehaviour
             switch (driveType)
             {
                 case DriveType.rearWheelDrive:
-                    if (w.wheelType == WheelPosition.RearLeft || w.wheelType == WheelPosition.RearRight)
+                    if (w.wheelPosition == WheelPosition.RearLeft || w.wheelPosition == WheelPosition.RearRight)
                         w.SimulatePhysics(brakeForce, engine, true);
                     else
                         w.SimulatePhysics(brakeForce, engine, false);
                     break;
                 case DriveType.frontWheelDrive:
-                    if (w.wheelType == WheelPosition.FrontLeft || w.wheelType == WheelPosition.FrontRight)
+                    if (w.wheelPosition == WheelPosition.FrontLeft || w.wheelPosition == WheelPosition.FrontRight)
                         w.SimulatePhysics(brakeForce, engine, true);
                     else
                         w.SimulatePhysics(brakeForce, engine, false);
@@ -263,7 +263,7 @@ public class VehicleController : MonoBehaviour
         float value = 0;
         foreach (Wheel w in wheels)
         {
-            if(w.wheelType == WheelPosition.FrontLeft || w.wheelType == WheelPosition.FrontRight)
+            if(w.wheelPosition == WheelPosition.FrontLeft || w.wheelPosition == WheelPosition.FrontRight)
                 value += w.WheelForce;
         }
         value = value / 2f;

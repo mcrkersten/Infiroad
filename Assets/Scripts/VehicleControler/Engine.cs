@@ -76,12 +76,12 @@ public class Engine
             switch (type)
             {
                 case DriveType.rearWheelDrive:
-                    if (w.wheelType == WheelPosition.RearLeft || w.wheelType == WheelPosition.RearRight)
+                    if (w.wheelPosition == WheelPosition.RearLeft || w.wheelPosition == WheelPosition.RearRight)
                         if (w.RPM > rad)
                             rad = w.RPM;
                     break;  
                 case DriveType.frontWheelDrive:
-                    if (w.wheelType == WheelPosition.FrontLeft || w.wheelType == WheelPosition.FrontRight)
+                    if (w.wheelPosition == WheelPosition.FrontLeft || w.wheelPosition == WheelPosition.FrontRight)
                         if (w.RPM > rad)
                             rad = w.RPM;
                     break;
