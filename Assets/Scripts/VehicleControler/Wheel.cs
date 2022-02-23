@@ -84,8 +84,10 @@ public class Wheel : MonoBehaviour
             float brakeForce = CalculateBrakingForce(brakeInput);
             float sidewaysForce = -wheelVelocityLocalSpace.x * downForce;
 
-            Vector3 calculatedForce = transform.TransformDirection(CalculateForces(accelerationForce, brakeForce, sidewaysForce, downForce));
-            rb.AddForceAtPosition(calculatedForce, hit.point);
+            Vector3 localForceDirection = CalculateForces(accelerationForce, brakeForce, sidewaysForce, downForce);
+            forceDirectionDebug = localForceDirection;
+            Vector3 worldForceDirection = transform.TransformDirection(localForceDirection);
+            rb.AddForceAtPosition(worldForceDirection, hit.point);
 
             Debug.DrawRay(transform.position, -this.transform.up * hit.distance, Color.red);
         }
@@ -115,8 +117,7 @@ public class Wheel : MonoBehaviour
         Vector2 result = a + b;
         wheelForce = -result.x;
         gripDebug = p;
-        forceDirectionDebug = new Vector3(Mathf.Clamp(result.x, -downForce, downForce), 0f, Mathf.Clamp(result.y, -downForce, downForce));
-        return forceDirectionDebug;
+        return new Vector3(Mathf.Clamp(result.x, -downForce, downForce) * Mathf.Abs(result.normalized.x), 0f, Mathf.Clamp(result.y, -downForce, downForce) * Mathf.Abs(result.normalized.y));
     }
 
     private Vector3 CalculateSuspensionForce(RaycastHit hit)
