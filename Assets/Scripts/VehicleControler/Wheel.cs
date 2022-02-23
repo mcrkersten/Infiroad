@@ -88,9 +88,6 @@ public class Wheel : MonoBehaviour
             rb.AddForceAtPosition(calculatedForce, hit.point);
 
             Debug.DrawRay(transform.position, -this.transform.up * hit.distance, Color.red);
-
-            if (wheelPosition == WheelPosition.FrontLeft)
-                Debug.Log(downForce);
         }
         else
         {
