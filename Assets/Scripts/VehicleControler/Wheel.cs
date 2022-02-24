@@ -24,8 +24,8 @@ public class Wheel : MonoBehaviour
     private float lastLength;
     private float springLength;
 
-    private float wheelForce;
-    public float WheelForce { get { return wheelForce; } }
+    private float steeringWheelForce;
+    public float WheelForce { get { return steeringWheelForce; } }
 
     private Vector3 wheelVelocityLocalSpace;
     public float RPM;
@@ -37,15 +37,8 @@ public class Wheel : MonoBehaviour
     [Header("General Slip")]
     public AnimationCurve slipCurve;
 
-    [Header("Braking Slip")]
-    public AnimationCurve brakePedalCurve;
-    public AnimationCurve brakeSlipCurve;
-
-    [Header("Acceleration Slip")]
-    public float maxAccelerationPull;
-
     [HideInInspector] public Vector3 forceDirectionDebug;
-    [HideInInspector] public float gripDebug;
+    public float gripDebug;
 
 
     private void Start()
@@ -70,6 +63,8 @@ public class Wheel : MonoBehaviour
 
             Debug.DrawLine(this.transform.position, this.transform.position + rb.GetPointVelocity(hit.point).normalized);
             Debug.DrawLine(this.transform.position, this.transform.position + this.transform.forward, Color.green);
+            Debug.DrawRay(transform.position, -this.transform.up * hit.distance, Color.red);
+
             wheelModel.transform.position = transform.position + (-this.transform.up * (hit.distance));
 
             wheelVelocityLocalSpace = transform.InverseTransformDirection(rb.GetPointVelocity(hit.point));
@@ -78,9 +73,7 @@ public class Wheel : MonoBehaviour
             rb.AddForceAtPosition(suspensionForce, hit.point);
             float downForce = suspensionForce.y + 300;
 
-
             float accelerationForce = isDriveWheel ? CalculateAccelerationForce(engine) : 0f;
-
             float brakeForce = CalculateBrakingForce(brakeInput);
             float sidewaysForce = -wheelVelocityLocalSpace.x * downForce;
 
@@ -93,10 +86,11 @@ public class Wheel : MonoBehaviour
         }
         else
         {
-            wheelForce = (1);
+            steeringWheelForce = 0;
         }
+
         //Technical debt
-        RotateWheel(wheelSlipAnimate);
+        RotateWheelModel(wheelSlipAnimate);
     }
 
     private float CalculateBrakingForce(float brakeInput)
@@ -112,12 +106,12 @@ public class Wheel : MonoBehaviour
 
         float p = c / downForce;
         p = slipCurve.Evaluate(Mathf.Abs(p));
-        downForce = downForce * p;
+        float gripForce = downForce * p;
 
         Vector2 result = a + b;
-        wheelForce = -result.x;
+        steeringWheelForce = -result.x;
         gripDebug = p;
-        return new Vector3(Mathf.Clamp(result.x, -downForce, downForce) * Mathf.Abs(result.normalized.x), 0f, Mathf.Clamp(result.y, -downForce, downForce) * Mathf.Abs(result.normalized.y));
+        return new Vector3(Mathf.Clamp(result.x, -gripForce, gripForce) * Mathf.Abs(result.normalized.x), 0f, Mathf.Clamp(result.y, -gripForce, gripForce) * Mathf.Abs(result.normalized.y));
     }
 
     private Vector3 CalculateSuspensionForce(RaycastHit hit)
@@ -138,41 +132,20 @@ public class Wheel : MonoBehaviour
         return Vector3.zero;
     }
 
-    private float CalculateSidewaysForce(float newtonDownforce)
-    {
-        float kgDownforce = Mathf.Max(0f, newtonDownforce);
-        float gripForce = Mathf.Clamp((wheelVelocityLocalSpace.x * kgDownforce), -kgDownforce, kgDownforce);
-
-        wheelForce = gripForce; //Force feedback value
-        return gripForce;
-    }
-
     private float CalculateAccelerationForce(Engine engine)
     {
         float power = (engine.horsePower) * engine.EnergyOutput;
         return power;
     }
 
-
-    public float CalculateBaseRPM()
-    {
-        float circumference = (Mathf.PI * 2f) * wheelRadius;
-        Vector3 velocity = wheelVelocityLocalSpace;
-        float meterPerHour = (velocity.z * 3.6f) * 1000f;
-        float meterPerMinute = meterPerHour / 60f;
-        return meterPerMinute / circumference;
-    }
-
-    private void RotateWheel(float wheelBrakeSlip)
+    private void RotateWheelModel(float wheelBrakeSlip)
     {
         float circumference = (Mathf.PI * 2f) * wheelRadius;
         Vector3 velocity = wheelVelocityLocalSpace * 3.6f;
         float speed = velocity.z / circumference;
 
         if (wheelBrakeSlip > 0f)
-        {
             speed = 0;
-        }
 
         if (wheelPosition == WheelPosition.FrontRight || wheelPosition == WheelPosition.RearRight)
             wheelModel.transform.GetChild(0).Rotate(Vector3.left, speed);
@@ -180,13 +153,9 @@ public class Wheel : MonoBehaviour
             wheelModel.transform.GetChild(0).Rotate(Vector3.left, -speed);
 
         if(speed > 7f)
-        {
             BlurWheel();
-        }
         else
-        {
             UnBlurWheel();
-        }
 
         float meterPerSecond = wheelVelocityLocalSpace.z;
         RPM = meterPerSecond / wheelRadius;

@@ -16,8 +16,6 @@ public class Engine
     private float differentialRatio;
     private float engineDelay = .1f;
 
-    private float lastFrameInput;
-
     [HideInInspector]
     public float engineRPM;
     private float idleRPM;

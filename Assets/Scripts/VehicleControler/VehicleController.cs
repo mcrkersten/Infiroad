@@ -41,6 +41,7 @@ public class VehicleController : MonoBehaviour
     public float enginePower;
 
     public UserInputType userInputType;
+    public AnimationCurve controllerSteering;
 
     public VehicleUserInterfaceData userInterface;
     void Awake()
@@ -130,7 +131,7 @@ public class VehicleController : MonoBehaviour
 
         SetUserInterface(accelerationInput, brakeInput);
 
-        CalculateSteeringInput(steerPosition);
+        CalculateSteeringInput(steerPosition, userInputType);
         SetYrotationFrontWheels();
 
         slideDirection = (CalculateSlideVector(wheels));
@@ -173,21 +174,25 @@ public class VehicleController : MonoBehaviour
 
     private void SetUserInterface(float accelerationInput, float brakeInput)
     {
-
         userInterface.acceleration = accelerationInput;
         userInterface.brake = brakeInput;
     }
-    private void CalculateSteeringInput(float steerPosition)
-    {
-        steeringWheel.transform.localEulerAngles = new Vector3(14.289f, 0, -steerPosition * (float)wheelInputAngle);
-        float steerForce = Mathf.Clamp(steerPosition * 2f, -steeringRatio, steeringRatio);
 
-        if (steerPosition > 0)//right
+    private void CalculateSteeringInput(float steerPosition, UserInputType inputType)
+    {
+        float steering = steerPosition;
+        if(inputType == UserInputType.Controller)
+            steering = controllerSteering.Evaluate(steerPosition);
+
+        steeringWheel.transform.localEulerAngles = new Vector3(14.289f, 0, -steering * (float)wheelInputAngle);
+        float steerForce = Mathf.Clamp(steering * 2f, -steeringRatio, steeringRatio);
+
+        if (steering > 0)//right
         {
             ackermannAngleLeft = Mathf.Rad2Deg * Mathf.Atan(VehicleConstants.WHEEL_BASE / (VehicleConstants.TURN_RADIUS + (VehicleConstants.REAR_TRACK / 2))) * steerForce;
             ackermannAngleRight = Mathf.Rad2Deg * Mathf.Atan(VehicleConstants.WHEEL_BASE / (VehicleConstants.TURN_RADIUS - (VehicleConstants.REAR_TRACK / 2))) * steerForce;
         }
-        else if (steerPosition < 0)//left
+        else if (steering < 0)//left
         {
             ackermannAngleLeft = Mathf.Rad2Deg * Mathf.Atan(VehicleConstants.WHEEL_BASE / (VehicleConstants.TURN_RADIUS - (VehicleConstants.REAR_TRACK / 2))) * steerForce;
             ackermannAngleRight = Mathf.Rad2Deg * Mathf.Atan(VehicleConstants.WHEEL_BASE / (VehicleConstants.TURN_RADIUS + (VehicleConstants.REAR_TRACK / 2))) * steerForce;
@@ -198,6 +203,7 @@ public class VehicleController : MonoBehaviour
             ackermannAngleRight = 0;
         }
     }
+
     private void SetYrotationFrontWheels()
     {
         foreach (Wheel w in wheels)
@@ -208,6 +214,7 @@ public class VehicleController : MonoBehaviour
                 w.steerAngle = ackermannAngleRight;
         }
     }
+
     private void ApplyForceToWheels(float brakeForce)
     {
         foreach (Wheel w in wheels)
