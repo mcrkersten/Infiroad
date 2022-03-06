@@ -340,6 +340,8 @@ MonoBehaviour:
   noiseChannels: []
   guardRailNoiseChannel:
     channelSettings: []
+  startDecoration: {fileID: 0}
+  sectorDecoration: {fileID: 0}
   shortNoise: 0
   shortPower: 0
   mediumNoise: 0

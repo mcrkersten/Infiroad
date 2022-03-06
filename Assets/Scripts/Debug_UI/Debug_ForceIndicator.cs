@@ -6,15 +6,17 @@ using UnityEngine.UI;
 
 public class Debug_ForceIndicator : MonoBehaviour
 {
-    public List<Wheel> wheelsToDebug = new List<Wheel>();
+    public List<Suspension> suspensionToDebug = new List<Suspension>();
     private List<Indicator> indicators = new List<Indicator>();
+
     public GameObject indicatorPrefab;
+    public Gradient colorGradient;
 
     private void Start()
     {
-        foreach (Wheel wheel in wheelsToDebug)
+        foreach (Suspension s in suspensionToDebug)
         {
-            indicators.Add(new Indicator(Instantiate(indicatorPrefab, this.transform).GetComponent<Image>(), wheel));
+            indicators.Add(new Indicator(Instantiate(indicatorPrefab, this.transform).GetComponent<Image>(), s));
         }
     }
 
@@ -26,6 +28,7 @@ public class Debug_ForceIndicator : MonoBehaviour
 
             Vector2 offset = GetOffset(indicator);
             indicator.image.transform.localScale = Vector3.one * indicator.wheel.gripDebug;
+            indicator.image.color = colorGradient.Evaluate(1f - indicator.wheel.gripDebug);
             indicator.image.transform.localPosition = new Vector3(-indicator.wheel.forceDirectionDebug.x + offset.x, -indicator.wheel.forceDirectionDebug.z + offset.y, 0) / 20f;
             i++;
         }
@@ -34,18 +37,18 @@ public class Debug_ForceIndicator : MonoBehaviour
     private Vector2 GetOffset(Indicator indicator)
     {
         Vector2 offset = Vector2.zero;
-        switch (indicator.wheel.wheelPosition)
+        switch (indicator.suspension.suspensionPosition)
         {
-            case WheelPosition.FrontLeft:
+            case SuspensionPosition.FrontLeft:
                 offset = new Vector2(-200, 400);
                 break;
-            case WheelPosition.FrontRight:
+            case SuspensionPosition.FrontRight:
                 offset = new Vector2(200, 400);
                 break;
-            case WheelPosition.RearLeft:
+            case SuspensionPosition.RearLeft:
                 offset = new Vector2(-200, -400);
                 break;
-            case WheelPosition.RearRight:
+            case SuspensionPosition.RearRight:
                 offset = new Vector2(200, -400);
                 break;
         }
@@ -55,11 +58,13 @@ public class Debug_ForceIndicator : MonoBehaviour
     protected class Indicator
     {
         public Image image;
-        public Wheel wheel;
-        public Indicator(Image image, Wheel wheel)
+        public Suspension suspension;
+        public WheelRaycast wheel;
+        public Indicator(Image image, Suspension suspension)
         {
             this.image = image;
-            this.wheel = wheel;
+            this.suspension = suspension;
+            wheel = suspension.wheel;
         }
     }
 }

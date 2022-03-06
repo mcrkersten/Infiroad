@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1798274642
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1798274643}
-  m_Layer: 0
-  m_Name: Player
-  m_TagString: Player
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1798274643
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1798274642}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.348, z: 1.181}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 712050964457550976}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &138796324838991318
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,6 +322,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 127
+  brakeBias: 0.8
   restLength: 0.5
   springTravel: 0.05
   springtStiffness: 30000
@@ -374,75 +344,17 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.15751351
     - serializedVersion: 3
-      time: 1.059548
-      value: 0.8521009
-      inSlope: -2.5976894
+      time: 1.1015402
+      value: 0.6997145
+      inSlope: -3.0689654
       outSlope: 0
       tangentMode: 1
       weightedMode: 0
-      inWeight: 0.11279968
+      inWeight: 0.12040059
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  brakePedalCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -0.003717422
-      value: 0.002117483
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0.051074345
-      outSlope: 0.051074345
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.06271474
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  brakeSlipCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.9
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 1
-    - serializedVersion: 3
-      time: 0.9999931
-      value: 0.29853332
-      inSlope: 9.182276
-      outSlope: 9.182276
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.03489854
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  maxAccelerationPull: 800
   forceDirectionDebug: {x: 0, y: 0, z: 0}
   gripDebug: 0
 --- !u!1 &712050963060628131
@@ -523,17 +435,76 @@ MonoBehaviour:
   wheelInputAngle: 900
   steeringRatio: 1.5
   engine:
-    EngineOn: 1
-    torqueCurve:
+    currentGear: 0
+    maxRPM: 10000
+    engineTorqueProfile:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 200.19926
+        inSlope: 237.03816
+        outSlope: 237.03816
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.20669083
+      - serializedVersion: 3
+        time: 0.4440559
+        value: 251.63339
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1.0040699
+        value: 3.1466675
+        inSlope: -727.9508
+        outSlope: -727.9508
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.06359954
+        outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    horsePower: 0
-    engineRPM: 0
-    wheelInputRPM: 0
-    pullMultiplier: 0
+    throttleProfile:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 3.0313692
+        outSlope: 3.0313692
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.02189781
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    gearRatios:
+    - 4.23
+    - 2.47
+    - 1.67
+    - 1.23
+    - 1
+    - 0.79
+    driveWheels:
+    - {fileID: 712050962960065082}
+    - {fileID: 712050964233628199}
+  driveType: 0
   centerOfMass: {fileID: 712050964132987305}
   steeringWheel: {fileID: 8075249951300305181}
   wheels:
@@ -546,61 +517,40 @@ MonoBehaviour:
   - {fileID: 1012591175219951284}
   - {fileID: 4674440992956991823}
   - {fileID: 6280015180944462416}
-  driveType: 0
-  gearRatios:
-  - 8
-  - 7
-  - 6
-  - 5
-  - 4
-  - 3
-  torqueCurve:
+  userInputType: 0
+  controllerSteering:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.0012617428
-      value: -0.019027013
-      inSlope: 0.41502666
-      outSlope: 0.41502666
+      time: -1
+      value: -0.6501786
+      inSlope: 1.3442523
+      outSlope: 1.3442523
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.19895914
+      outWeight: 0.32766992
     - serializedVersion: 3
-      time: 0.64840096
-      value: 1.0002109
-      inSlope: -0.05658815
-      outSlope: -0.05658815
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.09482958
-    - serializedVersion: 3
-      time: 0.8177078
-      value: 0.96637243
-      inSlope: -0.7292664
-      outSlope: -0.7292664
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1.2932446
+      time: 0
       value: 0
-      inSlope: 0.049411137
-      outSlope: 0.049411137
+      inSlope: 0.0071690045
+      outSlope: 0.0071690045
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.7591845
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1
+      value: 0.656
+      inSlope: 1.317085
+      outSlope: 1.317085
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.11327767
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  differentialRatio: 2
-  idleRPM: 1600
-  maxRPM: 10000
-  enginePower: 1000
-  userInputType: 0
 --- !u!1 &712050963737140387
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,6 +601,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 127
+  brakeBias: 0.8
   restLength: 0.5
   springTravel: 0.05
   springtStiffness: 30000
@@ -672,75 +623,17 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.15751351
     - serializedVersion: 3
-      time: 1.059548
-      value: 0.8521009
-      inSlope: -2.5976894
+      time: 1.1015402
+      value: 0.6997145
+      inSlope: -3.0689654
       outSlope: 0
       tangentMode: 1
       weightedMode: 0
-      inWeight: 0.11279968
+      inWeight: 0.12040059
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  brakePedalCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -0.003717422
-      value: 0.002117483
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0.051074345
-      outSlope: 0.051074345
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.06271474
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  brakeSlipCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.9
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 1
-    - serializedVersion: 3
-      time: 0.9999931
-      value: 0.29853332
-      inSlope: 9.182276
-      outSlope: 9.182276
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.03489854
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  maxAccelerationPull: 800
   forceDirectionDebug: {x: 0, y: 0, z: 0}
   gripDebug: 0
 --- !u!1 &712050963994937740
@@ -793,6 +686,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 127
+  brakeBias: 0.8
   restLength: 0.5
   springTravel: 0.05
   springtStiffness: 30000
@@ -814,75 +708,17 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.15751351
     - serializedVersion: 3
-      time: 1.059548
-      value: 0.8521009
-      inSlope: -2.5976894
+      time: 1.1015402
+      value: 0.6997145
+      inSlope: -3.0689654
       outSlope: 0
       tangentMode: 1
       weightedMode: 0
-      inWeight: 0.11279968
+      inWeight: 0.12040059
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  brakePedalCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -0.003717422
-      value: 0.002117483
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0.051074345
-      outSlope: 0.051074345
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.06271474
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  brakeSlipCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.9
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 1
-    - serializedVersion: 3
-      time: 0.9999931
-      value: 0.29853332
-      inSlope: 9.182276
-      outSlope: 9.182276
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.03489854
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  maxAccelerationPull: 800
   forceDirectionDebug: {x: 0, y: 0, z: 0}
   gripDebug: 0
 --- !u!1 &712050964132987302
@@ -966,6 +802,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 127
+  brakeBias: 0.8
   restLength: 0.5
   springTravel: 0.05
   springtStiffness: 30000
@@ -987,218 +824,19 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.15751351
     - serializedVersion: 3
-      time: 1.059548
-      value: 0.8521009
-      inSlope: -2.5976894
+      time: 1.1015402
+      value: 0.6997145
+      inSlope: -3.0689654
       outSlope: 0
       tangentMode: 1
       weightedMode: 0
-      inWeight: 0.11279968
+      inWeight: 0.12040059
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  brakePedalCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -0.003717422
-      value: 0.002117483
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0.051074345
-      outSlope: 0.051074345
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.06271474
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  brakeSlipCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.9
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 1
-    - serializedVersion: 3
-      time: 0.9999931
-      value: 0.29853332
-      inSlope: 9.182276
-      outSlope: 9.182276
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.03489854
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  maxAccelerationPull: 800
   forceDirectionDebug: {x: 0, y: 0, z: 0}
   gripDebug: 0
---- !u!1 &712050964457550977
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 712050964457550976}
-  - component: {fileID: 712050964457550978}
-  - component: {fileID: 712050964457550979}
-  - component: {fileID: 3049694481062383626}
-  - component: {fileID: 339725880}
-  m_Layer: 0
-  m_Name: Camera
-  m_TagString: MainCamera
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &712050964457550976
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 712050964457550977}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -0.06, z: -0.265}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1798274643}
-  m_Father: {fileID: 6268275467998383758}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &712050964457550978
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 712050964457550977}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.1
-  far clip plane: 1000
-  field of view: 48
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!81 &712050964457550979
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 712050964457550977}
-  m_Enabled: 1
---- !u!114 &3049694481062383626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 712050964457550977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_ClearDepth: 1
-  m_AllowXRRendering: 1
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
---- !u!114 &339725880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 712050964457550977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6585975478d07f446a941feaf13875f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Fade: 0.33
-  CloudShadowTexture: {fileID: 0}
-  ShadowColor: {r: 1, g: 1, b: 1, a: 1}
-  CloudTextureScale: 0.1
-  BottomThreshold: 0
-  TopThreshold: 1
-  ShadowIntensity: 1
-  ScreenSpaceShadowsMaterial: {fileID: 0}
-  ShadowDirection: {x: 0, y: 0, z: 0}
 --- !u!1 &974876468067066220
 GameObject:
   m_ObjectHideFlags: 0
@@ -2235,37 +1873,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!1 &2583216991933677616
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7872187157237027406}
-  m_Layer: 0
-  m_Name: LookAtTransform
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7872187157237027406
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2583216991933677616}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: -0, z: 0.848}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6268275467998383758}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2764841257656645808
 GameObject:
   m_ObjectHideFlags: 0
@@ -4109,57 +3716,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &8284840622417038069
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6268275467998383758}
-  - component: {fileID: 712050964521844562}
-  m_Layer: 0
-  m_Name: CameraSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6268275467998383758
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8284840622417038069}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.205, z: -0.062}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 712050964457550976}
-  - {fileID: 7872187157237027406}
-  m_Father: {fileID: 712050963060628130}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &712050964521844562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8284840622417038069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0f2cd989ad1b01489d14080390fc6f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  physicsPower: 1
-  maxAngle: {x: 5, y: 5, z: 5}
-  rb: {fileID: 712050963060628133}
-  lookAtTransform: {fileID: 7872187157237027406}
-  cameraTransform: {fileID: 712050964457550976}
 --- !u!1 &8498516816897422087
 GameObject:
   m_ObjectHideFlags: 0
@@ -5238,4 +4794,75 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f35986cfc1aa80b4386663e432f0eb0d, type: 3}
   m_PrefabInstance: {fileID: 6894859800002574364}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8723104472958158515
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 712050963060628130}
+    m_Modifications:
+    - target: {fileID: 862188552860863558, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
+      propertyPath: m_Name
+      value: CameraSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 3455336368788211773, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3455336368788211773, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3455336368788211773, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.205
+      objectReference: {fileID: 0}
+    - target: {fileID: 3455336368788211773, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.062
+      objectReference: {fileID: 0}
+    - target: {fileID: 3455336368788211773, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3455336368788211773, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3455336368788211773, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3455336368788211773, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3455336368788211773, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3455336368788211773, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3455336368788211773, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8137731682335111649, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 712050963060628133}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
+--- !u!20 &712050964457550978 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 8137731681466298929, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
+  m_PrefabInstance: {fileID: 8723104472958158515}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6268275467998383758 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3455336368788211773, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
+  m_PrefabInstance: {fileID: 8723104472958158515}
   m_PrefabAsset: {fileID: 0}

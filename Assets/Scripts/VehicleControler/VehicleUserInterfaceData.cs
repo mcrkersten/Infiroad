@@ -4,33 +4,31 @@ using UnityEngine;
 
 public class VehicleUserInterfaceData
 {
-    private Engine engine;
-    private VehicleController vehicle;
+    private Engine2 engine;
     private Rigidbody rb;
 
     public float acceleration;
     public float brake;
-    public VehicleUserInterfaceData(Engine engine, VehicleController vehicle)
+    public VehicleUserInterfaceData(Engine2 engine, VehicleController vehicle)
     {
-        this.vehicle = vehicle;
         this.engine = engine;
         rb = vehicle.GetComponent<Rigidbody>();
     }
 
     public int GetRPM()
     {
-        return (int)engine.wheelInputRPM;
+        return 0;
     }
 
     public float GetRPMPercentage()
     {
-        return engine.wheelInputRPM / vehicle.maxRPM;
+        return 0;
     }
 
 
     public int GetCurrentGear()
     {
-        return engine.CurrentGear;
+        return engine.currentGear;
     }
 
     public int GetCurrentSpeed()

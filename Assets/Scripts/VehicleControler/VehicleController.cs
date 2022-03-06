@@ -19,7 +19,9 @@ public class VehicleController : MonoBehaviour
     private InputAction clutch;
 
     [Header("Vehicle configuration")]
-    public Engine engine;
+    public Engine2 engine;
+    private float engineForce;
+    public DriveType driveType;
     public Transform centerOfMass;
     public Transform steeringWheel;
 
@@ -28,17 +30,8 @@ public class VehicleController : MonoBehaviour
     private Rigidbody rb;
     private float slideDirection;
 
-    public List<Wheel> wheels = new List<Wheel>();
+    public List<Suspension> suspensions = new List<Suspension>();
     public List<DownForceWing> downforceWing = new List<DownForceWing>();
-
-    [Header("Gears")]
-    public DriveType driveType;
-    public float[] gearRatios;
-    public AnimationCurve torqueCurve;
-    public float differentialRatio;
-    public float idleRPM;
-    public float maxRPM;
-    public float enginePower;
 
     public UserInputType userInputType;
     public AnimationCurve controllerSteering;
@@ -50,12 +43,12 @@ public class VehicleController : MonoBehaviour
         steeringInput = new SteeringWheelInput();
         steeringInput.Init();
 
-        vehicleInputActions = new VehicleInputActions();
-        engine = new Engine(gearRatios, differentialRatio, idleRPM, maxRPM, enginePower, wheels, torqueCurve);
-        userInterface = new VehicleUserInterfaceData(engine, this);
-
         rb = this.GetComponent<Rigidbody>();
         rb.centerOfMass = centerOfMass.localPosition;
+
+        vehicleInputActions = new VehicleInputActions();
+        engine.InitializeEngine(rb.mass);
+        userInterface = new VehicleUserInterfaceData(engine, this);
     }
 
     private void OnEnable()
@@ -126,7 +119,8 @@ public class VehicleController : MonoBehaviour
         float brakeInput = ReadBrakeInput(userInputType);
         float steerPosition = ReadSteeringInput(userInputType);
 
-        engine.SimulateEngine(accelerationInput, clutchInput, driveType);
+        float localForwardVelocity = Vector3.Dot(rb.velocity, transform.forward);
+        engineForce = engine.Run(localForwardVelocity, accelerationInput);
         ApplyForceToWheels(brakeInput);
 
         SetUserInterface(accelerationInput, brakeInput);
@@ -134,7 +128,7 @@ public class VehicleController : MonoBehaviour
         CalculateSteeringInput(steerPosition, userInputType);
         SetYrotationFrontWheels();
 
-        slideDirection = (CalculateSlideVector(wheels));
+        slideDirection = (CalculateSlideVector(suspensions));
         steeringInput.SetWheelForce(-Mathf.RoundToInt(slideDirection));
     }
 
@@ -184,7 +178,7 @@ public class VehicleController : MonoBehaviour
         if(inputType == UserInputType.Controller)
             steering = controllerSteering.Evaluate(steerPosition);
 
-        steeringWheel.transform.localEulerAngles = new Vector3(14.289f, 0, -steering * (float)wheelInputAngle);
+        steeringWheel.transform.localEulerAngles = new Vector3(steeringWheel.transform.localEulerAngles.x, -steering * (float)wheelInputAngle, steeringWheel.transform.localEulerAngles.z);
         float steerForce = Mathf.Clamp(steering * 2f, -steeringRatio, steeringRatio);
 
         if (steering > 0)//right
@@ -206,35 +200,35 @@ public class VehicleController : MonoBehaviour
 
     private void SetYrotationFrontWheels()
     {
-        foreach (Wheel w in wheels)
+        foreach (Suspension w in suspensions)
         {
-            if (w.wheelPosition == WheelPosition.FrontLeft)
-                w.steerAngle = ackermannAngleLeft;
-            if (w.wheelPosition == WheelPosition.FrontRight)
-                w.steerAngle = ackermannAngleRight;
+            if (w.suspensionPosition == SuspensionPosition.FrontLeft)
+                w.wheel.steerAngle = ackermannAngleLeft;
+            if (w.suspensionPosition == SuspensionPosition.FrontRight)
+                w.wheel.steerAngle = ackermannAngleRight;
         }
     }
 
     private void ApplyForceToWheels(float brakeForce)
     {
-        foreach (Wheel w in wheels)
+        foreach (Suspension w in suspensions)
         {
             switch (driveType)
             {
                 case DriveType.rearWheelDrive:
-                    if (w.wheelPosition == WheelPosition.RearLeft || w.wheelPosition == WheelPosition.RearRight)
-                        w.SimulatePhysics(brakeForce, engine, true);
+                    if (w.suspensionPosition == SuspensionPosition.RearLeft || w.suspensionPosition == SuspensionPosition.RearRight)
+                        w.SimulatePhysics(brakeForce, engineForce);
                     else
-                        w.SimulatePhysics(brakeForce, engine, false);
+                        w.SimulatePhysics(brakeForce, 0);
                     break;
                 case DriveType.frontWheelDrive:
-                    if (w.wheelPosition == WheelPosition.FrontLeft || w.wheelPosition == WheelPosition.FrontRight)
-                        w.SimulatePhysics(brakeForce, engine, true);
+                    if (w.suspensionPosition == SuspensionPosition.FrontLeft || w.suspensionPosition == SuspensionPosition.FrontRight)
+                        w.SimulatePhysics(brakeForce, engineForce);
                     else
-                        w.SimulatePhysics(brakeForce, engine, false);
+                        w.SimulatePhysics(brakeForce, 0);
                     break;
                 case DriveType.allWheelDrive:
-                    w.SimulatePhysics(brakeForce, engine, true);
+                    w.SimulatePhysics(brakeForce, engineForce);
                     break;
                 default:
                     break;
@@ -265,13 +259,13 @@ public class VehicleController : MonoBehaviour
         }
     }
 
-    private float CalculateSlideVector(List<Wheel> frontWheels)
+    private float CalculateSlideVector(List<Suspension> frontSuspensions)
     {
         float value = 0;
-        foreach (Wheel w in wheels)
+        foreach (Suspension w in suspensions)
         {
-            if(w.wheelPosition == WheelPosition.FrontLeft || w.wheelPosition == WheelPosition.FrontRight)
-                value += w.WheelForce;
+            if(w.suspensionPosition == SuspensionPosition.FrontLeft || w.suspensionPosition == SuspensionPosition.FrontRight)
+                value += w.wheel.WheelForce;
         }
         value = value / 2f;
         return value;

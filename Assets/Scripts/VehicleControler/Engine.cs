@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 [System.Serializable]
 public class Engine
 {
@@ -11,7 +12,7 @@ public class Engine
     private float maxRPM;
     private float[] gearRatio;
     public AnimationCurve torqueCurve;
-    private List<Wheel> driveWheels;
+    private List<Suspension> driveSuspension;
     public float horsePower;
     private float differentialRatio;
     private float engineDelay = .1f;
@@ -26,7 +27,7 @@ public class Engine
 
     public float EnergyOutput { get { return energyOutput; } }
     private float energyOutput;
-    public Engine(float[] gears, float differentialRatio, float idleRPM, float maxRPM, float horsePower, List<Wheel> driveWheels, AnimationCurve torqueCurve)
+    public Engine(float[] gears, float differentialRatio, float idleRPM, float maxRPM, float horsePower, List<Suspension> driveSuspension, AnimationCurve torqueCurve)
     {
         this.gearRatio = gears;
         this.idleRPM = idleRPM;
@@ -34,7 +35,7 @@ public class Engine
         this.horsePower = horsePower;
         this.differentialRatio = differentialRatio;
         this.torqueCurve = torqueCurve;
-        this.driveWheels = driveWheels;
+        this.driveSuspension = driveSuspension;
     }
 
     public void SimulateEngine(float throttle, float clutch, DriveType type)
@@ -69,23 +70,23 @@ public class Engine
     private float WheelRadPerSecond(DriveType type)
     {
         float rad = 0;
-        foreach (Wheel w in driveWheels)
+        foreach (Suspension w in driveSuspension)
         {
             switch (type)
             {
                 case DriveType.rearWheelDrive:
-                    if (w.wheelPosition == WheelPosition.RearLeft || w.wheelPosition == WheelPosition.RearRight)
-                        if (w.RPM > rad)
-                            rad = w.RPM;
+                    if (w.suspensionPosition == SuspensionPosition.RearLeft || w.suspensionPosition == SuspensionPosition.RearRight)
+                        if (w.wheel.RPM > rad)
+                            rad = w.wheel.RPM;
                     break;  
                 case DriveType.frontWheelDrive:
-                    if (w.wheelPosition == WheelPosition.FrontLeft || w.wheelPosition == WheelPosition.FrontRight)
-                        if (w.RPM > rad)
-                            rad = w.RPM;
+                    if (w.suspensionPosition == SuspensionPosition.FrontLeft || w.suspensionPosition == SuspensionPosition.FrontRight)
+                        if (w.wheel.RPM > rad)
+                            rad = w.wheel.RPM;
                     break;
                 case DriveType.allWheelDrive:
-                    if (w.RPM > rad)
-                        rad = w.RPM;
+                    if (w.wheel.RPM > rad)
+                        rad = w.wheel.RPM;
                     break;
             }
         }

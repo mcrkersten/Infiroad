@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -43,7 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09809f9d950d3064bb3da4943ba09578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vehicleStartTransform: {fileID: 0}
   settings:
+    segmentVariation: 0
     gradient:
       serializedVersion: 2
       key0: {r: 0.10215378, g: 1, b: 0, a: 1}
@@ -75,14 +78,14 @@ MonoBehaviour:
       m_NumAlphaKeys: 2
     debug: 0
     sidePointAmount: 5
-    gridSize: 400
+    gridSize: 600
     straight_NpointsBetween: 2
     corner_NpointsBetween: 2
-    XaxisVariation: 50
-    segmentHeightRange: 17.25
+    XaxisVariation: 40
+    segmentHeightRange: 7.7
     isFixedBetweenRange: 0
-    segmentProximity: 30
-    barrierWidth: 6.09
+    segmentDeletionProximity: 20
+  vehicle: {fileID: 0}
   segmentPrefab: {fileID: 2490539787425671966, guid: 581f21a299defcb4d9142c7dd4a17603, type: 3}
   roadChainTriggerObjectPrefab: {fileID: 7696483532372454975, guid: c537102fda2ee344e8c1c56eaee6f2d4, type: 3}
   roadChainPrefab: {fileID: 6707775167756143377, guid: 8864714a39c351f45bc03981a7c61c00, type: 3}
@@ -90,8 +93,13 @@ MonoBehaviour:
   startSegment: {fileID: 0}
   currentMeshTask:
     mirror: 0
+    roadSettings: {fileID: 0}
     points: []
+    startPointIndex: 0
+    noiseChannel:
+      channelSettings: []
   radiusDelay: Infinity
   lastMeshPosition: {x: Infinity, y: Infinity, z: Infinity}
   meshtasks: []
-  roadMesh2D: {fileID: 11400000, guid: 33567533da55e71438bc2e53f9e13ee4, type: 2}
+  road: {fileID: 11400000, guid: 33567533da55e71438bc2e53f9e13ee4, type: 2}
+  generatedRoadEdgeloops: 0
