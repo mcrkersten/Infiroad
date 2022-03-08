@@ -109,12 +109,17 @@ public class VehicleController : MonoBehaviour
         {
             float downforce = wing.CalculateLiftforce(1.1455f);
             Vector3 downForceVector = downforce * -wing.transform.up;
-            rb.AddForceAtPosition(downForceVector * 1000f, wing.transform.position);
+            rb.AddForceAtPosition(downForceVector * 300f, wing.transform.position);
             Debug.DrawLine(wing.transform.position, wing.transform.position + downForceVector, Color.green);
         }
 
-        float clutchInput = 1f - clutch.ReadValue<float>();
+        Vector3 airResistance = CalculateAirResistance();
+        rb.AddForce(airResistance);
 
+        Vector3 mechanicalResistance = CalculateMechanicalResistance();
+        rb.AddForce(airResistance);
+
+        float clutchInput = 1f - clutch.ReadValue<float>();
         float accelerationInput = ReadAccelerationInput(userInputType);
         float brakeInput = ReadBrakeInput(userInputType);
         float steerPosition = ReadSteeringInput(userInputType);
@@ -130,6 +135,18 @@ public class VehicleController : MonoBehaviour
 
         slideDirection = (CalculateSlideVector(suspensions));
         steeringInput.SetWheelForce(-Mathf.RoundToInt(slideDirection));
+    }
+
+    private Vector3 CalculateMechanicalResistance()
+    {
+
+        return Vector3.zero;
+    }
+
+    private Vector3 CalculateAirResistance()
+    {
+
+        return Vector3.zero;
     }
 
 
@@ -178,8 +195,8 @@ public class VehicleController : MonoBehaviour
         if(inputType == UserInputType.Controller)
             steering = controllerSteering.Evaluate(steerPosition);
 
-        steeringWheel.transform.localEulerAngles = new Vector3(steeringWheel.transform.localEulerAngles.x, -steering * (float)wheelInputAngle, steeringWheel.transform.localEulerAngles.z);
-        float steerForce = Mathf.Clamp(steering * 2f, -steeringRatio, steeringRatio);
+        steeringWheel.transform.localEulerAngles = new Vector3(steeringWheel.transform.localEulerAngles.x, steering * (float)wheelInputAngle, steeringWheel.transform.localEulerAngles.z);
+        float steerForce = Mathf.Clamp(steering * 2.25f, -steeringRatio, steeringRatio);
 
         if (steering > 0)//right
         {
@@ -209,7 +226,7 @@ public class VehicleController : MonoBehaviour
         }
     }
 
-    private void ApplyForceToWheels(float brakeForce)
+    private void ApplyForceToWheels(float brakeInput)
     {
         foreach (Suspension w in suspensions)
         {
@@ -217,18 +234,18 @@ public class VehicleController : MonoBehaviour
             {
                 case DriveType.rearWheelDrive:
                     if (w.suspensionPosition == SuspensionPosition.RearLeft || w.suspensionPosition == SuspensionPosition.RearRight)
-                        w.SimulatePhysics(brakeForce, engineForce);
+                        w.SimulatePhysics(brakeInput, engineForce);
                     else
-                        w.SimulatePhysics(brakeForce, 0);
+                        w.SimulatePhysics(brakeInput, 0);
                     break;
                 case DriveType.frontWheelDrive:
                     if (w.suspensionPosition == SuspensionPosition.FrontLeft || w.suspensionPosition == SuspensionPosition.FrontRight)
-                        w.SimulatePhysics(brakeForce, engineForce);
+                        w.SimulatePhysics(brakeInput, engineForce);
                     else
-                        w.SimulatePhysics(brakeForce, 0);
+                        w.SimulatePhysics(brakeInput, 0);
                     break;
                 case DriveType.allWheelDrive:
-                    w.SimulatePhysics(brakeForce, engineForce);
+                    w.SimulatePhysics(brakeInput, engineForce);
                     break;
                 default:
                     break;

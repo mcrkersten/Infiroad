@@ -19,7 +19,7 @@ MonoBehaviour:
     curveTime: 0
     noiseChannel: 1
   - prefab: {fileID: 4807873992971614875, guid: 48e0c365a77675e47af5e4279926cc85, type: 3}
-    position: {x: 1.9620714, y: 0.4167893}
+    position: {x: 1.9620714, y: 0.5119237}
     curveTime: -0.025
     noiseChannel: 1
   - prefab: {fileID: 8937104343192257952, guid: 925b5ab7d1573cf4a8fe2be566598541, type: 3}

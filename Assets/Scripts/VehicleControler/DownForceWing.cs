@@ -6,7 +6,7 @@ public class DownForceWing : MonoBehaviour
 {
     public float wingAngle;
     public float width;
-    public float height;
+    public float lenght;
     private Rigidbody rb;
 
     private void Start()
@@ -16,7 +16,7 @@ public class DownForceWing : MonoBehaviour
 
     public float GetArea()
     {
-        return width * height;
+        return width * lenght;
     }
 
     public float CalculateLiftforce(float airDensity)

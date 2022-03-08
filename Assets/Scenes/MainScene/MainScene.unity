@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1819086, g: 0.22407041, b: 0.2869938, a: 1}
+  m_IndirectSpecularColor: {r: 0.18190898, g: 0.22407112, b: 0.28699434, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1047,9 +1047,9 @@ RectTransform:
   m_Father: {fileID: 297906226}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 181, y: -111}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -655, y: -111}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1472946169
@@ -1418,13 +1418,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2737307801119574456, guid: 6caca361c7217f7408160d1ff7fd3b94, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 1568567287719838192, guid: 6caca361c7217f7408160d1ff7fd3b94, type: 3}
+      propertyPath: field of view
+      value: 60.5
       objectReference: {fileID: 0}
-    - target: {fileID: 4328844776855269656, guid: 6caca361c7217f7408160d1ff7fd3b94, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 5393199524841225212, guid: 6caca361c7217f7408160d1ff7fd3b94, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.591
+      objectReference: {fileID: 0}
+    - target: {fileID: 5393199524841225212, guid: 6caca361c7217f7408160d1ff7fd3b94, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.093
       objectReference: {fileID: 0}
     - target: {fileID: 6053509712107160178, guid: 6caca361c7217f7408160d1ff7fd3b94, type: 3}
       propertyPath: m_Name
@@ -1473,14 +1477,6 @@ PrefabInstance:
     - target: {fileID: 6866216667751782600, guid: 6caca361c7217f7408160d1ff7fd3b94, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8232948078194267011, guid: 6caca361c7217f7408160d1ff7fd3b94, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8351741000127811814, guid: 6caca361c7217f7408160d1ff7fd3b94, type: 3}
-      propertyPath: userInputType
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6caca361c7217f7408160d1ff7fd3b94, type: 3}

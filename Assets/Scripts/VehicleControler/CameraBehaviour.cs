@@ -35,7 +35,7 @@ public class CameraBehaviour : MonoBehaviour
 
 
 
-        transform.localEulerAngles = CameraShake();
+        //transform.localEulerAngles = CameraShake();
     }
 
     private Vector3 CameraShake()

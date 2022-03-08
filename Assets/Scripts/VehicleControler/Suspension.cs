@@ -47,10 +47,10 @@ public class Suspension : MonoBehaviour
 
             Vector3 suspensionForce = CalculateSuspensionForce(hit);
             rb.AddForceAtPosition(suspensionForce, hit.point);
-            float downForce = suspensionForce.y + 300;
+            float downForce = suspensionForce.y + 800;
 
             float accelerationForce = engineForce;
-            float brakeForce = CalculateBrakingForce(brakeInput * brakeBias);
+            float brakeForce = CalculateBrakingForce(brakeInput);
             float sidewaysForce = -wheel.wheelVelocityLocalSpace.x * downForce;
 
             Vector3 localForceDirection = CalculateForces(accelerationForce, brakeForce, sidewaysForce, downForce);
@@ -103,7 +103,7 @@ public class Suspension : MonoBehaviour
 
     private float CalculateBrakingForce(float brakeInput)
     {
-        return Mathf.Clamp(wheel.wheelVelocityLocalSpace.z, -1, 1) * -VehicleConstants.BRAKE_FORCE * brakeInput;
+        return Mathf.Clamp(wheel.wheelVelocityLocalSpace.z, -1, 1) * (-VehicleConstants.BRAKE_FORCE * brakeBias) * brakeInput;
     }
 }
 [System.Serializable]
