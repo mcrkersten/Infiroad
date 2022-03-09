@@ -26,8 +26,8 @@ public class WheelRaycast : MonoBehaviour
     public float steerAngle;
 
 
-    [HideInInspector] public Vector3 forceDirectionDebug;
-    public float gripDebug;
+    [HideInInspector] public Vector3 forceDirectionDebug = Vector3.zero;
+    public float gripDebug = 0.01f;
 
     private void Start()
     {

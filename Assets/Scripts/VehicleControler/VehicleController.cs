@@ -47,7 +47,7 @@ public class VehicleController : MonoBehaviour
         rb.centerOfMass = centerOfMass.localPosition;
 
         vehicleInputActions = new VehicleInputActions();
-        engine.InitializeEngine(rb.mass);
+        engine.InitializeEngine();
         userInterface = new VehicleUserInterfaceData(engine, this);
     }
 
@@ -116,9 +116,6 @@ public class VehicleController : MonoBehaviour
         Vector3 airResistance = CalculateAirResistance();
         rb.AddForce(airResistance);
 
-        Vector3 mechanicalResistance = CalculateMechanicalResistance();
-        rb.AddForce(airResistance);
-
         float clutchInput = 1f - clutch.ReadValue<float>();
         float accelerationInput = ReadAccelerationInput(userInputType);
         float brakeInput = ReadBrakeInput(userInputType);
@@ -135,12 +132,6 @@ public class VehicleController : MonoBehaviour
 
         slideDirection = (CalculateSlideVector(suspensions));
         steeringInput.SetWheelForce(-Mathf.RoundToInt(slideDirection));
-    }
-
-    private Vector3 CalculateMechanicalResistance()
-    {
-
-        return Vector3.zero;
     }
 
     private Vector3 CalculateAirResistance()

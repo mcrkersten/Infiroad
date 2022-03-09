@@ -25,10 +25,12 @@ public class Debug_ForceIndicator : MonoBehaviour
         int i = 0;
         foreach (Indicator indicator in indicators)
         {
-
+            indicator.wheel.gripDebug = float.IsNaN(indicator.wheel.gripDebug) ? 0f : indicator.wheel.gripDebug;
             Vector2 offset = GetOffset(indicator);
             indicator.image.transform.localScale = Vector3.one * indicator.wheel.gripDebug;
             indicator.image.color = colorGradient.Evaluate(1f - indicator.wheel.gripDebug);
+
+            indicator.wheel.forceDirectionDebug = float.IsNaN(indicator.wheel.forceDirectionDebug.z) ? Vector3.zero : indicator.wheel.forceDirectionDebug;
             indicator.image.transform.localPosition = new Vector3(-indicator.wheel.forceDirectionDebug.x + offset.x, -indicator.wheel.forceDirectionDebug.z + offset.y, 0) / 20f;
             i++;
         }

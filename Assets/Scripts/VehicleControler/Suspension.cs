@@ -56,6 +56,8 @@ public class Suspension : MonoBehaviour
             Vector3 localForceDirection = CalculateForces(accelerationForce, brakeForce, sidewaysForce, downForce);
             wheel.forceDirectionDebug = localForceDirection;
             Vector3 worldForceDirection = wheel.transform.TransformDirection(localForceDirection);
+            //Check if valid
+            worldForceDirection = float.IsNaN(worldForceDirection.y) ? Vector3.zero : worldForceDirection;
             rb.AddForceAtPosition(worldForceDirection, hit.point);
 
             Debug.DrawRay(wheel.transform.position, -this.transform.up * hit.distance, Color.red);
@@ -81,7 +83,7 @@ public class Suspension : MonoBehaviour
 
         Vector2 result = a + b;
         wheel.steeringWheelForce = -result.x;
-        wheel.gripDebug = p;
+        wheel.gripDebug = Mathf.Max(.01f, p);
         return new Vector3(Mathf.Clamp(result.x, -gripForce, gripForce), 0f, Mathf.Clamp(result.y, -gripForce, gripForce));
     }
 
