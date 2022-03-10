@@ -24,8 +24,11 @@ public class Engine2
     private bool isShifting;
     private float shiftTime;
 
+    public float physicsImpact;
+
     public AK.Wwise.RTPC engineSpeedAudio;
     public AK.Wwise.RTPC throttleAudio;
+    public AK.Wwise.RTPC GearAudio;
 
     public void InitializeEngine()
     {
@@ -50,11 +53,13 @@ public class Engine2
 
         float effectiveGearRatio = gearRatios[currentGear] * finalDriveRatio;
         float wheelRPM = currentForwardSpeed / (rollingCircumference / 60f);
-        float enginewRPM = wheelRPM * effectiveGearRatio;
+        float enginewRPM = (wheelRPM * effectiveGearRatio) - (physicsWobble * physicsImpact);
         float engineTorque = mechanicalForce + (CalculateEnginePullTorque(enginewRPM) * throttle * effectiveGearRatio);
         float engineForce = engineTorque / driveWheelRadiusInMeter;
+
         engineSpeedAudio.SetGlobalValue(enginewRPM);
         throttleAudio.SetGlobalValue(throttle * 100);
+
         dashboard.UpdateTechometerDile(enginewRPM / maxRPM);
         return engineForce;
     }
@@ -63,7 +68,7 @@ public class Engine2
     {
         float effectiveGearRatio = gearRatios[currentGear] * finalDriveRatio;
         float wheelRPM = currentForwardSpeed / (rollingCircumference / 60f);
-        float currentEngineRPM = wheelRPM * effectiveGearRatio;
+        float currentEngineRPM = (wheelRPM * effectiveGearRatio);
 
         float idealEngineRPM = (3500f) * (1f - throttle);
         if(currentEngineRPM < idealEngineRPM)
@@ -90,12 +95,14 @@ public class Engine2
     {
         StartAutomaticShift();
         currentGear = Mathf.Min(gearRatios.Length - 1, currentGear + 1);
+        GearAudio.SetGlobalValue(currentGear);  
     }
 
     public void ShiftDown(InputAction.CallbackContext obj)
     {
         StartAutomaticShift();
         currentGear = Mathf.Max(0, currentGear - 1);
+        GearAudio.SetGlobalValue(currentGear);
     }
 
     private void StartAutomaticShift()

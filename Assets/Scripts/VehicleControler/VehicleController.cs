@@ -122,10 +122,10 @@ public class VehicleController : MonoBehaviour
         float brakeInput = ReadBrakeInput(userInputType);
         float steerPosition = ReadSteeringInput(userInputType);
 
-        float localForwardVelocity = Vector3.Dot(rb.velocity, transform.forward);
-        engineForce = engine.Run(localForwardVelocity, accelerationInput, 0);
+         float physicsWobble = ApplyForceToWheels(brakeInput);
 
-        ApplyForceToWheels(brakeInput);
+        float localForwardVelocity = Vector3.Dot(rb.velocity, transform.forward);
+        engineForce = engine.Run(localForwardVelocity, accelerationInput, physicsWobble);
 
         SetUserInterface(accelerationInput, brakeInput);
 
@@ -225,31 +225,33 @@ public class VehicleController : MonoBehaviour
         }
     }
 
-    private void ApplyForceToWheels(float brakeInput)
+    private float ApplyForceToWheels(float brakeInput)
     {
+        float physicsWobble = 0f;
         foreach (Suspension w in suspensions)
         {
             switch (driveType)
             {
                 case DriveType.rearWheelDrive:
                     if (w.suspensionPosition == SuspensionPosition.RearLeft || w.suspensionPosition == SuspensionPosition.RearRight)
-                        w.SimulatePhysics(brakeInput, engineForce);
+                        physicsWobble += w.SimulatePhysics(brakeInput, engineForce);
                     else
-                        w.SimulatePhysics(brakeInput, 0);
+                        physicsWobble += w.SimulatePhysics(brakeInput, 0);
                     break;
                 case DriveType.frontWheelDrive:
                     if (w.suspensionPosition == SuspensionPosition.FrontLeft || w.suspensionPosition == SuspensionPosition.FrontRight)
-                        w.SimulatePhysics(brakeInput, engineForce);
+                        physicsWobble += w.SimulatePhysics(brakeInput, engineForce);
                     else
-                        w.SimulatePhysics(brakeInput, 0);
+                        physicsWobble += w.SimulatePhysics(brakeInput, 0);
                     break;
                 case DriveType.allWheelDrive:
-                    w.SimulatePhysics(brakeInput, engineForce);
+                    physicsWobble += w.SimulatePhysics(brakeInput, engineForce);
                     break;
                 default:
                     break;
             }
         }
+        return physicsWobble / suspensions.Count;
     }
     private void OnDisable()
     {

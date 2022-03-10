@@ -33,10 +33,10 @@ public class Suspension : MonoBehaviour
         maxLength = restLength + springTravel;
     }
 
-    public void SimulatePhysics(float brakeInput, float engineForce)
+    public float SimulatePhysics(float brakeInput, float engineForce)
     {
         float wheelSlipAnimate = 0f;
-
+        float physicsWobble = 0f;
         if (wheel.Raycast(maxLength, layerMask, out RaycastHit hit))
         {
             Debug.DrawLine(this.transform.position, this.transform.position + rb.GetPointVelocity(hit.point).normalized);
@@ -45,7 +45,9 @@ public class Suspension : MonoBehaviour
 
             wheel.wheelVelocityLocalSpace = wheel.transform.InverseTransformDirection(rb.GetPointVelocity(hit.point));
 
-            Vector3 suspensionForce = CalculateSuspensionForce(hit);
+            float suspensionCompression = 0;
+            Vector3 suspensionForce = CalculateSuspensionForce(hit, out suspensionCompression);
+            physicsWobble = suspensionCompression;
             rb.AddForceAtPosition(suspensionForce, hit.point);
             float downForce = suspensionForce.y + 800;
 
@@ -69,6 +71,7 @@ public class Suspension : MonoBehaviour
 
         //Technical debt
         wheel.RotateWheelModel(wheelSlipAnimate, suspensionPosition);
+        return physicsWobble;
     }
 
     private Vector3 CalculateForces(float accelerationForce, float brakeForce, float sidewaysForce, float downForce)
@@ -87,19 +90,20 @@ public class Suspension : MonoBehaviour
         return new Vector3(Mathf.Clamp(result.x, -gripForce, gripForce), 0f, Mathf.Clamp(result.y, -gripForce, gripForce));
     }
 
-    private Vector3 CalculateSuspensionForce(RaycastHit hit)
+    private Vector3 CalculateSuspensionForce(RaycastHit hit, out float suspensionCompresssion)
     {
         float springLength = Mathf.Clamp(hit.distance, minLength, maxLength);
         float springVelocity = (lastLength - springLength) / Time.fixedDeltaTime;
-
         float springForce = springtStiffness * (restLength - springLength);
         float damperForce = damperStiffness * springVelocity;
         lastLength = springLength;
+        suspensionCompresssion = springVelocity;
         if (springForce + damperForce > 0f)
         {
             Debug.DrawLine(this.transform.position, this.transform.position + this.transform.up * ((springForce + damperForce) / 2000f), Color.cyan);
             return this.transform.up * (springForce + damperForce);
         }
+
         return Vector3.zero;
     }
 
