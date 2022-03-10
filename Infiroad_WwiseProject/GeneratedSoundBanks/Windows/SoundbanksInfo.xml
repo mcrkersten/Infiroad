@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="140">
+	<RootPaths>
+		<ProjectRoot>C:\Repository\Infiroad\Infiroad_WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Repository\Infiroad\Infiroad_WwiseProject\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>C:\Repository\Infiroad\Infiroad_WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<StreamedFiles/>
+	<MediaFilesNotInAnyBank/>
+	<SoundBanks>
+		<SoundBank Id="1355168291" Language="SFX" Hash="2103019153">
+			<ObjectPath>Init</ObjectPath>
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+		</SoundBank>
+		<SoundBank Id="2025709351" Language="SFX" Hash="2909664754">
+			<ObjectPath>\SoundBanks\Default Work Unit\Vehicle</ObjectPath>
+			<ShortName>Vehicle</ShortName>
+			<Path>Vehicle.bnk</Path>
+			<IncludedEvents>
+				<Event Id="639345804" Name="Play_Engine" ObjectPath="\Events\Default Work Unit\Play_Engine" MaxAttenuation="30." DurationType="Infinite"/>
+			</IncludedEvents>
+			<IncludedMemoryFiles>
+				<File Id="450858606" Language="SFX">
+					<ShortName>Diesel Engine.wav</ShortName>
+					<Path>SFX\Diesel Engine_E1EF92B3.wem</Path>
+				</File>
+			</IncludedMemoryFiles>
+			<GameParameters>
+				<GameParameter Id="640949982" Name="Speed" ObjectPath="\Game Parameters\Default Work Unit\Speed"/>
+				<GameParameter Id="2995819693" Name="Throttle" ObjectPath="\Game Parameters\Default Work Unit\Throttle"/>
+			</GameParameters>
+		</SoundBank>
+	</SoundBanks>
+</SoundBanksInfo>

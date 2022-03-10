@@ -104,26 +104,6 @@ namespace UniStorm
             No = 1
         }
 
-        public void CreateWeatherSound()
-        {
-            UniStormSystem UniStormSystemObject = FindObjectOfType<UniStormSystem>();
-            if (UniStormSystemObject.enabled)
-            {
-                GameObject Temp = new GameObject();
-                Temp.AddComponent<AudioSource>();
-                AudioSource _AS = Temp.GetComponent<AudioSource>();
-                _AS.clip = WeatherSound;
-                _AS.volume = 0;
-                _AS.loop = true;
-                UnityEngine.Audio.AudioMixer m_AudioMixer = Resources.Load("UniStorm Audio Mixer") as UnityEngine.Audio.AudioMixer;
-                _AS.outputAudioMixerGroup = m_AudioMixer.FindMatchingGroups("Master/Weather")[0];
-                Temp.name = WeatherTypeName + " (UniStorm)";
-                Temp.transform.SetParent(GameObject.Find("UniStorm Sounds").transform);
-                Temp.transform.position = new Vector3(Temp.transform.parent.position.x, Temp.transform.parent.position.y, Temp.transform.parent.position.z);
-                UniStormSystemObject.WeatherSoundsList.Add(_AS);
-            }
-        }
-
         public void CreateWeatherEffect()
         {
             UniStormSystem UniStormSystemObject = FindObjectOfType<UniStormSystem>();

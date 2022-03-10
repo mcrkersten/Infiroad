@@ -91,13 +91,6 @@ namespace UniStorm.Utility
                 LightningPoints.Add(transform.position);
             }
 
-            gameObject.AddComponent<AudioSource>();
-            AS = GetComponent<AudioSource>();
-            AS.outputAudioMixerGroup = FindObjectOfType<UniStormSystem>().UniStormAudioMixer.FindMatchingGroups("Master/Weather")[0];
-            LightningBolt.enabled = false;
-            m_LightningMaterial = LightningBolt.material;
-            m_LightningMaterial.SetColor("_TintColor", UniStormSystem.Instance.LightningColor);
-            m_LightningColor = m_LightningMaterial.GetColor("_TintColor");
 
             Vector3 GeneratedPosition = new Vector3(PlayerTransform.position.x, PlayerTransform.position.y, PlayerTransform.position.z) + new Vector3(Random.insideUnitSphere.x, 0, Random.insideUnitSphere.z) * LightningGenerationDistance;
             StartingPoint.position = GeneratedPosition + new Vector3(0, 80, 0);

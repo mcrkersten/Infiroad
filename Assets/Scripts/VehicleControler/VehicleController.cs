@@ -118,11 +118,13 @@ public class VehicleController : MonoBehaviour
 
         float clutchInput = 1f - clutch.ReadValue<float>();
         float accelerationInput = ReadAccelerationInput(userInputType);
+        accelerationInput = SmoothInput(accelerationInput, .25f);
         float brakeInput = ReadBrakeInput(userInputType);
         float steerPosition = ReadSteeringInput(userInputType);
 
         float localForwardVelocity = Vector3.Dot(rb.velocity, transform.forward);
-        engineForce = engine.Run(localForwardVelocity, accelerationInput);
+        engineForce = engine.Run(localForwardVelocity, accelerationInput, 0);
+
         ApplyForceToWheels(brakeInput);
 
         SetUserInterface(accelerationInput, brakeInput);
@@ -134,9 +136,15 @@ public class VehicleController : MonoBehaviour
         steeringInput.SetWheelForce(-Mathf.RoundToInt(slideDirection));
     }
 
+    float lastInput;
+    private float SmoothInput(float accelerationInput, float smoothSpeed)
+    {
+        lastInput = Mathf.Lerp(lastInput, accelerationInput, smoothSpeed);
+        return lastInput;
+    }
+
     private Vector3 CalculateAirResistance()
     {
-
         return Vector3.zero;
     }
 

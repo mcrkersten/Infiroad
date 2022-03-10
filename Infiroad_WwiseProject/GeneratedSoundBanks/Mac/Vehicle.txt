@@ -1,0 +1,13 @@
+Event	ID	Name			Wwise Object Path	Notes
+	639345804	Play_Engine			\Default Work Unit\Play_Engine	
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	640949982	Speed			\Default Work Unit\Speed	
+	2995819693	Throttle			\Default Work Unit\Throttle	
+
+Effect plug-ins	ID	Name	Type				Notes
+	2805769450	Special_Effect_1	Wwise Flanger			
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	450858606	Engine	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Mac\SFX\Diesel Engine_E1EF92B3.wem		\Actor-Mixer Hierarchy\Default Work Unit\Engine		1288632
+

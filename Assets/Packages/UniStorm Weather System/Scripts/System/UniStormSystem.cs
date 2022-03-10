@@ -617,12 +617,6 @@ namespace UniStorm
                             AdditionalParticleSystemList.Add(AllWeatherTypes[i].AdditionalWeatherEffect);
                         }
                     }
-
-                    //Create a weather sound for each weather type that has one.
-                    if (AllWeatherTypes[i].UseWeatherSound == WeatherType.Yes_No.Yes && AllWeatherTypes[i].WeatherSound != null)
-                    {
-                        AllWeatherTypes[i].CreateWeatherSound();
-                    }
                 }
             }
 
@@ -671,21 +665,6 @@ namespace UniStorm
             CreateSun();
             CreateMoon();            
 
-            //Intialize the other components and set the proper settings from within the editor
-            GameObject TempAudioSource = new GameObject("UniStorm Time of Day Sounds");
-            TempAudioSource.transform.SetParent(this.transform);
-            TempAudioSource.transform.localPosition = Vector3.zero;
-            TempAudioSource.AddComponent<AudioSource>();
-            TimeOfDayAudioSource = TempAudioSource.GetComponent<AudioSource>();
-            TimeOfDayAudioSource.outputAudioMixerGroup = UniStormAudioMixer.FindMatchingGroups("Master/Ambience")[0];
-            m_TimeOfDaySoundsSeconds = Random.Range(TimeOfDaySoundsSecondsMin, TimeOfDaySoundsSecondsMax + 1);
-
-            GameObject TempAudioSourceMusic = new GameObject("UniStorm Time of Day Music");
-            TempAudioSourceMusic.transform.SetParent(this.transform);
-            TempAudioSourceMusic.transform.localPosition = Vector3.zero;
-            TempAudioSourceMusic.AddComponent<AudioSource>();
-            TimeOfDayMusicAudioSource = TempAudioSourceMusic.GetComponent<AudioSource>();
-            TimeOfDayMusicAudioSource.outputAudioMixerGroup = UniStormAudioMixer.FindMatchingGroups("Master/Music")[0];
 
             UniStormWindZone = GameObject.Find("UniStorm Windzone").GetComponent<WindZone>();
             m_StarsRenderer = GameObject.Find("UniStorm Stars").GetComponent<Renderer>();
@@ -1761,8 +1740,6 @@ namespace UniStorm
 
                 MoveSun();
                 UpdateColors();
-                PlayTimeOfDaySound();
-                PlayTimeOfDayMusic();
                 CalculateTimeOfDay();
 
                 //Generate our lightning, if the randomized lightning seconds have been met
@@ -2059,144 +2036,6 @@ namespace UniStorm
         }
 
         //Calculates our time of day sounds according to the hour and randomized seconds set by the user.
-        void PlayTimeOfDaySound()
-        {
-            m_TimeOfDaySoundsTimer += Time.deltaTime;
-
-            if (m_TimeOfDaySoundsTimer >= m_TimeOfDaySoundsSeconds + m_CurrentClipLength)
-            {
-                if (CurrentWeatherType != null && CurrentWeatherType.PrecipitationWeatherType == WeatherType.Yes_No.Yes &&
-                    TimeOfDaySoundsDuringPrecipitationWeather == UniStormSystem.EnableFeature.Enabled ||
-                    CurrentWeatherType != null && CurrentWeatherType.PrecipitationWeatherType == WeatherType.Yes_No.No &&
-                    TimeOfDaySoundsDuringPrecipitationWeather == UniStormSystem.EnableFeature.Disabled)
-                {
-                    if (CurrentTimeOfDay == CurrentTimeOfDayEnum.Morning)
-                    {
-                        //Morning Sounds
-                        if (MorningSounds.Count != 0)
-                        {
-                            TimeOfDayAudioSource.clip = MorningSounds[Random.Range(0, MorningSounds.Count)];
-                            if (TimeOfDayAudioSource.clip != null)
-                            {
-                                TimeOfDayAudioSource.Play();
-                                m_CurrentClipLength = TimeOfDayAudioSource.clip.length;
-                            }
-                        }
-                    }
-                    else if (CurrentTimeOfDay == CurrentTimeOfDayEnum.Day)
-                    {
-                        //Day Sounds
-                        if (DaySounds.Count != 0)
-                        {
-                            TimeOfDayAudioSource.clip = DaySounds[Random.Range(0, DaySounds.Count)];
-                            if (TimeOfDayAudioSource.clip != null)
-                            {
-                                TimeOfDayAudioSource.Play();
-                                m_CurrentClipLength = TimeOfDayAudioSource.clip.length;
-                            }
-                        }
-                    }
-                    else if (CurrentTimeOfDay == CurrentTimeOfDayEnum.Evening)
-                    {
-                        //Evening Sounds
-                        if (EveningSounds.Count != 0)
-                        {
-                            TimeOfDayAudioSource.clip = EveningSounds[Random.Range(0, EveningSounds.Count)];
-                            if (TimeOfDayAudioSource.clip != null)
-                            {
-                                TimeOfDayAudioSource.Play();
-                                m_CurrentClipLength = TimeOfDayAudioSource.clip.length;
-                            }
-                        }
-                    }
-                    else if (CurrentTimeOfDay == CurrentTimeOfDayEnum.Night)
-                    {
-                        //Night Sounds
-                        if (NightSounds.Count != 0)
-                        {
-                            TimeOfDayAudioSource.clip = NightSounds[Random.Range(0, NightSounds.Count)];
-                            if (TimeOfDayAudioSource.clip != null)
-                            {
-                                TimeOfDayAudioSource.Play();
-                                m_CurrentClipLength = TimeOfDayAudioSource.clip.length;
-                            }
-                        }
-                    }
-
-                    m_TimeOfDaySoundsTimer = 0;
-                }
-            }
-        }
-
-        //Calculates our time of day sounds according to the hour and randomized seconds set by the user.
-        void PlayTimeOfDayMusic()
-        {
-            m_TimeOfDayMusicTimer += Time.deltaTime;
-
-            if (m_TimeOfDayMusicTimer >= m_CurrentMusicClipLength + TimeOfDayMusicDelay || m_UpdateTimeOfDayMusic && TransitionMusicOnTimeOfDayChange == EnableFeature.Enabled || m_UpdateBiomeTimeOfDayMusic)
-            {
-                if (CurrentTimeOfDay == CurrentTimeOfDayEnum.Morning)
-                {
-                    //Morning Music
-                    if (MorningMusic.Count != 0)
-                    {
-                        if (MusicVolumeCoroutine != null) { StopCoroutine(MusicVolumeCoroutine); }
-                        AudioClip RandomMorningSound = MorningMusic[Random.Range(0, MorningMusic.Count)];
-                        if (RandomMorningSound != null)
-                        {
-                            MusicVolumeCoroutine = StartCoroutine(MusicFadeSequence(MusicTransitionLength, RandomMorningSound));
-                            m_CurrentMusicClipLength = RandomMorningSound.length;
-                        }
-                    }
-                }
-                else if (CurrentTimeOfDay == CurrentTimeOfDayEnum.Day)
-                {
-                    //Day Music
-                    if (DayMusic.Count != 0)
-                    {
-                        if (MusicVolumeCoroutine != null) { StopCoroutine(MusicVolumeCoroutine); }
-                        AudioClip RandomDaySound = DayMusic[Random.Range(0, DayMusic.Count)];
-                        if (RandomDaySound != null)
-                        {
-                            MusicVolumeCoroutine = StartCoroutine(MusicFadeSequence(MusicTransitionLength, RandomDaySound));
-                            m_CurrentMusicClipLength = RandomDaySound.length;
-                        }
-                    }
-                }
-                else if (CurrentTimeOfDay == CurrentTimeOfDayEnum.Evening)
-                {
-                    //Evening Music
-                    if (EveningMusic.Count != 0)
-                    {
-                        if (MusicVolumeCoroutine != null) { StopCoroutine(MusicVolumeCoroutine); }
-                        AudioClip RandomEveningSound = EveningMusic[Random.Range(0, EveningMusic.Count)];
-                        if (RandomEveningSound != null)
-                        {
-                            MusicVolumeCoroutine = StartCoroutine(MusicFadeSequence(MusicTransitionLength, RandomEveningSound));
-                            m_CurrentMusicClipLength = RandomEveningSound.length;
-                        }
-                    }
-                }
-                else if (CurrentTimeOfDay == CurrentTimeOfDayEnum.Night)
-                {
-                    //Night Music
-                    if (NightMusic.Count != 0)
-                    {
-                        if (MusicVolumeCoroutine != null) { StopCoroutine(MusicVolumeCoroutine); }
-                        AudioClip RandomNightSound = NightMusic[Random.Range(0, NightMusic.Count)];
-                        if (RandomNightSound != null)
-                        {
-                            MusicVolumeCoroutine = StartCoroutine(MusicFadeSequence(MusicTransitionLength, RandomNightSound));
-                            m_CurrentMusicClipLength = RandomNightSound.length;
-                        }
-                    }
-                }
-
-                m_TimeOfDayMusicTimer = 0;
-                m_UpdateTimeOfDayMusic = false;
-                m_UpdateBiomeTimeOfDayMusic = false;
-            }
-        }
 
         //Check our generated weather to see if it's time to update the weather.
         //If it is, slowly transition the weather according to the current weather type scriptable object

@@ -13,8 +13,8 @@ public class Engine2
     public AnimationCurve throttleProfile;
     public Dashboard dashboard;
 
-    public float[] gearRatios =  { 4.23f, 2.47f, 1.77f, 1.43f, 1.15f, 0.99f };
-    private float finalDriveRatio = 5.91f;
+    public float[] gearRatios =  { 2.36f, 1.88f, 1.5f, 1.19f, .97f };
+    private float finalDriveRatio = 4.49f;
 
     public List<WheelRaycast> driveWheels = new List<WheelRaycast>();
     private float driveWheelRadiusInMeter;
@@ -24,13 +24,18 @@ public class Engine2
     private bool isShifting;
     private float shiftTime;
 
+    public AK.Wwise.RTPC engineSpeedAudio;
+    public AK.Wwise.RTPC throttleAudio;
+
     public void InitializeEngine()
     {
         driveWheelRadiusInMeter = driveWheels[0].wheelRadius;
         rollingCircumference = driveWheelRadiusInMeter * 2f * Mathf.PI;
+        engineSpeedAudio.SetGlobalValue(0);
+        throttleAudio.SetGlobalValue(0);
     }
 
-    public float Run(float currentForwardSpeed, float throttle)
+    public float Run(float currentForwardSpeed, float throttle, float physicsWobble)
     {
         if (isShifting)
         {
@@ -48,7 +53,8 @@ public class Engine2
         float enginewRPM = wheelRPM * effectiveGearRatio;
         float engineTorque = mechanicalForce + (CalculateEnginePullTorque(enginewRPM) * throttle * effectiveGearRatio);
         float engineForce = engineTorque / driveWheelRadiusInMeter;
-
+        engineSpeedAudio.SetGlobalValue(enginewRPM);
+        throttleAudio.SetGlobalValue(throttle * 100);
         dashboard.UpdateTechometerDile(enginewRPM / maxRPM);
         return engineForce;
     }

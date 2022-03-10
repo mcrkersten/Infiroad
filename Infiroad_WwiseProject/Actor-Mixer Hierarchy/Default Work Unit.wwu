@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}" SchemaVersion="103">
+	<AudioObjects>
+		<WorkUnit Name="Default Work Unit" ID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}" PersistMode="Standalone">
+			<ChildrenList>
+				<Sound Name="Engine" ID="{4D68C318-915B-47E3-AEC4-9F8DF0FEFD13}" ShortID="217212260">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="2"/>
+						<Property Name="Highpass" Type="int16">
+							<RTPCList>
+								<RTPC Name="" ID="{F58C0E90-13F1-4CF6-B25F-F8A440703613}" ShortID="610898707">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="Speed" ID="{61736E36-909C-4E0D-830D-651148A7D65A}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{214ECB43-8976-4E6B-9044-B02350AA1235}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="65537"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>0</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>11000</XPos>
+												<YPos>27</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="Lowpass" Type="int16">
+							<RTPCList>
+								<RTPC Name="" ID="{07FF3FAD-6AC7-4DA9-8C68-215F3168DB68}" ShortID="737618061">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="Speed" ID="{61736E36-909C-4E0D-830D-651148A7D65A}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{5E6E23F2-64A3-4E79-BF2E-99964B5B1F1F}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="65537"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>33</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>11000</XPos>
+												<YPos>0</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+						<Property Name="Pitch" Type="int32">
+							<RTPCList>
+								<RTPC Name="" ID="{46328A37-11B3-4A0B-BE49-C75618E702CC}" ShortID="611687468">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="Speed" ID="{61736E36-909C-4E0D-830D-651148A7D65A}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{AA906709-B915-498B-ADEB-DAFEB6C310B9}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="65537"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>-3316</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>1000</XPos>
+												<YPos>-959</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>2412.57669</XPos>
+												<YPos>309</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>4572.08588</XPos>
+												<YPos>1855</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>7490.79755</XPos>
+												<YPos>3317</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>10055.2147239264</XPos>
+												<YPos>4265</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>11000</XPos>
+												<YPos>4400</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-11</Value>
+							</ValueList>
+							<RTPCList>
+								<RTPC Name="" ID="{8A4EFB1F-49EC-4B2D-B6D5-2FC014037AD3}" ShortID="1051909789">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="Throttle" ID="{04B0755B-3DB2-4FC3-B437-557F7F6C4CCC}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{16608FB7-5332-4256-9CCA-C42087FD6696}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>-7.85601</YPos>
+												<Flags>5</Flags>
+												<SegmentShape>Log2</SegmentShape>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>-0</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Attenuation">
+							<ObjectRef Name="Engine" ID="{2DEFA4A0-09BD-4373-85F5-7FF4C3BD9FE2}" WorkUnitID="{246E75F1-B3E1-4566-899A-8091C133C344}"/>
+						</Reference>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+						</Reference>
+						<Reference Name="Effect0" PluginName="Wwise Flanger" CompanyID="0" PluginID="125" PluginType="3">
+							<ObjectRef Name="Special_Effect_1" ID="{83317D8A-9D4C-438E-BE8C-BC7D27CAD1B0}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="EngineBase" ID="{C84E14AB-36D6-4FE3-86A6-CEF3C94E9C2F}">
+							<PropertyList>
+								<Property Name="FadeInDuration" Type="Real64" Value="0.00239580428213704"/>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+							</PropertyList>
+							<Language>SFX</Language>
+							<AudioFile>Diesel Engine.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="450858606"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="EngineBase" ID="{C84E14AB-36D6-4FE3-86A6-CEF3C94E9C2F}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>
