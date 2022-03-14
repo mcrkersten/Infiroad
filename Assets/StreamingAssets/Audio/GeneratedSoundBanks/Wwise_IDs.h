@@ -14,12 +14,15 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID PLAY_ENGINE = 639345804U;
+        static const AkUniqueID PLAY_WIND = 1020223172U;
     } // namespace EVENTS
 
     namespace GAME_PARAMETERS
     {
-        static const AkUniqueID SPEED = 640949982U;
+        static const AkUniqueID GEAR = 1172844112U;
+        static const AkUniqueID RMP = 1114824702U;
         static const AkUniqueID THROTTLE = 2995819693U;
+        static const AkUniqueID VELOCITY = 3519441192U;
     } // namespace GAME_PARAMETERS
 
     namespace BANKS

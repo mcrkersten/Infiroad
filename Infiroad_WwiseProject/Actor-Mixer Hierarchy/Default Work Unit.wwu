@@ -3,150 +3,25 @@
 	<AudioObjects>
 		<WorkUnit Name="Default Work Unit" ID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}" PersistMode="Standalone">
 			<ChildrenList>
-				<Sound Name="Engine" ID="{4D68C318-915B-47E3-AEC4-9F8DF0FEFD13}" ShortID="217212260">
+				<Sound Name="Engine" ID="{9A41658E-BE16-4101-BD51-7FAB9AEFF422}" ShortID="703662752">
 					<PropertyList>
 						<Property Name="3DSpatialization" Type="int16" Value="2"/>
-						<Property Name="Highpass" Type="int16">
-							<RTPCList>
-								<RTPC Name="" ID="{F58C0E90-13F1-4CF6-B25F-F8A440703613}" ShortID="610898707">
-									<ReferenceList>
-										<Reference Name="ControlInput">
-											<ObjectRef Name="Speed" ID="{61736E36-909C-4E0D-830D-651148A7D65A}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
-										</Reference>
-									</ReferenceList>
-									<Curve Name="" ID="{214ECB43-8976-4E6B-9044-B02350AA1235}">
-										<PropertyList>
-											<Property Name="Flags" Type="int32" Value="65537"/>
-										</PropertyList>
-										<PointList>
-											<Point>
-												<XPos>0</XPos>
-												<YPos>0</YPos>
-												<Flags>5</Flags>
-											</Point>
-											<Point>
-												<XPos>11000</XPos>
-												<YPos>27</YPos>
-												<Flags>37</Flags>
-											</Point>
-										</PointList>
-									</Curve>
-								</RTPC>
-							</RTPCList>
-						</Property>
-						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 						<Property Name="Lowpass" Type="int16">
-							<RTPCList>
-								<RTPC Name="" ID="{07FF3FAD-6AC7-4DA9-8C68-215F3168DB68}" ShortID="737618061">
-									<ReferenceList>
-										<Reference Name="ControlInput">
-											<ObjectRef Name="Speed" ID="{61736E36-909C-4E0D-830D-651148A7D65A}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
-										</Reference>
-									</ReferenceList>
-									<Curve Name="" ID="{5E6E23F2-64A3-4E79-BF2E-99964B5B1F1F}">
-										<PropertyList>
-											<Property Name="Flags" Type="int32" Value="65537"/>
-										</PropertyList>
-										<PointList>
-											<Point>
-												<XPos>0</XPos>
-												<YPos>33</YPos>
-												<Flags>5</Flags>
-											</Point>
-											<Point>
-												<XPos>11000</XPos>
-												<YPos>0</YPos>
-												<Flags>37</Flags>
-											</Point>
-										</PointList>
-									</Curve>
-								</RTPC>
-							</RTPCList>
+							<ValueList>
+								<Value>50</Value>
+							</ValueList>
 						</Property>
-						<Property Name="Pitch" Type="int32">
-							<RTPCList>
-								<RTPC Name="" ID="{46328A37-11B3-4A0B-BE49-C75618E702CC}" ShortID="611687468">
-									<ReferenceList>
-										<Reference Name="ControlInput">
-											<ObjectRef Name="Speed" ID="{61736E36-909C-4E0D-830D-651148A7D65A}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
-										</Reference>
-									</ReferenceList>
-									<Curve Name="" ID="{AA906709-B915-498B-ADEB-DAFEB6C310B9}">
-										<PropertyList>
-											<Property Name="Flags" Type="int32" Value="65537"/>
-										</PropertyList>
-										<PointList>
-											<Point>
-												<XPos>0</XPos>
-												<YPos>-3316</YPos>
-												<Flags>5</Flags>
-											</Point>
-											<Point>
-												<XPos>1000</XPos>
-												<YPos>-959</YPos>
-												<Flags>0</Flags>
-											</Point>
-											<Point>
-												<XPos>2412.57669</XPos>
-												<YPos>309</YPos>
-												<Flags>0</Flags>
-											</Point>
-											<Point>
-												<XPos>4572.08588</XPos>
-												<YPos>1855</YPos>
-												<Flags>0</Flags>
-											</Point>
-											<Point>
-												<XPos>7490.79755</XPos>
-												<YPos>3317</YPos>
-												<Flags>0</Flags>
-											</Point>
-											<Point>
-												<XPos>10055.2147239264</XPos>
-												<YPos>4265</YPos>
-												<Flags>0</Flags>
-											</Point>
-											<Point>
-												<XPos>11000</XPos>
-												<YPos>4400</YPos>
-												<Flags>37</Flags>
-											</Point>
-										</PointList>
-									</Curve>
-								</RTPC>
-							</RTPCList>
+						<Property Name="MakeUpGain" Type="Real64">
+							<ValueList>
+								<Value>3</Value>
+							</ValueList>
 						</Property>
+						<Property Name="SpeakerPanning" Type="int16" Value="1"/>
+						<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="50"/>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
-								<Value>-11</Value>
+								<Value>-5</Value>
 							</ValueList>
-							<RTPCList>
-								<RTPC Name="" ID="{8A4EFB1F-49EC-4B2D-B6D5-2FC014037AD3}" ShortID="1051909789">
-									<ReferenceList>
-										<Reference Name="ControlInput">
-											<ObjectRef Name="Throttle" ID="{04B0755B-3DB2-4FC3-B437-557F7F6C4CCC}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
-										</Reference>
-									</ReferenceList>
-									<Curve Name="" ID="{16608FB7-5332-4256-9CCA-C42087FD6696}">
-										<PropertyList>
-											<Property Name="Flags" Type="int32" Value="3"/>
-										</PropertyList>
-										<PointList>
-											<Point>
-												<XPos>0</XPos>
-												<YPos>-7.85601</YPos>
-												<Flags>5</Flags>
-												<SegmentShape>Log2</SegmentShape>
-											</Point>
-											<Point>
-												<XPos>100</XPos>
-												<YPos>-0</YPos>
-												<Flags>37</Flags>
-											</Point>
-										</PointList>
-									</Curve>
-								</RTPC>
-							</RTPCList>
 						</Property>
 					</PropertyList>
 					<ReferenceList>
@@ -156,31 +31,642 @@
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
 						</Reference>
-						<Reference Name="Effect0" PluginName="Wwise Flanger" CompanyID="0" PluginID="125" PluginType="3">
-							<ObjectRef Name="Special_Effect_1" ID="{83317D8A-9D4C-438E-BE8C-BC7D27CAD1B0}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<SourcePlugin Name="CrankcaseAudio REV" ID="{8E4FA085-86A2-48E7-A22B-9B945C5F541A}" ShortID="155480069" PluginName="CrankcaseAudio REV" CompanyID="261" PluginID="416">
+							<PropertyList>
+								<Property Name="Gear" Type="int32">
+									<RTPCList>
+										<RTPC Name="" ID="{8417BA15-08B0-43E6-8F9D-DC3D1E8B0F60}" ShortID="655640787">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="Gear" ID="{D3800333-7836-43E4-925B-33358D3222FE}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{3100E933-1056-4084-AA1A-4FB3A65C487D}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="65537"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>1</XPos>
+														<YPos>1</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>5</XPos>
+														<YPos>5</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
+									</RTPCList>
+								</Property>
+								<Property Name="RPM" Type="Real32">
+									<RTPCList>
+										<RTPC Name="" ID="{BE85C645-747B-4F96-A661-911B57D2C64C}" ShortID="52745769">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="RMP" ID="{61736E36-909C-4E0D-830D-651148A7D65A}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{03D6B333-B84A-4FE7-9D3D-539677D23369}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="1"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>0</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>10000</XPos>
+														<YPos>1</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
+									</RTPCList>
+								</Property>
+								<Property Name="Throttle" Type="Real32">
+									<RTPCList>
+										<RTPC Name="" ID="{C41814D2-B60C-477F-B31C-AD9CEE7F254C}" ShortID="586503915">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="Throttle" ID="{04B0755B-3DB2-4FC3-B437-557F7F6C4CCC}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{584DCF3E-DBF2-4183-AE79-8911787EBC46}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="1"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>0</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>1</XPos>
+														<YPos>1</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
+									</RTPCList>
+								</Property>
+								<Property Name="Velocity" Type="Real32">
+									<RTPCList>
+										<RTPC Name="" ID="{0F1E4B01-49F1-42B7-8354-C586D550EA90}" ShortID="214256201">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="Velocity" ID="{671F2341-4E24-4808-A90D-EF6A2E7DE1CE}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{84E5FDA7-C221-4F4C-9028-E50177E5128C}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="1"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>0</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>250</XPos>
+														<YPos>150</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
+									</RTPCList>
+								</Property>
+							</PropertyList>
+							<ChildrenList>
+								<PluginMediaSource Name="" ID="{53BD263C-BFB3-4D84-8E31-0CEF6C9AD6F4}">
+									<ParentPluginID>27267154</ParentPluginID>
+									<PropertyList>
+										<Property Name="DataFileName" Type="string" Value="Dodge_Viper.model"/>
+									</PropertyList>
+									<MediaIDList>
+										<MediaID ID="896025657"/>
+									</MediaIDList>
+								</PluginMediaSource>
+							</ChildrenList>
+							<Language>SFX</Language>
+							<PluginInnerObjectList>
+								<List Name="AccelDecelModelControlData">
+									<PluginInnerObject Name="" ID="{297798B2-39AA-42EE-8836-AE065BA12066}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418">
+										<PropertyList>
+											<Property Name="IdleRampIn" Type="Real32" Value="0.05"/>
+											<Property Name="IdleVolume" Type="Real32" Value="0.49"/>
+											<Property Name="Version" Type="int32" Value="2"/>
+										</PropertyList>
+									</PluginInnerObject>
+									<PluginInnerObject Name="" ID="{24A114E7-4D27-430A-B9E8-A16EE5A73216}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{A8641EAA-4734-491B-BC0B-F2E72D68B699}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{26BE8F13-AC9F-4D31-BBE6-2311F1210B01}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{E79870AE-444C-4D2F-BB31-001888389B66}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{ACD7084E-2AF3-4371-A00F-D731856A70E5}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{1E4FA36B-0453-4DDD-B428-04A6E3240384}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{86B64BF7-74C2-4468-9059-78D5BD5A52FC}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{5C2F01FB-7739-4E61-84B1-7DDDC8DD4940}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{54403FE9-9C73-4244-90C5-20CBF5AD80A5}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{4DCF4DDA-01EC-4E7A-B9DC-944BD20C0D43}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+								</List>
+								<List Name="EngineSimulationControlData">
+									<PluginInnerObject Name="" ID="{DF47A653-B7EC-4012-835E-B1D327806D99}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417">
+										<PropertyList>
+											<Property Name="ClutchRPMMergeTime" Type="Real32" Value="0.68"/>
+											<Property Name="ClutchRPMSpike" Type="Real32" Value="0.5"/>
+											<Property Name="DownShiftDuration" Type="Real32" Value="0.66"/>
+											<Property Name="UpShiftAttackThrottleTime" Type="Real32" Value="0.2"/>
+											<Property Name="UpShiftWobbleDuration" Type="Real32" Value="1.35"/>
+											<Property Name="UpShiftWobblePitchAmp" Type="Real32" Value="0.1"/>
+											<Property Name="UpShiftWobbleVolAmp" Type="Real32" Value="0.3"/>
+										</PropertyList>
+									</PluginInnerObject>
+									<PluginInnerObject Name="" ID="{12879895-A13F-4F74-AD81-321D1E64E170}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
+									<PluginInnerObject Name="" ID="{6FF1BCDD-7925-40F6-AD78-4AE207FEE55D}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
+									<PluginInnerObject Name="" ID="{2EB1C64E-C860-4329-B9FB-F419D5F3E95C}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
+									<PluginInnerObject Name="" ID="{C20E2701-D5D3-44F3-B929-13E9BD5E4C3D}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
+									<PluginInnerObject Name="" ID="{CBFAE213-EA34-4A56-9E0D-E5080A6F82B6}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
+									<PluginInnerObject Name="" ID="{C3F676E8-E75D-45F4-9663-F4EE7B5AB7B0}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
+									<PluginInnerObject Name="" ID="{1CD126C7-CAB4-421A-864B-6D84EBF4C3B4}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
+									<PluginInnerObject Name="" ID="{6E0C9E9F-2F12-4D37-ADAB-31260C1C8E5D}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
+									<PluginInnerObject Name="" ID="{4087951D-C4C8-458A-88F9-B72F1FF000E8}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
+									<PluginInnerObject Name="" ID="{7DC2E214-B40C-485A-8932-A373F609E3FE}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
+								</List>
+								<List Name="GranularModelControlData_Acceleration">
+									<PluginInnerObject Name="" ID="{87DA791D-8991-48B0-8B65-CEDFC4F7ECEB}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419">
+										<PropertyList>
+											<Property Name="LoadVolumeOff" Type="Real32" Value="0.3"/>
+										</PropertyList>
+									</PluginInnerObject>
+								</List>
+								<List Name="GranularModelControlData_Deceleration">
+									<PluginInnerObject Name="" ID="{53FCDAAB-A1D3-4E68-85A0-B930AF58A03E}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419">
+										<PropertyList>
+											<Property Name="LoadVolumeOff" Type="Real32" Value="1"/>
+											<Property Name="LoadVolumeOn" Type="Real32" Value="0"/>
+										</PropertyList>
+									</PluginInnerObject>
+									<PluginInnerObject Name="" ID="{AD16C352-073E-4759-BF52-60AAA66BB693}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
+									<PluginInnerObject Name="" ID="{1A58A064-E768-4F06-A6C0-9985B098F84C}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
+									<PluginInnerObject Name="" ID="{BFD69C49-E615-41DC-9986-9B3DC901E311}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
+									<PluginInnerObject Name="" ID="{505F6B55-38A2-41F0-8C3A-C489A029A544}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
+									<PluginInnerObject Name="" ID="{90C676C3-1638-4924-9194-DC1652F45DA8}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
+									<PluginInnerObject Name="" ID="{00561805-7305-4574-AFC5-DFBE339E23C3}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
+									<PluginInnerObject Name="" ID="{1C5ED0BE-60C7-4723-AA4C-0D555324DF6C}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
+									<PluginInnerObject Name="" ID="{A0BB28A7-ED48-473C-8272-F50FE72241E7}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
+									<PluginInnerObject Name="" ID="{EFC80FC0-1D03-4D0F-B1B2-622485F67D71}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
+									<PluginInnerObject Name="" ID="{E3522A9B-CA4D-4A8A-8C8A-534B7ACCDADB}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
+								</List>
+							</PluginInnerObjectList>
+						</SourcePlugin>
+					</ChildrenList>
+					<PositioningInfo>
+						<Panner Name="" ID="{C6CB4DE6-8252-4FC2-84BC-8C05AC8DEBAD}">
+							<PropertyList>
+								<Property Name="PanX" Type="Real64" Value="6.77236045021345E-15"/>
+								<Property Name="PanY" Type="Real64" Value="-67.2101449275362"/>
+							</PropertyList>
+						</Panner>
+						<Position Name="" ID="{283BB176-9735-4DB7-930A-75AB2DF06852}"/>
+					</PositioningInfo>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="CrankcaseAudio REV" ID="{8E4FA085-86A2-48E7-A22B-9B945C5F541A}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="Wind" ID="{59574B0C-04F4-4A8A-AD09-A530C7B7FD5B}" ShortID="627073069">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
+						<Property Name="EnableAttenuation" Type="bool" Value="False"/>
+						<Property Name="Highpass" Type="int16">
+							<ValueList>
+								<Value>21</Value>
+							</ValueList>
+						</Property>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="ListenerRelativeRouting" Type="bool" Value="False"/>
+						<Property Name="Lowpass" Type="int16">
+							<ValueList>
+								<Value>66</Value>
+							</ValueList>
+						</Property>
+						<Property Name="Pitch" Type="int32">
+							<ValueList>
+								<Value>1060</Value>
+							</ValueList>
+							<RTPCList>
+								<RTPC Name="" ID="{6E7979C0-0443-440E-9C7D-EAFBED925C6B}" ShortID="660646228">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="Velocity" ID="{671F2341-4E24-4808-A90D-EF6A2E7DE1CE}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{067ED85F-0D92-4990-91CE-8F617C8B3733}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="65537"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>-262</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>250</XPos>
+												<YPos>998</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+						<Property Name="RenderEffect0" Type="bool">
+							<ValueList>
+								<Value>True</Value>
+							</ValueList>
+						</Property>
+						<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="0"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-8</Value>
+							</ValueList>
+							<RTPCList>
+								<RTPC Name="" ID="{0BB34BC3-CDBB-415A-AB7C-2B345148D3C0}" ShortID="531006035">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="Velocity" ID="{671F2341-4E24-4808-A90D-EF6A2E7DE1CE}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{0586CBED-6F66-4B06-91F9-A2575E079FBD}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>-200</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>250</XPos>
+												<YPos>0.66257</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+								<RTPC Name="" ID="{DF7EE1D0-524B-42BA-9CEC-C4295D23C75D}" ShortID="421323715">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="Throttle" ID="{04B0755B-3DB2-4FC3-B437-557F7F6C4CCC}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{E03A81F1-75BA-4D81-BE94-F96D36C51BC2}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>0</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>1</XPos>
+												<YPos>-5</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+						</Reference>
+						<Reference Name="Effect0" PluginName="Wwise Stereo Delay" CompanyID="0" PluginID="135" PluginType="3">
+							<ObjectRef Name="_500ms_Per_Hour" ID="{9CE2F0FB-CE0B-4CC7-A699-E30528959D0E}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
 						</Reference>
 						<Reference Name="OutputBus">
 							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>
-						<AudioFileSource Name="EngineBase" ID="{C84E14AB-36D6-4FE3-86A6-CEF3C94E9C2F}">
-							<PropertyList>
-								<Property Name="FadeInDuration" Type="Real64" Value="0.00239580428213704"/>
-								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
-							</PropertyList>
+						<AudioFileSource Name="strong-wind-blowing-sound-background-sound-effect" ID="{80922DD5-1F6B-4135-8728-CD71AF7D124F}">
 							<Language>SFX</Language>
-							<AudioFile>Diesel Engine.wav</AudioFile>
+							<AudioFile>strong-wind-blowing-sound-background-sound-effect.wav</AudioFile>
 							<MediaIDList>
-								<MediaID ID="450858606"/>
+								<MediaID ID="493693357"/>
 							</MediaIDList>
 						</AudioFileSource>
 					</ChildrenList>
 					<ObjectLists/>
 					<ActiveSourceList>
-						<ActiveSource Name="EngineBase" ID="{C84E14AB-36D6-4FE3-86A6-CEF3C94E9C2F}" Platform="Linked"/>
+						<ActiveSource Name="strong-wind-blowing-sound-background-sound-effect" ID="{80922DD5-1F6B-4135-8728-CD71AF7D124F}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<RandomSequenceContainer Name="Screetch" ID="{E819F4A2-7D6D-47DA-A1A6-93B52B9A8C70}" ShortID="441689764">
+					<PropertyList>
+						<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
+						<Property Name="PlayMechanismLoop" Type="bool" Value="True"/>
+						<Property Name="PlayMechanismSpecialTransitions" Type="bool" Value="True"/>
+						<Property Name="PlayMechanismSpecialTransitionsType" Type="int16" Value="4"/>
+						<Property Name="PlayMechanismSpecialTransitionsValue" Type="Real64" Value="1.5"/>
+						<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
+						<Property Name="Volume" Type="Real64">
+							<RTPCList>
+								<RTPC Name="" ID="{990E73A4-E09B-4711-ADC0-913D2A4FFD4F}" ShortID="225767297">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="Slip" ID="{FF3BF4C6-64BB-45F3-BD3C-984E43E40C43}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{5739B640-2CD8-4B48-BE4E-AEC4DB742CD7}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>-200</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>0</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="Screetches" ID="{3969B448-39B6-4FF7-B0FF-DD62FFADABD2}" ShortID="561767414">
+							<PropertyList>
+								<Property Name="Inclusion" Type="bool">
+									<ValueList>
+										<Value>False</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Screetch 1" ID="{115E6B15-7A64-4C1F-913D-E5D185601674}">
+									<PropertyList>
+										<Property Name="LoopBegin" Type="Real64" Value="0"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+										<Property Name="TrimEnd" Type="Real64" Value="1.66208112874781"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Car chase kind of day sounddesign.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="864991999"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="Screetch 1" ID="{115E6B15-7A64-4C1F-913D-E5D185601674}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Screetches_01" ID="{468E6374-5339-4A1B-97A8-CE0FB07C8413}" ShortID="64987029">
+							<PropertyList>
+								<Property Name="Inclusion" Type="bool">
+									<ValueList>
+										<Value>False</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Screetch 2" ID="{12B54386-720B-4E78-8632-BF0CADA9AC09}">
+									<PropertyList>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+										<Property Name="TrimBegin" Type="Real64" Value="1.63042244058117"/>
+										<Property Name="TrimEnd" Type="Real64" Value="3.26084488116234"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Car chase kind of day sounddesign.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="146520319"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="Screetch 2" ID="{12B54386-720B-4E78-8632-BF0CADA9AC09}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Screetches_03" ID="{57B69CF6-F033-49F1-801D-C0D2F1ADABC0}" ShortID="551650062">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Screetch 3" ID="{596A3BCA-4D37-4C52-BBCD-535EE72F2967}">
+									<PropertyList>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+										<Property Name="TrimBegin" Type="Real64" Value="3.22918619299571"/>
+										<Property Name="TrimEnd" Type="Real64" Value="4.32141093474426"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Car chase kind of day sounddesign.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="62053708"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="Screetch 3" ID="{596A3BCA-4D37-4C52-BBCD-535EE72F2967}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Screetches_04" ID="{AE2EB6FB-BC6D-4114-9D93-8074BF30DA22}" ShortID="430254906">
+							<PropertyList>
+								<Property Name="Inclusion" Type="bool">
+									<ValueList>
+										<Value>False</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Screetch 4" ID="{AC07744E-01D5-4EF8-9108-CB2BD8049C83}">
+									<PropertyList>
+										<Property Name="FadeOutDuration" Type="Real64" Value="0.237440161249685"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+										<Property Name="TrimBegin" Type="Real64" Value="4.28975224657764"/>
+										<Property Name="TrimEnd" Type="Real64" Value="5.80936927857562"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Car chase kind of day sounddesign.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="284215194"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="Screetch 4" ID="{AC07744E-01D5-4EF8-9108-CB2BD8049C83}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Screetches_05" ID="{DE6192AD-3B14-4CC3-9EE3-0183281A2BB9}" ShortID="141691316">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Screetch 5" ID="{5659A5AD-6A2B-436D-B881-A6BEDFC44A1F}">
+									<PropertyList>
+										<Property Name="FadeOutDuration" Type="Real64" Value="0.47488032249937"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+										<Property Name="TrimBegin" Type="Real64" Value="6.5533484504913"/>
+										<Property Name="TrimEnd" Type="Real64" Value="7.74054925673974"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Car chase kind of day sounddesign.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="548466873"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="Screetch 5" ID="{5659A5AD-6A2B-436D-B881-A6BEDFC44A1F}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Screetches_06" ID="{959B33FA-6003-4BDF-B35E-9798F5E5D128}" ShortID="1014856396">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Screetch 6" ID="{195FE6B1-F481-4E3E-AD7A-5E2EE9C37302}">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="0.395733602082808"/>
+										<Property Name="FadeOutDuration" Type="Real64" Value="1.37715293524819"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+										<Property Name="TrimBegin" Type="Real64" Value="8.40538170823883"/>
+										<Property Name="TrimEnd" Type="Real64" Value="9.78253464348702"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Car chase kind of day sounddesign.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="697741870"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="Screetch 6" ID="{195FE6B1-F481-4E3E-AD7A-5E2EE9C37302}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Screetches_07" ID="{9E27806B-86EC-4FBA-93D3-C5741B1C8567}" ShortID="563746642">
+							<PropertyList>
+								<Property Name="Pitch" Type="int32">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{C314A77F-B92B-4B3B-BAC0-1EF03D615ECA}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Screetch 6" ID="{9EEAF09C-DCF4-49D1-A196-D5847683FB08}">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="1.25051818258167"/>
+										<Property Name="FadeOutDuration" Type="Real64" Value="1.2821768707483"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+										<Property Name="TrimBegin" Type="Real64" Value="10.9222474174855"/>
+										<Property Name="TrimEnd" Type="Real64" Value="13.0592088687327"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Car chase kind of day sounddesign.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="884772108"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="Screetch 6" ID="{9EEAF09C-DCF4-49D1-A196-D5847683FB08}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+					<ObjectLists/>
+				</RandomSequenceContainer>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

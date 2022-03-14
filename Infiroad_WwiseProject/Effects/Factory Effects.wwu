@@ -128,7 +128,14 @@
 								<Property Name="DelayTime" Type="Real32" Value="1"/>
 							</PropertyList>
 						</Effect>
-						<Effect Name="Echoes_Linear" ID="{D20F3717-EBA2-4E3A-84F8-C8BD431563FB}" PluginName="Wwise Delay" CompanyID="0" PluginID="106" PluginType="3"/>
+						<Effect Name="Echoes_Linear" ID="{D20F3717-EBA2-4E3A-84F8-C8BD431563FB}" PluginName="Wwise Delay" CompanyID="0" PluginID="106" PluginType="3">
+							<PropertyList>
+								<Property Name="DelayTime" Type="Real32" Value="0.82"/>
+								<Property Name="Feedback" Type="Real32" Value="80"/>
+								<Property Name="OutputLevel" Type="Real32" Value="-0.2"/>
+								<Property Name="WetDryMix" Type="Real32" Value="77.5"/>
+							</PropertyList>
+						</Effect>
 						<Effect Name="One_Tap_Half_Second" ID="{B8FE0D3B-7AAB-4344-89FE-177602B7BF19}" PluginName="Wwise Delay" CompanyID="0" PluginID="106" PluginType="3"/>
 						<Effect Name="One_Tap_Quarter_Second" ID="{6BD2D67D-601A-45A6-AD4C-2C089078EBED}" PluginName="Wwise Delay" CompanyID="0" PluginID="106" PluginType="3">
 							<PropertyList>
@@ -1522,7 +1529,7 @@
 										<Property Name="PreDelay" Type="Real32" Value="145"/>
 										<Property Name="Quality" Type="int32" Value="12"/>
 										<Property Name="ReverbLevel" Type="Real32" Value="-37"/>
-										<Property Name="RoomSize" Type="Real32" Value="73"/>
+										<Property Name="RoomSize" Type="Real32" Value="17"/>
 										<Property Name="StereoWidth" Type="Real32" Value="28"/>
 									</PropertyList>
 								</Effect>
@@ -1614,7 +1621,7 @@
 										<RTPC Name="" ID="{F291AD6A-35A8-4BED-B66B-FC4D45534E27}" ShortID="403804868">
 											<ReferenceList>
 												<Reference Name="ControlInput">
-													<ObjectRef Name="Speed" ID="{61736E36-909C-4E0D-830D-651148A7D65A}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+													<ObjectRef Name="RMP" ID="{61736E36-909C-4E0D-830D-651148A7D65A}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
 												</Reference>
 											</ReferenceList>
 											<Curve Name="" ID="{387319DD-0E9D-4911-8DBD-3E5A8D486C1B}">
@@ -1624,11 +1631,11 @@
 												<PointList>
 													<Point>
 														<XPos>0</XPos>
-														<YPos>-0</YPos>
+														<YPos>0</YPos>
 														<Flags>5</Flags>
 													</Point>
 													<Point>
-														<XPos>11000</XPos>
+														<XPos>10000</XPos>
 														<YPos>-13.33329</YPos>
 														<Flags>37</Flags>
 													</Point>
@@ -1642,7 +1649,7 @@
 										<RTPC Name="" ID="{297CFFFF-884D-4443-B7F7-8AD4F5CF44C0}" ShortID="20911795">
 											<ReferenceList>
 												<Reference Name="ControlInput">
-													<ObjectRef Name="Speed" ID="{61736E36-909C-4E0D-830D-651148A7D65A}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+													<ObjectRef Name="RMP" ID="{61736E36-909C-4E0D-830D-651148A7D65A}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
 												</Reference>
 											</ReferenceList>
 											<Curve Name="" ID="{C008D5C0-05E3-4F44-A1BC-51B1A4265D8C}">
@@ -1656,7 +1663,7 @@
 														<Flags>5</Flags>
 													</Point>
 													<Point>
-														<XPos>11000</XPos>
+														<XPos>10000</XPos>
 														<YPos>2.18519</YPos>
 														<Flags>37</Flags>
 													</Point>
@@ -1865,7 +1872,7 @@
 								<Property Name="FilterFrequency" Type="Real32" Value="72"/>
 								<Property Name="FilterGain" Type="Real32" Value="2.5"/>
 								<Property Name="LeftCrossfeed" Type="Real32" Value="-48"/>
-								<Property Name="LeftDelayTime" Type="Real32" Value="0.5"/>
+								<Property Name="LeftDelayTime" Type="Real32" Value="2"/>
 								<Property Name="RightCrossfeed" Type="Real32" Value="-48"/>
 								<Property Name="RightDelayTime" Type="Real32" Value="0.5"/>
 							</PropertyList>

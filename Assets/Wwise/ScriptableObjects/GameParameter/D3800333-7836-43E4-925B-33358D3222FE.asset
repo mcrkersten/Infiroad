@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc90a2a8dd3b4994e893bdb04c23b5de, type: 3}
+  m_Name: D3800333-7836-43E4-925B-33358D3222FE
+  m_EditorClassIdentifier: 
+  objectName: Gear
+  id: 1172844112
+  guid: D3800333-7836-43E4-925B-33358D3222FE

@@ -5,7 +5,9 @@
 			<ChildrenList>
 				<SoundBank Name="Vehicle" ID="{564C4052-6EDD-4170-BAFE-DEB552FFCF74}">
 					<ObjectInclusionList>
-						<ObjectRef Name="Engine" ID="{4D68C318-915B-47E3-AEC4-9F8DF0FEFD13}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Engine" ID="{9A41658E-BE16-4101-BD51-7FAB9AEFF422}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_Engine" ID="{AAC9F266-BD43-46DE-BF9E-C71A3A1A69BC}" WorkUnitID="{1E4DCFC4-5179-4B70-902F-D134C90AED1B}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Wind" ID="{59574B0C-04F4-4A8A-AD09-A530C7B7FD5B}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}" Origin="Manual" Filter="7"/>
 					</ObjectInclusionList>
 					<ObjectExclusionList/>
 					<GameSyncExclusionList/>

@@ -3,17 +3,32 @@
 	<GameParameters>
 		<WorkUnit Name="Default Work Unit" ID="{989F85A6-86E0-4D59-9E26-52B5370A782F}" PersistMode="Standalone">
 			<ChildrenList>
-				<GameParameter Name="Speed" ID="{61736E36-909C-4E0D-830D-651148A7D65A}">
+				<GameParameter Name="RMP" ID="{61736E36-909C-4E0D-830D-651148A7D65A}">
 					<PropertyList>
 						<Property Name="InitialValue" Type="Real64" Value="0"/>
-						<Property Name="Max" Type="Real64" Value="11000"/>
+						<Property Name="Max" Type="Real64" Value="10000"/>
 					</PropertyList>
 				</GameParameter>
 				<GameParameter Name="Throttle" ID="{04B0755B-3DB2-4FC3-B437-557F7F6C4CCC}">
 					<PropertyList>
 						<Property Name="InitialValue" Type="Real64" Value="0"/>
+						<Property Name="Max" Type="Real64" Value="1"/>
 					</PropertyList>
 				</GameParameter>
+				<GameParameter Name="Gear" ID="{D3800333-7836-43E4-925B-33358D3222FE}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="1"/>
+						<Property Name="Max" Type="Real64" Value="5"/>
+						<Property Name="Min" Type="Real64" Value="1"/>
+					</PropertyList>
+				</GameParameter>
+				<GameParameter Name="Velocity" ID="{671F2341-4E24-4808-A90D-EF6A2E7DE1CE}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+						<Property Name="Max" Type="Real64" Value="250"/>
+					</PropertyList>
+				</GameParameter>
+				<GameParameter Name="Slip" ID="{FF3BF4C6-64BB-45F3-BD3C-984E43E40C43}"/>
 			</ChildrenList>
 		</WorkUnit>
 	</GameParameters>

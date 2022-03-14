@@ -1,0 +1,159 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+[System.Serializable]
+public class Engine2
+{
+    public int currentSelectedGear;
+    public int currentEngagedGear;
+
+    public int maxRPM;
+    public AnimationCurve engineTorqueProfile;
+    public AnimationCurve engineBrakeProfile;
+    public AnimationCurve throttleProfile;
+    public Dashboard dashboard;
+    private float lastRPM = 0f;
+
+    public float[] gearRatios =  { 2.36f, 1.88f, 1.5f, 1.19f, .97f };
+    private float finalDriveRatio = 4.49f;
+
+    public List<WheelRaycast> driveWheels = new List<WheelRaycast>();
+    private float driveWheelRadiusInMeter;
+    private float rollingCircumference;
+
+    [SerializeField] private float ShiftTime;
+    private float shiftTime;
+    private bool isShifting;
+
+    public float physicsImpact;
+
+    [Header("Audio and feedbak")]
+    public AK.Wwise.RTPC engineRPMAudio;
+    public AK.Wwise.RTPC velocityAudio;
+    public AK.Wwise.RTPC throttleAudio;
+    public AK.Wwise.RTPC GearAudio;
+
+    private FeedbackComponent feedbackComponent;
+    public AnimationCurve RPM_feedbackCurve;
+    public AnimationCurve EnginePullfeedbackCurve;
+    public void InitializeEngine()
+    {
+        //General settings
+        driveWheelRadiusInMeter = driveWheels[0].wheelRadius;
+        rollingCircumference = driveWheelRadiusInMeter * 2f * Mathf.PI;
+
+        //Audio
+        velocityAudio.SetGlobalValue(0);
+        engineRPMAudio.SetGlobalValue(0);
+        throttleAudio.SetGlobalValue(0);
+        GearAudio.SetGlobalValue(1);
+
+        //Rumble
+        feedbackComponent = new FeedbackComponent("Engine", 5f);
+        FeedbackSystem.instance.RegisterFeedbackComponent(feedbackComponent);
+    }
+
+    public float Run(float currentForwardSpeed, float throttle, float clutch, float physicsWobble)
+    {
+        clutch = SemiAutomaticClutch(clutch);
+        float mechanicalForce = CalculateMechanicalForce(currentForwardSpeed, throttle);
+
+        float effectiveGearRatio = gearRatios[currentEngagedGear] * finalDriveRatio;
+        float wheelRPM = currentForwardSpeed / (rollingCircumference / 60f);
+        float enginewRPM = ((wheelRPM * effectiveGearRatio) - (physicsWobble * physicsImpact));
+        float velocity = (enginewRPM * clutch) + (Mathf.Lerp(3500f, maxRPM, throttle ) * (1f - clutch)) - lastRPM;
+        lastRPM = Mathf.Lerp(lastRPM + velocity, enginewRPM, clutch);
+        float engineTorque = (mechanicalForce + (CalculateEnginePullTorque(lastRPM) * throttle * effectiveGearRatio)) * clutch;
+        float engineForce = engineTorque / driveWheelRadiusInMeter;
+
+
+        engineRPMAudio.SetGlobalValue(lastRPM);
+        velocityAudio.SetGlobalValue(velocity);
+        dashboard.UpdateTechometerDile(lastRPM / maxRPM);
+
+        feedbackComponent.UpdateHighFrequencyRumble( RPM_feedbackCurve.Evaluate(lastRPM / maxRPM));
+        feedbackComponent.UpdateLowFrequencyRumble(velocity/100f);
+
+        throttleAudio.SetGlobalValue(throttle);
+        return engineForce;
+    }
+
+    private float SemiAutomaticClutch(float clutch)
+    {
+        if (isShifting)
+        {
+            Mathf.Clamp(clutch = shiftTime / ShiftTime, 0f, 1f);
+            shiftTime -= Time.deltaTime / 2f;
+            if (shiftTime < 0)
+            {
+                isShifting = false;
+                //GEAR CHANGE NEEDS TO HAPPEN WHEN CLUTCH DISENGAGED
+                currentEngagedGear = currentSelectedGear;
+                GearAudio.SetGlobalValue(currentSelectedGear);
+            }
+        }
+        else
+        {
+            if (shiftTime < ShiftTime)
+            {
+                Mathf.Clamp(clutch = shiftTime / ShiftTime, 0f, 1f);
+                shiftTime += Time.deltaTime / 2f;
+            }
+        }
+        return clutch;
+    }
+
+    float CalculateMechanicalForce(float currentForwardSpeed, float throttle)
+    {
+        float effectiveGearRatio = gearRatios[currentSelectedGear] * finalDriveRatio;
+        float wheelRPM = currentForwardSpeed / (rollingCircumference / 60f);
+        float currentEngineRPM = (wheelRPM * effectiveGearRatio);
+
+        float idealEngineRPM = (3500f) * (1f - throttle);
+        if(currentEngineRPM < idealEngineRPM)
+            return idealEngineRPM == 0f ? 0f : CalculateEnginePullTorque(idealEngineRPM);
+        return CalculateEngineBrakeTorque(idealEngineRPM, currentEngineRPM);
+    }
+
+    private float CalculateEnginePullTorque(float rpm)
+    {
+        float time = rpm / maxRPM;
+        return engineTorqueProfile.Evaluate(time);
+    }
+
+    private float CalculateEngineBrakeTorque(float rpm, float overshootRMP)
+    {
+        float time = rpm / maxRPM;
+        float overshoot = overshootRMP / rpm;
+        overshoot = Mathf.Clamp(overshoot, 0f, 10f);
+        return -engineTorqueProfile.Evaluate(time) * engineBrakeProfile.Evaluate(overshoot);
+    }
+
+
+    public void ShiftUp(InputAction.CallbackContext obj)
+    {
+        if (!isShifting)
+        {
+            StartAutomaticShift();
+            currentSelectedGear = Mathf.Min(gearRatios.Length - 1, currentSelectedGear + 1);
+        }
+    }
+
+    public void ShiftDown(InputAction.CallbackContext obj)
+    {
+        if (!isShifting)
+        {
+            StartAutomaticShift();
+            currentSelectedGear = Mathf.Max(0, currentSelectedGear - 1);
+        }
+    }
+
+    private void StartAutomaticShift()
+    {
+        isShifting = true;
+        shiftTime = ShiftTime;
+    }
+
+}

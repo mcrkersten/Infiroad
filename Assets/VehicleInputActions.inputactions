@@ -204,12 +204,45 @@
                 },
                 {
                     "name": "",
+                    "id": "335108bb-0462-400d-8eff-e02f18398b8d",
+                    "path": "<XInputController>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftUP",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "8f137a5a-602a-46e8-a069-4de598e1ebc2",
                     "path": "<Keyboard>/leftCtrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "ShiftDOWN",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9d2018ec-3758-4e2c-99c2-57f962c3cea9",
+                    "path": "<XInputController>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftDOWN",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "886e6d23-9e88-4be8-ba1a-768402723e90",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Clutch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -336,6 +369,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ShiftDOWN",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6c9424dd-39b1-4f16-876d-a5ca77b8b8d6",
+                    "path": "<Logitech G HUB G29 Driving Force Racing Wheel USB•{80441800-D376-11EB-8003-444553540000}>/U",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Clutch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

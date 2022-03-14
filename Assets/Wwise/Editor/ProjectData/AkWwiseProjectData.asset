@@ -66,7 +66,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: acfc11818922e14790e7d28625ee5da6
     GuidInternal: 
-    m_lastTime: -8585547375389471905
+    m_lastTime: -8585545919676401913
     List:
     - name: Vehicle
       guid: 52404c56dd6e7041bafedeb552ffcf74
@@ -94,10 +94,10 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: c4cf4d1e7951704b902fd134c90aed1b
     GuidInternal: 
-    m_lastTime: -8585547402504611884
+    m_lastTime: -8585545915799994611
     List:
     - name: Play_Engine
-      guid: a9a578d8149ab24c8e5b0dbc006d4b7e
+      guid: 66f2c9aa43bdde46bf9ec71a3a1a69bc
       id: 639345804
       PathAndIcons:
       - ElementName: Events
@@ -108,11 +108,28 @@ MonoBehaviour:
         guid: c4cf4d1e7951704b902fd134c90aed1b
       - ElementName: Play_Engine
         ObjectType: 3
-        guid: a9a578d8149ab24c8e5b0dbc006d4b7e
+        guid: 66f2c9aa43bdde46bf9ec71a3a1a69bc
       Path: Events\Default Work Unit\Play_Engine
       maxAttenuation: 30
       maxDuration: -1
       minDuration: -1
+    - name: Play_Wind
+      guid: 2ea4ecdb3b2f6943b933d8a0b920102f
+      id: 1020223172
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c4cf4d1e7951704b902fd134c90aed1b
+      - ElementName: Play_Wind
+        ObjectType: 3
+        guid: 2ea4ecdb3b2f6943b933d8a0b920102f
+      Path: Events\Default Work Unit\Play_Wind
+      maxAttenuation: 0
+      maxDuration: 98.18523
+      minDuration: 98.18523
   RtpcWwu:
   - PhysicalPath: Game Parameters\Default Work Unit.wwu
     PathAndIcons:
@@ -125,11 +142,11 @@ MonoBehaviour:
     ParentPath: Game Parameters\Default Work Unit
     guid: a6859f98e086594d9e2652b5370a782f
     GuidInternal: 
-    m_lastTime: -8585547428386835681
+    m_lastTime: -8585544844087440313
     List:
-    - name: Speed
-      guid: 366e73619c900d4e830d651148a7d65a
-      id: 640949982
+    - name: Gear
+      guid: 330380d33678e443925b33358d3222fe
+      id: 1172844112
       PathAndIcons:
       - ElementName: Game Parameters
         ObjectType: 5
@@ -137,10 +154,38 @@ MonoBehaviour:
       - ElementName: Default Work Unit
         ObjectType: 12
         guid: a6859f98e086594d9e2652b5370a782f
-      - ElementName: Speed
+      - ElementName: Gear
+        ObjectType: 13
+        guid: 330380d33678e443925b33358d3222fe
+      Path: Game Parameters\Default Work Unit\Gear
+    - name: RMP
+      guid: 366e73619c900d4e830d651148a7d65a
+      id: 1114824702
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: a6859f98e086594d9e2652b5370a782f
+      - ElementName: RMP
         ObjectType: 13
         guid: 366e73619c900d4e830d651148a7d65a
-      Path: Game Parameters\Default Work Unit\Speed
+      Path: Game Parameters\Default Work Unit\RMP
+    - name: Slip
+      guid: c6f43bffbb64f345bd3c984e43e40c43
+      id: 686938995
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: a6859f98e086594d9e2652b5370a782f
+      - ElementName: Slip
+        ObjectType: 13
+        guid: c6f43bffbb64f345bd3c984e43e40c43
+      Path: Game Parameters\Default Work Unit\Slip
     - name: Throttle
       guid: 5b75b004b23dc34fb437557f7f6c4ccc
       id: 2995819693
@@ -155,6 +200,20 @@ MonoBehaviour:
         ObjectType: 13
         guid: 5b75b004b23dc34fb437557f7f6c4ccc
       Path: Game Parameters\Default Work Unit\Throttle
+    - name: Velocity
+      guid: 41231f67244e0848a90def6a2e7de1ce
+      id: 3519441192
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: a6859f98e086594d9e2652b5370a782f
+      - ElementName: Velocity
+        ObjectType: 13
+        guid: 41231f67244e0848a90def6a2e7de1ce
+      Path: Game Parameters\Default Work Unit\Velocity
   StateWwu:
   - PhysicalPath: States\Default Work Unit.wwu
     PathAndIcons:
@@ -198,8 +257,8 @@ MonoBehaviour:
     m_lastTime: -8585547648325427575
     List: []
   ExpandedFileSystemItemIds: 010000000200000003000000050000000600000008000000090000000a00000012000000130000001400000015000000
-  ExpandedWaapiItemIds: 02000000040000000600000008000000090000000a0000000b0000000e000000
+  ExpandedWaapiItemIds: 010000000200000003000000050000000600000008000000090000000a0000000b0000001100000012000000130000001400000015000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
-  currentDataSource: 1
+  currentDataSource: 0
   CurrentPluginConfig: 

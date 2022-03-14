@@ -6,6 +6,11 @@
 				<Attenuation Name="Engine" ID="{2DEFA4A0-09BD-4373-85F5-7FF4C3BD9FE2}" ShortID="479264175">
 					<PropertyList>
 						<Property Name="ConeInnerAngle" Type="int32" Value="110"/>
+						<Property Name="ConeUse" Type="bool">
+							<ValueList>
+								<Value>True</Value>
+							</ValueList>
+						</Property>
 						<Property Name="RadiusMax" Type="Real64" Value="30"/>
 					</PropertyList>
 					<CurveUsageInfoList>

@@ -1,13 +1,19 @@
 Event	ID	Name			Wwise Object Path	Notes
 	639345804	Play_Engine			\Default Work Unit\Play_Engine	
+	1020223172	Play_Wind			\Default Work Unit\Play_Wind	
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
-	640949982	Speed			\Default Work Unit\Speed	
+	1114824702	RMP			\Default Work Unit\RMP	
+	1172844112	Gear			\Default Work Unit\Gear	
 	2995819693	Throttle			\Default Work Unit\Throttle	
+	3519441192	Velocity			\Default Work Unit\Velocity	
 
-Effect plug-ins	ID	Name	Type				Notes
-	2805769450	Special_Effect_1	Wwise Flanger			
+Source plug-ins	ID	Name	Type		Wwise Object Path	Notes
+	155480069	CrankcaseAudio REV	CrankcaseAudio REV		\Actor-Mixer Hierarchy\Default Work Unit\Engine\CrankcaseAudio REV	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	450858606	Engine	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Mac\SFX\Diesel Engine_E1EF92B3.wem		\Actor-Mixer Hierarchy\Default Work Unit\Engine		1288632
+	493693357	Wind	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Mac\SFX\strong-wind-blowing-sound-background-sound-effect_80497B0C.wem		\Actor-Mixer Hierarchy\Default Work Unit\Wind		33714240
+
+Plug-in Media	ID	Name	Source file	Type	Wwise Object Path	Notes	Data Size
+	896025657	CrankcaseAudio REV	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Mac\Plugins\CrankcaseAudio REV\Dodge_Viper_EAEDC289.wem	CrankcaseAudio REV (Custom)	\Actor-Mixer Hierarchy\Default Work Unit\Engine\CrankcaseAudio REV		1528592
 

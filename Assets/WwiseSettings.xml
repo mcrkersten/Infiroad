@@ -11,7 +11,7 @@
   <ShowSpatialAudioWarningMsg>true</ShowSpatialAudioWarningMsg>
   <WwiseInstallationPathMac />
   <WwiseInstallationPathWindows>C:\Program Files (x86)\Audiokinetic\Wwise 2021.1.7.7796</WwiseInstallationPathWindows>
-  <WwiseProjectPath>../Infiroad_WwiseProject/Infiroad_WwiseProject.wproj</WwiseProjectPath>
+  <WwiseProjectPath>../../Infiroad/Infiroad_WwiseProject/Infiroad_WwiseProject.wproj</WwiseProjectPath>
   <UseWaapi>true</UseWaapi>
   <WaapiPort>8080</WaapiPort>
   <WaapiIP>127.0.0.1</WaapiIP>
