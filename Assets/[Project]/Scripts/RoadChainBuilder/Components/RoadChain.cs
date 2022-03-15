@@ -34,7 +34,7 @@ public class RoadChain : MonoBehaviour {
 	public PowerlineSettings powerlineSettings;
 	public FenceSettings fenceSettings;
 
-	private List<GameObject> spawnedGameObjects = new List<GameObject>();
+	private List<GameObject> activatedPooledObjects = new List<GameObject>();
 	[HideInInspector] public Road road;
 
 	//For dev UI
@@ -84,15 +84,17 @@ public class RoadChain : MonoBehaviour {
 		return organizedSegments[segmentIndex].bezier.GetOrientedPoint(percentage, .1f, ease);
 	}
 
-	public void SpawnDecor(RoadSegment segment, RoadDecoration decoration, int segmentIndex)
+	public void ActivateDecor(RoadSegment segment, RoadDecoration roadDecoration, int segmentIndex)
     {
 		RoadChainBuilder roadChainBuilder = RoadChainBuilder.instance;
 		RoadSettings roadSettings = segment.roadSetting;
+		List<GameObject> decorObjects = ObjectPooler.Instance.GetRoadDecorationFromPool(roadDecoration.RD_Type);
 		int segmendLoops = segment.edgeLoopCount;
 
-		foreach (Decoration decorItem in decoration.decor)
+		int decorIndex = 0;
+		foreach (Decoration decorItem in roadDecoration.decor)
 		{
-			int edgeLoop = segmendLoops - (int)Mathf.Lerp(0, segmendLoops, 1f - Mathf.Clamp01(decoration.mainCurveTime + decorItem.curveTime));
+			int edgeLoop = segmendLoops - (int)Mathf.Lerp(0, segmendLoops, 1f - Mathf.Clamp01(roadDecoration.mainCurveTime + decorItem.curveTime));
 			NoiseGenerator ng = roadSettings.generatorInstance;
 			Vector3 noise = Vector3.zero;
 
@@ -101,20 +103,31 @@ public class RoadChain : MonoBehaviour {
 				noise += ng.getNoise(segment.startEndLoop.x + edgeLoop, nts);
 			}
 
-			OrientedPoint orientedPoint = GetOrientedPointOnRoad(Mathf.Clamp01(decoration.mainCurveTime + decorItem.curveTime), segmentIndex, segment.roadSetting.rotationEasing);
+			OrientedPoint orientedPoint = GetOrientedPointOnRoad(Mathf.Clamp01(roadDecoration.mainCurveTime + decorItem.curveTime), segmentIndex, segment.roadSetting.rotationEasing);
 			Vector3 localPoint = new Vector3(decorItem.position.x, decorItem.position.y, 0);
 			Vector3 globalPoint = orientedPoint.LocalToWorldPos(localPoint + noise);
-
 			Vector3 worldPosition = segment.transform.TransformPoint(globalPoint);
-			GameObject inst = Instantiate(decorItem.prefab, worldPosition, segment.transform.rotation * orientedPoint.rot, segment.transform);
-			if (decorItem.prefab.gameObject.CompareTag("StartPosition"))
-				roadChainBuilder.vehicleStartTransform = inst.transform;
+
+			decorObjects[decorIndex].transform.position = worldPosition;
+			decorObjects[decorIndex].transform.rotation = segment.transform.rotation * orientedPoint.rot;
+			decorObjects[decorIndex].SetActive(true);
+			activatedPooledObjects.Add(decorObjects[decorIndex]);
+
+			if (decorObjects[decorIndex].CompareTag("StartPosition"))
+				roadChainBuilder.vehicleStartTransform = decorObjects[decorIndex].transform;
+			decorIndex++;
 		}
 	}
 
+    public void OnDestroy()
+    {
+        foreach (GameObject item in activatedPooledObjects)
+			if(item)
+				item.SetActive(false);
+    }
 
-	#region Initialize VegetationAssetTriggers
-	public void ActivateVegetationAssetTriggersOnAssetSpawnEdge(RoadSettings roadSettings, RoadSegment segment)
+    #region Initialize VegetationAssetTriggers
+    public void ActivateVegetationAssetTriggersOnAssetSpawnEdge(RoadSettings roadSettings, RoadSegment segment)
     {
         foreach (AssetSpawnEdge spawnEdge in segment.assetSpawnEdges)
         {

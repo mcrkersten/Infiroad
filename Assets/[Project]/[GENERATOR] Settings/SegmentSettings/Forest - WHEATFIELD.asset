@@ -284,6 +284,8 @@ MonoBehaviour:
   extusionMaterial: {fileID: 0}
   hasGuardrail: 1
   guardRail: {fileID: 11400000, guid: b725fa6678e620548b413d7deddcc79e, type: 2}
+  guardrailIsContinues: 0
+  guardRailMinimalCornerRadius: 0
   roadTypeTag: WHEATFIELD-BASIC
   assetPools:
   - tag: 0
@@ -351,8 +353,6 @@ MonoBehaviour:
       noiseDirection: 2
   guardRailNoiseChannel:
     channelSettings: []
-  startDecoration: {fileID: 0}
-  sectorDecoration: {fileID: 11400000, guid: cd718877663d0ca44aef8c11f696e2d3, type: 2}
   shortNoise: 0.75
   shortPower: 0.08
   mediumNoise: 0.019

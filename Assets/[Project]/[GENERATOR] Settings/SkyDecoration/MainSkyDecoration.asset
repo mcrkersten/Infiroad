@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13762e0e88ccf0d40a8dbf01d89bc87f, type: 3}
   m_Name: MainSkyDecoration
   m_EditorClassIdentifier: 
-  skyHeight: 81.5
+  skyHeight: 50
   skyDecors:
-  - spawnAreaSize: {x: 600, y: 100, z: 600}
+  - key: 0
+    amount: 10
+    spawnAreaSize: {x: 600, y: 31.47, z: 600}
     prefab: {fileID: 9099527341958240902, guid: 83421fed8193add499e94057a405f1bb, type: 3}
-    probability: 0.5
-  decorAmount: 4
+    probability: 1
+  decorAmount: 1

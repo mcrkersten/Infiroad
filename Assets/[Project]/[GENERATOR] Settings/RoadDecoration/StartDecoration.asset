@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 968972396982e854e9bbfb037c44c290, type: 3}
   m_Name: StartDecoration
   m_EditorClassIdentifier: 
+  segmentIndex: 0
+  wholeUnitsInPool: 1
   mainCurveTime: 0.2
   decor:
   - prefab: {fileID: 8228064313868283553, guid: 168c397e2bea7304daa08af21981dac4, type: 3}
@@ -78,3 +80,4 @@ MonoBehaviour:
     position: {x: -7.937585, y: 0}
     curveTime: -0.025
     noiseChannel: 1
+  RD_Type: 0

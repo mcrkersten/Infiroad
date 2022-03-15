@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 968972396982e854e9bbfb037c44c290, type: 3}
-  m_Name: SectorPointDecoration_0
+  m_Name: SectorPointDecoration
   m_EditorClassIdentifier: 
+  segmentIndex: 0
+  wholeUnitsInPool: 4
   mainCurveTime: 0.2
   decor:
   - prefab: {fileID: 9129019508651545179, guid: 08d7ecd3060fd86448e0955bc3b97b1e, type: 3}
@@ -30,3 +32,4 @@ MonoBehaviour:
     position: {x: -8, y: 0}
     curveTime: 0
     noiseChannel: 1
+  RD_Type: 1

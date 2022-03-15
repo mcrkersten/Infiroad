@@ -6,8 +6,8 @@ using UnityEngine.InputSystem;
 [System.Serializable]
 public class Engine2
 {
-    public int currentSelectedGear;
-    public int currentEngagedGear;
+    private int currentSelectedGear;
+    private int currentEngagedGear;
 
     public int maxRPM;
     public AnimationCurve engineTorqueProfile;
@@ -29,7 +29,7 @@ public class Engine2
 
     public float physicsImpact;
 
-    [Header("Audio and feedbak")]
+    [Header("Audio and feedback")]
     public AK.Wwise.RTPC engineRPMAudio;
     public AK.Wwise.RTPC velocityAudio;
     public AK.Wwise.RTPC throttleAudio;

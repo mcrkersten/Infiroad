@@ -22,7 +22,7 @@ public class RoadSettings : ScriptableObject
 	public List<VegitationPool> assetPools = new List<VegitationPool>();
 
 	public float heightNoise;
-	public Ease rotationEasing;
+	public Ease rotationEasing = Ease.InOut;
 	public float edgeLoopsPerMeter;
 
 	public float debugRoadCurveStrenght;
@@ -31,9 +31,6 @@ public class RoadSettings : ScriptableObject
 	[Header("Noise settings")]
 	public List<NoiseChannel> noiseChannels = new List<NoiseChannel>();
 	public NoiseChannel guardRailNoiseChannel;
-
-	public RoadDecoration startDecoration;
-	public RoadDecoration sectorDecoration;
 
 	[Header("Short")]
 	[Range(0f,1f)]

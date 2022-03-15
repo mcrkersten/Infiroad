@@ -22,11 +22,12 @@ using UnityEngine;
 [CreateAssetMenu, System.Serializable]
 public class Road : ScriptableObject {
 
-	public bool segmentVariation;
-	[Header("Road Shapes")]
-	public RoadSettings mainRoadSettings;
-
 	public List<VariationSettings> roadVariation = new List<VariationSettings>();
+
+	[Header("Road Decoration")]
+	public List<RoadDecoration> roadDecorations = new List<RoadDecoration>();
+
+	[Header("Sky Decoration")]
 	public SkyDecoration skyDecoration;
 
 	public GameObject assetSpawnPoint;

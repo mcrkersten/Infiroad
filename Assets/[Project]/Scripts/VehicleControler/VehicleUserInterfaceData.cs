@@ -28,7 +28,7 @@ public class VehicleUserInterfaceData
 
     public int GetCurrentGear()
     {
-        return engine.currentSelectedGear;
+        return 0;
     }
 
     public int GetCurrentSpeed()

@@ -355,7 +355,7 @@ MonoBehaviour:
     - {fileID: 8384785012545963275, guid: 06d9a0bb700e6254ab79f7e6bd1bb2a0, type: 3}
     - {fileID: 5547151071501892701, guid: 135907342e638cd4c914f565e36df296, type: 3}
     - {fileID: 645915518784132891, guid: a1c38ab04dc740146b4dafdd44e6bf42, type: 3}
-    size: 1500
+    size: 500
   heightNoise: 0
   rotationEasing: 3
   edgeLoopsPerMeter: 2
@@ -422,8 +422,6 @@ MonoBehaviour:
     - group: 1
       noiseType: 2
       noiseDirection: 0
-  startDecoration: {fileID: 11400000, guid: 3ef3e34d2c63c1446b3ffb9f1bde50c5, type: 2}
-  sectorDecoration: {fileID: 11400000, guid: cd718877663d0ca44aef8c11f696e2d3, type: 2}
   shortNoise: 0.75
   shortPower: 0.08
   mediumNoise: 0.019

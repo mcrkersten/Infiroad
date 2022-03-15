@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class RoadChainBuilder : MonoBehaviour
 {
@@ -30,7 +31,7 @@ public class RoadChainBuilder : MonoBehaviour
     public Road road;
     private ObjectPooler objectPooler;
 
-    private bool startGenerated = false;
+    private bool startLineIsGenerated = false;
 
     [Header("Debug")]
     public int generatedRoadEdgeloops = 0;
@@ -61,16 +62,28 @@ public class RoadChainBuilder : MonoBehaviour
     {
         objectPooler = new ObjectPooler();
         objectPooler.InstantiateVegetationTriggerPool(road.assetSpawnPointPoolSize, road.assetSpawnPoint);
+        InstantiateVegetationPools();
+        InstantiateRoadDecorationPools();
+        InstantiateSkyDecorationPools();
+    }
 
-        if (road.segmentVariation)
+    private void InstantiateSkyDecorationPools()
+    {
+        objectPooler.InstantiateAirDecoration(road.skyDecoration);
+    }
+
+    private void InstantiateVegetationPools()
+    {
+        foreach (VariationSettings s in road.roadVariation)
+            foreach (VariationSettings.Variation v in s.roadSettings)
+                objectPooler.InstantiateVegitationPool(v.roadSettings.assetPools, v.roadSettings.roadTypeTag);
+    }
+
+    private void InstantiateRoadDecorationPools()
+    {
+        foreach (RoadDecoration pool in road.roadDecorations)
         {
-            foreach (VariationSettings s in road.roadVariation)
-                foreach (VariationSettings.Variation v in s.roadSettings)
-                    objectPooler.InstantiateVegitationPool(v.roadSettings.assetPools, v.roadSettings.roadTypeTag);
-        }
-        else
-        {
-            objectPooler.InstantiateVegitationPool(road.mainRoadSettings.assetPools, road.mainRoadSettings.roadTypeTag);
+            objectPooler.InstantiateDecorationPool(pool);
         }
     }
 
@@ -101,54 +114,49 @@ public class RoadChainBuilder : MonoBehaviour
         OrientSegments(organized); //Orient again to make nice
         SetTangentLenght(organized);
 
-        if (road.segmentVariation)
+        roadChain.SetOrganizedSegments(organized);
+        foreach (RoadSegment segment in organized)
         {
-            roadChain.SetOrganizedSegments(organized);
-            foreach (RoadSegment segment in organized)
-            {
-                RoadSettings roadSettting = road.SelectRoadSetting(roadShape, segment);
-                roadChain.InitializeSegment(roadSettting, segment);
-            }
-
-            if (!startGenerated)
-            {
-                roadChain.SpawnDecor(organized[0], organized[0].roadSetting.startDecoration, 0);
-
-            }
-
-            int c = organized.Count - 2;
-            roadChain.SpawnDecor(organized[c], organized[c].roadSetting.sectorDecoration, c);
-
-            startGenerated = true;
-        }
-        else
-        {
-            roadChain.InitializeAllSegments(road.mainRoadSettings, organized);
+            RoadSettings roadSettting = road.SelectRoadSetting(roadShape, segment);
+            roadChain.InitializeSegment(roadSettting, segment);
+            HandleMeshTasks(roadSettting, roadChain);
         }
 
-        HandleMeshTasks(road.mainRoadSettings, roadChain);
+        SpawnRoadDecoration(roadChain, organized);
+        SpawnSkyDecoration();
         //SpawnSkyDecoration(road.skyDecoration);
     }
 
-    private void SpawnSkyDecoration(SkyDecoration skyDecoration)
+    private void SpawnRoadDecoration(RoadChain roadChain, List<RoadSegment> segments)
     {
+        if (!startLineIsGenerated)
+        {
+            RoadDecoration lrd = road.roadDecorations.First(t => t.RD_Type == RoadDecorationType.startLine);
+            int index = lrd.segmentIndex;
+            roadChain.ActivateDecor(segments[index], lrd, index);
+            startLineIsGenerated = true;
+        }
+
+        RoadDecoration rd = road.roadDecorations.First(t => t.RD_Type == RoadDecorationType.checkPoint);
+        int index1 = rd.segmentIndex;
+        roadChain.ActivateDecor(segments[index1], rd, index1);
+    }
+
+    private void SpawnSkyDecoration()
+    {
+        SkyDecoration skyDecoration = road.skyDecoration;
         for (int i = 0; i < skyDecoration.decorAmount; i++)
         {
             float probabilityRoll = Random.Range(0f, 1f);
             foreach (SkyDecor item in skyDecoration.skyDecors)
             {
-                if(item.probability < probabilityRoll)
+                if(item.probability > probabilityRoll)
                 {
                     float x = Random.Range(-item.spawnAreaSize.x / 2, item.spawnAreaSize.x / 2);
-                    float y = Random.Range(-item.spawnAreaSize.y / 2, item.spawnAreaSize.y / 2);
+                    float y = skyDecoration.skyHeight + Random.Range(-item.spawnAreaSize.y / 2, item.spawnAreaSize.y / 2);
                     float z = Random.Range(-item.spawnAreaSize.z / 2, item.spawnAreaSize.z / 2);
-                    Vector3 position = new Vector3(x, y, z);
-
-                    //TO DO | BUILD DECOR ASSET POOLER
-                    GameObject decor = null;
-                    decor.transform.parent = this.transform;
-                    decor.transform.localPosition = position;
-                    decor.transform.parent = null; 
+                    Vector3 position = new Vector3(x, y, z) + this.transform.position;
+                    ObjectPooler.Instance.ActivateSkyDecoration(item, position);
                 }
             }
         }

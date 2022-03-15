@@ -14,6 +14,8 @@ public class SkyDecoration : ScriptableObject
 [System.Serializable]
 public class SkyDecor
 {
+    public int key;
+    public int amount;
     public Vector3 spawnAreaSize;
     public GameObject prefab;
     [Range(0f,1f)]
