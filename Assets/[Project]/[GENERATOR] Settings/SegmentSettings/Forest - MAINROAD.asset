@@ -414,8 +414,6 @@ MonoBehaviour:
     - group: 1
       noiseType: 2
       noiseDirection: 0
-  startDecoration: {fileID: 11400000, guid: 3ef3e34d2c63c1446b3ffb9f1bde50c5, type: 2}
-  sectorDecoration: {fileID: 11400000, guid: cd718877663d0ca44aef8c11f696e2d3, type: 2}
   shortNoise: 0.75
   shortPower: 0.08
   mediumNoise: 0.019

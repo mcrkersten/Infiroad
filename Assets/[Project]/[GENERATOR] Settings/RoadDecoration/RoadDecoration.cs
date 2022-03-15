@@ -26,5 +26,5 @@ public enum RoadDecorationType
 {
     startLine = 0,
     checkPoint,
-    Random = default
+    Random,
 }
