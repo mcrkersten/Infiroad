@@ -82,13 +82,11 @@ public class RoadMeshExtruder {
 			float extrusionSize = 0f;
 			float curveRadius = bezier.GetRadius(t);
 			if (IsBetween(curveRadius, -700f, 700f))
-            {
 				extrusionSize = roadSettings.runoffAnimationCurve.Evaluate((curveRadius / 700f));
-			}
 			else
 				extrusionSize = 0f;
 			float nowNumber = extrusionSize * 10f;
-			float damp = Mathf.Lerp(roadChainBuilder.radiusDelay, nowNumber, .8f);
+			float damp = Mathf.Lerp(roadChainBuilder.radiusDelay, nowNumber, Time.deltaTime * 2f);
 			roadChainBuilder.radiusDelay = damp;
 
 

@@ -57,7 +57,7 @@ public class Suspension : MonoBehaviour
             Vector3 suspensionForce = CalculateSuspensionForce(hit, out suspensionCompression);
             physicsWobble = suspensionCompression;
             rb.AddForceAtPosition(suspensionForce, hit.point);
-            downForce = suspensionForce.y;
+            downForce = suspensionForce.y + (rb.mass/4f);
 
             float accelerationForce = engineForce;
             float brakeForce = CalculateBrakingForce(brakeInput);
@@ -88,7 +88,7 @@ public class Suspension : MonoBehaviour
         Vector2 sideways = new Vector2(sidewaysForce, 0f);
         Vector2 rawForce = forward + sideways;
 
-        float distance = Vector2.Distance(forward, sideways);
+        float distance = Vector2.Distance(Vector2.zero, sideways + forward);
         float time = distance / downForce;
         float force = wheel.slipCurve.Evaluate(Mathf.Abs(time));
         float maxForce = downForce * force;
@@ -111,6 +111,7 @@ public class Suspension : MonoBehaviour
                 feedbackComponent.UpdateLowFrequencyRumble(Slip_feedbackCurve.Evaluate(Mathf.Abs(sideways.x / downForce)));
                 break;
             case SuspensionPosition.RearRight:
+                Debug.Log(time);
                 feedbackComponent.UpdateLowFrequencyRumble(Slip_feedbackCurve.Evaluate(Mathf.Abs(sideways.x / downForce)));
                 break;
             default:

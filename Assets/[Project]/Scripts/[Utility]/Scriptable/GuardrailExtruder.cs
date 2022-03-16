@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,8 +17,7 @@ public class GuardrailExtruder
 	public void Extrude(MeshTask meshTask, RoadChain parent, RoadSettings roadSettings)
     {
 		currentRoadchain = parent;
-		Mesh mesh = CreateMesh(roadSettings);
-
+		Mesh mesh = CreateMeshFilters(roadSettings);
 		ClearMesh(mesh);
 
 		CreateGuardrail(roadSettings.guardRail, meshTask);
@@ -25,10 +25,17 @@ public class GuardrailExtruder
 		CreateTriangles(meshTask, roadSettings.guardRail, hardEdgeCount);
 
 		AssignMesh(mesh);
+		AssignMeshCollider(mesh);
 
 	}
 
-	private Mesh CreateMesh(RoadSettings roadSettings)
+    private void AssignMeshCollider(Mesh mesh)
+    {
+		MeshCollider c = currentGuardrail.AddComponent<MeshCollider>();
+		c.sharedMesh = mesh;
+	}
+
+    private Mesh CreateMeshFilters(RoadSettings roadSettings)
     {
 		GameObject g = new GameObject();
 		currentGuardrail = g;
@@ -37,8 +44,7 @@ public class GuardrailExtruder
 		MeshRenderer mr = currentGuardrail.AddComponent<MeshRenderer>();
 		mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.TwoSided;
 		mr.material = roadSettings.guardRail.material;
-		Mesh mesh = mf.mesh;
-		return mesh;
+		return mf.mesh;
 	}
 
 	private void ClearMesh(Mesh mesh)

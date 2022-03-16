@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   segmentIndex: 0
   wholeUnitsInPool: 4
-  mainCurveTime: 0.8
+  mainCurveTime: 0.7
   decor:
   - prefab: {fileID: 9129019508651545179, guid: 08d7ecd3060fd86448e0955bc3b97b1e, type: 3}
     position: {x: 0, y: 0}

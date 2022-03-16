@@ -81,7 +81,7 @@ public class RoadChain : MonoBehaviour {
 
 	public OrientedPoint GetOrientedPointOnRoad(float percentage, int segmentIndex, Ease ease)
     {
-		return organizedSegments[segmentIndex].bezier.GetOrientedPoint(percentage, .1f, ease);
+		return organizedSegments[segmentIndex].bezier.GetOrientedPoint(percentage, .01f, ease);
 	}
 
 	public void ActivateDecor(RoadSegment segment, RoadDecoration roadDecoration, int segmentIndex)
@@ -103,13 +103,19 @@ public class RoadChain : MonoBehaviour {
 				noise += ng.getNoise(segment.startEndLoop.x + edgeLoop, nts);
 			}
 
+			Vector3 decorPosition = new Vector3(decorItem.position.x, decorItem.position.y, 0);
+
+			OrientedPoint nextPoint = GetOrientedPointOnRoad(Mathf.Clamp01(roadDecoration.mainCurveTime + decorItem.curveTime + .15f), segmentIndex, segment.roadSetting.rotationEasing);
+			Vector3 next = segment.transform.TransformPoint(nextPoint.LocalToWorldPos(decorPosition + noise));
+			OrientedPoint prevPoint = GetOrientedPointOnRoad(Mathf.Clamp01(roadDecoration.mainCurveTime + decorItem.curveTime - .15f), segmentIndex, segment.roadSetting.rotationEasing);
+			Vector3 prev = segment.transform.TransformPoint(prevPoint.LocalToWorldPos(decorPosition + noise));
+
 			OrientedPoint orientedPoint = GetOrientedPointOnRoad(Mathf.Clamp01(roadDecoration.mainCurveTime + decorItem.curveTime), segmentIndex, segment.roadSetting.rotationEasing);
-			Vector3 localPoint = new Vector3(decorItem.position.x, decorItem.position.y, 0);
-			Vector3 globalPoint = orientedPoint.LocalToWorldPos(localPoint + noise);
-			Vector3 worldPosition = segment.transform.TransformPoint(globalPoint);
+			Vector3 localPosition = orientedPoint.LocalToWorldPos(decorPosition + noise);
+			Vector3 worldPosition = segment.transform.TransformPoint(localPosition);
 
 			decorObjects[decorIndex].transform.position = worldPosition;
-			decorObjects[decorIndex].transform.rotation = segment.transform.rotation * orientedPoint.rot;
+			decorObjects[decorIndex].transform.rotation = Quaternion.LookRotation(next - prev);
 			decorObjects[decorIndex].SetActive(true);
 			activatedPooledObjects.Add(decorObjects[decorIndex]);
 
