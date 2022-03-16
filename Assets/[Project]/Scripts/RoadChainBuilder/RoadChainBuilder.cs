@@ -23,7 +23,7 @@ public class RoadChainBuilder : MonoBehaviour
 
     //Mesh task variables
     [HideInInspector] public MeshTask currentMeshTask = null;
-    [HideInInspector] public float radiusDelay = .2f;
+    [HideInInspector] public float radiusDelay = 0f;
     [HideInInspector] public Vector3 lastMeshPosition = Vector3.positiveInfinity;
     [HideInInspector] public List<MeshTask> meshtasks = new List<MeshTask>();
     GuardrailExtruder guardRailExtruder = new GuardrailExtruder();
@@ -38,6 +38,7 @@ public class RoadChainBuilder : MonoBehaviour
 
     private void Awake()
     {
+        radiusDelay = 0f;
         InstantiateAssetPools();
     }
 
@@ -122,6 +123,7 @@ public class RoadChainBuilder : MonoBehaviour
             HandleMeshTasks(roadSettting, roadChain);
         }
 
+        //
         SpawnRoadDecoration(roadChain, organized);
         SpawnSkyDecoration();
         //SpawnSkyDecoration(road.skyDecoration);
@@ -129,17 +131,20 @@ public class RoadChainBuilder : MonoBehaviour
 
     private void SpawnRoadDecoration(RoadChain roadChain, List<RoadSegment> segments)
     {
+        
         if (!startLineIsGenerated)
         {
+            //Create on first segment a startline
+            int index = 0;
             RoadDecoration lrd = road.roadDecorations.First(t => t.RD_Type == RoadDecorationType.startLine);
-            int index = lrd.segmentIndex;
             roadChain.ActivateDecor(segments[index], lrd, index);
             startLineIsGenerated = true;
         }
 
+        //Create on last segment a checkpoint
         RoadDecoration rd = road.roadDecorations.First(t => t.RD_Type == RoadDecorationType.checkPoint);
-        int index1 = rd.segmentIndex;
-        roadChain.ActivateDecor(segments[index1], rd, index1);
+        int lastIndex = segments.Count - 2; //Always mark last index as checkpoint
+        roadChain.ActivateDecor(segments[lastIndex], rd, lastIndex);
     }
 
     private void SpawnSkyDecoration()

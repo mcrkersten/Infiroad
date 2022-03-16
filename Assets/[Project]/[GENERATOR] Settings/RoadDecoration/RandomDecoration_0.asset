@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: RandomDecoration_0
   m_EditorClassIdentifier: 
   segmentIndex: 0
-  wholeUnitsInPool: 0
-  mainCurveTime: 0
+  wholeUnitsInPool: 5
+  mainCurveTime: 0.8
   decor:
   - prefab: {fileID: 4854968495057723592, guid: 1a5ccd4094bd75f4fb0d2dcb4f82a12a, type: 3}
     position: {x: -7.88, y: 0}
@@ -28,4 +28,4 @@ MonoBehaviour:
     position: {x: -7.88, y: 0}
     curveTime: 0.04
     noiseChannel: 0
-  RD_Type: 0
+  RD_Type: 2

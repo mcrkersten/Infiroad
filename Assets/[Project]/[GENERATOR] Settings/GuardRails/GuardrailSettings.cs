@@ -10,6 +10,7 @@ public class GuardrailSettings : ScriptableObject
 	[Header("Shape")]
     public VertexPosition[] points;
 	public bool closedLoop;
+	public bool guardrailExtends;
 	public int PointCount => points.Length;
 	public Vector2 guardrailPosition;
 

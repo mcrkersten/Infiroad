@@ -55,11 +55,11 @@ public class GuardrailExtruder
 		int currentEdgeloop = 0;
 		int poleCount = 0;
 
+		float local_XOffset = 0f;//The offset on the X-axis when in curve
 		Vector2 meshDirection = meshTask.mirror ? (Vector2.left) : (Vector2.right);
-		
-
 		foreach (MeshTask.Point p in meshTask.points)
 		{
+			local_XOffset = meshTask.mirror ? Mathf.Min(0f, p.radius) : Mathf.Max(0f, p.radius);
 			Vector3 noise = Vector3.zero;
 			foreach (NoiseChannelSettings channel in meshTask.noiseChannel.channelSettings)
             {
@@ -72,7 +72,7 @@ public class GuardrailExtruder
 
 				Vector2 point = guardrailSettings.points[i].vertex.point * (Vector2.left + Vector2.up);
 
-				Vector3 offset = new Vector3(meshDirection.x * (point.x + guardrailSettings.guardRailWidth), point.y, 0f) + noise;
+				Vector3 offset = new Vector3(meshDirection.x * (point.x + guardrailSettings.guardRailWidth + Mathf.Abs(local_XOffset)), point.y, 0f) + noise;
 
 				Vector3 relativePosition = p.rotation * offset;
 				Vector3 position = relativePosition + (p.position);
@@ -87,7 +87,7 @@ public class GuardrailExtruder
 
 			if (currentEdgeloop - (poleCount * guardrailSettings.poleSpacing) == 0)
 			{
-				CreateGuardrailPole(meshDirection, guardrailSettings, p, noise);
+				CreateGuardrailPole(meshDirection, guardrailSettings, p, noise, Mathf.Abs(local_XOffset));
 				poleCount++;
 			}
 			currentEdgeloop++;
@@ -138,14 +138,14 @@ public class GuardrailExtruder
 			triIndices.Reverse();
 	}
 
-	private void CreateGuardrailPole(Vector2 direction, GuardrailSettings guardrailSettings, MeshTask.Point p, Vector3 noise)
+	private void CreateGuardrailPole(Vector2 direction, GuardrailSettings guardrailSettings, MeshTask.Point p, Vector3 noise, float X_offset)
 	{
-		Vector3 offset = new Vector3(direction.x * (guardrailSettings.guardrailPosition.x + guardrailSettings.guardRailWidth), guardrailSettings.guardrailPosition.y, 0f) + noise;
+		Vector3 offset = new Vector3(direction.x * (guardrailSettings.guardrailPosition.x + guardrailSettings.guardRailWidth + X_offset), guardrailSettings.guardrailPosition.y, 0f) + noise;
 		Vector3 relativePosition = p.rotation * offset;
 		Vector3 position = relativePosition + (p.position);
 
 		GameObject pole = null;
-		if (p.radius < guardrailSettings.sharpCornerRadius)
+		if (Mathf.Abs(guardrailSettings.sharpCornerRadius) < X_offset)
 			pole = GameObject.Instantiate(guardrailSettings.sharpCornerGuardrailPolePrefab, position, p.rotation, currentGuardrail.transform);
 		else
 			pole = GameObject.Instantiate(guardrailSettings.guardrailPolePrefab, position, p.rotation, currentGuardrail.transform);
@@ -167,6 +167,15 @@ public class GuardrailExtruder
 				hardEdgeCount++;
 		}
 		return hardEdgeCount;
+	}
+
+	private float CalculatePositiveOrNegativeCurve(float xValue, float curveStrenght, RoadSettings roadSettings)
+	{
+		if (xValue > 0f) //Positive
+			return Mathf.Max(0f, curveStrenght);
+		if (xValue < 0f) //Negative
+			return Mathf.Min(0f, curveStrenght);
+		return 0f;
 	}
 
 	private void AssignMesh(Mesh mesh)

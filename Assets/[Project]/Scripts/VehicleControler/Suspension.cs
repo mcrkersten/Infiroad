@@ -57,7 +57,7 @@ public class Suspension : MonoBehaviour
             Vector3 suspensionForce = CalculateSuspensionForce(hit, out suspensionCompression);
             physicsWobble = suspensionCompression;
             rb.AddForceAtPosition(suspensionForce, hit.point);
-            downForce = suspensionForce.y + 100f;
+            downForce = suspensionForce.y;
 
             float accelerationForce = engineForce;
             float brakeForce = CalculateBrakingForce(brakeInput);
@@ -95,8 +95,8 @@ public class Suspension : MonoBehaviour
 
         Vector3 cleanedForce =  ReturnCleanedForce(maxForce, rawForce);
 
-        float scaledForce = sideways.x / downForce;
-        wheel.steeringWheelForce = (force) * sideways.x < 0f ? 100f : -100f;
+        float scaledForce = cleanedForce.x / maxForce;
+        wheel.steeringWheelForce = -(scaledForce) * 100f;
         wheel.gripDebug = Mathf.Max(.01f, force);
 
         switch (suspensionPosition)

@@ -78,39 +78,21 @@ public class RoadMeshExtruder {
 				tUv = table.TToPercentage(tUv);
 			float y_UV = tUv * tiling;
 
-			float curveRadiusInverse = 0;
-			//Gets curve radius
+			//Gets bigger with larger radius
+			float extrusionSize = 0f;
 			float curveRadius = bezier.GetRadius(t);
-			float clampedRadius = curveRadius;
-
-			if (curveRadius > 300f)
-				clampedRadius = 0f;
-			if (curveRadius < -300f)
-				clampedRadius = 0f;
-
-			float radiusT = Mathf.Min(Mathf.Abs(clampedRadius), 300f) / 300f; // 0f to 1.0f
-			float animationCurveOutput = roadSettings.runoffAnimationCurve.Evaluate(radiusT);
-			if (clampedRadius > 0)
-				curveRadiusInverse = 10f * animationCurveOutput;
-			if (clampedRadius < 0)
-				curveRadiusInverse = -10f * animationCurveOutput;
-
-			//stepsize
-			if (ring != 0 || roadChainBuilder.generatedRoadEdgeloops == 0)
-			{
-				float step = Mathf.Clamp(curveRadiusInverse, -.25f, .25f);
-				roadChainBuilder.radiusDelay = Mathf.Clamp(roadChainBuilder.radiusDelay + (step), -10f, 10f);
-				if (clampedRadius == 0)
-				{
-					if (roadChainBuilder.radiusDelay > .2f)
-						roadChainBuilder.radiusDelay -= .2f;
-					else if (roadChainBuilder.radiusDelay < -.2f)
-						roadChainBuilder.radiusDelay += .2f;
-					else
-						roadChainBuilder.radiusDelay = 0f;
-				}
+			if (IsBetween(curveRadius, -700f, 700f))
+            {
+				extrusionSize = roadSettings.runoffAnimationCurve.Evaluate((curveRadius / 700f));
 			}
+			else
+				extrusionSize = 0f;
+			float nowNumber = extrusionSize * 10f;
+			float damp = Mathf.Lerp(roadChainBuilder.radiusDelay, nowNumber, .8f);
+			roadChainBuilder.radiusDelay = damp;
 
+
+			//MESHTASK
 			if (!roadSettings.guardrailIsContinues && Mathf.Abs(curveRadius) < roadSettings.guardRailMinimalCornerRadius)
 			{
 				Vector3 currentMeshPosition = segment.transform.TransformPoint(op.pos);
@@ -119,13 +101,13 @@ public class RoadMeshExtruder {
 				{
 					if (roadChainBuilder.currentMeshTask != null)
 						roadChainBuilder.meshtasks.Add(roadChainBuilder.currentMeshTask);
-					roadChainBuilder.currentMeshTask = new MeshTask(curveRadius < 0, roadSettings, roadChainBuilder.generatedRoadEdgeloops, roadSettings.guardRailNoiseChannel);
+					roadChainBuilder.currentMeshTask = new MeshTask(curveRadius, curveRadius < 0, roadSettings, roadChainBuilder.generatedRoadEdgeloops, roadSettings.guardRailNoiseChannel);
 				}
 
 				if (distance > .01f) //Fish out duplicates
 				{
 					roadChainBuilder.lastMeshPosition = currentMeshPosition;
-					roadChainBuilder.currentMeshTask.AddPoint(roadChainBuilder.lastMeshPosition, segment.transform.rotation * op.rot, Mathf.Abs(curveRadius));
+					roadChainBuilder.currentMeshTask.AddPoint(roadChainBuilder.lastMeshPosition, segment.transform.rotation * op.rot, roadChainBuilder.radiusDelay);
 				}
             }
             else if(roadSettings.guardrailIsContinues)
@@ -133,9 +115,9 @@ public class RoadMeshExtruder {
 				Vector3 currentMeshPosition = segment.transform.TransformPoint(op.pos);
 
 				if(ring == 0)
-					roadChainBuilder.currentMeshTask = new MeshTask(roadSettings, roadChainBuilder.generatedRoadEdgeloops, roadSettings.guardRailNoiseChannel);
+					roadChainBuilder.currentMeshTask = new MeshTask(curveRadius, roadSettings, roadChainBuilder.generatedRoadEdgeloops, roadSettings.guardRailNoiseChannel);
 
-				roadChainBuilder.currentMeshTask.AddPoint(currentMeshPosition, segment.transform.rotation * op.rot, Mathf.Abs(curveRadius));
+				roadChainBuilder.currentMeshTask.AddPoint(currentMeshPosition, segment.transform.rotation * op.rot, roadChainBuilder.radiusDelay);
 
 				if (ring == edgeLoopCount - 1)
 					roadChainBuilder.meshtasks.Add(roadChainBuilder.currentMeshTask);
@@ -148,8 +130,8 @@ public class RoadMeshExtruder {
 			for (int i = 0; i < roadSettings.PointCount; i++) {
 
 				float offsetCurve = 0f;
-				if (roadSettings.points[i].scalesWithCorner)
-					offsetCurve = CalculatePositiveOrNegativeCurve(roadSettings.points[i], roadChainBuilder.radiusDelay, roadSettings);
+				if(roadSettings.points[i].scalesWithCorner)
+					offsetCurve = roadSettings.points[i].vertex_1.point.x < 0f ? Mathf.Min(0f, roadChainBuilder.radiusDelay) : Mathf.Max(0f, roadChainBuilder.radiusDelay);
 
 				Vector2 localPoint = new Vector2(roadSettings.points[i].vertex_1.point.x + offsetCurve, roadSettings.points[i].vertex_1.point.y);
 				Vector2 noise = AddRandomNoiseValue(roadSettings.points[i].noiseChannel, roadSettings);
@@ -173,8 +155,10 @@ public class RoadMeshExtruder {
 
 				Vector2 minMaxUV = minMaxUvs[roadSettings.points[i].materialIndex];
 				float x_UV = 0;
-				//Left extrusion
-				if (offsetCurve <= 0)
+
+                #region LeftExtrusion
+                //Left extrusion
+                if (offsetCurve <= 0)
 				{
 					//closing edge of UV extrusion
 					if (i != 0 && roadSettings.points[i - 1].extrudePoint)
@@ -214,7 +198,9 @@ public class RoadMeshExtruder {
 						verts.Add(globalPoint);
 					}
 				}
+				#endregion
 
+				#region RightExtrusion
 				//Right extrusion
 				if (offsetCurve > 0)
 				{
@@ -255,6 +241,7 @@ public class RoadMeshExtruder {
 						verts.Add(globalPoint);
 					}
 				}
+				#endregion
 			}
 
 			if (ring != edgeLoopCount - 1)
@@ -280,6 +267,10 @@ public class RoadMeshExtruder {
 		segment.GetComponent<MeshRenderer>().materials = m.ToArray();
 	}
 
+	private bool IsBetween(double testValue, double bound1, double bound2)
+	{
+		return (testValue >= Math.Min(bound1, bound2) && testValue <= Math.Max(bound1, bound2));
+	}
 	private Vector2 AddRandomNoiseValue(int noiseChannel, RoadSettings roadSettings)
 	{
 		//Random
@@ -385,15 +376,6 @@ public class RoadMeshExtruder {
 		}
 		return tries;
 	}
-
-	private float CalculatePositiveOrNegativeCurve(VertexPoint vertexPoint, float curveStrenght, RoadSettings roadSettings)
-	{
-		if (vertexPoint.vertex_1.point.x > 0f) //Positive
-			return Mathf.Max(0f, curveStrenght);
-		if (vertexPoint.vertex_1.point.x < 0f) //Negative
-			return Mathf.Min(0f, curveStrenght);
-		return 0f;
-	}
 }
 [System.Serializable]
 public class MeshTask
@@ -405,17 +387,20 @@ public class MeshTask
 
 	public bool mirror;
 	public bool bothSides;
+	public float curveRadius;
 
-	public MeshTask(bool onRightSide, RoadSettings settings, int startPointIndex, NoiseChannel noiseChannel)
+	public MeshTask(float curveRadius ,bool onRightSide, RoadSettings settings, int startPointIndex, NoiseChannel noiseChannel)
 	{
+		this.curveRadius = curveRadius;
 		this.roadSettings = settings;
 		this.mirror = onRightSide;
 		this.startPointIndex = startPointIndex;
 		this.noiseChannel = noiseChannel;
 	}
 
-	public MeshTask(RoadSettings settings, int startPointIndex, NoiseChannel noiseChannel)
+	public MeshTask(float curveRadius ,RoadSettings settings, int startPointIndex, NoiseChannel noiseChannel)
 	{
+		this.curveRadius = curveRadius;
 		this.roadSettings = settings;
 		this.startPointIndex = startPointIndex;
 		this.noiseChannel = noiseChannel;
