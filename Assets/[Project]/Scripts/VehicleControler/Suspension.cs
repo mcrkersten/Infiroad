@@ -26,6 +26,12 @@ public class Suspension : MonoBehaviour
     private float maxLength;
     private float lastLength;
 
+    [Range(-100,100)]
+    public float test;
+
+    //For audio;
+    [HideInInspector] public float stress;
+
     private FeedbackComponent feedbackComponent;
     public AnimationCurve Slip_feedbackCurve;
 
@@ -71,6 +77,8 @@ public class Suspension : MonoBehaviour
             rb.AddForceAtPosition(worldForceDirection, hit.point);
 
             Debug.DrawRay(wheel.transform.position, -wheel.transform.up * hit.distance, Color.red);
+
+            stress = Mathf.Lerp(stress, physicsWobble, Time.deltaTime/2f);
         }
         else
         {
@@ -96,12 +104,14 @@ public class Suspension : MonoBehaviour
         Vector3 cleanedForce =  ReturnCleanedForce(maxForce, rawForce);
 
         float scaledForce = cleanedForce.x / maxForce;
-        wheel.steeringWheelForce = -(scaledForce) * 100f;
+        //wheel.steeringWheelForce = -(scaledForce) * 100f;
         wheel.gripDebug = Mathf.Max(.01f, force);
 
+        wheel.steeringWheelForce = test;
         switch (suspensionPosition)
         {
             case SuspensionPosition.FrontLeft:
+                Debug.Log(test);
                 feedbackComponent.UpdateHighFrequencyRumble(Slip_feedbackCurve.Evaluate(Mathf.Abs(sideways.x / downForce)));
                 break;
             case SuspensionPosition.FrontRight:
@@ -111,7 +121,6 @@ public class Suspension : MonoBehaviour
                 feedbackComponent.UpdateLowFrequencyRumble(Slip_feedbackCurve.Evaluate(Mathf.Abs(sideways.x / downForce)));
                 break;
             case SuspensionPosition.RearRight:
-                Debug.Log(time);
                 feedbackComponent.UpdateLowFrequencyRumble(Slip_feedbackCurve.Evaluate(Mathf.Abs(sideways.x / downForce)));
                 break;
             default:

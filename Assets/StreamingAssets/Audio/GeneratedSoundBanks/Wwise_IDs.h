@@ -14,13 +14,16 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID PLAY_ENGINE = 639345804U;
+        static const AkUniqueID PLAY_SUSPENSION = 4142784629U;
         static const AkUniqueID PLAY_WIND = 1020223172U;
     } // namespace EVENTS
 
     namespace GAME_PARAMETERS
     {
+        static const AkUniqueID FRONTSUSPENSION = 2076996661U;
         static const AkUniqueID GEAR = 1172844112U;
         static const AkUniqueID RMP = 1114824702U;
+        static const AkUniqueID SLIP = 686938995U;
         static const AkUniqueID THROTTLE = 2995819693U;
         static const AkUniqueID VELOCITY = 3519441192U;
     } // namespace GAME_PARAMETERS
@@ -38,7 +41,6 @@ namespace AK
 
     namespace AUDIO_DEVICES
     {
-        static const AkUniqueID NO_OUTPUT = 2317455096U;
         static const AkUniqueID SYSTEM = 3859886410U;
     } // namespace AUDIO_DEVICES
 

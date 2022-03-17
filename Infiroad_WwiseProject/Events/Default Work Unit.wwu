@@ -25,6 +25,20 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_Suspension" ID="{E918C261-9359-47A4-95C4-7F3C7F6C7F59}">
+					<ChildrenList>
+						<Action Name="" ID="{429A4DA7-E0FE-4CEF-8355-7DF96E6771E5}" ShortID="145370451">
+							<PropertyList>
+								<Property Name="Scope" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Suspension" ID="{CB349797-75AE-4037-AA60-6E716754968F}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

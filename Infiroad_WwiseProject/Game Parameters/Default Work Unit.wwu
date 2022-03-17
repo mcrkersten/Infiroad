@@ -29,6 +29,12 @@
 					</PropertyList>
 				</GameParameter>
 				<GameParameter Name="Slip" ID="{FF3BF4C6-64BB-45F3-BD3C-984E43E40C43}"/>
+				<GameParameter Name="FrontSuspension" ID="{62D94335-365F-4CF3-8E06-F3DD25BE1E0C}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+						<Property Name="Max" Type="Real64" Value="3"/>
+					</PropertyList>
+				</GameParameter>
 			</ChildrenList>
 		</WorkUnit>
 	</GameParameters>

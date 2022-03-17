@@ -5,8 +5,11 @@
 			<ChildrenList>
 				<SoundBank Name="Vehicle" ID="{564C4052-6EDD-4170-BAFE-DEB552FFCF74}">
 					<ObjectInclusionList>
+						<ObjectRef Name="Suspension" ID="{CB349797-75AE-4037-AA60-6E716754968F}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Engine" ID="{9A41658E-BE16-4101-BD51-7FAB9AEFF422}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_Wind" ID="{DBECA42E-2F3B-4369-B933-D8A0B920102F}" WorkUnitID="{1E4DCFC4-5179-4B70-902F-D134C90AED1B}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_Engine" ID="{AAC9F266-BD43-46DE-BF9E-C71A3A1A69BC}" WorkUnitID="{1E4DCFC4-5179-4B70-902F-D134C90AED1B}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_Suspension" ID="{E918C261-9359-47A4-95C4-7F3C7F6C7F59}" WorkUnitID="{1E4DCFC4-5179-4B70-902F-D134C90AED1B}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Wind" ID="{59574B0C-04F4-4A8A-AD09-A530C7B7FD5B}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}" Origin="Manual" Filter="7"/>
 					</ObjectInclusionList>
 					<ObjectExclusionList/>

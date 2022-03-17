@@ -358,7 +358,7 @@ MonoBehaviour:
     size: 500
   heightNoise: 0
   rotationEasing: 3
-  edgeLoopsPerMeter: 0.5
+  edgeLoopsPerMeter: 1
   debugRoadCurveStrenght: 0
   runoffAnimationCurve:
     serializedVersion: 2

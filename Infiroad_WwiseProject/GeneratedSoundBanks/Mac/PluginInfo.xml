@@ -2,7 +2,6 @@
 <PluginInfo Project="Infiroad_WwiseProject" Platform="Mac" BasePlatform="Mac">
 	<Plugins>
 		<Plugin Name="System" ID="11403271"/>
-		<Plugin Name="No Output" ID="11862023"/>
 		<Plugin Name="CrankcaseAudio REV" ID="27267154" DLL="CrankcaseAudioREVModelPlayer" StaticLib="CrankcaseAudioREVModelPlayerSource"/>
 	</Plugins>
 </PluginInfo>

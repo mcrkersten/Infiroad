@@ -16,11 +16,17 @@
 								<Value>3</Value>
 							</ValueList>
 						</Property>
-						<Property Name="SpeakerPanning" Type="int16" Value="1"/>
+						<Property Name="Pitch" Type="int32">
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{1156DFBD-F66C-47E2-AE7F-17A476EE4A36}"/>
+								</ModifierInfo>
+							</ModifierList>
+						</Property>
 						<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="50"/>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
-								<Value>-5</Value>
+								<Value>-27</Value>
 							</ValueList>
 						</Property>
 					</PropertyList>
@@ -237,8 +243,8 @@
 					<PositioningInfo>
 						<Panner Name="" ID="{C6CB4DE6-8252-4FC2-84BC-8C05AC8DEBAD}">
 							<PropertyList>
-								<Property Name="PanX" Type="Real64" Value="6.77236045021345E-15"/>
-								<Property Name="PanY" Type="Real64" Value="-67.2101449275362"/>
+								<Property Name="PanX" Type="Real64" Value="4.42930153321976"/>
+								<Property Name="PanY" Type="Real64" Value="-26.9907664997483"/>
 							</PropertyList>
 						</Panner>
 						<Position Name="" ID="{283BB176-9735-4DB7-930A-75AB2DF06852}"/>
@@ -268,32 +274,6 @@
 							<ValueList>
 								<Value>1060</Value>
 							</ValueList>
-							<RTPCList>
-								<RTPC Name="" ID="{6E7979C0-0443-440E-9C7D-EAFBED925C6B}" ShortID="660646228">
-									<ReferenceList>
-										<Reference Name="ControlInput">
-											<ObjectRef Name="Velocity" ID="{671F2341-4E24-4808-A90D-EF6A2E7DE1CE}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
-										</Reference>
-									</ReferenceList>
-									<Curve Name="" ID="{067ED85F-0D92-4990-91CE-8F617C8B3733}">
-										<PropertyList>
-											<Property Name="Flags" Type="int32" Value="65537"/>
-										</PropertyList>
-										<PointList>
-											<Point>
-												<XPos>0</XPos>
-												<YPos>-262</YPos>
-												<Flags>5</Flags>
-											</Point>
-											<Point>
-												<XPos>250</XPos>
-												<YPos>998</YPos>
-												<Flags>37</Flags>
-											</Point>
-										</PointList>
-									</Curve>
-								</RTPC>
-							</RTPCList>
 						</Property>
 						<Property Name="RenderEffect0" Type="bool">
 							<ValueList>
@@ -306,30 +286,6 @@
 								<Value>-8</Value>
 							</ValueList>
 							<RTPCList>
-								<RTPC Name="" ID="{0BB34BC3-CDBB-415A-AB7C-2B345148D3C0}" ShortID="531006035">
-									<ReferenceList>
-										<Reference Name="ControlInput">
-											<ObjectRef Name="Velocity" ID="{671F2341-4E24-4808-A90D-EF6A2E7DE1CE}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
-										</Reference>
-									</ReferenceList>
-									<Curve Name="" ID="{0586CBED-6F66-4B06-91F9-A2575E079FBD}">
-										<PropertyList>
-											<Property Name="Flags" Type="int32" Value="3"/>
-										</PropertyList>
-										<PointList>
-											<Point>
-												<XPos>0</XPos>
-												<YPos>-200</YPos>
-												<Flags>5</Flags>
-											</Point>
-											<Point>
-												<XPos>250</XPos>
-												<YPos>0.66257</YPos>
-												<Flags>37</Flags>
-											</Point>
-										</PointList>
-									</Curve>
-								</RTPC>
 								<RTPC Name="" ID="{DF7EE1D0-524B-42BA-9CEC-C4295D23C75D}" ShortID="421323715">
 									<ReferenceList>
 										<Reference Name="ControlInput">
@@ -667,6 +623,96 @@
 					</ChildrenList>
 					<ObjectLists/>
 				</RandomSequenceContainer>
+				<Sound Name="Suspension" ID="{CB349797-75AE-4037-AA60-6E716754968F}" ShortID="148863969">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
+						<Property Name="Highpass" Type="int16">
+							<ValueList>
+								<Value>33</Value>
+							</ValueList>
+						</Property>
+						<Property Name="Lowpass" Type="int16">
+							<ValueList>
+								<Value>56</Value>
+							</ValueList>
+						</Property>
+						<Property Name="Pitch" Type="int32">
+							<ValueList>
+								<Value>-1340</Value>
+							</ValueList>
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{8A6D2710-1B91-4E00-9602-95DB5B98171B}">
+										<PropertyList>
+											<Property Name="Enabled" Type="bool" Value="True"/>
+											<Property Name="Max" Type="Real64" Value="300"/>
+											<Property Name="Min" Type="Real64" Value="-300"/>
+										</PropertyList>
+									</Modifier>
+								</ModifierInfo>
+							</ModifierList>
+						</Property>
+						<Property Name="Volume" Type="Real64">
+							<RTPCList>
+								<RTPC Name="" ID="{F7FC2293-DC6C-4E9B-8567-32622DE497DD}" ShortID="46877045">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="FrontSuspension" ID="{62D94335-365F-4CF3-8E06-F3DD25BE1E0C}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{AD6ECE33-6FB0-4A2E-884C-AE146968DEA7}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>-200</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>3</XPos>
+												<YPos>0</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Attenuation">
+							<ObjectRef Name="Engine" ID="{2DEFA4A0-09BD-4373-85F5-7FF4C3BD9FE2}" WorkUnitID="{246E75F1-B3E1-4566-899A-8091C133C344}"/>
+						</Reference>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="car-suspension-bounce-car-rear-suspension-bounce" ID="{FB34D658-32DE-4FD5-ACA8-72C43BCD89B6}">
+							<PropertyList>
+								<Property Name="FadeInDuration" Type="Real64" Value="0.0381526636439162"/>
+								<Property Name="FadeOutDuration" Type="Real64" Value="0.1728456897876"/>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+								<Property Name="TrimBegin" Type="Real64" Value="0.712007918188475"/>
+								<Property Name="TrimEnd" Type="Real64" Value="0.92135389264863"/>
+							</PropertyList>
+							<Language>SFX</Language>
+							<AudioFile>car-suspension-bounce-car-rear-suspension-bounce.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="270640359"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="car-suspension-bounce-car-rear-suspension-bounce" ID="{FB34D658-32DE-4FD5-ACA8-72C43BCD89B6}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

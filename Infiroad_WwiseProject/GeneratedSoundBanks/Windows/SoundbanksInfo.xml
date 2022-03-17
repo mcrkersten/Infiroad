@@ -11,12 +11,12 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Language="SFX" Hash="3912485521">
+		<SoundBank Id="1355168291" Language="SFX" Hash="1708815885">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="2025709351" Language="SFX" Hash="1951485554">
+		<SoundBank Id="2025709351" Language="SFX" Hash="257264447">
 			<ObjectPath>\SoundBanks\Default Work Unit\Vehicle</ObjectPath>
 			<ShortName>Vehicle</ShortName>
 			<Path>Vehicle.bnk</Path>
@@ -29,9 +29,28 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1020223172" Name="Play_Wind" ObjectPath="\Events\Default Work Unit\Play_Wind" DurationType="Infinite"/>
+				<Event Id="4142784629" Name="Play_Suspension" ObjectPath="\Events\Default Work Unit\Play_Suspension" MaxAttenuation="30." DurationType="OneShot" DurationMin="0.381731" DurationMax="0.539849">
+					<IncludedMemoryFiles>
+						<File Id="270640359" Language="SFX">
+							<ShortName>car-suspension-bounce-car-rear-suspension-bounce.wav</ShortName>
+							<Path>SFX\car-suspension-bounce-car-rear-suspension-bounce_ECCC6CA4.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1020223172" Name="Play_Wind" ObjectPath="\Events\Default Work Unit\Play_Wind" DurationType="Infinite">
+					<IncludedMemoryFiles>
+						<File Id="493693357" Language="SFX">
+							<ShortName>strong-wind-blowing-sound-background-sound-effect.wav</ShortName>
+							<Path>SFX\strong-wind-blowing-sound-background-sound-effect_80497B0C.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
+				<File Id="270640359" Language="SFX">
+					<ShortName>car-suspension-bounce-car-rear-suspension-bounce.wav</ShortName>
+					<Path>SFX\car-suspension-bounce-car-rear-suspension-bounce_ECCC6CA4.wem</Path>
+				</File>
 				<File Id="493693357" Language="SFX">
 					<ShortName>strong-wind-blowing-sound-background-sound-effect.wav</ShortName>
 					<Path>SFX\strong-wind-blowing-sound-background-sound-effect_80497B0C.wem</Path>
@@ -44,6 +63,7 @@
 			<GameParameters>
 				<GameParameter Id="1114824702" Name="RMP" ObjectPath="\Game Parameters\Default Work Unit\RMP"/>
 				<GameParameter Id="1172844112" Name="Gear" ObjectPath="\Game Parameters\Default Work Unit\Gear"/>
+				<GameParameter Id="2076996661" Name="FrontSuspension" ObjectPath="\Game Parameters\Default Work Unit\FrontSuspension"/>
 				<GameParameter Id="2995819693" Name="Throttle" ObjectPath="\Game Parameters\Default Work Unit\Throttle"/>
 				<GameParameter Id="3519441192" Name="Velocity" ObjectPath="\Game Parameters\Default Work Unit\Velocity"/>
 			</GameParameters>

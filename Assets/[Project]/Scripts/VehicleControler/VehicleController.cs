@@ -31,6 +31,7 @@ public class VehicleController : MonoBehaviour
     private float ackermannAngleRight;
     private Rigidbody rb;
     private float slideDirection;
+    private float steerDelay;
 
     public List<Suspension> suspensions = new List<Suspension>();
     public List<DownForceWing> downforceWing = new List<DownForceWing>();
@@ -211,7 +212,8 @@ public class VehicleController : MonoBehaviour
     {
         float steering = steerPosition;
         if(inputType == UserInputType.Controller)
-            steering = controllerSteering.Evaluate(steerPosition);
+            steering = Mathf.Lerp(steerDelay, controllerSteering.Evaluate(steerPosition), Time.deltaTime);
+        steerDelay = steering;
 
         steeringWheel.transform.localEulerAngles = new Vector3(steeringWheel.transform.localEulerAngles.x, steering * (float)wheelInputAngle, steeringWheel.transform.localEulerAngles.z);
         float steerForce = Mathf.Clamp(steering * 2.25f, -steeringRatio, steeringRatio);
