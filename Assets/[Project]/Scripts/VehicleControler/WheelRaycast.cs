@@ -11,18 +11,19 @@ public class WheelRaycast : MonoBehaviour
 
     [Header("General Slip")]
     public AnimationCurve slipCurve;
+    [SerializeField] private AnimationCurve brakeLock;
+    [SerializeField] private AnimationCurve wheelSpin;
 
     private Vector3 wheelModelLocalStartPosition;
     private Vector3 suspensionLocalStartPosition;
 
     [HideInInspector] public Vector3 wheelVelocityLocalSpace;
     [HideInInspector] public float steeringWheelForce;
-
-    public float WheelForce { get { return steeringWheelForce; } }
     public float RPM;
 
     [Header("Wheel")]
     public float wheelRadius;
+    private float tireCircumference;
     public float steerAngle;
 
 
@@ -31,6 +32,7 @@ public class WheelRaycast : MonoBehaviour
 
     private void Start()
     {
+        tireCircumference = (Mathf.PI * 2f) * wheelRadius;
         wheelModelLocalStartPosition = new Vector3(wheelModel.transform.localPosition.x, 0, wheelModel.transform.localPosition.z);
         suspensionLocalStartPosition = new Vector3(suspension.transform.localPosition.x, 0, suspension.transform.localPosition.z);
     }
@@ -47,32 +49,34 @@ public class WheelRaycast : MonoBehaviour
 
     public bool Raycast(float maxLenght, LayerMask layerMask, out RaycastHit hit)
     {
-        if (Physics.SphereCast(transform.position, wheelRadius, -transform.up, out RaycastHit hitPoint, maxLenght, layerMask))
+        if (Physics.SphereCast(transform.position, wheelRadius, -transform.root.up, out RaycastHit hitPoint, maxLenght, layerMask))
         {
-            wheelModel.transform.localPosition = wheelModelLocalStartPosition + (-this.transform.up * (hitPoint.distance));
-            suspension.transform.localPosition = suspensionLocalStartPosition + (-this.transform.up * (hitPoint.distance));
+            wheelModel.transform.localPosition = wheelModelLocalStartPosition + (-Vector3.up * (hitPoint.distance));
+            suspension.transform.localPosition = suspensionLocalStartPosition + (-Vector3.up * (hitPoint.distance));
             hit = hitPoint;
+            
             return true;
         }
+        wheelModel.transform.localPosition = wheelModelLocalStartPosition + (-Vector3.up * maxLenght);
+        suspension.transform.localPosition = suspensionLocalStartPosition + (-Vector3.up * maxLenght);
         hit = new RaycastHit();
         return false;
     }
 
-    public void RotateWheelModel(float wheelBrakeSlip, SuspensionPosition suspensionPosition)
+    public float RotateWheelModel(float verticalForce, SuspensionPosition suspensionPosition)
     {
-        float circumference = (Mathf.PI * 2f) * wheelRadius;
-        Vector3 velocity = wheelVelocityLocalSpace * 3.6f;
-        float speed = velocity.z / circumference;
+        float wheelLockPercentage = brakeLock.Evaluate(verticalForce);
+        float wheelSpinPercentage = wheelSpin.Evaluate(verticalForce);
+        float combinedPercentage = 1f - Mathf.Clamp((1f - wheelLockPercentage) + (1f - wheelSpinPercentage), 0f, 1f);
 
-        if (wheelBrakeSlip > 0f)
-            speed = 0;
-
+        float rotationSpeed = (wheelVelocityLocalSpace.z * 3.6f) / tireCircumference;
         if (suspensionPosition == SuspensionPosition.FrontRight || suspensionPosition == SuspensionPosition.RearRight)
-            wheelModel.transform.Rotate(Vector3.left, -speed);
+            wheelModel.transform.Rotate(Vector3.right, rotationSpeed * combinedPercentage);
         else
-            wheelModel.transform.Rotate(Vector3.left, speed);
+            wheelModel.transform.Rotate(Vector3.left, rotationSpeed * combinedPercentage);
 
         float meterPerSecond = wheelVelocityLocalSpace.z;
         RPM = meterPerSecond / wheelRadius;
+        return combinedPercentage;
     }
 }

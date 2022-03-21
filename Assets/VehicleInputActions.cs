@@ -267,6 +267,17 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Clutch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6fc590a9-faa6-4005-9eb3-8d8d2ddf9f28"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Clutch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },

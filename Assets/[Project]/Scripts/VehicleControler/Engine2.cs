@@ -37,7 +37,6 @@ public class Engine2
 
     private FeedbackComponent feedbackComponent;
     public AnimationCurve RPM_feedbackCurve;
-    public AnimationCurve EnginePullfeedbackCurve;
     public void InitializeEngine()
     {
         //General settings
@@ -71,7 +70,9 @@ public class Engine2
 
         engineRPMAudio.SetGlobalValue(lastRPM);
         velocityAudio.SetGlobalValue(velocity);
-        dashboard.UpdateTechometerDile(lastRPM / maxRPM);
+
+        dashboard.UpdateMeter(lastRPM / maxRPM, DashboardMeter.MeterType.Tacheometer);
+        dashboard.UpdateMeter(currentForwardSpeed * 3.6f, DashboardMeter.MeterType.Speedometer);
 
         feedbackComponent.UpdateHighFrequencyRumble( RPM_feedbackCurve.Evaluate(lastRPM / maxRPM));
         feedbackComponent.UpdateLowFrequencyRumble(velocity/100f);

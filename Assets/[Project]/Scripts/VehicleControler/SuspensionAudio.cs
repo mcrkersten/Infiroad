@@ -16,9 +16,9 @@ public class SuspensionAudio : MonoBehaviour
         bool left = false;
         foreach (Suspension s in suspension)
         {
-            if (i < s.stress)
+            if (i < s.stressSuspensionAudio)
                 left = true;
-            i += Mathf.Abs(s.stress);
+            i += Mathf.Abs(s.stressSuspensionAudio);
         }
         i = (i / (suspension.Count - 1))*30f;
         if (i > .6f)
@@ -26,15 +26,12 @@ public class SuspensionAudio : MonoBehaviour
             if (left)
             {
                 Event.Post(this.left);
-                Debug.Log("Left");
             }
             else
             {
                 Event.Post(this.right);
-                Debug.Log("Right");
             }
         }
-        Debug.Log(i);
         RTCP.SetGlobalValue(i);
     }
 }

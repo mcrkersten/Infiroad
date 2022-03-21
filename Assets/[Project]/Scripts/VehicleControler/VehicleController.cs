@@ -25,19 +25,21 @@ public class VehicleController : MonoBehaviour
     [Space]
     public DriveType driveType;
     public Transform centerOfMass;
-    public Transform steeringWheel;
 
     private float ackermannAngleLeft;
     private float ackermannAngleRight;
+
     private Rigidbody rb;
-    private float slideDirection;
-    private float steerDelay;
+    [HideInInspector] public float steerWeight;
+
 
     public List<Suspension> suspensions = new List<Suspension>();
     public List<DownForceWing> downforceWing = new List<DownForceWing>();
 
+    public Transform steeringWheel;
+    [SerializeField] private WheelModelRotation wheelModelRotation;
     public UserInputType userInputType;
-    public AnimationCurve controllerSteering;
+    public float steeringStrenght;
 
     public VehicleUserInterfaceData userInterface;
     private FeedbackSystem feedbackSystem;
@@ -129,20 +131,42 @@ public class VehicleController : MonoBehaviour
         accelerationInput = SmoothInput(accelerationInput, .25f);
         float clutchInput = ReadClutchInput(userInputType);
         float brakeInput = ReadBrakeInput(userInputType);
-        float steerPosition = ReadSteeringInput(userInputType);
+        float steerInput = ReadSteeringInput(userInputType);
 
-         float physicsWobble = ApplyForceToWheels(brakeInput);
+        float physicsWobble = ApplyForceToWheels(brakeInput);
 
         float localForwardVelocity = Vector3.Dot(rb.velocity, transform.forward);
         engineForce = engine.Run(localForwardVelocity, accelerationInput, clutchInput, physicsWobble);
 
         SetUserInterface(accelerationInput, brakeInput);
 
-        CalculateSteeringInput(steerPosition, userInputType);
-        SetYrotationFrontWheels();
+        steerWeight = CalculateSteerWeight();
 
-        slideDirection = (CalculateSlideVector(suspensions));
-        steeringInput.SetWheelForce(-Mathf.RoundToInt(slideDirection));
+        float fibrationCompensation = localForwardVelocity * Time.deltaTime;
+        float playerSteeringForce = CalculateSteeringInputForce(steerInput, steerWeight, userInputType, fibrationCompensation);
+
+        ApplySteeringDirection(playerSteeringForce);
+        SetWheelModelRotation(-playerSteeringForce);
+        SetSteeringFrontWheels();
+
+        //Steering wheel input
+        steeringInput.SetInputWheelForce(Mathf.RoundToInt(-steerWeight * 100f));
+    }
+
+    private void SetWheelModelRotation(float rotation)
+    {
+        switch (wheelModelRotation)
+        {
+            case WheelModelRotation.X:
+                steeringWheel.transform.localEulerAngles = new Vector3(rotation * (float)wheelInputAngle, steeringWheel.transform.localEulerAngles.y, steeringWheel.transform.localEulerAngles.z);
+                break;
+            case WheelModelRotation.Y:
+                steeringWheel.transform.localEulerAngles = new Vector3(steeringWheel.transform.localEulerAngles.x, rotation * (float)wheelInputAngle, steeringWheel.transform.localEulerAngles.z);
+                break;
+            case WheelModelRotation.Z:
+                steeringWheel.transform.localEulerAngles = new Vector3(steeringWheel.transform.localEulerAngles.x, steeringWheel.transform.localEulerAngles.y, rotation * (float)wheelInputAngle);
+                break;
+        }
     }
 
     float lastInput;
@@ -157,7 +181,7 @@ public class VehicleController : MonoBehaviour
         return Vector3.zero;
     }
 
-
+    #region ReadInput
     private float ReadAccelerationInput(UserInputType inputType)
     {
         switch (inputType)
@@ -174,7 +198,8 @@ public class VehicleController : MonoBehaviour
         switch (inputType)
         {
             case UserInputType.Wheels:
-                return -.5f + steering.ReadValue<float>();
+                Debug.Log(Mathf.Lerp(-1f, 1f, steering.ReadValue<float>()) + " " + steering.ReadValue<float>());
+                return Mathf.Lerp(-1f, 1f, steering.ReadValue<float>());
             default:
                 return steering.ReadValue<float>();
         }
@@ -201,6 +226,7 @@ public class VehicleController : MonoBehaviour
                 return 1f - clutch.ReadValue<float>();
         }
     }
+    #endregion
 
     private void SetUserInterface(float accelerationInput, float brakeInput)
     {
@@ -208,25 +234,39 @@ public class VehicleController : MonoBehaviour
         userInterface.brake = brakeInput;
     }
 
-    private void CalculateSteeringInput(float steerPosition, UserInputType inputType)
+    private float steeringForce = 0f;
+    private float CalculateSteeringInputForce(float steerInput, float steerWeight, UserInputType inputType, float power)
     {
-        float steering = steerPosition;
+        float steering = steeringForce;
         if(inputType == UserInputType.Controller)
-            steering = Mathf.Lerp(steerDelay, controllerSteering.Evaluate(steerPosition), Time.deltaTime);
-        steerDelay = steering;
-
-        steeringWheel.transform.localEulerAngles = new Vector3(steeringWheel.transform.localEulerAngles.x, steering * (float)wheelInputAngle, steeringWheel.transform.localEulerAngles.z);
-        float steerForce = Mathf.Clamp(steering * 2.25f, -steeringRatio, steeringRatio);
-
-        if (steering > 0)//right
         {
-            ackermannAngleLeft = Mathf.Rad2Deg * Mathf.Atan(VehicleConstants.WHEEL_BASE / (VehicleConstants.TURN_RADIUS + (VehicleConstants.REAR_TRACK / 2))) * steerForce;
-            ackermannAngleRight = Mathf.Rad2Deg * Mathf.Atan(VehicleConstants.WHEEL_BASE / (VehicleConstants.TURN_RADIUS - (VehicleConstants.REAR_TRACK / 2))) * steerForce;
+            steering += Mathf.Lerp(0f, steerInput + (steerWeight/(1.5f)), Time.deltaTime);
+            steering = Mathf.Clamp(steering, -1f, 1f);
+            steeringForce = steering;
+            return steeringForce;
         }
-        else if (steering < 0)//left
+        return steerInput;
+    }
+
+    /// <summary>
+    /// Apply direction 
+    /// -1f = full left rotation
+    /// 1f = full right rotation
+    /// </summary>
+    /// <param name="rotation"></param>
+    private void ApplySteeringDirection(float rotation)
+    {
+        float steerDirection = Mathf.Clamp(rotation, -steeringRatio, steeringRatio);
+
+        if (rotation > 0)//right
         {
-            ackermannAngleLeft = Mathf.Rad2Deg * Mathf.Atan(VehicleConstants.WHEEL_BASE / (VehicleConstants.TURN_RADIUS - (VehicleConstants.REAR_TRACK / 2))) * steerForce;
-            ackermannAngleRight = Mathf.Rad2Deg * Mathf.Atan(VehicleConstants.WHEEL_BASE / (VehicleConstants.TURN_RADIUS + (VehicleConstants.REAR_TRACK / 2))) * steerForce;
+            ackermannAngleLeft = Mathf.Rad2Deg * Mathf.Atan(VehicleConstants.WHEEL_BASE / (VehicleConstants.TURN_RADIUS + (VehicleConstants.REAR_TRACK / 2))) * steerDirection;
+            ackermannAngleRight = Mathf.Rad2Deg * Mathf.Atan(VehicleConstants.WHEEL_BASE / (VehicleConstants.TURN_RADIUS - (VehicleConstants.REAR_TRACK / 2))) * steerDirection;
+        }
+        else if (rotation < 0)//left
+        {
+            ackermannAngleLeft = Mathf.Rad2Deg * Mathf.Atan(VehicleConstants.WHEEL_BASE / (VehicleConstants.TURN_RADIUS - (VehicleConstants.REAR_TRACK / 2))) * steerDirection;
+            ackermannAngleRight = Mathf.Rad2Deg * Mathf.Atan(VehicleConstants.WHEEL_BASE / (VehicleConstants.TURN_RADIUS + (VehicleConstants.REAR_TRACK / 2))) * steerDirection;
         }
         else
         {
@@ -235,7 +275,7 @@ public class VehicleController : MonoBehaviour
         }
     }
 
-    private void SetYrotationFrontWheels()
+    private void SetSteeringFrontWheels()
     {
         foreach (Suspension w in suspensions)
         {
@@ -298,16 +338,29 @@ public class VehicleController : MonoBehaviour
         }
     }
 
-    private float CalculateSlideVector(List<Suspension> frontSuspensions)
+    /// <summary>
+    /// From -1f, to 1f
+    /// </summary>
+    /// <returns></returns>
+    private float CalculateSteerWeight()
     {
         float value = 0;
         foreach (Suspension w in suspensions)
         {
             if(w.suspensionPosition == SuspensionPosition.FrontLeft || w.suspensionPosition == SuspensionPosition.FrontRight)
-                value += w.wheel.WheelForce;
+            {
+                value += w.wheel.steeringWheelForce;
+            }
         }
-        value = value / 2f;
-        return value;
+
+        return value/2f;
+    }
+
+    private enum WheelModelRotation
+    {
+        X = 0,
+        Y,
+        Z,
     }
 }
 

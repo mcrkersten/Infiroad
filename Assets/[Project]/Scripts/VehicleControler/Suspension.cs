@@ -30,7 +30,7 @@ public class Suspension : MonoBehaviour
     public float test;
 
     //For audio;
-    [HideInInspector] public float stress;
+    [HideInInspector] public float stressSuspensionAudio;
 
     private FeedbackComponent feedbackComponent;
     public AnimationCurve Slip_feedbackCurve;
@@ -49,7 +49,6 @@ public class Suspension : MonoBehaviour
     public float SimulatePhysics(float brakeInput, float engineForce)
     {
         float downForce = 0f;
-        float wheelSlipAnimate = 0f;
         float physicsWobble = 0f;
         if (wheel.Raycast(maxLength, layerMask, out RaycastHit hit))
         {
@@ -59,17 +58,16 @@ public class Suspension : MonoBehaviour
 
             wheel.wheelVelocityLocalSpace = wheel.transform.InverseTransformDirection(rb.GetPointVelocity(hit.point));
 
-            float suspensionCompression = 0;
+            float suspensionCompression;
             Vector3 suspensionForce = CalculateSuspensionForce(hit, out suspensionCompression);
             physicsWobble = suspensionCompression;
             rb.AddForceAtPosition(suspensionForce, hit.point);
-            downForce = suspensionForce.y + (rb.mass/4f);
+            downForce = suspensionForce.y + (rb.mass);
 
             float accelerationForce = engineForce;
             float brakeForce = CalculateBrakingForce(brakeInput);
-            float sidewaysForce = -wheel.wheelVelocityLocalSpace.x * downForce;
 
-            Vector3 localForceDirection = CalculateForces(accelerationForce, brakeForce, sidewaysForce, downForce);
+            Vector3 localForceDirection = CalculateForces(accelerationForce, brakeForce, downForce);
             wheel.forceDirectionDebug = localForceDirection;
             Vector3 worldForceDirection = wheel.transform.TransformDirection(localForceDirection);
             //Check if valid
@@ -78,60 +76,43 @@ public class Suspension : MonoBehaviour
 
             Debug.DrawRay(wheel.transform.position, -wheel.transform.up * hit.distance, Color.red);
 
-            stress = Mathf.Lerp(stress, physicsWobble, Time.deltaTime/2f);
+            stressSuspensionAudio = Mathf.Lerp(stressSuspensionAudio, physicsWobble, Time.deltaTime/2f);
         }
         else
         {
             wheel.steeringWheelForce = 0;
         }
-
-        //Technical debt
-        wheel.RotateWheelModel(wheelSlipAnimate, suspensionPosition);
         return physicsWobble;
     }
 
-    private Vector3 CalculateForces(float accelerationForce, float brakeForce, float sidewaysForce, float downForce)
+    private Vector3 CalculateForces(float accelerationForce, float brakeForce, float downForce)
     {
         Vector2 forward = new Vector2(0f, accelerationForce + brakeForce);
-        Vector2 sideways = new Vector2(sidewaysForce, 0f);
+        float time2 = -forward.y / downForce;
+        float brakeSlip = wheel.RotateWheelModel(time2, suspensionPosition);
+        if (suspensionPosition == SuspensionPosition.FrontLeft)
+            Debug.Log(brakeSlip);
+
+        Vector3 brake = this.transform.root.InverseTransformDirection(rb.GetPointVelocity(transform.position));
+        Vector2 sideways = new Vector2(Mathf.Lerp(-wheel.wheelVelocityLocalSpace.x, -brake.x, 1f - brakeSlip) * downForce, 0f);
         Vector2 rawForce = forward + sideways;
 
-        float distance = Vector2.Distance(Vector2.zero, sideways + forward);
+        //Normal force | No accelation or brake influence on sideforce
+        float distance = Vector2.Distance(Vector2.zero, rawForce);
         float time = distance / downForce;
-        float force = wheel.slipCurve.Evaluate(Mathf.Abs(time));
-        float maxForce = downForce * force;
+        float gripPercentage = wheel.slipCurve.Evaluate(Mathf.Abs(time));
+        float gripForce = downForce * gripPercentage;
+        Vector3 clampedGripForce =  ClampForce(rawForce, gripForce);
 
-        Vector3 cleanedForce =  ReturnCleanedForce(maxForce, rawForce);
-
-        float scaledForce = cleanedForce.x / maxForce;
-        //wheel.steeringWheelForce = -(scaledForce) * 100f;
-        wheel.gripDebug = Mathf.Max(.01f, force);
-
-        wheel.steeringWheelForce = test;
-        switch (suspensionPosition)
-        {
-            case SuspensionPosition.FrontLeft:
-                Debug.Log(test);
-                feedbackComponent.UpdateHighFrequencyRumble(Slip_feedbackCurve.Evaluate(Mathf.Abs(sideways.x / downForce)));
-                break;
-            case SuspensionPosition.FrontRight:
-                feedbackComponent.UpdateHighFrequencyRumble(Slip_feedbackCurve.Evaluate(Mathf.Abs(sideways.x / downForce)));
-                break;
-            case SuspensionPosition.RearLeft:
-                feedbackComponent.UpdateLowFrequencyRumble(Slip_feedbackCurve.Evaluate(Mathf.Abs(sideways.x / downForce)));
-                break;
-            case SuspensionPosition.RearRight:
-                feedbackComponent.UpdateLowFrequencyRumble(Slip_feedbackCurve.Evaluate(Mathf.Abs(sideways.x / downForce)));
-                break;
-            default:
-                break;
-        }
-        return cleanedForce;
+        wheel.gripDebug = Mathf.Max(.01f, gripPercentage);
+        float horizontalForce = Mathf.Clamp(sideways.x, -1f, 1f) * -gripPercentage;
+        wheel.steeringWheelForce = horizontalForce;
+        return clampedGripForce;
     }
 
-    private Vector3 ReturnCleanedForce(float maxForce, Vector2 rawForce)
+    private Vector3 ClampForce(Vector2 rawForce, float absoluteClampValue)
     {
-        return new Vector3(Mathf.Clamp(rawForce.x, -maxForce, maxForce), 0f, Mathf.Clamp(rawForce.y, -maxForce, maxForce));
+        return new Vector3(Mathf.Clamp(rawForce.x, -absoluteClampValue, absoluteClampValue), 0f, Mathf.Clamp(rawForce.y, -absoluteClampValue, absoluteClampValue));
     }
 
     private Vector3 CalculateSuspensionForce(RaycastHit hit, out float suspensionCompresssion)

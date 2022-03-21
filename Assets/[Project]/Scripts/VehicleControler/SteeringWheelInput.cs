@@ -18,7 +18,7 @@ public class SteeringWheelInput
         }
     }
 
-    public void SetWheelForce(int slideVector)
+    public void SetInputWheelForce(int slideVector)
     {
         LogitechGSDK.LogiPlayConstantForce(0, slideVector);
     }
