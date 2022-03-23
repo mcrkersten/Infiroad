@@ -57,15 +57,15 @@ public class Engine2
     public float Run(float currentForwardSpeed, float throttle, float clutch, float physicsWobble)
     {
         clutch = SemiAutomaticClutch(clutch);
-        float mechanicalForce = CalculateMechanicalForce(currentForwardSpeed, throttle);
+        float mechanicalForce = CalculateMechanicalFriction(currentForwardSpeed, throttle);
 
         float effectiveGearRatio = gearRatios[currentEngagedGear] * finalDriveRatio;
         float wheelRPM = currentForwardSpeed / (rollingCircumference / 60f);
         float enginewRPM = ((wheelRPM * effectiveGearRatio) - (physicsWobble * physicsImpact));
         float velocity = (enginewRPM * clutch) + (Mathf.Lerp(3500f, maxRPM, throttle ) * (1f - clutch)) - lastRPM;
         lastRPM = Mathf.Lerp(lastRPM + velocity, enginewRPM, clutch);
-        float engineTorque = (mechanicalForce + (CalculateEnginePullTorque(lastRPM) * throttle * effectiveGearRatio)) * clutch;
-        float engineForce = engineTorque / driveWheelRadiusInMeter;
+        float wheelTorque = (mechanicalForce + (CalculateEngineTorque(lastRPM) * throttle * effectiveGearRatio)) * clutch;
+        float forceToApply = wheelTorque / driveWheelRadiusInMeter;
 
 
         engineRPMAudio.SetGlobalValue(lastRPM);
@@ -78,7 +78,7 @@ public class Engine2
         feedbackComponent.UpdateLowFrequencyRumble(velocity/100f);
 
         throttleAudio.SetGlobalValue(throttle);
-        return engineForce;
+        return forceToApply;
     }
 
     private float SemiAutomaticClutch(float clutch)
@@ -106,7 +106,7 @@ public class Engine2
         return clutch;
     }
 
-    float CalculateMechanicalForce(float currentForwardSpeed, float throttle)
+    float CalculateMechanicalFriction(float currentForwardSpeed, float throttle)
     {
         float effectiveGearRatio = gearRatios[currentSelectedGear] * finalDriveRatio;
         float wheelRPM = currentForwardSpeed / (rollingCircumference / 60f);
@@ -114,11 +114,11 @@ public class Engine2
 
         float idealEngineRPM = (3500f) * (1f - throttle);
         if(currentEngineRPM < idealEngineRPM)
-            return idealEngineRPM == 0f ? 0f : CalculateEnginePullTorque(idealEngineRPM);
+            return idealEngineRPM == 0f ? 0f : CalculateEngineTorque(idealEngineRPM);
         return CalculateEngineBrakeTorque(idealEngineRPM, currentEngineRPM);
     }
 
-    private float CalculateEnginePullTorque(float rpm)
+    private float CalculateEngineTorque(float rpm)
     {
         float time = rpm / maxRPM;
         return engineTorqueProfile.Evaluate(time);
