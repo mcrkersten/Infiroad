@@ -17,7 +17,7 @@ public class Engine2
     private float lastRPM = 0f;
 
     public float[] gearRatios =  { 2.36f, 1.88f, 1.5f, 1.19f, .97f };
-    private float finalDriveRatio = 4.49f;
+    private float finalDriveRatio = 6.49f;
 
     public List<WheelRaycast> driveWheels = new List<WheelRaycast>();
     private float driveWheelRadiusInMeter;
@@ -68,7 +68,7 @@ public class Engine2
         float forceToApply = wheelTorque / driveWheelRadiusInMeter;
 
 
-        engineRPMAudio.SetGlobalValue(lastRPM);
+        engineRPMAudio.SetGlobalValue(enginewRPM);
         velocityAudio.SetGlobalValue(velocity);
 
         dashboard.UpdateMeter(lastRPM / maxRPM, DashboardMeter.MeterType.Tacheometer);

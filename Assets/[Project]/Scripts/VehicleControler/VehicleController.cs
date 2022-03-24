@@ -352,7 +352,7 @@ public class VehicleController : MonoBehaviour
                 value += w.wheel.steeringWheelForce;
             }
         }
-
+            Debug.Log(value);
         return value/2f;
     }
 

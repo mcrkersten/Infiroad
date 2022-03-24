@@ -78,10 +78,6 @@ public class Suspension : MonoBehaviour
 
             stressSuspensionAudio = Mathf.Lerp(stressSuspensionAudio, physicsWobble, Time.deltaTime/2f);
         }
-        else
-        {
-            wheel.steeringWheelForce = 0;
-        }
         return physicsWobble;
     }
 
@@ -90,11 +86,11 @@ public class Suspension : MonoBehaviour
         Vector2 forward = new Vector2(0f, accelerationForce + brakeForce);
         float time2 = -forward.y / downForce;
         float brakeSlip = wheel.RotateWheelModel(time2, suspensionPosition);
-        if (suspensionPosition == SuspensionPosition.FrontLeft)
-            Debug.Log(brakeSlip);
-
         Vector3 brake = this.transform.root.InverseTransformDirection(rb.GetPointVelocity(transform.position));
-        Vector2 sideways = new Vector2(Mathf.Lerp(-wheel.wheelVelocityLocalSpace.x, -brake.x, 1f - brakeSlip) * downForce, 0f);
+
+        float calc = Mathf.Lerp(-wheel.wheelVelocityLocalSpace.x, -brake.x, 1f - brakeSlip);
+        Vector2 sideways = new Vector2(calc * downForce, 0f);
+
         Vector2 rawForce = forward + sideways;
 
         //Normal force | No accelation or brake influence on sideforce
@@ -105,7 +101,7 @@ public class Suspension : MonoBehaviour
         Vector3 clampedGripForce =  ClampForce(rawForce, gripForce);
 
         wheel.gripDebug = Mathf.Max(.01f, gripPercentage);
-        float horizontalForce = Mathf.Clamp(sideways.x, -1f, 1f) * -gripPercentage;
+        float horizontalForce = Mathf.Clamp(clampedGripForce.x/downForce, -1f, 1f) * -Mathf.Abs(gripPercentage);
         wheel.steeringWheelForce = horizontalForce;
         return clampedGripForce;
     }

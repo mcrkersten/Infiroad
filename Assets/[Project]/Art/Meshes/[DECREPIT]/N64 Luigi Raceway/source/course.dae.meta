@@ -1,9 +1,119 @@
 fileFormatVersion: 2
 guid: 86db23302bf5fbe419edac5113aa005e
 ModelImporter:
-  serializedVersion: 20200
+  serializedVersion: 21202
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WT_EleArrow_ALL
+    second: {fileID: 2100000, guid: d0c4df3a4fff88e4c91dbbf74f6e0b24, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a_MainRoad_m
+    second: {fileID: 2100000, guid: faaf7597e4d2de44292420a5a2c31c9b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a_SAND_m
+    second: {fileID: 2100000, guid: 08ca583e8bd31104fb535abd88483fbb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a_bc_enseki_m
+    second: {fileID: 2100000, guid: ce7783395bfc6864c9d44157144ae1fd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a_bc_kankyakuseat_m
+    second: {fileID: 2100000, guid: f8cc68c1e31050b488632cdb3b9d254c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a_kusa_soto
+    second: {fileID: 2100000, guid: 82665288bf091ad49965db5009091f1b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: a_kusa_waki_m
+    second: {fileID: 2100000, guid: 4986930ccf4319d42b71ec5b50830691, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bc_kankyaku_m
+    second: {fileID: 2100000, guid: b67c80b525e76564a8bb099917042082, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bc_spot_m
+    second: {fileID: 2100000, guid: 0c6d89a09f5cc5540bdb52755e158b58, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bc_tree_one_m
+    second: {fileID: 2100000, guid: 7fe9e96b921a4f045a969d144fab55e3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: block3_m
+    second: {fileID: 2100000, guid: 01ec196cfb17e044a841aa87d69151bf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ef_dushBoard
+    second: {fileID: 2100000, guid: 5b101ced5790e64469c3eb606be097a0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: enkei_yama_m
+    second: {fileID: 2100000, guid: ef6a0867c3a82c7408ba079c5fb1bbc6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: fence
+    second: {fileID: 2100000, guid: 8a8734b616e6f9747a7784d26982abab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hana_m
+    second: {fileID: 2100000, guid: 8df7981833d4b0b4797638667b2fc48c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: kinoko_m
+    second: {fileID: 2100000, guid: 641727227b6bfb047ae3df7339c35530, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: kusa_kanban_m
+    second: {fileID: 2100000, guid: dee262515fa5c034bb962c0d7563dddf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lake_m
+    second: {fileID: 2100000, guid: 33c9143e1b36f5f46ac7596b9ee77a6f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lugcap_m
+    second: {fileID: 2100000, guid: d5628195749a9fa4a9e1c5d5615472e4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: popkanban_m
+    second: {fileID: 2100000, guid: 8bc33b5d6a566424d8008e9344946206, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tatemono_m
+    second: {fileID: 2100000, guid: 6d60d699cf9aff2428c94999b277ad46, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: yama_m
+    second: {fileID: 2100000, guid: a756b6f497775fd4da5cd01367f8fe43, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -14,6 +124,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -43,6 +154,7 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -54,6 +166,7 @@ ModelImporter:
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
