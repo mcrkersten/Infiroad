@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class WheelRaycast : MonoBehaviour
 {
@@ -10,7 +11,9 @@ public class WheelRaycast : MonoBehaviour
     [SerializeField] private List<SuspensionPointer> suspensionPointers = new List<SuspensionPointer>();
 
     [Header("General Slip")]
-    public AnimationCurve slipCurve;
+    public SurfaceScriptable currentSurface;
+
+
     [SerializeField] private AnimationCurve brakeLock;
     [SerializeField] private AnimationCurve wheelSpin;
 
@@ -54,13 +57,48 @@ public class WheelRaycast : MonoBehaviour
             wheelModel.transform.localPosition = wheelModelLocalStartPosition + (-Vector3.up * (hitPoint.distance));
             suspension.transform.localPosition = suspensionLocalStartPosition + (-Vector3.up * (hitPoint.distance));
             hit = hitPoint;
-            
+
+            Material m = GetMaterialFromRaycastHit(hit, hit.transform.GetComponent<Mesh>());
+            Debug.Log(m);
+            currentSurface = hit.transform.GetComponent<RoadSegment>().surfaceSettings.First(s => s.material == m);
             return true;
         }
         wheelModel.transform.localPosition = wheelModelLocalStartPosition + (-Vector3.up * maxLenght);
         suspension.transform.localPosition = suspensionLocalStartPosition + (-Vector3.up * maxLenght);
         hit = new RaycastHit();
         return false;
+    }
+
+    private Material GetMaterialFromRaycastHit(RaycastHit hit, Mesh mesh)
+    {
+        MeshCollider meshCollider = hit.collider as MeshCollider;
+        if (meshCollider == null || meshCollider.sharedMesh == null)
+            return null;
+
+        mesh = meshCollider.sharedMesh;
+        Renderer renderer = hit.collider.GetComponent<MeshRenderer>();
+
+        int[] hitTriangle = new int[]
+        {
+                    mesh.triangles[hit.triangleIndex * 3],
+                    mesh.triangles[hit.triangleIndex * 3 + 1],
+                    mesh.triangles[hit.triangleIndex * 3 + 2]
+        };
+
+        for (int i = 0; i < mesh.subMeshCount; i++)
+        {
+            int[] subMeshTris = mesh.GetTriangles(i);
+            for (int j = 0; j < subMeshTris.Length; j += 3)
+            {
+                if (subMeshTris[j] == hitTriangle[0] &&
+                    subMeshTris[j + 1] == hitTriangle[1] &&
+                    subMeshTris[j + 2] == hitTriangle[2])
+                {
+                    return renderer.sharedMaterials[i];
+                }
+            }
+        }
+        return null;
     }
 
     public float RotateWheelModel(float verticalForce, SuspensionPosition suspensionPosition)

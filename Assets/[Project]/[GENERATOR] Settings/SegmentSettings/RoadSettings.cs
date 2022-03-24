@@ -7,8 +7,9 @@ public class RoadSettings : ScriptableObject
 {
 	[Header("Appearance")]
     public VertexPoint[] points;
-	public List<Material> materials;
-	public Material extusionMaterial;
+	[SerializeField] private List<SurfaceScriptable> surfaceSettings = new List<SurfaceScriptable>();
+	[HideInInspector] public List<SurfaceScriptable> allSurfaceSettings = new List<SurfaceScriptable>();
+	public SurfaceScriptable runoffMaterial;
 	public int PointCount => points.Length;
 
 	[Header("Guardrail")]
@@ -21,7 +22,6 @@ public class RoadSettings : ScriptableObject
 	public string roadTypeTag;
 	public List<VegitationPool> assetPools = new List<VegitationPool>();
 
-	public float heightNoise;
 	public Ease rotationEasing = Ease.InOut;
 	public float edgeLoopsPerMeter;
 
@@ -51,6 +51,13 @@ public class RoadSettings : ScriptableObject
 	public float longPower;
 
 	public int seed;
+
+	public void UpdateAllRoadSurfaces()
+    {
+		allSurfaceSettings = new List<SurfaceScriptable>();
+		allSurfaceSettings.AddRange(surfaceSettings);
+		allSurfaceSettings.Add(runoffMaterial);
+    }
 
 	public NoiseGenerator generatorInstance 
 	{ 

@@ -279,8 +279,9 @@ MonoBehaviour:
     scalesWithCorner: 1
     extrudePoint: 0
     assetSpawnPoint: []
-  materials:
-  - {fileID: 2100000, guid: 735b67e5869a598489f8525d1965ecc5, type: 2}
+  surfaceSettings:
+  - {fileID: 11400000, guid: 9913d07f23f03c844bdd446da8bff5b7, type: 2}
+  - {fileID: 11400000, guid: a2d20a9566f01da458310c9728b622a1, type: 2}
   extusionMaterial: {fileID: 0}
   hasGuardrail: 1
   guardRail: {fileID: 11400000, guid: b725fa6678e620548b413d7deddcc79e, type: 2}
@@ -311,7 +312,6 @@ MonoBehaviour:
     prefabs:
     - {fileID: 1484271881014528276, guid: 3b40b7305dfc7a042a4dc185cd75ae76, type: 3}
     size: 3000
-  heightNoise: 0
   rotationEasing: 0
   edgeLoopsPerMeter: 2
   debugRoadCurveStrenght: 0

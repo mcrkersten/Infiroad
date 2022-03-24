@@ -38,8 +38,19 @@ public class RoadChainBuilder : MonoBehaviour
 
     private void Awake()
     {
+        ÚpdateAllRoadSettings();
         radiusDelay = 0f;
         InstantiateAssetPools();
+    }
+
+    /// <summary>
+    /// Creates a full list of all materials that can spawn on the road.
+    /// </summary>
+    private void ÚpdateAllRoadSettings()
+    {
+        foreach (VariationSettings variation in road.roadVariation)
+            foreach (VariationSettings.Variation var in variation.roadSettings)
+                var.roadSettings.UpdateAllRoadSurfaces();
     }
 
     private void Start()

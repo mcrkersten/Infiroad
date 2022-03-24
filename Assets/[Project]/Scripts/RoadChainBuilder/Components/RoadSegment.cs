@@ -25,12 +25,12 @@ public class RoadSegment : UniqueMesh {
 
 	[HideInInspector] public OrientedCubicBezier3D bezier;
 	[HideInInspector] public List<AssetSpawnEdge> assetSpawnEdges = new List<AssetSpawnEdge>();
+	[HideInInspector] public List<SurfaceScriptable> surfaceSettings = new List<SurfaceScriptable>();
 	// Serialized stuff, like settings
 	public float tangentLength = 3; // Tangent size. Note that it's only the tangent of the first point. The next segment controls the endpoint tangent length
 
 	// Non-serialized stuff
 	RoadMeshExtruder meshExtruder = new RoadMeshExtruder();
-
 	// Properties
 	public bool HasValidNextPoint => TryGetNextSegment() != null;
 	bool IsInValidChain => transform.parent.Ref()?.GetComponent<RoadChain>() != null;
@@ -45,6 +45,7 @@ public class RoadSegment : UniqueMesh {
 	// uvzStartEnd is used for the (optional) normalized coordinates along the whole track,
 	// x = start coordinate, y = end coordinate
 	public void CreateMesh( Vector2 nrmCoordStartEnd, RoadSettings settings ) {
+		surfaceSettings.AddRange(settings.allSurfaceSettings);
 		roadSetting = settings;
 		// Only generate a mesh if we've got a next control point
 		if ( HasValidNextPoint ) {
@@ -59,7 +60,7 @@ public class RoadSegment : UniqueMesh {
 				nrmCoordStartEnd: nrmCoordStartEnd,
 				edgeLoopsPerMeter: settings.edgeLoopsPerMeter,
 				tilingAspectRatio: GetTextureAspectRatio()
-			);;
+			);
 		} else if( meshCached != null ) {
 			DestroyImmediate( meshCached );
 		}

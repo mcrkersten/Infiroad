@@ -346,13 +346,8 @@ public class VehicleController : MonoBehaviour
     {
         float value = 0;
         foreach (Suspension w in suspensions)
-        {
             if(w.suspensionPosition == SuspensionPosition.FrontLeft || w.suspensionPosition == SuspensionPosition.FrontRight)
-            {
                 value += w.wheel.steeringWheelForce;
-            }
-        }
-            Debug.Log(value);
         return value/2f;
     }
 

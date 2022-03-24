@@ -24,7 +24,7 @@ MonoBehaviour:
     ParentPath: Virtual Acoustics\Default Work Unit
     guid: 3bc912454d5f1044abb246ea8c2d17ef
     GuidInternal: 
-    m_lastTime: -8585547648325277546
+    m_lastTime: -8585547019565537055
     List: []
   AuxBusWwu:
   - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
@@ -38,7 +38,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: 10c11122525dad4eb3e80acbec25d886
     GuidInternal: 
-    m_lastTime: -8585547648326532770
+    m_lastTime: -8585547019566787864
     List:
     - name: Master Audio Bus
       guid: d8a41415a61d2a41a17e75ca0c2149f3
@@ -66,7 +66,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: acfc11818922e14790e7d28625ee5da6
     GuidInternal: 
-    m_lastTime: -8585541343467755074
+    m_lastTime: -8585542708188715480
     List:
     - name: Vehicle
       guid: 52404c56dd6e7041bafedeb552ffcf74
@@ -94,7 +94,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: c4cf4d1e7951704b902fd134c90aed1b
     GuidInternal: 
-    m_lastTime: -8585541343467535039
+    m_lastTime: -8585542708276348578
     List:
     - name: Play_Engine
       guid: 66f2c9aa43bdde46bf9ec71a3a1a69bc
@@ -113,23 +113,6 @@ MonoBehaviour:
       maxAttenuation: 30
       maxDuration: -1
       minDuration: -1
-    - name: Play_Suspension
-      guid: 61c218e95993a44795c47f3c7f6c7f59
-      id: 4142784629
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: c4cf4d1e7951704b902fd134c90aed1b
-      - ElementName: Play_Suspension
-        ObjectType: 3
-        guid: 61c218e95993a44795c47f3c7f6c7f59
-      Path: Events\Default Work Unit\Play_Suspension
-      maxAttenuation: 30
-      maxDuration: 0.539849
-      minDuration: 0.381731
     - name: Play_Wind
       guid: 2ea4ecdb3b2f6943b933d8a0b920102f
       id: 1020223172
@@ -159,22 +142,8 @@ MonoBehaviour:
     ParentPath: Game Parameters\Default Work Unit
     guid: a6859f98e086594d9e2652b5370a782f
     GuidInternal: 
-    m_lastTime: -8585541343467620057
+    m_lastTime: -8585542708276338602
     List:
-    - name: FrontSuspension
-      guid: 3543d9625f36f34c8e06f3dd25be1e0c
-      id: 2076996661
-      PathAndIcons:
-      - ElementName: Game Parameters
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: a6859f98e086594d9e2652b5370a782f
-      - ElementName: FrontSuspension
-        ObjectType: 13
-        guid: 3543d9625f36f34c8e06f3dd25be1e0c
-      Path: Game Parameters\Default Work Unit\FrontSuspension
     - name: Gear
       guid: 330380d33678e443925b33358d3222fe
       id: 1172844112
@@ -257,7 +226,7 @@ MonoBehaviour:
     ParentPath: States\Default Work Unit
     guid: 4497a01d860f5e4e826d13695fc7f0a5
     GuidInternal: 
-    m_lastTime: -8585547648325527596
+    m_lastTime: -8585547019565566977
     List: []
   SwitchWwu:
   - PhysicalPath: Switches\Default Work Unit.wwu
@@ -271,7 +240,7 @@ MonoBehaviour:
     ParentPath: Switches\Default Work Unit
     guid: f6f3ea8f39608d42bc6df3c1263298d5
     GuidInternal: 
-    m_lastTime: -8585547648326587778
+    m_lastTime: -8585547019565556881
     List: []
   TriggerWwu:
   - PhysicalPath: Triggers\Default Work Unit.wwu
@@ -285,10 +254,10 @@ MonoBehaviour:
     ParentPath: Triggers\Default Work Unit
     guid: 9b5e6fbce7e8a74d9514aa897955192f
     GuidInternal: 
-    m_lastTime: -8585541343467685064
+    m_lastTime: -8585547019565545989
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 0100000002000000040000000500000006000000070000000a0000000c0000000f0000001100000013000000140000001500000019000000
+  ExpandedWaapiItemIds: 
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

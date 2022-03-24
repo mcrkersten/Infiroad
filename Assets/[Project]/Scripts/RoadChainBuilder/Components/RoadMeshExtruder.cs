@@ -259,10 +259,13 @@ public class RoadMeshExtruder {
 
 		//mesh.SetTriangles( triIndices, 0 ); // <------------  SECOND ENTREE IS MATERIAL INDEX OF MESH
 		mesh.RecalculateNormals();
-		List<Material> m = new List<Material>();
-		m.AddRange(roadSettings.materials);
-		m.Add(roadSettings.extusionMaterial);
-		segment.GetComponent<MeshRenderer>().materials = m.ToArray();
+		List<SurfaceScriptable> m = new List<SurfaceScriptable>();
+		m.AddRange(roadSettings.allSurfaceSettings);
+
+		List<Material> mat = new List<Material>();
+        foreach (SurfaceScriptable item in m)
+			mat.Add(item.material);
+		segment.GetComponent<MeshRenderer>().materials = mat.ToArray();
 	}
 
 	private bool IsBetween(double testValue, double bound1, double bound2)
@@ -302,7 +305,10 @@ public class RoadMeshExtruder {
     {
 		int current = 0;
 		List<Vector2> uvs = new List<Vector2>();
-        foreach (Material m in roadSettings.materials)
+		List<SurfaceScriptable> sfsc = new List<SurfaceScriptable>();
+		sfsc.AddRange(roadSettings.allSurfaceSettings);
+
+		foreach (SurfaceScriptable m in sfsc)
         {
 			float min_Xuv = float.PositiveInfinity;
 			float max_Xuv = float.NegativeInfinity;
@@ -336,11 +342,10 @@ public class RoadMeshExtruder {
 	private List<List<int>> CreateTriangles(int skippedVertex, int edgeLoopCount, RoadSettings roadSettings)
     {
 		List<List<int>> tries = new List<List<int>>();
-		List<Material> materials = new List<Material>();
-		materials.AddRange(roadSettings.materials);
-		materials.Add(roadSettings.extusionMaterial);
+		List<SurfaceScriptable> surfaceScriptables = new List<SurfaceScriptable>();
+		surfaceScriptables.AddRange(roadSettings.allSurfaceSettings);
 
-		foreach (Material m in materials)
+		foreach (SurfaceScriptable surface in surfaceScriptables)
 			tries.Add(new List<int>());
 
 		// Generate Trianges
