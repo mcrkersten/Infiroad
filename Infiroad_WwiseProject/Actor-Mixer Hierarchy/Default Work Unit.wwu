@@ -170,25 +170,6 @@
 							</ChildrenList>
 							<Language>SFX</Language>
 							<PluginInnerObjectList>
-								<List Name="AccelDecelModelControlData">
-									<PluginInnerObject Name="" ID="{297798B2-39AA-42EE-8836-AE065BA12066}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418">
-										<PropertyList>
-											<Property Name="IdleRampIn" Type="Real32" Value="0.05"/>
-											<Property Name="IdleVolume" Type="Real32" Value="0.49"/>
-											<Property Name="Version" Type="int32" Value="2"/>
-										</PropertyList>
-									</PluginInnerObject>
-									<PluginInnerObject Name="" ID="{24A114E7-4D27-430A-B9E8-A16EE5A73216}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{A8641EAA-4734-491B-BC0B-F2E72D68B699}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{26BE8F13-AC9F-4D31-BBE6-2311F1210B01}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{E79870AE-444C-4D2F-BB31-001888389B66}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{ACD7084E-2AF3-4371-A00F-D731856A70E5}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{1E4FA36B-0453-4DDD-B428-04A6E3240384}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{86B64BF7-74C2-4468-9059-78D5BD5A52FC}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{5C2F01FB-7739-4E61-84B1-7DDDC8DD4940}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{54403FE9-9C73-4244-90C5-20CBF5AD80A5}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{4DCF4DDA-01EC-4E7A-B9DC-944BD20C0D43}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-								</List>
 								<List Name="EngineSimulationControlData">
 									<PluginInnerObject Name="" ID="{DF47A653-B7EC-4012-835E-B1D327806D99}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417">
 										<PropertyList>
@@ -211,6 +192,25 @@
 									<PluginInnerObject Name="" ID="{6E0C9E9F-2F12-4D37-ADAB-31260C1C8E5D}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
 									<PluginInnerObject Name="" ID="{4087951D-C4C8-458A-88F9-B72F1FF000E8}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
 									<PluginInnerObject Name="" ID="{7DC2E214-B40C-485A-8932-A373F609E3FE}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
+								</List>
+								<List Name="AccelDecelModelControlData">
+									<PluginInnerObject Name="" ID="{297798B2-39AA-42EE-8836-AE065BA12066}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418">
+										<PropertyList>
+											<Property Name="IdleRampIn" Type="Real32" Value="0.05"/>
+											<Property Name="IdleVolume" Type="Real32" Value="0.49"/>
+											<Property Name="Version" Type="int32" Value="2"/>
+										</PropertyList>
+									</PluginInnerObject>
+									<PluginInnerObject Name="" ID="{24A114E7-4D27-430A-B9E8-A16EE5A73216}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{A8641EAA-4734-491B-BC0B-F2E72D68B699}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{26BE8F13-AC9F-4D31-BBE6-2311F1210B01}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{E79870AE-444C-4D2F-BB31-001888389B66}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{ACD7084E-2AF3-4371-A00F-D731856A70E5}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{1E4FA36B-0453-4DDD-B428-04A6E3240384}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{86B64BF7-74C2-4468-9059-78D5BD5A52FC}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{5C2F01FB-7739-4E61-84B1-7DDDC8DD4940}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{54403FE9-9C73-4244-90C5-20CBF5AD80A5}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{4DCF4DDA-01EC-4E7A-B9DC-944BD20C0D43}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
 								</List>
 								<List Name="GranularModelControlData_Acceleration">
 									<PluginInnerObject Name="" ID="{87DA791D-8991-48B0-8B65-CEDFC4F7ECEB}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419">

@@ -11,7 +11,7 @@ public class Suspension : MonoBehaviour
     public SuspensionPosition suspensionPosition;
     public LayerMask layerMask;
     private Rigidbody rb;
-    public float brakeBias;
+    [HideInInspector] public float brakeBias;
 
     [Header("Suspension")]
     [Tooltip("Position of spring under 0 load")]
@@ -25,9 +25,6 @@ public class Suspension : MonoBehaviour
     private float minLength;
     private float maxLength;
     private float lastLength;
-
-    [Range(-100,100)]
-    public float test;
 
     //For audio;
     [HideInInspector] public float stressSuspensionAudio;

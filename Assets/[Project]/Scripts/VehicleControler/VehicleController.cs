@@ -19,6 +19,7 @@ public class VehicleController : MonoBehaviour
     private InputAction clutch;
 
     [Header("Vehicle configuration")]
+    [Range(0f,1f)] public float brakeBias;
     public Engine2 engine;
     private float engineForce;
 
@@ -32,12 +33,14 @@ public class VehicleController : MonoBehaviour
     private Rigidbody rb;
     [HideInInspector] public float steerWeight;
 
-
     public List<Suspension> suspensions = new List<Suspension>();
     public List<DownForceWing> downforceWing = new List<DownForceWing>();
 
+    [Header("Steering wheel settings")]
     public Transform steeringWheel;
     [SerializeField] private WheelModelRotation wheelModelRotation;
+
+    [Header("Controll settings")]
     public UserInputType userInputType;
     public float steeringStrenght;
 
@@ -57,6 +60,30 @@ public class VehicleController : MonoBehaviour
         vehicleInputActions = new VehicleInputActions();
         engine.InitializeEngine();
         userInterface = new VehicleUserInterfaceData(engine, this);
+
+        SetBrakeBias();
+    }
+
+    private void SetBrakeBias()
+    {
+        foreach (Suspension sus in suspensions)
+        {
+            switch (sus.suspensionPosition)
+            {
+                case SuspensionPosition.FrontLeft:
+                    sus.brakeBias = brakeBias;
+                    break;
+                case SuspensionPosition.FrontRight:
+                    sus.brakeBias = brakeBias;
+                    break;
+                case SuspensionPosition.RearLeft:
+                    sus.brakeBias = 1f - brakeBias;  
+                    break;
+                case SuspensionPosition.RearRight:
+                    sus.brakeBias = 1f - brakeBias;
+                    break;
+            }
+        }
     }
 
     private void OnEnable()
@@ -102,6 +129,9 @@ public class VehicleController : MonoBehaviour
         vehicleInputActions.Default.ShiftUP.started += engine.ShiftUp;
         vehicleInputActions.Default.ShiftDOWN.Enable();
         vehicleInputActions.Default.ShiftDOWN.started += engine.ShiftDown;
+
+        vehicleInputActions.Default.Reset.Enable();
+        vehicleInputActions.Default.Reset.started += ResetVehicle;
     }
 
     // Update is called once per frame
@@ -198,7 +228,6 @@ public class VehicleController : MonoBehaviour
         switch (inputType)
         {
             case UserInputType.Wheels:
-                Debug.Log(Mathf.Lerp(-1f, 1f, steering.ReadValue<float>()) + " " + steering.ReadValue<float>());
                 return Mathf.Lerp(-1f, 1f, steering.ReadValue<float>());
             default:
                 return steering.ReadValue<float>();
@@ -314,6 +343,7 @@ public class VehicleController : MonoBehaviour
         }
         return physicsWobble / suspensions.Count;
     }
+
     private void OnDisable()
     {
         steering.Disable();
@@ -349,6 +379,11 @@ public class VehicleController : MonoBehaviour
             if(w.suspensionPosition == SuspensionPosition.FrontLeft || w.suspensionPosition == SuspensionPosition.FrontRight)
                 value += w.wheel.steeringWheelForce;
         return value/2f;
+    }
+
+    private void ResetVehicle(InputAction.CallbackContext obj)
+    {
+
     }
 
     private enum WheelModelRotation

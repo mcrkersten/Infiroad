@@ -554,7 +554,6 @@ MonoBehaviour:
   springTravel: 0.35
   springtStiffness: 30000
   damperStiffness: 900
-  test: 0
   stressSuspensionAudio: 0
   Slip_feedbackCurve:
     serializedVersion: 2
@@ -719,7 +718,6 @@ MonoBehaviour:
   springTravel: 0.35
   springtStiffness: 30000
   damperStiffness: 900
-  test: 0
   stressSuspensionAudio: 0
   Slip_feedbackCurve:
     serializedVersion: 2
@@ -1632,66 +1630,7 @@ MonoBehaviour:
     pointer: {fileID: 5593526808130564409}
   - suspensionPart: {fileID: 5144796800851795471}
     pointer: {fileID: 5658939453038641506}
-  slipCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.041641444
-      value: 0.025233805
-      inSlope: 1.629193
-      outSlope: 1.629193
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.045916077
-    - serializedVersion: 3
-      time: 1.3335456
-      value: 0.9980486
-      inSlope: 0.00718386
-      outSlope: 0.00718386
-      tangentMode: 1
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1.3519957
-      value: 0.99057597
-      inSlope: -1.5300651
-      outSlope: -1.5300651
-      tangentMode: 1
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 2.0060058
-      value: 0.7008875
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 4.4884033
-      value: 0.80952984
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.062910154
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  currentSurface: {fileID: 0}
   brakeLock:
     serializedVersion: 2
     m_Curve:
@@ -1705,7 +1644,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.9996166
+      time: 0.66689897
       value: 1
       inSlope: 0
       outSlope: 0
@@ -1714,7 +1653,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.8188571
+      time: 1.398554
       value: 0
       inSlope: -3.536135
       outSlope: -3.536135
@@ -2628,66 +2567,7 @@ MonoBehaviour:
   wheelModel: {fileID: 6324821117845362381}
   suspension: {fileID: 2283981103272149479}
   suspensionPointers: []
-  slipCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.041641444
-      value: 0.025233805
-      inSlope: 1.629193
-      outSlope: 1.629193
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.045916077
-    - serializedVersion: 3
-      time: 1.3335456
-      value: 0.9980486
-      inSlope: 0.00718386
-      outSlope: 0.00718386
-      tangentMode: 1
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1.3519957
-      value: 0.99057597
-      inSlope: -1.5300651
-      outSlope: -1.5300651
-      tangentMode: 1
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 2.0060058
-      value: 0.7008875
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 4.4884033
-      value: 0.80952984
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.062910154
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  currentSurface: {fileID: 0}
   brakeLock:
     serializedVersion: 2
     m_Curve:
@@ -2701,7 +2581,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.9996166
+      time: 0.66689897
       value: 1
       inSlope: 0
       outSlope: 0
@@ -2710,7 +2590,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.8188571
+      time: 1.398554
       value: 0
       inSlope: -3.536135
       outSlope: -3.536135
@@ -3007,66 +2887,7 @@ MonoBehaviour:
   wheelModel: {fileID: 8566841044558778124}
   suspension: {fileID: 3956543991963718995}
   suspensionPointers: []
-  slipCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.041641444
-      value: 0.025233805
-      inSlope: 1.629193
-      outSlope: 1.629193
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.045916077
-    - serializedVersion: 3
-      time: 1.3335456
-      value: 0.9980486
-      inSlope: 0.00718386
-      outSlope: 0.00718386
-      tangentMode: 1
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1.3519957
-      value: 0.99057597
-      inSlope: -1.5300651
-      outSlope: -1.5300651
-      tangentMode: 1
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 2.0060058
-      value: 0.7008875
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 4.4884033
-      value: 0.80952984
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.062910154
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  currentSurface: {fileID: 0}
   brakeLock:
     serializedVersion: 2
     m_Curve:
@@ -3080,7 +2901,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.9996166
+      time: 0.66689897
       value: 1
       inSlope: 0
       outSlope: 0
@@ -3089,7 +2910,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.8188571
+      time: 1.398554
       value: 0
       inSlope: -3.536135
       outSlope: -3.536135
@@ -5528,7 +5349,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5017808466280603394}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.048, z: -0.142}
+  m_LocalPosition: {x: 0, y: 0.048, z: -0.457}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5805,66 +5626,7 @@ MonoBehaviour:
     pointer: {fileID: 5593526808130564409}
   - suspensionPart: {fileID: 4391148110789334027}
     pointer: {fileID: 5658939453038641506}
-  slipCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.041641444
-      value: 0.025233805
-      inSlope: 1.629193
-      outSlope: 1.629193
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.045916077
-    - serializedVersion: 3
-      time: 1.3335456
-      value: 0.9980486
-      inSlope: 0.00718386
-      outSlope: 0.00718386
-      tangentMode: 1
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1.3519957
-      value: 0.99057597
-      inSlope: -1.5300651
-      outSlope: -1.5300651
-      tangentMode: 1
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 2.0060058
-      value: 0.7008875
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 4.4884033
-      value: 0.80952984
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.062910154
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  currentSurface: {fileID: 0}
   brakeLock:
     serializedVersion: 2
     m_Curve:
@@ -5878,7 +5640,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.9996166
+      time: 0.66689897
       value: 1
       inSlope: 0
       outSlope: 0
@@ -5887,7 +5649,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.8188571
+      time: 1.398554
       value: 0
       inSlope: -3.536135
       outSlope: -3.536135
@@ -6534,7 +6296,6 @@ MonoBehaviour:
   springTravel: 0.35
   springtStiffness: 30000
   damperStiffness: 900
-  test: 0
   stressSuspensionAudio: 0
   Slip_feedbackCurve:
     serializedVersion: 2
@@ -6922,6 +6683,7 @@ MonoBehaviour:
   useWheel: 1
   wheelInputAngle: 450
   steeringRatio: 1
+  brakeBias: 0.4
   engine:
     maxRPM: 10000
     engineTorqueProfile:
@@ -6930,24 +6692,15 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 504.07935
-        outSlope: 504.07935
+        inSlope: 417.9154
+        outSlope: 417.9154
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.052026268
+        outWeight: 0.028741114
       - serializedVersion: 3
-        time: 0.591532
-        value: 62.086624
-        inSlope: -127.11558
-        outSlope: -127.11558
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.048891775
-      - serializedVersion: 3
-        time: 1.0040699
-        value: 3.1466675
+        time: 0.9986378
+        value: 23.689697
         inSlope: -190.62163
         outSlope: -190.62163
         tangentMode: 0
@@ -7089,7 +6842,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6053509712107160178}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -7711,7 +7464,6 @@ MonoBehaviour:
   springTravel: 0.35
   springtStiffness: 30000
   damperStiffness: 900
-  test: 0
   stressSuspensionAudio: 0
   Slip_feedbackCurve:
     serializedVersion: 2
@@ -11017,7 +10769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8137731681466298929, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
       propertyPath: field of view
-      value: 50
+      value: 66
       objectReference: {fileID: 0}
     - target: {fileID: 8137731681466298931, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
       propertyPath: m_LocalPosition.y

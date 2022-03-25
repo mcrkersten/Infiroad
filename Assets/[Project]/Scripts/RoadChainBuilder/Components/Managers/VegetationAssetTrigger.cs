@@ -28,6 +28,9 @@ public class VegetationAssetTrigger : MonoBehaviour
         if (assetTag == null)
             return;
 
+        if (assetTag.scannedBy.Contains(poolTag))
+            return;
+
         //Search in pool for sub-pool with tag
         if (assetTag.tags.Contains(poolTag))
         {
@@ -36,6 +39,7 @@ public class VegetationAssetTrigger : MonoBehaviour
             else
                 ActivateGroupFromAssetPool(assetTag, Random.Range(0, amountOfAssetsOnPoint));
         }
+        assetTag.scannedBy.Add(poolTag);
     }
 
     //Activate a group of assets from the assetpool

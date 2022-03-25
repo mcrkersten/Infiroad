@@ -59,7 +59,6 @@ public class WheelRaycast : MonoBehaviour
             hit = hitPoint;
 
             Material m = GetMaterialFromRaycastHit(hit, hit.transform.GetComponent<Mesh>());
-            Debug.Log(m);
             currentSurface = hit.transform.GetComponent<RoadSegment>().surfaceSettings.First(s => s.material == m);
             return true;
         }

@@ -8,7 +8,7 @@ public class RoadChainTrigger : MonoBehaviour
     public static event OnRoadChainTrigger trigger;
     private void OnTriggerEnter(Collider other)
     {
-        other.gameObject.SetActive(false);
+        other.gameObject.GetComponent<Collider>().enabled = false;
         trigger?.Invoke();
     }
 }

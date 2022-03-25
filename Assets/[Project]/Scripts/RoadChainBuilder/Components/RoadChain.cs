@@ -151,12 +151,14 @@ public class RoadChain : MonoBehaviour {
 				{
 					Vector3 point = Vector3.Lerp(spawnEdge.leftPoint, spawnEdge.rightPoint, (float)i / item.spawnPointsBetweenAmount);
 					VegetationTriggerAsset x = ObjectPooler.Instance.ActivateVegetationTriggerAsset(point, item.assetPointType);
+					x.scannedBy = new List<VegetationAssetTypeTag>();
 					x.gameObject.name = road.roadTypeTag;
 				}
             }
             else
             {
 				VegetationTriggerAsset x = ObjectPooler.Instance.ActivateVegetationTriggerAsset(spawnEdge.leftPoint, item.assetPointType);
+				x.scannedBy = new List<VegetationAssetTypeTag>();
 				x.gameObject.name = road.roadTypeTag;
 			}
 		}
