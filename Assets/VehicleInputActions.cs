@@ -312,7 +312,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Braking"",
@@ -363,6 +363,15 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""name"": ""ShiftDOWN"",
                     ""type"": ""Button"",
                     ""id"": ""ce8ad70d-bcf7-4acb-a954-07b2932b8259"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reset"",
+                    ""type"": ""Button"",
+                    ""id"": ""13bf80e8-7e00-4e7c-8595-752e04f5d5ce"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -433,6 +442,17 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Clutch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c9e230aa-1ab7-4a07-ade3-239a621ad055"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reset"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -521,6 +541,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         m_SteeringWheel_StartEngine = m_SteeringWheel.FindAction("StartEngine", throwIfNotFound: true);
         m_SteeringWheel_ShiftUP = m_SteeringWheel.FindAction("ShiftUP", throwIfNotFound: true);
         m_SteeringWheel_ShiftDOWN = m_SteeringWheel.FindAction("ShiftDOWN", throwIfNotFound: true);
+        m_SteeringWheel_Reset = m_SteeringWheel.FindAction("Reset", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -676,6 +697,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_SteeringWheel_StartEngine;
     private readonly InputAction m_SteeringWheel_ShiftUP;
     private readonly InputAction m_SteeringWheel_ShiftDOWN;
+    private readonly InputAction m_SteeringWheel_Reset;
     public struct SteeringWheelActions
     {
         private @VehicleInputActions m_Wrapper;
@@ -687,6 +709,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         public InputAction @StartEngine => m_Wrapper.m_SteeringWheel_StartEngine;
         public InputAction @ShiftUP => m_Wrapper.m_SteeringWheel_ShiftUP;
         public InputAction @ShiftDOWN => m_Wrapper.m_SteeringWheel_ShiftDOWN;
+        public InputAction @Reset => m_Wrapper.m_SteeringWheel_Reset;
         public InputActionMap Get() { return m_Wrapper.m_SteeringWheel; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -717,6 +740,9 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @ShiftDOWN.started -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnShiftDOWN;
                 @ShiftDOWN.performed -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnShiftDOWN;
                 @ShiftDOWN.canceled -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnShiftDOWN;
+                @Reset.started -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnReset;
+                @Reset.performed -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnReset;
+                @Reset.canceled -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnReset;
             }
             m_Wrapper.m_SteeringWheelActionsCallbackInterface = instance;
             if (instance != null)
@@ -742,6 +768,9 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @ShiftDOWN.started += instance.OnShiftDOWN;
                 @ShiftDOWN.performed += instance.OnShiftDOWN;
                 @ShiftDOWN.canceled += instance.OnShiftDOWN;
+                @Reset.started += instance.OnReset;
+                @Reset.performed += instance.OnReset;
+                @Reset.canceled += instance.OnReset;
             }
         }
     }
@@ -811,5 +840,6 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         void OnStartEngine(InputAction.CallbackContext context);
         void OnShiftUP(InputAction.CallbackContext context);
         void OnShiftDOWN(InputAction.CallbackContext context);
+        void OnReset(InputAction.CallbackContext context);
     }
 }

@@ -334,10 +334,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a2d20a9566f01da458310c9728b622a1, type: 2}
   - {fileID: 11400000, guid: 067fe766fe8fd2247904b77aa6814951, type: 2}
   runoffMaterial: {fileID: 11400000, guid: 067fe766fe8fd2247904b77aa6814951, type: 2}
-  hasGuardrail: 1
+  hasGuardrail: 0
   guardRail: {fileID: 11400000, guid: 5750af715875c8d4e80fa4c7ef1f7013, type: 2}
   guardrailIsContinues: 1
-  guardRailMinimalCornerRadius: 500
+  guardRailMinimalCornerRadius: 0
   roadTypeTag: FOREST-BASIC
   assetPools:
   - tag: 0

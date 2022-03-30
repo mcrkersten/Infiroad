@@ -15,10 +15,8 @@ MonoBehaviour:
   roadVariation:
   - shape: 0
     roadSettings:
-    - weight: 0.75
-      roadSettings: {fileID: 11400000, guid: 86196bba0c9bb8549b57ee70a0f5091b, type: 2}
     - weight: 1
-      roadSettings: {fileID: 11400000, guid: d06876c007301dd49a0599855f73ecda, type: 2}
+      roadSettings: {fileID: 11400000, guid: 86196bba0c9bb8549b57ee70a0f5091b, type: 2}
   - shape: 1
     roadSettings:
     - weight: 1

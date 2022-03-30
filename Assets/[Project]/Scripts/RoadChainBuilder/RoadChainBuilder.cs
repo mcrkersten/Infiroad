@@ -59,7 +59,7 @@ public class RoadChainBuilder : MonoBehaviour
         createdRoadChains.Clear();
         CreateNextRoadChain(new EdgePoint(EdgeLocation.none, 3, startSegment));
         CreateNextRoadChain();
-        RoadChainTrigger.trigger += CreateNextRoadChain;
+        EventTriggerManager.roadChainTrigger += CreateNextRoadChain;
 
         SetVehicleStartPosition();
     }
@@ -624,7 +624,7 @@ public class RoadChainBuilder : MonoBehaviour
 
     private void OnDestroy()
     {
-        RoadChainTrigger.trigger -= CreateNextRoadChain;
+        EventTriggerManager.roadChainTrigger -= CreateNextRoadChain;
     }
 }
 

@@ -290,7 +290,7 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Braking",
@@ -341,6 +341,15 @@
                     "name": "ShiftDOWN",
                     "type": "Button",
                     "id": "ce8ad70d-bcf7-4acb-a954-07b2932b8259",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Reset",
+                    "type": "Button",
+                    "id": "13bf80e8-7e00-4e7c-8595-752e04f5d5ce",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -411,6 +420,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Clutch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c9e230aa-1ab7-4a07-ade3-239a621ad055",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reset",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

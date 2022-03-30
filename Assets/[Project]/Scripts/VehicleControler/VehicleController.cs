@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 public class VehicleController : MonoBehaviour
 {
+    private bool physicsLocked;
     public PlayerInput playerInput;
     public bool useWheel;
     public int wheelInputAngle;
@@ -47,8 +49,15 @@ public class VehicleController : MonoBehaviour
     public VehicleUserInterfaceData userInterface;
     private FeedbackSystem feedbackSystem;
 
+    [Header("Reset system")]
+    [SerializeField] private ResetScreen resetScreen;
+    private Transform resetPosition;
+
     void Awake()
     {
+        ResetScreen.resetVehicle += ResetVehicle;
+        EventTriggerManager.resetPoint += NewResetPoint;
+
         Input.ResetInputAxes();
         steeringInput = new SteeringWheelInput();
         steeringInput.Init();
@@ -62,6 +71,11 @@ public class VehicleController : MonoBehaviour
         userInterface = new VehicleUserInterfaceData(engine, this);
 
         SetBrakeBias();
+    }
+
+    private void NewResetPoint(Transform transform)
+    {
+        resetPosition = transform;
     }
 
     private void SetBrakeBias()
@@ -129,9 +143,6 @@ public class VehicleController : MonoBehaviour
         vehicleInputActions.Default.ShiftUP.started += engine.ShiftUp;
         vehicleInputActions.Default.ShiftDOWN.Enable();
         vehicleInputActions.Default.ShiftDOWN.started += engine.ShiftDown;
-
-        vehicleInputActions.Default.Reset.Enable();
-        vehicleInputActions.Default.Reset.started += ResetVehicle;
     }
 
     // Update is called once per frame
@@ -346,6 +357,8 @@ public class VehicleController : MonoBehaviour
 
     private void OnDisable()
     {
+        ResetScreen.resetVehicle -= ResetVehicle;
+        EventTriggerManager.resetPoint -= NewResetPoint;
         steering.Disable();
         braking.Disable();
         acceleration.Disable();
@@ -381,9 +394,22 @@ public class VehicleController : MonoBehaviour
         return value/2f;
     }
 
-    private void ResetVehicle(InputAction.CallbackContext obj)
+    private void ResetVehicle()
     {
+        LockPhysicsLock();
+        transform.DOMove(resetPosition.position, .2f).SetEase(DG.Tweening.Ease.InOutCubic).OnComplete(UnlockPhysicsLock);
+        transform.DORotate(resetPosition.eulerAngles, .2f).SetEase(DG.Tweening.Ease.InOutCubic);
+    }
 
+    private void LockPhysicsLock()
+    {
+        rb.isKinematic = true;
+        physicsLocked = true;
+    }
+    private void UnlockPhysicsLock()
+    {
+        rb.isKinematic = false;
+        physicsLocked = false;
     }
 
     private enum WheelModelRotation

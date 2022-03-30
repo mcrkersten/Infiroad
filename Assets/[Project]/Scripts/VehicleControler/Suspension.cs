@@ -93,7 +93,11 @@ public class Suspension : MonoBehaviour
         //Normal force | No accelation or brake influence on sideforce
         float distance = Vector2.Distance(Vector2.zero, rawForce);
         float time = distance / downForce;
-        float gripPercentage = wheel.currentSurface.slip.Evaluate(Mathf.Abs(time));
+
+        float gripPercentage = 0;
+        if (wheel.currentSurface != null)
+            gripPercentage = wheel.currentSurface.slip.Evaluate(Mathf.Abs(time));
+
         float gripForce = downForce * gripPercentage;
         Vector3 clampedGripForce =  ClampForce(rawForce, gripForce);
 

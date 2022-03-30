@@ -1653,13 +1653,13 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.398554
+      time: 1.101801
       value: 0
-      inSlope: -3.536135
-      outSlope: -3.536135
+      inSlope: -6.321267
+      outSlope: -6.321267
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.15416533
+      inWeight: 0.03319671
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -2590,13 +2590,13 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.398554
+      time: 1.101801
       value: 0
-      inSlope: -3.536135
-      outSlope: -3.536135
+      inSlope: -6.321267
+      outSlope: -6.321267
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.15416533
+      inWeight: 0.03319671
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -2910,13 +2910,13 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.398554
+      time: 1.101801
       value: 0
-      inSlope: -3.536135
-      outSlope: -3.536135
+      inSlope: -6.321267
+      outSlope: -6.321267
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.15416533
+      inWeight: 0.03319671
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -5649,13 +5649,13 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.398554
+      time: 1.101801
       value: 0
-      inSlope: -3.536135
-      outSlope: -3.536135
+      inSlope: -6.321267
+      outSlope: -6.321267
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.15416533
+      inWeight: 0.03319671
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -6683,7 +6683,7 @@ MonoBehaviour:
   useWheel: 1
   wheelInputAngle: 450
   steeringRatio: 1
-  brakeBias: 0.4
+  brakeBias: 0.693
   engine:
     maxRPM: 10000
     engineTorqueProfile:
@@ -6833,8 +6833,9 @@ MonoBehaviour:
   - {fileID: 9166318014888682555}
   steeringWheel: {fileID: 3881492110850256670}
   wheelModelRotation: 2
-  userInputType: 1
+  userInputType: 2
   steeringStrenght: 4
+  resetScreen: {fileID: 0}
 --- !u!114 &2666332195233202079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6842,7 +6843,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6053509712107160178}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -10279,27 +10280,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1504271503890449562, guid: 7e50d65ce659e96489529cbaffe93330, type: 3}
       propertyPath: m_Size.x
-      value: 2.0471127
+      value: 2.1955922
       objectReference: {fileID: 0}
     - target: {fileID: 1504271503890449562, guid: 7e50d65ce659e96489529cbaffe93330, type: 3}
       propertyPath: m_Size.y
-      value: 0.898919
+      value: 0.44398856
       objectReference: {fileID: 0}
     - target: {fileID: 1504271503890449562, guid: 7e50d65ce659e96489529cbaffe93330, type: 3}
       propertyPath: m_Size.z
-      value: 3.9631042
+      value: 4.8884735
       objectReference: {fileID: 0}
     - target: {fileID: 1504271503890449562, guid: 7e50d65ce659e96489529cbaffe93330, type: 3}
       propertyPath: m_Center.x
-      value: -0.032962203
+      value: -0.021322608
       objectReference: {fileID: 0}
     - target: {fileID: 1504271503890449562, guid: 7e50d65ce659e96489529cbaffe93330, type: 3}
       propertyPath: m_Center.y
-      value: 0.0012449622
+      value: 0.055030167
       objectReference: {fileID: 0}
     - target: {fileID: 1504271503890449562, guid: 7e50d65ce659e96489529cbaffe93330, type: 3}
       propertyPath: m_Center.z
-      value: 0.025604248
+      value: 0.024467468
       objectReference: {fileID: 0}
     - target: {fileID: 3956179933839717013, guid: 7e50d65ce659e96489529cbaffe93330, type: 3}
       propertyPath: m_Radius

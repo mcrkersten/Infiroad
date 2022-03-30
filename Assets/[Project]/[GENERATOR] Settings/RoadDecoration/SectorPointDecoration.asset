@@ -32,4 +32,8 @@ MonoBehaviour:
     position: {x: -8, y: 0}
     curveTime: 0
     noiseChannel: 1
+  - prefab: {fileID: 2639451264253111639, guid: 36c08b2a9adabb944a9ae990baafcc81, type: 3}
+    position: {x: 0, y: 0}
+    curveTime: 0
+    noiseChannel: 1
   RD_Type: 1
