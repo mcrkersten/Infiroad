@@ -39,6 +39,32 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Folder Name="UI" ID="{BE603329-0908-4BCC-A70E-745C6DE9BC4A}" ShortID="459026199">
+					<ChildrenList>
+						<Event Name="CountDown" ID="{C0C2AF3B-DC5A-4AF7-8E80-BE9665E83604}">
+							<ChildrenList>
+								<Action Name="" ID="{726E0234-7E72-42E4-9FC3-D908C038F02B}" ShortID="56659218">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="CountDown" ID="{9FCBDB36-4F01-468F-A76B-77901B3C63BD}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="GO" ID="{4FF49FF2-189E-46D4-9765-A08D28CA7C3D}">
+							<ChildrenList>
+								<Action Name="" ID="{0813CBD6-3394-4EE8-A802-D01D55C84E3E}" ShortID="1025186844">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="GO" ID="{747D7BAE-FB36-4341-8F5C-D62625033030}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

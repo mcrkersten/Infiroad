@@ -7,6 +7,7 @@ using DG.Tweening;
 
 public class VehicleController : MonoBehaviour
 {
+    [HideInInspector] public float distanceTraveled = 0f;
     private bool physicsLocked;
     public PlayerInput playerInput;
     public bool useWheel;
@@ -52,6 +53,7 @@ public class VehicleController : MonoBehaviour
     [Header("Reset system")]
     [SerializeField] private ResetScreen resetScreen;
     private Transform resetPosition;
+    private Vector3 lastFramePosition = new Vector3();
 
     void Awake()
     {
@@ -157,6 +159,8 @@ public class VehicleController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        distanceTraveled += Vector3.Distance(transform.position, lastFramePosition);
+        lastFramePosition = transform.position;
         foreach (DownForceWing wing in downforceWing)
         {
             float downforce = wing.CalculateLiftforce(1.1455f);
@@ -164,7 +168,6 @@ public class VehicleController : MonoBehaviour
             rb.AddForceAtPosition(downForceVector * 300f, wing.transform.position);
             Debug.DrawLine(wing.transform.position, wing.transform.position + downForceVector, Color.green);
         }
-
         Vector3 airResistance = CalculateAirResistance();
         rb.AddForce(airResistance);
 
@@ -401,12 +404,12 @@ public class VehicleController : MonoBehaviour
         transform.DORotate(resetPosition.eulerAngles, .2f).SetEase(DG.Tweening.Ease.InOutCubic);
     }
 
-    private void LockPhysicsLock()
+    public void LockPhysicsLock()
     {
         rb.isKinematic = true;
         physicsLocked = true;
     }
-    private void UnlockPhysicsLock()
+    public void UnlockPhysicsLock()
     {
         rb.isKinematic = false;
         physicsLocked = false;

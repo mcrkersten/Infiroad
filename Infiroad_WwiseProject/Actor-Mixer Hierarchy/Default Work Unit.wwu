@@ -713,6 +713,81 @@
 						<ActiveSource Name="car-suspension-bounce-car-rear-suspension-bounce" ID="{FB34D658-32DE-4FD5-ACA8-72C43BCD89B6}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<Folder Name="UI" ID="{2EB0044A-E994-4B64-A799-D663E3B54782}" ShortID="442981434">
+					<ChildrenList>
+						<Sound Name="CountDown" ID="{9FCBDB36-4F01-468F-A76B-77901B3C63BD}" ShortID="1063921189">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-26</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="mixkit-short-race-countdown-926" ID="{F44B7B17-4794-4458-9EAB-91EFA1AFC811}">
+									<PropertyList>
+										<Property Name="FadeOutDuration" Type="Real64" Value="0.101331485774687"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+										<Property Name="TrimEnd" Type="Real64" Value="1.00064842202503"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>mixkit-short-race-countdown-926.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="1018576071"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="mixkit-short-race-countdown-926" ID="{F44B7B17-4794-4458-9EAB-91EFA1AFC811}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="GO" ID="{747D7BAE-FB36-4341-8F5C-D62625033030}" ShortID="278067649">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-24</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="mixkit-short-race-countdown-926" ID="{D905EC70-1594-40CB-8AE1-26AE01D02B91}">
+									<PropertyList>
+										<Property Name="FadeOutDuration" Type="Real64" Value="0.354660200211403"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+										<Property Name="TrimBegin" Type="Real64" Value="2.00201218572866"/>
+										<Property Name="TrimEnd" Type="Real64" Value="2.80688215595882"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>mixkit-short-race-countdown-926.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="886748003"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="mixkit-short-race-countdown-926" ID="{D905EC70-1594-40CB-8AE1-26AE01D02B91}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</Folder>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

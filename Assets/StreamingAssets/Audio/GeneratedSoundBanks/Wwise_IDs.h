@@ -13,6 +13,8 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID COUNTDOWN = 1505888634U;
+        static const AkUniqueID GO = 1786192775U;
         static const AkUniqueID PLAY_ENGINE = 639345804U;
         static const AkUniqueID PLAY_SUSPENSION = 4142784629U;
         static const AkUniqueID PLAY_WIND = 1020223172U;

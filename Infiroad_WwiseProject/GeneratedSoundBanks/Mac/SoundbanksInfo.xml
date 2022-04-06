@@ -16,11 +16,27 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="2025709351" Language="SFX" Hash="4033439737">
+		<SoundBank Id="2025709351" Language="SFX" Hash="4097177218">
 			<ObjectPath>\SoundBanks\Default Work Unit\Vehicle</ObjectPath>
 			<ShortName>Vehicle</ShortName>
 			<Path>Vehicle.bnk</Path>
 			<IncludedEvents>
+				<Event Id="1505888634" Name="CountDown" ObjectPath="\Events\Default Work Unit\UI\CountDown" DurationType="OneShot" DurationMin="1.000648" DurationMax="1.000648">
+					<IncludedMemoryFiles>
+						<File Id="1018576071" Language="SFX">
+							<ShortName>mixkit-short-race-countdown-926.wav</ShortName>
+							<Path>SFX\mixkit-short-race-countdown-926_8A95F37A.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1786192775" Name="GO" ObjectPath="\Events\Default Work Unit\UI\GO" DurationType="OneShot" DurationMin="0.80487" DurationMax="0.80487">
+					<IncludedMemoryFiles>
+						<File Id="886748003" Language="SFX">
+							<ShortName>mixkit-short-race-countdown-926.wav</ShortName>
+							<Path>SFX\mixkit-short-race-countdown-926_AF0283F6.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 				<Event Id="639345804" Name="Play_Engine" ObjectPath="\Events\Default Work Unit\Play_Engine" MaxAttenuation="30." DurationType="Unknown">
 					<IncludedMemoryFiles>
 						<File Id="896025657" Language="SFX">

@@ -146,7 +146,7 @@ public class ObjectPooler
     }
 
     /// <summary>
-    /// Get a asset from the vegetation pool
+    /// Get a asse t from the vegetation pool
     /// </summary>
     /// <param name="typeTag">Tag of vegitationPools</param>
     /// <param name="roadTag">tag of road</param>
@@ -158,15 +158,14 @@ public class ObjectPooler
         if (!vegitationPoolDictionaries.ContainsKey(roadTag)) { return; }
         if (!vegitationPoolDictionaries[roadTag].ContainsKey(typeTag)) { return; }
 
+        //Get object from Dictionary
         GameObject objectToSpawn = vegitationPoolDictionaries[roadTag][typeTag].Dequeue();
 
+        //Activate and set position
         objectToSpawn.SetActive(true);
-        Vector3 currentScale = objectToSpawn.transform.localScale;
-        objectToSpawn.transform.localScale = Vector3.zero;
-        objectToSpawn.transform.position = position;
-        objectToSpawn.transform.rotation = rotation;
-        objectToSpawn.transform.DOScale(currentScale, 1f).SetEase(DG.Tweening.Ease.InBack);
+        SetGameObjectPosition(objectToSpawn, position, rotation);
 
+        //Put object back in to dictionary
         vegitationPoolDictionaries[roadTag][typeTag].Enqueue(objectToSpawn);
     }
 
@@ -195,6 +194,15 @@ public class ObjectPooler
             parent = new GameObject();
             parent.name = "ObjectPool";
         }
+    }
+
+    private void SetGameObjectPosition(GameObject go,Vector3 position, Quaternion rotation)
+    {
+        Vector3 currentScale = go.transform.localScale;
+        go.transform.localScale = Vector3.zero;
+        go.transform.position = position;
+        go.transform.rotation = rotation;
+        go.transform.DOScale(currentScale, 1f).SetEase(DG.Tweening.Ease.InBack);
     }
 }
 
