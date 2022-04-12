@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -50.51243, y: 72.9987, z: 64.15358}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6707775167756143379}
   m_RootOrder: 1
@@ -106,6 +107,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -50.1, y: 0, z: 53.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6707775167756143379}
   m_RootOrder: 0
@@ -150,6 +152,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 937824143579971402}
   - {fileID: 937824142521424263}
@@ -168,16 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d892635dc02cbb6479f8a31208984702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entryPoint:
-    edgeLocation: 0
-    edgePointPositionIndex: 0
-  exitPoint:
-    edgeLocation: 0
-    edgePointPositionIndex: 0
-  organizedSegments: []
-  mesh2D: {fileID: 11400000, guid: 33567533da55e71438bc2e53f9e13ee4, type: 2}
   loop: 0
-  edgeLoopsPerMeter: 1
+  organizedSegments: []
   uvMode: 2
   meshSpawnPoints:
     pointRows:
@@ -3733,21 +3728,7 @@ MonoBehaviour:
       - {x: 197.6606, y: 0.9994507, z: 12.685684}
       - {x: 198.81448, y: 0.99722075, z: 12.658958}
       - {x: 200.00003, y: 1.0000025, z: 12.649986}
-  spawnableGameObjects:
-  - prefab: {fileID: 5859249683117163955, guid: b33fe77fd1a78444c8f578cceb5e40da, type: 3}
-    spawnRows: 0e000000
-    pointsBetween: 54
-    type: 0
-    rotationStyle: 0
-    transformParent: {fileID: 937824142521424263}
-  - prefab: {fileID: 6417268898692153255, guid: 46aaa5d26240fc44a85b190a5d050dbb, type: 3}
-    spawnRows: 0d000000
-    pointsBetween: 10
-    type: 1
-    rotationStyle: 1
-    transformParent: {fileID: 937824143579971402}
   powerlineSettings: {fileID: 937824142521424262}
   fenceSettings: {fileID: 937824143579971405}
-  pointsOnEdge: 5
-  spawnRadius: 1
-  assetSpawnPoint: {fileID: 4923321435712348272, guid: 0a906291cb590f14aac19b96c2eeb107, type: 3}
+  road: {fileID: 0}
+  devSettings: []

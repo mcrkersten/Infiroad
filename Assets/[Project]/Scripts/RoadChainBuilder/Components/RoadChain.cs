@@ -95,12 +95,11 @@ public class RoadChain : MonoBehaviour {
 		foreach (Decoration decorItem in roadDecoration.decor)
 		{
 			int edgeLoop = segmendLoops - (int)Mathf.Lerp(0, segmendLoops, 1f - Mathf.Clamp01(roadDecoration.mainCurveTime + decorItem.curveTime));
-			NoiseGenerator ng = roadSettings.generatorInstance;
 			Vector3 noise = Vector3.zero;
 
-			foreach (NoiseChannelSettings nts in roadSettings.noiseChannels[decorItem.noiseChannel].channelSettings)
+			foreach (NoiseChannel nts in roadSettings.noiseChannels)
 			{
-				noise += ng.getNoise(segment.startEndLoop.x + edgeLoop, nts);
+				noise += nts.generatorInstance.getNoise(segment.startEndLoop.x + edgeLoop, nts);
 			}
 
 			Vector3 decorPosition = new Vector3(decorItem.position.x, decorItem.position.y, 0);

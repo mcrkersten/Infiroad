@@ -99,7 +99,7 @@ public class RoadMeshExtruder {
 				{
 					if (roadChainBuilder.currentMeshTask != null)
 						roadChainBuilder.meshtasks.Add(roadChainBuilder.currentMeshTask);
-					roadChainBuilder.currentMeshTask = new MeshTask(curveRadius, curveRadius < 0, roadSettings, roadChainBuilder.generatedRoadEdgeloops, roadSettings.guardRailNoiseChannel);
+					roadChainBuilder.currentMeshTask = new MeshTask(curveRadius, curveRadius < 0, roadSettings, roadChainBuilder.generatedRoadEdgeloops, roadSettings.noiseChannels[roadSettings.guardRailNoiseChannel]);
 				}
 
 				if (distance > .01f) //Fish out duplicates
@@ -113,7 +113,7 @@ public class RoadMeshExtruder {
 				Vector3 currentMeshPosition = segment.transform.TransformPoint(op.pos);
 
 				if(ring == 0)
-					roadChainBuilder.currentMeshTask = new MeshTask(curveRadius, roadSettings, roadChainBuilder.generatedRoadEdgeloops, roadSettings.guardRailNoiseChannel);
+					roadChainBuilder.currentMeshTask = new MeshTask(curveRadius, roadSettings, roadChainBuilder.generatedRoadEdgeloops, roadSettings.noiseChannels[roadSettings.guardRailNoiseChannel]);
 
 				roadChainBuilder.currentMeshTask.AddPoint(currentMeshPosition, segment.transform.rotation * op.rot, roadChainBuilder.radiusDelay);
 
@@ -135,23 +135,23 @@ public class RoadMeshExtruder {
 				Vector2 noise = AddRandomNoiseValue(roadSettings.points[i].noiseChannel, roadSettings);
 				//float noiseMagnitude = noise.magnitude;
 				Vector3 globalPoint = op.LocalToWorldPos(localPoint + noise);
+				Vector2 localUVPoint = roadSettings.points[i].vertex_1.point;
 
+				if (assetPointOpen)
+				{
+					Vector3 closeGrassPoint = segment.transform.TransformPoint(globalPoint);
+					segment.assetSpawnEdges.Add(new AssetSpawnEdge(openAssetPoint, closeGrassPoint, assetTypes));
+					openAssetPoint = Vector3.positiveInfinity;
+					assetPointOpen = false;
+				}
 				//Asset points
 				if (!assetPointOpen && roadSettings.points[i].assetSpawnPoint.Count > 0) {
 					openAssetPoint = segment.transform.TransformPoint(globalPoint);
 					assetPointOpen = true;
 					assetTypes = roadSettings.points[i].assetSpawnPoint;
 				}
-				else if (assetPointOpen) {
-					Vector3 closeGrassPoint = segment.transform.TransformPoint(globalPoint);
 
-					segment.assetSpawnEdges.Add(new AssetSpawnEdge(openAssetPoint, closeGrassPoint, assetTypes));
-
-					openAssetPoint = Vector3.positiveInfinity;
-					assetPointOpen = false;
-				}
-
-				Vector2 minMaxUV = minMaxUvs[roadSettings.points[i].materialIndex];
+				Vector2 currentUV_MinMax = minMaxUvs[roadSettings.points[i].materialIndex];
 				float x_UV = 0;
 
                 #region LeftExtrusion
@@ -168,21 +168,20 @@ public class RoadMeshExtruder {
 					//If different material
 					else if (i != 0 && roadSettings.points[i].materialIndex != roadSettings.points[i - 1].materialIndex)
 					{
-						int index = roadSettings.points[i - 1].materialIndex;
-						x_UV = Mathf.InverseLerp(minMaxUvs[index].x, minMaxUvs[index].y, localPoint.x - offsetCurve);
+						x_UV = Mathf.InverseLerp(minMaxUvs[roadSettings.points[i - 1].materialIndex].x, minMaxUvs[roadSettings.points[i - 1].materialIndex].y, localUVPoint.x);
 						uvs0.Add(new Vector2(x_UV, y_UV));
 						verts.Add(globalPoint);
 					}
 
 					//MAIN MESH VERTEX
-					x_UV = Mathf.InverseLerp(minMaxUV.x, minMaxUV.y, localPoint.x - offsetCurve);
+					x_UV = Mathf.InverseLerp(currentUV_MinMax.x, currentUV_MinMax.y, localUVPoint.x);
 					uvs0.Add(new Vector2(x_UV, y_UV));
 					verts.Add(globalPoint);
 
 					//If hard edge vertex 
 					if (roadSettings.points[i].ishardEdge)
 					{
-						x_UV = Mathf.InverseLerp(minMaxUV.x, minMaxUV.y, localPoint.x - offsetCurve);
+						x_UV = Mathf.InverseLerp(currentUV_MinMax.x, currentUV_MinMax.y, localUVPoint.x);
 						uvs0.Add(new Vector2(x_UV, y_UV));
 						verts.Add(globalPoint);
 					}
@@ -190,8 +189,7 @@ public class RoadMeshExtruder {
 					//Opening edge of UV extrusion
 					else if (roadSettings.points[i].extrudePoint)
 					{
-						float normalize = Mathf.InverseLerp(minMaxUV.x, minMaxUV.y, localPoint.x - offsetCurve);
-						x_UV = Mathf.InverseLerp(minMaxUV.x, minMaxUV.y, localPoint.x) - normalize;
+						x_UV = offsetCurve/10f;
 						uvs0.Add(new Vector2(Mathf.Abs(x_UV), y_UV));
 						verts.Add(globalPoint);
 					}
@@ -205,34 +203,34 @@ public class RoadMeshExtruder {
 					//closing edge of UV extrusion
 					if (i != 0 && roadSettings.points[i - 1].extrudePoint)
 					{
-						float normalize = Mathf.InverseLerp(minMaxUV.x, minMaxUV.y, localPoint.x - offsetCurve);
-						x_UV = Mathf.InverseLerp(minMaxUV.x, minMaxUV.y, localPoint.x) - normalize;
+						x_UV = offsetCurve/10f;
 						uvs0.Add(new Vector2(x_UV, y_UV));
 						verts.Add(globalPoint);
 					}
 
 					else if (i != 0 && roadSettings.points[i].materialIndex != roadSettings.points[i - 1].materialIndex)
 					{
-						int index = roadSettings.points[i - 1].materialIndex;
-						x_UV = Mathf.InverseLerp(minMaxUvs[index].x, minMaxUvs[index].y, localPoint.x - offsetCurve);
+						int material = roadSettings.points[i - 1].materialIndex;
+						x_UV = Mathf.InverseLerp(minMaxUvs[material].x, currentUV_MinMax.y, localUVPoint.x);
+						Debug.Log("DEV MEM: "+i+" = is duplicate for UV fix");
 						uvs0.Add(new Vector2(x_UV, y_UV));
 						verts.Add(globalPoint);
 					}
 
 					//MAIN MESH VERTEX
-					x_UV = Mathf.InverseLerp(minMaxUV.x, minMaxUV.y, localPoint.x - offsetCurve);
+					x_UV = Mathf.InverseLerp(currentUV_MinMax.x, currentUV_MinMax.y, localUVPoint.x);
 					uvs0.Add(new Vector2(x_UV, y_UV));
 					verts.Add(globalPoint);
 
 					if (roadSettings.points[i].ishardEdge)
 					{
-						x_UV = Mathf.InverseLerp(minMaxUV.x, minMaxUV.y, localPoint.x - offsetCurve);
+						x_UV = Mathf.InverseLerp(currentUV_MinMax.x, currentUV_MinMax.y, localUVPoint.x);
 						uvs0.Add(new Vector2(x_UV, y_UV));
 						verts.Add(globalPoint);
 					}
 
 					//opening edge of extrusion
-					else if (roadSettings.points[i].extrudePoint)
+					if (roadSettings.points[i].extrudePoint)
 					{
 						x_UV = 0f;
 						uvs0.Add(new Vector2(x_UV, y_UV));
@@ -272,14 +270,13 @@ public class RoadMeshExtruder {
 	{
 		return (testValue >= Math.Min(bound1, bound2) && testValue <= Math.Max(bound1, bound2));
 	}
+
 	private Vector2 AddRandomNoiseValue(int noiseChannel, RoadSettings roadSettings)
 	{
-		//Random
-		NoiseGenerator ng = roadSettings.generatorInstance;
 		Vector3 noise = new Vector3();
-		foreach (NoiseChannelSettings group in roadSettings.noiseChannels[noiseChannel].channelSettings)
+		foreach (NoiseChannel channel in roadSettings.noiseChannels)
 		{
-			noise += ng.getNoise(roadChainBuilder.generatedRoadEdgeloops, group);
+			noise += channel.generatorInstance.getNoise(roadChainBuilder.generatedRoadEdgeloops, channel);
 		}
 		return noise;
 	}
@@ -312,17 +309,20 @@ public class RoadMeshExtruder {
         {
 			float min_Xuv = float.PositiveInfinity;
 			float max_Xuv = float.NegativeInfinity;
-			foreach (var item in roadSettings.points)
-			{
-				if(item.materialIndex == current)
-                {
-					if (item.vertex_1.point.x < min_Xuv)
-						min_Xuv = item.vertex_1.point.x;
 
-					if (item.vertex_1.point.x > max_Xuv)
-						max_Xuv = item.vertex_1.point.x;
-				}
+			foreach (var p in roadSettings.points)
+			{
+				if(p.materialIndex == current)
+                {
+					if (p.vertex_1.point.x < min_Xuv)
+						min_Xuv = p.vertex_1.point.x;
+
+					if (p.vertex_1.point.x > max_Xuv)
+						max_Xuv = p.vertex_1.point.x;
+                }
 			}
+
+
 			uvs.Add(new Vector2(min_Xuv, max_Xuv));
 			current++;
 		}

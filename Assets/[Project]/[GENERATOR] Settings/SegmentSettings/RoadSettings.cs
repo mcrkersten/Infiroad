@@ -30,50 +30,13 @@ public class RoadSettings : ScriptableObject
 
 	[Header("Noise settings")]
 	public List<NoiseChannel> noiseChannels = new List<NoiseChannel>();
-	public NoiseChannel guardRailNoiseChannel;
-
-	[Header("Short")]
-	[Range(0f,1f)]
-	public float shortNoise;
-	[Range(0f, 1f)]
-	public float shortPower;
-
-	[Header("Medium")]
-	[Range(0f, 1f)]
-	public float mediumNoise;
-	[Range(0f, 1f)]
-	public float mediumPower;
-
-	[Header("Long")]
-	[Range(0f, 1f)]
-	public float longNoise;
-	[Range(0f, 20f)]
-	public float longPower;
-
-	public int seed;
+	public int guardRailNoiseChannel;
 
 	public void UpdateAllRoadSurfaces()
     {
 		allSurfaceSettings = new List<SurfaceScriptable>();
 		allSurfaceSettings.AddRange(surfaceSettings);
 		allSurfaceSettings.Add(runoffMaterial);
-    }
-
-	public NoiseGenerator generatorInstance 
-	{ 
-		get { 
-			if (GeneratorInstance == null) { return CreateNoiseGenerator(); }
-            else { return GeneratorInstance; }
-		}
-	}
-
-	private NoiseGenerator GeneratorInstance;
-
-	public NoiseGenerator CreateNoiseGenerator()
-    {
-		if(GeneratorInstance == null)
-			GeneratorInstance = new NoiseGenerator(shortNoise, shortPower, mediumNoise, mediumPower, longNoise, longPower, seed);
-		return GeneratorInstance;
     }
 
 	/// <summary>
@@ -145,27 +108,44 @@ public class RoadSettings : ScriptableObject
 [System.Serializable]
 public class NoiseChannel
 {
-	public List<NoiseChannelSettings> channelSettings = new List<NoiseChannelSettings>();
-}
+	public int channel;
+	public List<Noise> noises = new List<Noise>();
+	public NoiseGenerator generatorInstance
+	{
+		get
+		{
+			if (GeneratorInstance == null) { return CreateNoiseGenerator(channel); }
+			else { return GeneratorInstance; }
+		}
+	}
 
+	private NoiseGenerator GeneratorInstance;
+
+	public NoiseGenerator CreateNoiseGenerator(int groupIndex)
+	{
+		if (GeneratorInstance == null)
+			GeneratorInstance = new NoiseGenerator(noises, groupIndex);
+		return GeneratorInstance;
+	}
+}
 [System.Serializable]
-public class NoiseChannelSettings
+public class Noise
 {
-	public int group;
-	public NoiseType noiseType;
+	[SerializeField] private NoiseType noiseType;
 	public NoiseDirection noiseDirection;
-}
 
-public enum NoiseType
-{
-	none,
-	short_Noise,
-	medium_Noise,
-	long_Noise,
-	shortMedium_Noise,
-	mediumLong_Noise,
-	shortLong_Noise,
-	allTypes
+	[Range(0f, .9999f)]
+	public float noiseLenght;
+	[Range(0f, 1f)]
+	public float noisePower;
+
+	private enum NoiseType
+	{
+		None,
+		Short_Noise,
+		Medium_Noise,
+		Long_Noise,
+	}
 }
 
 public enum NoiseDirection
@@ -173,5 +153,4 @@ public enum NoiseDirection
 	None,
 	Horizontal,
 	Vertical,
-	Biderectional
 }

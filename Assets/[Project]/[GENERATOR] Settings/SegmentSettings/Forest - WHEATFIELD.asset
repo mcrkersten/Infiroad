@@ -341,23 +341,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   noiseChannels:
-  - channelSettings:
-    - group: 0
-      noiseType: 0
-      noiseDirection: 0
-  - channelSettings:
-    - group: 1
-      noiseType: 3
-      noiseDirection: 1
-    - group: 1
-      noiseType: 2
-      noiseDirection: 2
-  guardRailNoiseChannel:
-    channelSettings: []
-  shortNoise: 0.75
-  shortPower: 0.08
-  mediumNoise: 0.019
-  mediumPower: 0.1
-  longNoise: 0.002
-  longPower: 20
-  seed: 0
+  - channel: 0
+    noises: []
+  - channel: 0
+    noises: []
+  guardRailNoiseChannel: 0

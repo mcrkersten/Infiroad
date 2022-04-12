@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Suspension : MonoBehaviour
 {
-    public WheelRaycast wheel;
+    public Wheel_Raycast wheel;
 
     public float collisionStrenght;
     public SuspensionPosition suspensionPosition;

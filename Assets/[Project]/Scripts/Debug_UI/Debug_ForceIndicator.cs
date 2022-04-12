@@ -61,7 +61,7 @@ public class Debug_ForceIndicator : MonoBehaviour
     {
         public Image image;
         public Suspension suspension;
-        public WheelRaycast wheel;
+        public Wheel_Raycast wheel;
         public Indicator(Image image, Suspension suspension)
         {
             this.image = image;

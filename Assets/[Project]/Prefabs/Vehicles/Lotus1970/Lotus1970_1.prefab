@@ -523,7 +523,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 382425345146172252}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.473, z: 0}
+  m_LocalPosition: {x: 0.09200001, y: -0.473, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1598,7 +1598,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1225848131736378723}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.77400017, y: 0.55, z: 0}
+  m_LocalPosition: {x: 0.862, y: 0.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1702,6 +1702,7 @@ MonoBehaviour:
   RPM: 0
   wheelRadius: 0.4
   steerAngle: 0
+  smokeParticleSystemPrefab: {fileID: 5316389788902483448, guid: 9879bd9c2537a59459179b51a2c5d706, type: 3}
   forceDirectionDebug: {x: 0, y: 0, z: 0}
   gripDebug: 0
 --- !u!1 &1281844842530370940
@@ -2639,6 +2640,7 @@ MonoBehaviour:
   RPM: 0
   wheelRadius: 0.45
   steerAngle: 0
+  smokeParticleSystemPrefab: {fileID: 5316389788902483448, guid: 9879bd9c2537a59459179b51a2c5d706, type: 3}
   forceDirectionDebug: {x: 0, y: 0, z: 0}
   gripDebug: 0
 --- !u!1 &2101158653635113829
@@ -2959,6 +2961,7 @@ MonoBehaviour:
   RPM: 0
   wheelRadius: 0.45
   steerAngle: 0
+  smokeParticleSystemPrefab: {fileID: 5316389788902483448, guid: 9879bd9c2537a59459179b51a2c5d706, type: 3}
   forceDirectionDebug: {x: 0, y: 0, z: 0}
   gripDebug: 0
 --- !u!1 &2167965592566940452
@@ -5116,7 +5119,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4782458542353077139}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0.0630002, y: -0.473, z: 0}
+  m_LocalPosition: {x: 0.155, y: -0.473, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5381,7 +5384,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5069276261884109812}
   m_LocalRotation: {x: -0, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.35, z: -0.056}
+  m_LocalPosition: {x: 0, y: 0.086, z: -0.936}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5400,9 +5403,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07d9a774f1600114498a73858ec62966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wingAngle: 7
+  wingAngle: 10
   width: 1
-  lenght: 1
+  lenght: 1.2
 --- !u!1 &5137515557399716941
 GameObject:
   m_ObjectHideFlags: 0
@@ -5594,7 +5597,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5234133331178370005}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.77400017, y: 0.55, z: 0}
+  m_LocalPosition: {x: -0.862, y: 0.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5698,6 +5701,7 @@ MonoBehaviour:
   RPM: 0
   wheelRadius: 0.4
   steerAngle: 0
+  smokeParticleSystemPrefab: {fileID: 5316389788902483448, guid: 9879bd9c2537a59459179b51a2c5d706, type: 3}
   forceDirectionDebug: {x: 0, y: 0, z: 0}
   gripDebug: 0
 --- !u!1 &5301098774534615693
@@ -6028,7 +6032,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5412365881574345336}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0630002, y: -0.473, z: 0}
+  m_LocalPosition: {x: -0.153, y: -0.473, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6265,7 +6269,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5619082283571888569}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.473, z: 0}
+  m_LocalPosition: {x: -0.089999676, y: -0.473, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6663,7 +6667,7 @@ Rigidbody:
   m_Drag: 0.05
   m_AngularDrag: 0
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -6679,6 +6683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f4f9523e36c6ca4fa954702cf061fdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distanceTraveled: 0
   playerInput: {fileID: 2666332195233202079}
   useWheel: 1
   wheelInputAngle: 450
@@ -6771,11 +6776,11 @@ MonoBehaviour:
         maxAngle: 300
         maxValue: 270
     gearRatios:
-    - 3.23
-    - 2.47
-    - 1.67
-    - 1.23
+    - 3
+    - 2
+    - 1.5
     - 1
+    - 0.5
     driveWheels:
     - {fileID: 4227715369631494702}
     - {fileID: 7762288089884894289}
@@ -6833,7 +6838,7 @@ MonoBehaviour:
   - {fileID: 9166318014888682555}
   steeringWheel: {fileID: 3881492110850256670}
   wheelModelRotation: 2
-  userInputType: 2
+  userInputType: 1
   steeringStrenght: 4
   resetScreen: {fileID: 0}
 --- !u!114 &2666332195233202079
@@ -10734,11 +10739,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3455336368788211773, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.53
+      value: 0.561
       objectReference: {fileID: 0}
     - target: {fileID: 3455336368788211773, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.359
+      value: 0.429
       objectReference: {fileID: 0}
     - target: {fileID: 3455336368788211773, guid: 76bde54ade657f4448a3a0e4c3839305, type: 3}
       propertyPath: m_LocalRotation.w

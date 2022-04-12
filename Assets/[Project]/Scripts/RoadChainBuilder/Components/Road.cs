@@ -25,7 +25,7 @@ public class Road : ScriptableObject {
 	public List<VariationSettings> roadVariation = new List<VariationSettings>();
 
 	[Header("Road Decoration")]
-	public List<RoadDecoration> roadDecorations = new List<RoadDecoration>();
+	public List<RoadDecoration> standardDecoration = new List<RoadDecoration>();
 
 	[Header("Sky Decoration")]
 	public SkyDecoration skyDecoration;

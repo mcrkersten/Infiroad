@@ -67,10 +67,7 @@ public class GuardrailExtruder
 		{
 			local_XOffset = meshTask.mirror ? Mathf.Min(0f, p.radius) : Mathf.Max(0f, p.radius);
 			Vector3 noise = Vector3.zero;
-			foreach (NoiseChannelSettings channel in meshTask.noiseChannel.channelSettings)
-            {
-				noise += meshTask.roadSettings.generatorInstance.getNoise(meshTask.startPointIndex + currentEdgeloop, channel);
-            }
+			noise += meshTask.noiseChannel.generatorInstance.getNoise(meshTask.startPointIndex + currentEdgeloop, meshTask.noiseChannel);
 
 			for (int i = 0; i < guardrailSettings.PointCount; i++)
 			{

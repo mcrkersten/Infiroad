@@ -19,7 +19,7 @@ public class Engine2
     public float[] gearRatios =  { 2.36f, 1.88f, 1.5f, 1.19f, .97f };
     private float finalDriveRatio = 6.49f;
 
-    public List<WheelRaycast> driveWheels = new List<WheelRaycast>();
+    public List<Wheel_Raycast> driveWheels = new List<Wheel_Raycast>();
     private float driveWheelRadiusInMeter;
     private float rollingCircumference;
 
