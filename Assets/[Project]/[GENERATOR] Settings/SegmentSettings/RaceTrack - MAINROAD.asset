@@ -452,8 +452,8 @@ MonoBehaviour:
       noiseDirection: 1
       noiseLenght: 0
       noisePower: 0
-    - noiseType: 0
-      noiseDirection: 0
+    - noiseType: 1
+      noiseDirection: 2
       noiseLenght: 0
       noisePower: 0
   guardRailNoiseChannel: 1
