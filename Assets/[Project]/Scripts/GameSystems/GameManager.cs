@@ -5,6 +5,7 @@ using UnityEngine;
 namespace GameSystems {
     public class GameManager : MonoBehaviour
     {
+        private static GameManager instance;
         public int gameTime;
         private float currentGameTime;
 
@@ -12,6 +13,7 @@ namespace GameSystems {
         public static event StartGame onStartGame;
 
         [SerializeField] private VehicleController vehicleController;
+        public InputType inputType;
 
         [Header("Game and UI systems")]
         [SerializeField] private CountdownClock startCountdownClock;
@@ -24,8 +26,11 @@ namespace GameSystems {
         private int frame;
         private bool isRunning;
 
+        public static GameManager Instance { get { return instance; } }
+
         private void Awake()
         {
+            instance = this;
             CountdownClock.timerFinished += GO_Timer;
             CountdownClock.timerFinished += Game_Timer;
 

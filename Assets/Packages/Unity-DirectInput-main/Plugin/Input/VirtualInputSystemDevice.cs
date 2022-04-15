@@ -229,7 +229,7 @@ public class DirectInputDevice : InputDevice, IInputUpdateCallbackReceiver{
   public DeviceInfo deviceInfo { get; private set; } // Store the info of the DirectInput device for each InputSystem device (Cleared on Domain Reload)
 
 #if UNITY_EDITOR
-  static DirectInputDevice(){
+ static DirectInputDevice(){
     Debug.Log("DirectInput Device initialize");
     Initialize();
   }

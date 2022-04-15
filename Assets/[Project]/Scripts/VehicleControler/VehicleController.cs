@@ -110,8 +110,11 @@ public class VehicleController : MonoBehaviour
             case UserInputType.Wheels:
                 ActivateWheelControls();
                 break;
-            default:
-                ActivateDefaultControls();
+            case UserInputType.Keyboard:
+                ActivateKeyboardControls();
+                break;
+            case UserInputType.Gamepad:
+                ActivateGamepadControls();
                 break;
         };
 
@@ -133,27 +136,37 @@ public class VehicleController : MonoBehaviour
         vehicleInputActions.SteeringWheel.ShiftDOWN.Enable();
         vehicleInputActions.SteeringWheel.ShiftDOWN.started += engine.ShiftDown;
     }
-
-    private void ActivateDefaultControls()
+    private void ActivateKeyboardControls()
     {
-        steering = vehicleInputActions.Default.Steering;
-        braking = vehicleInputActions.Default.Braking;
-        acceleration = vehicleInputActions.Default.Acceleration;
-        clutch = vehicleInputActions.Default.Clutch;
+        steering = vehicleInputActions.Keyboard.Steering;
+        braking = vehicleInputActions.Keyboard.Braking;
+        acceleration = vehicleInputActions.Keyboard.Acceleration;
+        clutch = vehicleInputActions.Keyboard.Clutch;
 
-        vehicleInputActions.Default.ShiftUP.Enable();
-        vehicleInputActions.Default.ShiftUP.started += engine.ShiftUp;
-        vehicleInputActions.Default.ShiftDOWN.Enable();
-        vehicleInputActions.Default.ShiftDOWN.started += engine.ShiftDown;
+        vehicleInputActions.Keyboard.ShiftUP.Enable();
+        vehicleInputActions.Keyboard.ShiftUP.started += engine.ShiftUp;
+        vehicleInputActions.Keyboard.ShiftDOWN.Enable();
+        vehicleInputActions.Keyboard.ShiftDOWN.started += engine.ShiftDown;
     }
+    private void ActivateGamepadControls()
+    {
+        steering = vehicleInputActions.Gamepad.Steering;
+        braking = vehicleInputActions.Gamepad.Braking;
+        acceleration = vehicleInputActions.Gamepad.Acceleration;
+        clutch = vehicleInputActions.Gamepad.Clutch;
 
+        vehicleInputActions.Gamepad.ShiftUP.Enable();
+        vehicleInputActions.Gamepad.ShiftUP.started += engine.ShiftUp;
+        vehicleInputActions.Gamepad.ShiftDOWN.Enable();
+        vehicleInputActions.Gamepad.ShiftDOWN.started += engine.ShiftDown;
+    }
     // Update is called once per frame
     void Update()
     {
         LogitechGSDK.LogiUpdate();
         Debug.DrawLine(centerOfMass.position, centerOfMass.transform.position + rb.velocity.normalized, Color.red);
 
-        if(userInputType == UserInputType.Controller)
+        if(userInputType == UserInputType.Gamepad)
             feedbackSystem.GamepadFeedbackLoop();
     }
 
@@ -281,7 +294,7 @@ public class VehicleController : MonoBehaviour
     private float CalculateSteeringInputForce(float steerInput, float steerWeight, UserInputType inputType, float power)
     {
         float steering = steeringForce;
-        if(inputType == UserInputType.Controller)
+        if(inputType == UserInputType.Gamepad)
         {
             steering += Mathf.Lerp(0f, steerInput + (steerWeight/(1.5f)), Time.deltaTime);
             steering = Mathf.Clamp(steering, -1f, 1f);
@@ -375,11 +388,17 @@ public class VehicleController : MonoBehaviour
                 vehicleInputActions.SteeringWheel.ShiftDOWN.started -= engine.ShiftDown;
                 vehicleInputActions.SteeringWheel.ShiftDOWN.Disable();
                 break;
-            default:
-                vehicleInputActions.Default.ShiftUP.started -= engine.ShiftUp;
-                vehicleInputActions.Default.ShiftUP.Disable();
-                vehicleInputActions.Default.ShiftDOWN.started -= engine.ShiftDown;
-                vehicleInputActions.Default.ShiftDOWN.Disable();
+            case UserInputType.Keyboard:
+                vehicleInputActions.Keyboard.ShiftUP.started -= engine.ShiftUp;
+                vehicleInputActions.Keyboard.ShiftUP.Disable();
+                vehicleInputActions.Keyboard.ShiftDOWN.started -= engine.ShiftDown;
+                vehicleInputActions.Keyboard.ShiftDOWN.Disable();
+                break;
+            case UserInputType.Gamepad:
+                vehicleInputActions.Gamepad.ShiftUP.started -= engine.ShiftUp;
+                vehicleInputActions.Gamepad.ShiftUP.Disable();
+                vehicleInputActions.Gamepad.ShiftDOWN.started -= engine.ShiftDown;
+                vehicleInputActions.Gamepad.ShiftDOWN.Disable();
                 break;
         }
     }
@@ -433,7 +452,7 @@ public enum DriveType
 public enum UserInputType
 {
     Keyboard = 0,
-    Controller,
+    Gamepad,
     Wheels
 }
 

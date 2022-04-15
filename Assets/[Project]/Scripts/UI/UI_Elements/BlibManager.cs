@@ -21,5 +21,6 @@ public class BlibManager : MonoBehaviour
     {
         currentActiveBlib?.Deactivate();
         blibs[index]?.Activate();
+        currentActiveBlib = blibs[index];
     }
 }

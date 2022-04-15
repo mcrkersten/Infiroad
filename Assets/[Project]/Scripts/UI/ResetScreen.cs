@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
 using UnityEngine.UI;
-
+using GameSystems;
 public class ResetScreen : MonoBehaviour
 {
     public VehicleInputActions vehicleInputActions;
@@ -17,8 +17,22 @@ public class ResetScreen : MonoBehaviour
     void Start()
     {
         vehicleInputActions = new VehicleInputActions();
-        vehicleInputActions.Default.Reset.Enable();
-        vehicleInputActions.Default.Reset.started += ActivateResetScreen;
+        GameManager gm = GameManager.Instance;
+        switch (gm.inputType)
+        {
+            case InputType.Keyboard:
+                vehicleInputActions.Keyboard.Reset.Enable();
+                vehicleInputActions.Keyboard.Reset.started += ActivateResetScreen;
+                break;
+            case InputType.Gamepad:
+                vehicleInputActions.Gamepad.Reset.Enable();
+                vehicleInputActions.Gamepad.Reset.started += ActivateResetScreen;
+                break;
+            case InputType.Wheel:
+                vehicleInputActions.SteeringWheel.Reset.Enable();
+                vehicleInputActions.SteeringWheel.Reset.started += ActivateResetScreen;
+                break;
+        }
     }
 
     public void ActivateResetScreen(InputAction.CallbackContext obj)
@@ -35,6 +49,21 @@ public class ResetScreen : MonoBehaviour
     // Update is called once per frame
     void OnDestroy()
     {
-        vehicleInputActions.Default.Reset.started -= ActivateResetScreen;
+        GameManager gm = GameManager.Instance;
+        switch (gm.inputType)
+        {
+            case InputType.Keyboard:
+                vehicleInputActions.Keyboard.Reset.Disable();
+                vehicleInputActions.Keyboard.Reset.started -= ActivateResetScreen;
+                break;
+            case InputType.Gamepad:
+                vehicleInputActions.Gamepad.Reset.Disable();
+                vehicleInputActions.Gamepad.Reset.started -= ActivateResetScreen;
+                break;
+            case InputType.Wheel:
+                vehicleInputActions.SteeringWheel.Reset.Disable();
+                vehicleInputActions.SteeringWheel.Reset.started -= ActivateResetScreen;
+                break;
+        }
     }
 }
