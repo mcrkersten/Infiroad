@@ -82,6 +82,7 @@ public class BindingMenuLogic : MonoBehaviour
         rebindingOperation = actionToRebind.PerformInteractiveRebinding()
                     // To avoid accidental input from mouse motion
                     .WithControlsExcluding("Mouse")
+                    .WithControlsExcluding("<Keyboard>/printScreen")
                     .OnMatchWaitForAnother(0.1f)
                     .OnComplete(operation => OnRebindComplete(actionToRebind))
                     .Start();
