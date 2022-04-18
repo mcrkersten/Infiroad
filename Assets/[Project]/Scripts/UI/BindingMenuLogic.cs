@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using System.Linq;
 
 public class BindingMenuLogic : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class BindingMenuLogic : MonoBehaviour
     {
         blibManager.InstantiateBlibs(Enum.GetValues(typeof(KeyBinding)).Length - 1);
         blibManager.ActivateBlib(0);
+        SetBindingText();
     }
 
     private void OnEnable()
@@ -86,14 +88,23 @@ public class BindingMenuLogic : MonoBehaviour
                     .OnMatchWaitForAnother(0.1f)
                     .OnComplete(operation => OnRebindComplete(actionToRebind))
                     .Start();
+
+    }
+
+    private void SetPlayerInputSetting(InputType type, KeyBinding key, InputBinding binding)
+    {
+        PlayerInputSettings ps = playerInputSettings.First(x => x.inputType == type);
+        Debug.Log(type);
+        ps.SetBinding(key, binding);
     }
 
     private void OnRebindComplete(InputAction actionToRebind)
     {
         actionToRebind.Enable();
-        bindingButton.Bound(InputControlPath.ToHumanReadableString(actionToRebind.bindings[0].effectivePath));
+        bindingButton.SetKeyText(actionToRebind.bindings[0]);
         rebindingOperation.Dispose();
         navigateInputButtons.buttons[3].onClick.AddListener(() => StartBindingKey(selectedKeybinding, selectedInputType));
+        SetPlayerInputSetting(selectedInputType, selectedKeybinding, actionToRebind.bindings[0]);
     }
 
     private void WheelBinding(KeyBinding key)

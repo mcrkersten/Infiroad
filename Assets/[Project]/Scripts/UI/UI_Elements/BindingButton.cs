@@ -27,9 +27,17 @@ public class BindingButton : MonoBehaviour
         listening.gameObject.SetActive(true);
     }
 
-    public void Bound(string keyName)
+    public void SetKeyText(InputBinding binding)
     {
-        listening.UpdateTextElement(0, keyName);
+        var str = InputControlPath.ToHumanReadableString(binding.effectivePath);
+        var newStr = "";
+        var idx = str.LastIndexOf(" ");
+        if (idx > -1)
+            newStr = str.Remove(idx);
+        else
+            newStr = str;
+
+        listening.UpdateTextElement(0, newStr);
         listening.UpdateTextElement(1, "Click to rebind");
     }
 
