@@ -23,4 +23,13 @@ public class BlibManager : MonoBehaviour
         blibs[index]?.Activate();
         currentActiveBlib = blibs[index];
     }
+
+    public void DestroyAllBLibs()
+    {
+        int count = blibs.Count;
+        for (int i = 0; i < count; i++)
+            Destroy(blibs[i].gameObject);
+        blibs = new List<Blib>();
+        currentActiveBlib = null;
+    }
 }

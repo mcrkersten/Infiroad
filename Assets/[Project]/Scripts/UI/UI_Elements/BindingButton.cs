@@ -37,6 +37,8 @@ public class BindingButton : MonoBehaviour
         else
             newStr = str;
 
+        unbound.gameObject.SetActive(false);
+        listening.gameObject.SetActive(true);
         listening.UpdateTextElement(0, newStr);
         listening.UpdateTextElement(1, "Click to rebind");
     }
