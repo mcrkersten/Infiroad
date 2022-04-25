@@ -20,6 +20,11 @@ public class BindingMenuLogic : MonoBehaviour
     private int selectedKeybinding = 0;
     private List<InputType> bindingErrors = new List<InputType>();
 
+    private void Start()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     public void StartBIndingMenuLogic()
     {
         inputAction = new VehicleInputActions();
@@ -46,6 +51,7 @@ public class BindingMenuLogic : MonoBehaviour
         else
         {
             Debug.Log("START GAME");
+            bindingManager.selectedBinding = bindingManager.playerInputBindings.Where(i => i.inputType == selectedInputType).First();
             //Startgame
         }
     }

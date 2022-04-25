@@ -6,7 +6,9 @@ using System.Linq;
 
 public class BindingManager : MonoBehaviour
 {
+    public PlayerInputBindings selectedBinding;
     public List<PlayerInputBindings> playerInputBindings = new List<PlayerInputBindings>();
+    [SerializeField] private List<PlayerInputBindings> defaultPlayerInputBindings = new List<PlayerInputBindings>();
 
     public List<InputType> CheckBindingFiles()
     {
@@ -19,6 +21,22 @@ public class BindingManager : MonoBehaviour
                 bindings.Add(b);
             else
                 bindingErrors.Add(inputType);
+        }
+
+        List<InputType> fixedErrors = new List<InputType>();
+        foreach (InputType inputType in bindingErrors)
+        {
+            PlayerInputBindings selectedBinding = defaultPlayerInputBindings.Where(i => i.inputType == inputType).FirstOrDefault();
+            if(selectedBinding != null)
+            {
+                bindings.Add(selectedBinding);
+                fixedErrors.Add(inputType);
+            }
+        }
+
+        foreach (InputType inputType in fixedErrors)
+        {
+            bindingErrors.Remove(inputType);
         }
 
         foreach (PlayerInputBindings binding in bindings)
