@@ -25,13 +25,16 @@ public class RoadSettingsInspector : Editor
 		RoadSettings t = target as RoadSettings;
 
 		Undo.RecordObject(t, "RoadSettings");
-		Undo.RecordObject(t.guardRail, "GuardrailSettings");
 
 		Draw3DShape(t);
 		DrawHandles(t);
-		DrawRightGuardrail(t.guardRail);
-		DrawLeftGuardrail(t.guardRail);
-		DrawGuardrailHandle(t.guardRail);
+        foreach (GuardrailSettings g in t.guardRails)
+        {
+			Undo.RecordObject(g, "GuardrailSettings" + g.ToString());
+			DrawRightGuardrail(g);
+			DrawLeftGuardrail(g);
+			DrawGuardrailHandle(g);
+		}
 		DrawAddButtons(t);
 	}
 

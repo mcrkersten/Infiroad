@@ -7,35 +7,43 @@ using System.Linq;
 [CreateAssetMenu, System.Serializable]
 public class PlayerInputBindings : ScriptableObject
 {
-    public InputType inputType;
-    public List<BindingObject> bindings = new List<BindingObject>();
+    public InputBindings inputBindings;
 
     public void SetBinding(int key, InputBinding binding)
     {
-        BindingObject bo = bindings[key];
+        BindingObject bo = inputBindings.bindings[key];
         bo.SetKeyPath(binding);
+        bo.key = key;
     }
 
     public bool CheckBindings()
     {
-        foreach (BindingObject bo in bindings)
+        foreach (BindingObject bo in inputBindings.bindings)
         {
             if (bo.inputBinding == null)
                 return false;
         }
         return true;
     }
+}
 
-    [System.Serializable]
-    public class BindingObject
+[System.Serializable]
+public class BindingObject
+{
+    [SerializeField] public string bindingName;
+    public InputBinding inputBinding;
+    public int key;
+
+    public void SetKeyPath(InputBinding ib)
     {
-        [SerializeField] public string bindingName;
-        public InputBinding inputBinding;
-
-        public void SetKeyPath(InputBinding ib)
-        {
-            this.inputBinding = ib;
-            bindingName = InputControlPath.ToHumanReadableString(ib.effectivePath);
-        }
+        this.inputBinding = ib;
+        bindingName = InputControlPath.ToHumanReadableString(ib.effectivePath);
     }
+}
+
+[System.Serializable]
+public class InputBindings
+{
+    public InputType inputType;
+    public List<BindingObject> bindings = new List<BindingObject>();
 }

@@ -20,12 +20,13 @@ using UnityEngine;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 // This is the parent container for all the road segments
 public class RoadChain : MonoBehaviour {
 	public bool loop = false; // Whether or not the last segment should connect to the first
 	public List<RoadSegment> organizedSegments = new List<RoadSegment>();
-
+	public LayerMask trackLayer;
 	public UVMode uvMode = UVMode.TiledDeltaCompensated; // More info on what this is in the enum!
 
 	public MeshSpawnPoints meshSpawnPoints;
@@ -73,9 +74,11 @@ public class RoadChain : MonoBehaviour {
 
 	public void CreateRoad(RoadSettings roadSettings, RoadSegment segment)
 	{
-		roadSettings.guardRail.CalculateLine();
-		roadSettings.guardRail.CalculateInverseLine();
-
+        foreach (GuardrailSettings g in roadSettings.guardRails)
+        {
+			g.CalculateLine();
+			g.CalculateInverseLine();
+		}
 		segment.CreateMesh(Vector2.zero, roadSettings); //Creates mesh
 	}
 
@@ -94,13 +97,11 @@ public class RoadChain : MonoBehaviour {
 		int decorIndex = 0;
 		foreach (Decoration decorItem in roadDecoration.decor)
 		{
-			int edgeLoop = segmendLoops - (int)Mathf.Lerp(0, segmendLoops, 1f - Mathf.Clamp01(roadDecoration.mainCurveTime + decorItem.curveTime));
+			int currentEdgeloop = (int)Mathf.Lerp(0, segmendLoops, 1f - Mathf.Clamp01(roadDecoration.mainCurveTime + decorItem.curveTime));
+			int edgeLoop = segmendLoops - currentEdgeloop;
 			Vector3 noise = Vector3.zero;
-
 			foreach (NoiseChannel nts in roadSettings.noiseChannels)
-			{
 				noise += nts.generatorInstance.getNoise(segment.startEndLoop.x + edgeLoop, nts);
-			}
 
 			Vector3 decorPosition = new Vector3(decorItem.position.x, decorItem.position.y, 0);
 
@@ -114,7 +115,10 @@ public class RoadChain : MonoBehaviour {
 			Vector3 worldPosition = segment.transform.TransformPoint(localPosition);
 
 			decorObjects[decorIndex].transform.position = worldPosition;
-			decorObjects[decorIndex].transform.rotation = Quaternion.LookRotation(next - prev);
+			Vector3 positionOut = new Vector3();
+			decorObjects[decorIndex].transform.rotation = GetUpVector(out positionOut, worldPosition) * Quaternion.LookRotation(next - prev);
+			decorObjects[decorIndex].transform.position = positionOut;
+
 			decorObjects[decorIndex].SetActive(true);
 			activatedPooledObjects.Add(decorObjects[decorIndex]);
 
@@ -124,7 +128,19 @@ public class RoadChain : MonoBehaviour {
 		}
 	}
 
-    public void OnDestroy()
+	private Quaternion GetUpVector(out Vector3 positionOut, Vector3 position)
+    {
+		RaycastHit hit;
+		if (Physics.Raycast(position + Vector3.up, Vector3.down, out hit, Mathf.Infinity, trackLayer))
+		{
+			positionOut = hit.point;
+			return Quaternion.Euler(hit.normal);
+		}
+		positionOut = position;
+		return Quaternion.identity;
+	}
+
+	public void OnDestroy()
     {
         foreach (GameObject item in activatedPooledObjects)
 			if(item)

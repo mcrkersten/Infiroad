@@ -370,7 +370,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 067fe766fe8fd2247904b77aa6814951, type: 2}
   runoffMaterial: {fileID: 11400000, guid: 067fe766fe8fd2247904b77aa6814951, type: 2}
   hasGuardrail: 0
-  guardRail: {fileID: 11400000, guid: 5750af715875c8d4e80fa4c7ef1f7013, type: 2}
+  guardRails:
+  - {fileID: 11400000, guid: 5750af715875c8d4e80fa4c7ef1f7013, type: 2}
+  - {fileID: 11400000, guid: 0d430583a073a984caf4ad0fb0e144fa, type: 2}
   guardrailIsContinues: 1
   guardRailMinimalCornerRadius: 0
   roadTypeTag: FOREST-BASIC
@@ -395,7 +397,7 @@ MonoBehaviour:
     - {fileID: 645915518784132891, guid: a1c38ab04dc740146b4dafdd44e6bf42, type: 3}
     size: 500
   rotationEasing: 3
-  edgeLoopsPerMeter: 1
+  edgeLoopsPerMeter: 2
   debugRoadCurveStrenght: 0
   runoffAnimationCurve:
     serializedVersion: 2
@@ -450,10 +452,12 @@ MonoBehaviour:
     noises:
     - noiseType: 3
       noiseDirection: 1
-      noiseLenght: 0
-      noisePower: 0
-    - noiseType: 1
+      noiseLenght: 0.999
+      noisePower: 20
+    - noiseType: 3
       noiseDirection: 2
-      noiseLenght: 0
-      noisePower: 0
+      noiseLenght: 0.993
+      noisePower: 1
   guardRailNoiseChannel: 1
+  hasCornerChamfer: 1
+  maxChamfer: 5

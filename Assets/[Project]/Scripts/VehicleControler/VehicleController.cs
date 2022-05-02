@@ -7,6 +7,8 @@ using DG.Tweening;
 
 public class VehicleController : MonoBehaviour
 {
+    public bool useBindingManager;
+
     [HideInInspector] public float distanceTraveled = 0f;
     private bool physicsLocked;
     public PlayerInput playerInput;
@@ -44,7 +46,6 @@ public class VehicleController : MonoBehaviour
     [SerializeField] private WheelModelRotation wheelModelRotation;
 
     [Header("Controll settings")]
-    public UserInputType userInputType;
     public float steeringStrenght;
 
     public VehicleUserInterfaceData userInterface;
@@ -54,21 +55,27 @@ public class VehicleController : MonoBehaviour
     [SerializeField] private ResetScreen resetScreen;
     private Transform resetPosition;
     private Vector3 lastFramePosition = new Vector3();
+    private InputType userInputType = 0;
 
     void Awake()
     {
+        if (useBindingManager)
+        {
+            BindingManager.Instance.InitializeSelectedBinding();
+            vehicleInputActions = BindingManager.Instance.vehicleInputActions;
+        }
+
+        rb = this.GetComponent<Rigidbody>();
+        feedbackSystem = new FeedbackSystem(playerInput);
         ResetScreen.resetVehicle += ResetVehicle;
         EventTriggerManager.resetPoint += NewResetPoint;
 
         Input.ResetInputAxes();
         steeringInput = new SteeringWheelInput();
         steeringInput.Init();
-        feedbackSystem = new FeedbackSystem(playerInput);
 
-        rb = this.GetComponent<Rigidbody>();
         rb.centerOfMass = centerOfMass.localPosition;
 
-        vehicleInputActions = new VehicleInputActions();
         engine.InitializeEngine();
         userInterface = new VehicleUserInterfaceData(engine, this);
 
@@ -104,24 +111,26 @@ public class VehicleController : MonoBehaviour
 
     private void OnEnable()
     {
-
-        switch (userInputType)
+        if (useBindingManager)
         {
-            case UserInputType.Wheels:
-                ActivateWheelControls();
-                break;
-            case UserInputType.Keyboard:
-                ActivateKeyboardControls();
-                break;
-            case UserInputType.Gamepad:
-                ActivateGamepadControls();
-                break;
-        };
-
-        steering.Enable();
-        braking.Enable();
-        acceleration.Enable();
-        clutch.Enable();
+            switch (BindingManager.Instance.selectedBinding.inputBindings.inputType)
+            {
+                case InputType.Wheel:
+                    ActivateWheelControls();
+                    break;
+                case InputType.Keyboard:
+                    ActivateKeyboardControls();
+                    break;
+                case InputType.Gamepad:
+                    ActivateGamepadControls();
+                    break;
+            };
+            steering.Enable();
+            braking.Enable();
+            acceleration.Enable();
+            clutch.Enable();
+            userInputType = BindingManager.Instance.selectedBinding.inputBindings.inputType;
+        }
     }
 
     private void ActivateWheelControls()
@@ -166,7 +175,7 @@ public class VehicleController : MonoBehaviour
         LogitechGSDK.LogiUpdate();
         Debug.DrawLine(centerOfMass.position, centerOfMass.transform.position + rb.velocity.normalized, Color.red);
 
-        if(userInputType == UserInputType.Gamepad)
+        if(userInputType == InputType.Gamepad)
             feedbackSystem.GamepadFeedbackLoop();
     }
 
@@ -239,44 +248,52 @@ public class VehicleController : MonoBehaviour
     }
 
     #region ReadInput
-    private float ReadAccelerationInput(UserInputType inputType)
+    private float ReadAccelerationInput(InputType inputType)
     {
+        if (!useBindingManager)
+            return 0f;
         switch (inputType)
         {
-            case UserInputType.Wheels:
+            case InputType.Wheel:
                 return 1f - acceleration.ReadValue<float>();
             default:
                 return acceleration.ReadValue<float>();
         }
     }
 
-    private float ReadSteeringInput(UserInputType inputType)
+    private float ReadSteeringInput(InputType inputType)
     {
+        if (!useBindingManager)
+            return 0f;
         switch (inputType)
         {
-            case UserInputType.Wheels:
+            case InputType.Wheel:
                 return Mathf.Lerp(-1f, 1f, steering.ReadValue<float>());
             default:
                 return steering.ReadValue<float>();
         }
     }
 
-    private float ReadBrakeInput(UserInputType inputType)
+    private float ReadBrakeInput(InputType inputType)
     {
+        if (!useBindingManager)
+            return 0f;
         switch (inputType)
         {
-            case UserInputType.Wheels:
+            case InputType.Wheel:
                 return 1f - braking.ReadValue<float>();
             default:
                 return braking.ReadValue<float>();
         }
     }
 
-    private float ReadClutchInput(UserInputType inputType)
+    private float ReadClutchInput(InputType inputType)
     {
+        if (!useBindingManager)
+            return 0f;
         switch (inputType)
         {
-            case UserInputType.Wheels:
+            case InputType.Wheel:
                 return clutch.ReadValue<float>();
             default:
                 return 1f - clutch.ReadValue<float>();
@@ -291,10 +308,10 @@ public class VehicleController : MonoBehaviour
     }
 
     private float steeringForce = 0f;
-    private float CalculateSteeringInputForce(float steerInput, float steerWeight, UserInputType inputType, float power)
+    private float CalculateSteeringInputForce(float steerInput, float steerWeight, InputType inputType, float power)
     {
         float steering = steeringForce;
-        if(inputType == UserInputType.Gamepad)
+        if(inputType == InputType.Gamepad)
         {
             steering += Mathf.Lerp(0f, steerInput + (steerWeight/(1.5f)), Time.deltaTime);
             steering = Mathf.Clamp(steering, -1f, 1f);
@@ -380,21 +397,21 @@ public class VehicleController : MonoBehaviour
         acceleration.Disable();
         clutch.Disable();
 
-        switch (userInputType)
+        switch (BindingManager.Instance.selectedBinding.inputBindings.inputType)
         {
-            case UserInputType.Wheels:
+            case InputType.Wheel:
                 vehicleInputActions.SteeringWheel.ShiftUP.started -= engine.ShiftUp;
                 vehicleInputActions.SteeringWheel.ShiftUP.Disable();
                 vehicleInputActions.SteeringWheel.ShiftDOWN.started -= engine.ShiftDown;
                 vehicleInputActions.SteeringWheel.ShiftDOWN.Disable();
                 break;
-            case UserInputType.Keyboard:
+            case InputType.Keyboard:
                 vehicleInputActions.Keyboard.ShiftUP.started -= engine.ShiftUp;
                 vehicleInputActions.Keyboard.ShiftUP.Disable();
                 vehicleInputActions.Keyboard.ShiftDOWN.started -= engine.ShiftDown;
                 vehicleInputActions.Keyboard.ShiftDOWN.Disable();
                 break;
-            case UserInputType.Gamepad:
+            case InputType.Gamepad:
                 vehicleInputActions.Gamepad.ShiftUP.started -= engine.ShiftUp;
                 vehicleInputActions.Gamepad.ShiftUP.Disable();
                 vehicleInputActions.Gamepad.ShiftDOWN.started -= engine.ShiftDown;
@@ -448,12 +465,4 @@ public enum DriveType
     frontWheelDrive,
     allWheelDrive,
 }
-
-public enum UserInputType
-{
-    Keyboard = 0,
-    Gamepad,
-    Wheels
-}
-
 

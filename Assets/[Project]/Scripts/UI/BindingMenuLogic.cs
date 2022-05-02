@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class BindingMenuLogic : MonoBehaviour
 {
     [SerializeField] private GameObject bindingMenuWarning;
+    [SerializeField] private GameObject saveBindingButton;
     [SerializeField] private BindingManager bindingManager;
     [SerializeField] private BindingButton bindingButton;
     [SerializeField] private Buttons inputTypeSelectionButtons;
@@ -20,16 +22,16 @@ public class BindingMenuLogic : MonoBehaviour
     private int selectedKeybinding = 0;
     private List<InputType> bindingErrors = new List<InputType>();
 
-    private void Start()
-    {
-        DontDestroyOnLoad(this.gameObject);
-    }
-
     public void StartBIndingMenuLogic()
     {
-        inputAction = new VehicleInputActions();
         Enable_NavigateInputSettings();
         Enable_InputTypeSetButtons();
+        inputAction = bindingManager.vehicleInputActions;
+        UpdateBindingFiles();
+    }
+
+    public void UpdateBindingFiles()
+    {
         bindingErrors = bindingManager.CheckBindingFiles();
     }
 
@@ -51,8 +53,8 @@ public class BindingMenuLogic : MonoBehaviour
         else
         {
             Debug.Log("START GAME");
-            bindingManager.selectedBinding = bindingManager.playerInputBindings.Where(i => i.inputType == selectedInputType).First();
-            //Startgame
+            bindingManager.selectedBinding = bindingManager.playerInputBindings.Where(i => i.inputBindings.inputType == selectedInputType).First();
+            SceneManager.LoadScene(1);
         }
     }
 
@@ -121,7 +123,7 @@ public class BindingMenuLogic : MonoBehaviour
 
     private void SetPlayerInputSetting(InputType type, int key, InputBinding binding)
     {
-        PlayerInputBindings ps = bindingManager.playerInputBindings.First(x => x.inputType == type);
+        PlayerInputBindings ps = bindingManager.playerInputBindings.First(x => x.inputBindings.inputType == type);
         ps.SetBinding((int)key, binding);
     }
 
@@ -257,6 +259,8 @@ public class BindingMenuLogic : MonoBehaviour
         blibManager.ActivateBlib((int)selectedKeybinding);
         SetBindingText(inputType);
         SetBindingButtonText();
+
+        CheckBinding(inputType);
     }
 
     private void PreviousBinding(InputType inputType)
@@ -270,6 +274,41 @@ public class BindingMenuLogic : MonoBehaviour
         blibManager.ActivateBlib((int)selectedKeybinding);
         SetBindingText(inputType);
         SetBindingButtonText();
+
+        CheckBinding(inputType);
+
+    }
+
+    private void CheckBinding(InputType inputType)
+    {
+        bool result = true;
+        switch (inputType)
+        {
+            case InputType.Keyboard:
+                foreach (BindingObject binding in bindingManager.playerInputBindings[0].inputBindings.bindings)
+                    if (binding.bindingName == "")
+                        result = false;
+                break;
+            case InputType.Gamepad:
+                foreach (BindingObject binding in bindingManager.playerInputBindings[1].inputBindings.bindings)
+                    if (binding.bindingName == "")
+                        result = false;
+                break;
+            case InputType.Wheel:
+                foreach (BindingObject binding in bindingManager.playerInputBindings[2].inputBindings.bindings)
+                    if (binding.bindingName == "")
+                        result = false;
+                break;
+        }
+
+        saveBindingButton.SetActive(result);
+    }
+
+    public void SaveCurrentBinding()
+    {
+        BindingFileManager.SaveBindingData(selectedInputType);
+        UpdateBindingFiles();
+        CancelBinding();
     }
 
     private void SetBindingButtonText()
@@ -277,20 +316,20 @@ public class BindingMenuLogic : MonoBehaviour
         switch (selectedInputType)
         {
             case InputType.Keyboard:
-                if (bindingManager.playerInputBindings[0].bindings[selectedKeybinding].bindingName != "")
-                    bindingButton.SetKeyText(bindingManager.playerInputBindings[0].bindings[selectedKeybinding].inputBinding);
+                if (bindingManager.playerInputBindings[0].inputBindings.bindings[selectedKeybinding].bindingName != "")
+                    bindingButton.SetKeyText(bindingManager.playerInputBindings[0].inputBindings.bindings[selectedKeybinding].inputBinding);
                 else
                     bindingButton.UnBound();
                 break;
             case InputType.Gamepad:
-                if (bindingManager.playerInputBindings[1].bindings[selectedKeybinding].bindingName != "")
-                    bindingButton.SetKeyText(bindingManager.playerInputBindings[1].bindings[selectedKeybinding].inputBinding);
+                if (bindingManager.playerInputBindings[1].inputBindings.bindings[selectedKeybinding].bindingName != "")
+                    bindingButton.SetKeyText(bindingManager.playerInputBindings[1].inputBindings.bindings[selectedKeybinding].inputBinding);
                 else
                     bindingButton.UnBound();
                 break;
             case InputType.Wheel:
-                if (bindingManager.playerInputBindings[2].bindings[selectedKeybinding].bindingName != "")
-                    bindingButton.SetKeyText(bindingManager.playerInputBindings[2].bindings[selectedKeybinding].inputBinding);
+                if (bindingManager.playerInputBindings[2].inputBindings.bindings[selectedKeybinding].bindingName != "")
+                    bindingButton.SetKeyText(bindingManager.playerInputBindings[2].inputBindings.bindings[selectedKeybinding].inputBinding);
                 else
                     bindingButton.UnBound();
                 break;

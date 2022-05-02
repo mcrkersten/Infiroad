@@ -4,6 +4,8 @@ using System.Linq;
 
 public class RoadChainBuilder : MonoBehaviour
 {
+    public bool isForMenu;
+
     public static RoadChainBuilder instance;
     [HideInInspector] public Transform vehicleStartTransform;
 
@@ -24,6 +26,7 @@ public class RoadChainBuilder : MonoBehaviour
     //Mesh task variables
     [HideInInspector] public MeshTask currentMeshTask = null;
     [HideInInspector] public float radiusDelay = 0f;
+    [HideInInspector] public float radiusVelocity = 0f;
     [HideInInspector] public Vector3 lastMeshPosition = Vector3.positiveInfinity;
     [HideInInspector] public List<MeshTask> meshtasks = new List<MeshTask>();
     GuardrailExtruder guardRailExtruder = new GuardrailExtruder();
@@ -59,9 +62,29 @@ public class RoadChainBuilder : MonoBehaviour
         createdRoadChains.Clear();
         CreateNextRoadChain(new EdgePoint(EdgeLocation.none, 3, startSegment));
         CreateNextRoadChain();
+        if (isForMenu)
+        {
+            CreateNextRoadChain();
+            CreateNextRoadChain();
+            CreateNextRoadChain();
+            CenterCamera();
+        }
         EventTriggerManager.roadChainTrigger += CreateNextRoadChain;
 
-        SetVehicleStartPosition();
+        if(vehicle != null)
+            SetVehicleStartPosition();
+    }
+
+    private void CenterCamera()
+    {
+        Vector3 avarage = Vector3.zero;
+        foreach (RoadChain item in createdRoadChains)
+        {
+            avarage += item.transform.transform.position;
+        }
+        avarage = avarage / createdRoadChains.Count;
+        avarage[1] = 450;
+        Camera.main.transform.position = avarage;
     }
 
     private void SetVehicleStartPosition()
@@ -103,7 +126,7 @@ public class RoadChainBuilder : MonoBehaviour
     {
         CreateNextRoadChain(lastEdgePoint);
 
-        if (createdRoadChains.Count == 4)
+        if (createdRoadChains.Count == 4 && !isForMenu)
             DeleteRoadChain(0);
     }
 
@@ -131,16 +154,20 @@ public class RoadChainBuilder : MonoBehaviour
         {
             RoadSettings roadSettting = road.SelectRoadSetting(roadShape, segment);
             roadChain.InitializeSegment(roadSettting, segment);
-            HandleMeshTasks(roadSettting, roadChain);
+            foreach (GuardrailSettings guardRailSetting in roadSettting.guardRails)
+            {
+                HandleMeshTasks(guardRailSetting, roadChain);
+            }
+            meshtasks.Clear();
         }
 
         //
-        SpawnRoadStandartDecoration(roadChain, organized);
+        SpawnRoadStandardDecoration(roadChain, organized);
         SpawnSkyDecoration();
         //SpawnSkyDecoration(road.skyDecoration);
     }
 
-    private void SpawnRoadStandartDecoration(RoadChain roadChain, List<RoadSegment> segments)
+    private void SpawnRoadStandardDecoration(RoadChain roadChain, List<RoadSegment> segments)
     {
         
         if (!startLineIsGenerated)
@@ -213,7 +240,7 @@ public class RoadChainBuilder : MonoBehaviour
         return RoadShape.corners;
     }
 
-    private void HandleMeshTasks(RoadSettings settings, RoadChain roadchain)
+    private void HandleMeshTasks(GuardrailSettings settings, RoadChain roadchain)
     {
         foreach (MeshTask task in meshtasks)
         {
@@ -247,7 +274,6 @@ public class RoadChainBuilder : MonoBehaviour
                 }
             }
         }
-        meshtasks.Clear();
     }
 
     private List<RoadSegment> OrganizeSegments(List<RoadSegment> createdSegments, EdgePoint entry, EdgePoint exit)

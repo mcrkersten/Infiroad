@@ -78,13 +78,13 @@ MonoBehaviour:
       m_NumAlphaKeys: 2
     debug: 0
     sidePointAmount: 5
-    gridSize: 600
+    gridSize: 400
     straight_NpointsBetween: 2
     corner_NpointsBetween: 2
-    XaxisVariation: 40
-    segmentHeightRange: 7.7
+    XaxisVariation: 50
+    segmentHeightRange: 5
     isFixedBetweenRange: 0
-    segmentDeletionProximity: 20
+    segmentDeletionProximity: 30
   vehicle: {fileID: 0}
   segmentPrefab: {fileID: 2490539787425671966, guid: 581f21a299defcb4d9142c7dd4a17603, type: 3}
   roadChainTriggerObjectPrefab: {fileID: 7696483532372454975, guid: c537102fda2ee344e8c1c56eaee6f2d4, type: 3}
@@ -92,12 +92,15 @@ MonoBehaviour:
   createdRoadChains: []
   startSegment: {fileID: 0}
   currentMeshTask:
-    mirror: 0
     roadSettings: {fileID: 0}
     points: []
     startPointIndex: 0
     noiseChannel:
-      channelSettings: []
+      channel: 0
+      noises: []
+    mirror: 0
+    bothSides: 0
+    curveRadius: 0
   radiusDelay: Infinity
   lastMeshPosition: {x: Infinity, y: Infinity, z: Infinity}
   meshtasks: []

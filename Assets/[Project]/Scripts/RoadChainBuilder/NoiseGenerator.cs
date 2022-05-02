@@ -15,9 +15,9 @@ public class NoiseGenerator
         this.channelIndex = groupIndex;
     }
 
-    public float getNoise(int positionalIndex, Noise n)
+    private float getNoise(int positionalIndex, Noise n)
     {
-        float noise = (-.5f + Mathf.PerlinNoise(channelIndex * (1f - n.noiseLenght), positionalIndex * (1f - n.noiseLenght)) * n.noisePower);
+        float noise = (-.5f + Mathf.PerlinNoise(channelIndex * (1f - n.noiseLenght), positionalIndex * (1f - n.noiseLenght))) * n.noisePower;
         return noise;
     }
 

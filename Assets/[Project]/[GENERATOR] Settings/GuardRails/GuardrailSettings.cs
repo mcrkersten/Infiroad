@@ -28,6 +28,9 @@ public class GuardrailSettings : ScriptableObject
 
 	public float guardRailWidth;
 
+	public bool hasCornerChamfer;
+	public float maxChamfer;
+
 	public float CalcUspan()
 	{
 		float dist = 0;

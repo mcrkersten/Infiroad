@@ -14,7 +14,7 @@ public class RoadSettings : ScriptableObject
 
 	[Header("Guardrail")]
 	public bool hasGuardrail;
-	public GuardrailSettings guardRail;
+	public List<GuardrailSettings> guardRails = new List<GuardrailSettings>();
 	public bool guardrailIsContinues;
 	public float guardRailMinimalCornerRadius;
 
@@ -31,6 +31,9 @@ public class RoadSettings : ScriptableObject
 	[Header("Noise settings")]
 	public List<NoiseChannel> noiseChannels = new List<NoiseChannel>();
 	public int guardRailNoiseChannel;
+
+	public bool hasCornerChamfer;
+	public float maxChamfer;
 
 	public void UpdateAllRoadSurfaces()
     {
@@ -136,7 +139,7 @@ public class Noise
 
 	[Range(0f, .9999f)]
 	public float noiseLenght;
-	[Range(0f, 1f)]
+	[Range(0f, 20f)]
 	public float noisePower;
 
 	private enum NoiseType

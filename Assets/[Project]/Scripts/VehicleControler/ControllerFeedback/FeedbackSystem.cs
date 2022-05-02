@@ -57,7 +57,10 @@ public class FeedbackSystem
             lowFrequency = Mathf.Clamp(lowFrequency, 0f, 1f);
         }
 
-        activeGamepad.SetMotorSpeeds(lowFrequency, highFrequency);
+        if(activeGamepad != null)
+            activeGamepad.SetMotorSpeeds(lowFrequency, highFrequency);
+        else
+            activeGamepad = GetActiveGamepad();
     }
 
     private Gamepad GetActiveGamepad()

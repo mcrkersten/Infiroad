@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2490539787425671963}
   - component: {fileID: 2490539787425671964}
   - component: {fileID: 2490539787425671967}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RoadChainSegment
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
@@ -52,6 +52,7 @@ MonoBehaviour:
     points: []
     upStart: {x: 0, y: 0, z: 0}
     upEnd: {x: 0, y: 0, z: 0}
+  surfaceSettings: []
   tangentLength: 45
   roadSetting: {fileID: 0}
   startEndLoop: {x: 0, y: 0}

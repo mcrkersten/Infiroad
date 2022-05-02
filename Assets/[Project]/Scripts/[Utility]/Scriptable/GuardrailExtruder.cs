@@ -14,15 +14,15 @@ public class GuardrailExtruder
 
 	RoadChain currentRoadchain;
 	GameObject currentGuardrail;
-	public void Extrude(MeshTask meshTask, RoadChain parent, RoadSettings roadSettings)
+	public void Extrude(MeshTask meshTask, RoadChain parent, GuardrailSettings guardrailSettings)
     {
 		currentRoadchain = parent;
-		Mesh mesh = CreateMeshFilters(roadSettings);
+		Mesh mesh = CreateMeshFilters(guardrailSettings);
 		ClearMesh(mesh);
 
-		CreateGuardrail(roadSettings.guardRail, meshTask);
-		int hardEdgeCount = CalculateHardEdgeCount(roadSettings.guardRail);
-		CreateTriangles(meshTask, roadSettings.guardRail, hardEdgeCount);
+		CreateGuardrail(guardrailSettings, meshTask);
+		int hardEdgeCount = CalculateHardEdgeCount(guardrailSettings);
+		CreateTriangles(meshTask, guardrailSettings, hardEdgeCount);
 
 		AssignMesh(mesh);
 		AssignMeshCollider(mesh);
@@ -35,7 +35,7 @@ public class GuardrailExtruder
 		c.sharedMesh = mesh;
 	}
 
-    private Mesh CreateMeshFilters(RoadSettings roadSettings)
+    private Mesh CreateMeshFilters(GuardrailSettings settings)
     {
 		GameObject g = new GameObject();
 		currentGuardrail = g;
@@ -43,7 +43,7 @@ public class GuardrailExtruder
 		MeshFilter mf = currentGuardrail.AddComponent<MeshFilter>();
 		MeshRenderer mr = currentGuardrail.AddComponent<MeshRenderer>();
 		mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.TwoSided;
-		mr.material = roadSettings.guardRail.material;
+		mr.material = settings.material;
 		return mf.mesh;
 	}
 
@@ -67,15 +67,17 @@ public class GuardrailExtruder
 		{
 			local_XOffset = meshTask.mirror ? Mathf.Min(0f, p.radius) : Mathf.Max(0f, p.radius);
 			Vector3 noise = Vector3.zero;
-			noise += meshTask.noiseChannel.generatorInstance.getNoise(meshTask.startPointIndex + currentEdgeloop, meshTask.noiseChannel);
+			noise += guardrailSettings.guardrailExtends ? meshTask.noiseChannel.generatorInstance.getNoise(meshTask.startPointIndex + currentEdgeloop, meshTask.noiseChannel) : Vector3.zero;
 
 			for (int i = 0; i < guardrailSettings.PointCount; i++)
 			{
-				Vector2 uv = new Vector2(currentEdgeloop, guardrailSettings.points[i].vertex.uv.y);
+				Vector2 uv = new Vector2(currentEdgeloop/3f, guardrailSettings.points[i].vertex.uv.y);
 
 				Vector2 point = guardrailSettings.points[i].vertex.point * (Vector2.left + Vector2.up);
 
 				Vector3 offset = new Vector3(meshDirection.x * (point.x + guardrailSettings.guardRailWidth + Mathf.Abs(local_XOffset)), point.y, 0f) + noise;
+				if (guardrailSettings.hasCornerChamfer)
+					offset = Quaternion.Euler(0, 0, (p.radius / 10f) * guardrailSettings.maxChamfer) * offset;
 
 				Vector3 relativePosition = p.rotation * offset;
 				Vector3 position = relativePosition + (p.position);
@@ -144,6 +146,9 @@ public class GuardrailExtruder
 	private void CreateGuardrailPole(Vector2 direction, GuardrailSettings guardrailSettings, MeshTask.Point p, Vector3 noise, float X_offset)
 	{
 		Vector3 offset = new Vector3(direction.x * (guardrailSettings.guardrailPosition.x + guardrailSettings.guardRailWidth + X_offset), guardrailSettings.guardrailPosition.y, 0f) + noise;
+		if (guardrailSettings.hasCornerChamfer)
+			offset = Quaternion.Euler(0, 0, (p.radius / 10f) * guardrailSettings.maxChamfer) * offset;
+
 		Vector3 relativePosition = p.rotation * offset;
 		Vector3 position = relativePosition + (p.position);
 

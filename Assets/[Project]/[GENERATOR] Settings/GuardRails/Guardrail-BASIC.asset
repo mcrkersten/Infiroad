@@ -49,6 +49,7 @@ MonoBehaviour:
     inversedLine: {x: 0, y: 1}
     isHardEdge: 0
   closedLoop: 0
+  guardrailExtends: 0
   guardrailPosition: {x: 0, y: 0}
   material: {fileID: 2100000, guid: 7ce9870caa6ca8342ac605f7e4db18ba, type: 2}
   poleSpacing: 5
@@ -56,3 +57,5 @@ MonoBehaviour:
   guardrailPolePrefab: {fileID: 5404048526340345794, guid: 7a60bffdda92bb5419fa2270007496ce, type: 3}
   sharpCornerGuardrailPolePrefab: {fileID: 5172932599711086609, guid: 66db0c81dfcaae34294ebf173cb629fd, type: 3}
   guardRailWidth: 6.462839
+  hasCornerChamfer: 1
+  maxChamfer: 5

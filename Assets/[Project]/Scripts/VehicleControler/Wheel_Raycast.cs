@@ -31,7 +31,7 @@ public class Wheel_Raycast : MonoBehaviour
     public float steerAngle;
 
     public GameObject smokeParticleSystemPrefab;
-    private ParticleSystem slipSmokeParticleSystem;
+    [SerializeField] private ParticleSystem slipSmokeParticleSystem;
 
     [HideInInspector] public Vector3 forceDirectionDebug = Vector3.zero;
     public float gripDebug = 0.01f;
@@ -43,8 +43,6 @@ public class Wheel_Raycast : MonoBehaviour
         tireCircumference = (Mathf.PI * 2f) * wheelRadius;
         wheelModelLocalStartPosition = new Vector3(wheelModel.transform.localPosition.x, 0, wheelModel.transform.localPosition.z);
         suspensionLocalStartPosition = new Vector3(suspension.transform.localPosition.x, 0, suspension.transform.localPosition.z);
-        slipSmokeParticleSystem = Instantiate(smokeParticleSystemPrefab).GetComponent<ParticleSystem>();
-        slipSmokeParticleSystem.transform.parent = this.transform;
     }
 
     private void Update()
@@ -174,6 +172,7 @@ public class Wheel_Raycast : MonoBehaviour
         var main = slipSmokeParticleSystem.main;
         main.stopAction = ParticleSystemStopAction.None;
         main.simulationSpace = ParticleSystemSimulationSpace.World;
+        main.loop = true;
 
         var emission = slipSmokeParticleSystem.emission;
         emission.rateOverDistance = (1f - slipPercentage) * 30f;

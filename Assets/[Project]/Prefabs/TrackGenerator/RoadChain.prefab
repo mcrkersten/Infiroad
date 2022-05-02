@@ -173,6 +173,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loop: 0
   organizedSegments: []
+  trackLayer:
+    serializedVersion: 2
+    m_Bits: 8
   uvMode: 2
   meshSpawnPoints:
     pointRows:

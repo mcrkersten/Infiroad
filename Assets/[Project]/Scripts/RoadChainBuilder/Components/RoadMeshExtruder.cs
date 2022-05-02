@@ -86,8 +86,9 @@ public class RoadMeshExtruder {
 			else
 				extrusionSize = 0f;
 			float nowNumber = extrusionSize * 10f;
-			float damp = Mathf.Lerp(roadChainBuilder.radiusDelay, nowNumber, Time.deltaTime * 2f);
-			roadChainBuilder.radiusDelay = damp;
+
+			if(ring != 0)
+				roadChainBuilder.radiusDelay = Mathf.Lerp(roadChainBuilder.radiusDelay, nowNumber, Time.deltaTime / 1.5f);
 
 
 			//MESHTASK
@@ -131,10 +132,13 @@ public class RoadMeshExtruder {
 				if(roadSettings.points[i].scalesWithCorner)
 					offsetCurve = roadSettings.points[i].vertex_1.point.x < 0f ? Mathf.Min(0f, roadChainBuilder.radiusDelay) : Mathf.Max(0f, roadChainBuilder.radiusDelay);
 
+				Quaternion chamferAngle = Quaternion.identity;
+				if(roadSettings.hasCornerChamfer)
+					chamferAngle = Quaternion.Euler(0, 0, (roadChainBuilder.radiusDelay / 10f) * roadSettings.maxChamfer);
 				Vector2 localPoint = new Vector2(roadSettings.points[i].vertex_1.point.x + offsetCurve, roadSettings.points[i].vertex_1.point.y);
 				Vector2 noise = AddRandomNoiseValue(roadSettings.points[i].noiseChannel, roadSettings);
 				//float noiseMagnitude = noise.magnitude;
-				Vector3 globalPoint = op.LocalToWorldPos(localPoint + noise);
+				Vector3 globalPoint = op.LocalToWorldPos(chamferAngle * (localPoint + noise));
 				Vector2 localUVPoint = roadSettings.points[i].vertex_1.point;
 
 				if (assetPointOpen)
@@ -212,7 +216,7 @@ public class RoadMeshExtruder {
 					{
 						int material = roadSettings.points[i - 1].materialIndex;
 						x_UV = Mathf.InverseLerp(minMaxUvs[material].x, currentUV_MinMax.y, localUVPoint.x);
-						Debug.Log("DEV MEM: "+i+" = is duplicate for UV fix");
+						//Debug.Log("DEV MEM: "+i+" = is duplicate for UV fix");
 						uvs0.Add(new Vector2(x_UV, y_UV));
 						verts.Add(globalPoint);
 					}
@@ -274,10 +278,7 @@ public class RoadMeshExtruder {
 	private Vector2 AddRandomNoiseValue(int noiseChannel, RoadSettings roadSettings)
 	{
 		Vector3 noise = new Vector3();
-		foreach (NoiseChannel channel in roadSettings.noiseChannels)
-		{
-			noise += channel.generatorInstance.getNoise(roadChainBuilder.generatedRoadEdgeloops, channel);
-		}
+		noise = roadSettings.noiseChannels[noiseChannel].generatorInstance.getNoise(roadChainBuilder.generatedRoadEdgeloops, roadSettings.noiseChannels[noiseChannel]);
 		return noise;
 	}
 
