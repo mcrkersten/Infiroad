@@ -165,7 +165,7 @@ public class OrientedCubicBezier3D {
 		return K;
 	}
 
-	public float GetRadius(float t)
+	public float GetCornerRadius(float t)
     {
 		return 1f / GetFlatCurvature(t);
     }

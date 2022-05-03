@@ -117,9 +117,9 @@ public class RoadChainBuilder : MonoBehaviour
     private void InstantiateRoadDecorationPools()
     {
         foreach (RoadDecoration pool in road.standardDecoration)
-        {
             objectPooler.InstantiateDecorationPool(pool);
-        }
+        foreach (RoadDecoration pool in road.randomizedDecoration)
+            objectPooler.InstantiateDecorationPool(pool);
     }
 
     public void CreateNextRoadChain()
@@ -153,21 +153,21 @@ public class RoadChainBuilder : MonoBehaviour
         foreach (RoadSegment segment in organized)
         {
             RoadSettings roadSettting = road.SelectRoadSetting(roadShape, segment);
-            roadChain.InitializeSegment(roadSettting, segment);
+            roadChain.InitializeSegmentMesh(roadSettting, segment);
             foreach (GuardrailSettings guardRailSetting in roadSettting.guardRails)
             {
                 HandleMeshTasks(guardRailSetting, roadChain);
             }
             meshtasks.Clear();
         }
-
-        //
-        SpawnRoadStandardDecoration(roadChain, organized);
+        int index = Random.Range(1, organized.Count - 1);
+        SpawnRandomRoadDecoration(roadChain, organized[index],index);
+        SpawnStandardRoadDecoration(roadChain, organized);
         SpawnSkyDecoration();
         //SpawnSkyDecoration(road.skyDecoration);
     }
 
-    private void SpawnRoadStandardDecoration(RoadChain roadChain, List<RoadSegment> segments)
+    private void SpawnStandardRoadDecoration(RoadChain roadChain, List<RoadSegment> segments)
     {
         
         if (!startLineIsGenerated)
@@ -182,6 +182,12 @@ public class RoadChainBuilder : MonoBehaviour
         RoadDecoration deco_1 = road.standardDecoration.First(t => t.RD_Type == RoadDecorationType.checkPoint);
         int lastIndex = segments.Count - 2; //Always mark last index as checkpoint
         roadChain.ActivateDecor(segments[lastIndex], deco_1, lastIndex);
+    }
+
+    private void SpawnRandomRoadDecoration(RoadChain roadChain, RoadSegment segment, int segmentIndex)
+    {
+        RoadDecoration deco = road.randomizedDecoration[Random.Range(0, road.randomizedDecoration.Count)];
+        roadChain.ActivateDecor(segment, deco, segmentIndex);
     }
 
     private void SpawnSkyDecoration()

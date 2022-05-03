@@ -52,7 +52,7 @@ public class RoadChain : MonoBehaviour {
 
 		foreach (RoadSegment seg in organizedSegments)
         {
-			CreateRoad(settings, seg);
+			CreateMesh(settings, seg);
 			ActivateVegetationAssetTriggersOnAssetSpawnEdge(settings, seg);
 		}
 	}
@@ -65,14 +65,14 @@ public class RoadChain : MonoBehaviour {
 			rs.transform.SetParent(this.transform);
 	}
 
-	public void InitializeSegment(RoadSettings settings, RoadSegment roadSegment)
+	public void InitializeSegmentMesh(RoadSettings settings, RoadSegment roadSegment)
     {
 		devSettings.Add(settings);
-		CreateRoad(settings, roadSegment);
+		CreateMesh(settings, roadSegment);
 		ActivateVegetationAssetTriggersOnAssetSpawnEdge(settings, roadSegment);
 	}
 
-	public void CreateRoad(RoadSettings roadSettings, RoadSegment segment)
+	public void CreateMesh(RoadSettings roadSettings, RoadSegment segment)
 	{
         foreach (GuardrailSettings g in roadSettings.guardRails)
         {
@@ -101,7 +101,7 @@ public class RoadChain : MonoBehaviour {
 			int edgeLoop = segmendLoops - currentEdgeloop;
 			Vector3 noise = Vector3.zero;
 			foreach (NoiseChannel nts in roadSettings.noiseChannels)
-				noise += nts.generatorInstance.getNoise(segment.startEndLoop.x + edgeLoop, nts);
+				noise += nts.generatorInstance.getNoise(segment.startEndEdgeLoop.x + edgeLoop, nts);
 
 			Vector3 decorPosition = new Vector3(decorItem.position.x, decorItem.position.y, 0);
 

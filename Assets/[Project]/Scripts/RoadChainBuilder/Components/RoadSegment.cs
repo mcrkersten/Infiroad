@@ -38,7 +38,7 @@ public class RoadSegment : UniqueMesh {
 
 	[HideInInspector]public RoadSettings roadSetting;
 
-	public Vector2Int startEndLoop;
+	public Vector2Int startEndEdgeLoop;
 
 	public int edgeLoopCount;
 	// This will regenerate the mesh!
@@ -51,7 +51,6 @@ public class RoadSegment : UniqueMesh {
 		if ( HasValidNextPoint ) {
 			this.bezier = GetBezierRepresentation(Space.Self);
 			meshExtruder.ExtrudeRoad(
-				roadChain: RoadChain,
 				segment: this,
 				mesh: Mesh,
 				roadSettings: settings,

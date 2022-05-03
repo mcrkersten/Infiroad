@@ -52,7 +52,7 @@ MonoBehaviour:
   guardrailExtends: 0
   guardrailPosition: {x: 0, y: 0}
   material: {fileID: 2100000, guid: 35fe2f69ff7d78a42b9c788c62345c32, type: 2}
-  poleSpacing: 5
+  poleSpacing: 8
   sharpCornerRadius: 200
   guardrailPolePrefab: {fileID: 8594070437465435305, guid: 69167b2b72e68c046981abca42e7d523, type: 3}
   sharpCornerGuardrailPolePrefab: {fileID: 5172932599711086609, guid: 66db0c81dfcaae34294ebf173cb629fd, type: 3}

@@ -32,7 +32,7 @@ public class RoadMeshExtruder {
 
 	RoadChainBuilder roadChainBuilder;
 
-	public void ExtrudeRoad(RoadChain roadChain, RoadSegment segment, Mesh mesh, RoadSettings roadSettings, OrientedCubicBezier3D bezier, UVMode uvMode, Vector2 nrmCoordStartEnd, float edgeLoopsPerMeter, float tilingAspectRatio) {
+	public void ExtrudeRoad(RoadSegment segment, Mesh mesh, RoadSettings roadSettings, OrientedCubicBezier3D bezier, UVMode uvMode, Vector2 nrmCoordStartEnd, float edgeLoopsPerMeter, float tilingAspectRatio) {
 
 		// Clear all data. This could be optimized by using arrays and only reconstruct when lengths change
 		ClearMesh(mesh);
@@ -48,6 +48,7 @@ public class RoadMeshExtruder {
 		LengthTable table = null;
 		if (uvMode == UVMode.TiledDeltaCompensated)
 			table = new LengthTable(bezier, 12);
+
 		float curveArcLength = bezier.GetArcLength();
 
 		// Tiling
@@ -58,69 +59,23 @@ public class RoadMeshExtruder {
 			tiling = Mathf.Max(1, Mathf.Round(tiling)); // Snap to nearest integer to tile correctly
 		}
 
-		// Generate vertices
-		// Foreach edge loop
 		// Calc edge loop count
 		int targetCount = Mathf.RoundToInt(curveArcLength * edgeLoopsPerMeter);
 		int edgeLoopCount = Mathf.Max(2, targetCount); // Make sure it's at least 2
 		segment.edgeLoopCount = edgeLoopCount;
-		segment.startEndLoop = new Vector2Int(RoadChainBuilder.instance.generatedRoadEdgeloops, edgeLoopCount);
+		segment.startEndEdgeLoop = new Vector2Int(RoadChainBuilder.instance.generatedRoadEdgeloops, edgeLoopCount);
 
 		for (int ring = 0; ring < edgeLoopCount; ring++) {
-
 
 			float t = ring / (edgeLoopCount - 1f);
 			OrientedPoint op = bezier.GetOrientedPoint(t, roadSettings.rotationEasing);
 
-			// Prepare UV coordinates. This branches lots based on type
-			float tUv = t;
-			if (uvMode == UVMode.TiledDeltaCompensated)
-				tUv = table.TToPercentage(tUv);
-			float y_UV = tUv * tiling;
-
-			//Gets bigger with larger radius
-			float extrusionSize = 0f;
-			float curveRadius = bezier.GetRadius(t);
-			if (IsBetween(curveRadius, -700f, 700f))
-				extrusionSize = roadSettings.runoffAnimationCurve.Evaluate((curveRadius / 700f));
-			else
-				extrusionSize = 0f;
-			float nowNumber = extrusionSize * 10f;
-
-			if(ring != 0)
-				roadChainBuilder.radiusDelay = Mathf.Lerp(roadChainBuilder.radiusDelay, nowNumber, Time.deltaTime / 1.5f);
-
-
-			//MESHTASK
-			if (!roadSettings.guardrailIsContinues && Mathf.Abs(curveRadius) < roadSettings.guardRailMinimalCornerRadius)
-			{
-				Vector3 currentMeshPosition = segment.transform.TransformPoint(op.pos);
-				float distance = Vector3.Distance(roadChainBuilder.lastMeshPosition, currentMeshPosition);
-				if (distance > 2.5f)
-				{
-					if (roadChainBuilder.currentMeshTask != null)
-						roadChainBuilder.meshtasks.Add(roadChainBuilder.currentMeshTask);
-					roadChainBuilder.currentMeshTask = new MeshTask(curveRadius, curveRadius < 0, roadSettings, roadChainBuilder.generatedRoadEdgeloops, roadSettings.noiseChannels[roadSettings.guardRailNoiseChannel]);
-				}
-
-				if (distance > .01f) //Fish out duplicates
-				{
-					roadChainBuilder.lastMeshPosition = currentMeshPosition;
-					roadChainBuilder.currentMeshTask.AddPoint(roadChainBuilder.lastMeshPosition, segment.transform.rotation * op.rot, roadChainBuilder.radiusDelay);
-				}
-            }
-            else if(roadSettings.guardrailIsContinues)
-            {
-				Vector3 currentMeshPosition = segment.transform.TransformPoint(op.pos);
-
-				if(ring == 0)
-					roadChainBuilder.currentMeshTask = new MeshTask(curveRadius, roadSettings, roadChainBuilder.generatedRoadEdgeloops, roadSettings.noiseChannels[roadSettings.guardRailNoiseChannel]);
-
-				roadChainBuilder.currentMeshTask.AddPoint(currentMeshPosition, segment.transform.rotation * op.rot, roadChainBuilder.radiusDelay);
-
-				if (ring == edgeLoopCount - 1)
-					roadChainBuilder.meshtasks.Add(roadChainBuilder.currentMeshTask);
-			}
+			//Calculate the radius of the corner.
+			roadChainBuilder.radiusDelay = CalculateCornerRadius(roadSettings, ring, t, bezier);
+			//Calculate corner chamfer based on radius of the corner
+			Quaternion chamferAngle = CalculateCornerChamfer(roadSettings, roadChainBuilder.radiusDelay);
+			//Create tasks to spawn meshes such as guardrails
+			HandleMeshTask(roadSettings, ring, segment, op, edgeLoopCount);
 
 			// Foreach vertex in the 2D shape
 			bool assetPointOpen = false;
@@ -128,18 +83,15 @@ public class RoadMeshExtruder {
 			List<AssetSpawnPoint> assetTypes = new List<AssetSpawnPoint>();
 			for (int i = 0; i < roadSettings.PointCount; i++) {
 
+				//Calculate corner extrusion
 				float offsetCurve = 0f;
 				if(roadSettings.points[i].scalesWithCorner)
 					offsetCurve = roadSettings.points[i].vertex_1.point.x < 0f ? Mathf.Min(0f, roadChainBuilder.radiusDelay) : Mathf.Max(0f, roadChainBuilder.radiusDelay);
 
-				Quaternion chamferAngle = Quaternion.identity;
-				if(roadSettings.hasCornerChamfer)
-					chamferAngle = Quaternion.Euler(0, 0, (roadChainBuilder.radiusDelay / 10f) * roadSettings.maxChamfer);
-				Vector2 localPoint = new Vector2(roadSettings.points[i].vertex_1.point.x + offsetCurve, roadSettings.points[i].vertex_1.point.y);
+				//Create coordinates for vertex
 				Vector2 noise = AddRandomNoiseValue(roadSettings.points[i].noiseChannel, roadSettings);
-				//float noiseMagnitude = noise.magnitude;
+				Vector2 localPoint = new Vector2(roadSettings.points[i].vertex_1.point.x + offsetCurve, roadSettings.points[i].vertex_1.point.y);
 				Vector3 globalPoint = op.LocalToWorldPos(chamferAngle * (localPoint + noise));
-				Vector2 localUVPoint = roadSettings.points[i].vertex_1.point;
 
 				if (assetPointOpen)
 				{
@@ -155,7 +107,13 @@ public class RoadMeshExtruder {
 					assetTypes = roadSettings.points[i].assetSpawnPoint;
 				}
 
+				// Prepare UV coordinates. This branches lots based on type
 				Vector2 currentUV_MinMax = minMaxUvs[roadSettings.points[i].materialIndex];
+				Vector2 localUVPoint = roadSettings.points[i].vertex_1.point;
+				float tUv = t;
+				if (uvMode == UVMode.TiledDeltaCompensated)
+					tUv = table.TToPercentage(tUv);
+				float y_UV = tUv * tiling;
 				float x_UV = 0;
 
                 #region LeftExtrusion
@@ -268,6 +226,60 @@ public class RoadMeshExtruder {
         foreach (SurfaceScriptable item in m)
 			mat.Add(item.material);
 		segment.GetComponent<MeshRenderer>().materials = mat.ToArray();
+	}
+
+	private float CalculateCornerRadius(RoadSettings roadSettings, int ring, float t, OrientedCubicBezier3D bezier)
+	{
+		//Gets bigger with larger radius
+		float extrusionSize = 0f;
+		float unCappedRadius = bezier.GetCornerRadius(t);
+		if (IsBetween(unCappedRadius, -300f, 300f))
+			extrusionSize = roadSettings.runoffAnimationCurve.Evaluate((unCappedRadius / 300f)) * 10f;
+
+		if (ring != 0)
+			return Mathf.Lerp(roadChainBuilder.radiusDelay, extrusionSize, .05f);
+		return roadChainBuilder.radiusDelay;
+	}
+
+	private Quaternion CalculateCornerChamfer(RoadSettings roadSettings, float radius)
+    {
+		if (roadSettings.hasCornerChamfer)
+			return Quaternion.Euler(0, 0, (radius / 10f) * roadSettings.maxChamfer);
+		return Quaternion.identity;
+	}
+
+	private void HandleMeshTask(RoadSettings roadSettings, int ring, RoadSegment segment, OrientedPoint op, int edgeLoopCount)
+    {
+		//MESHTASK
+		if (!roadSettings.guardrailIsContinues && Mathf.Abs(roadChainBuilder.radiusDelay) < roadSettings.guardRailMinimalCornerRadius)
+		{
+			Vector3 currentMeshPosition = segment.transform.TransformPoint(op.pos);
+			float distance = Vector3.Distance(roadChainBuilder.lastMeshPosition, currentMeshPosition);
+			if (distance > 2.5f)
+			{
+				if (roadChainBuilder.currentMeshTask != null)
+					roadChainBuilder.meshtasks.Add(roadChainBuilder.currentMeshTask);
+				roadChainBuilder.currentMeshTask = new MeshTask(roadChainBuilder.radiusDelay < 0, roadSettings, roadChainBuilder.generatedRoadEdgeloops, roadSettings.noiseChannels[roadSettings.guardRailNoiseChannel]);
+			}
+
+			if (distance > .01f) //Fish out duplicates
+			{
+				roadChainBuilder.lastMeshPosition = currentMeshPosition;
+				roadChainBuilder.currentMeshTask.AddPoint(roadChainBuilder.lastMeshPosition, segment.transform.rotation * op.rot, roadChainBuilder.radiusDelay);
+			}
+		}
+		else if (roadSettings.guardrailIsContinues)
+		{
+			Vector3 currentMeshPosition = segment.transform.TransformPoint(op.pos);
+
+			if (ring == 0)
+				roadChainBuilder.currentMeshTask = new MeshTask(roadSettings, roadChainBuilder.generatedRoadEdgeloops, roadSettings.noiseChannels[roadSettings.guardRailNoiseChannel]);
+
+			roadChainBuilder.currentMeshTask.AddPoint(currentMeshPosition, segment.transform.rotation * op.rot, roadChainBuilder.radiusDelay);
+
+			if (ring == edgeLoopCount - 1)
+				roadChainBuilder.meshtasks.Add(roadChainBuilder.currentMeshTask);
+		}
 	}
 
 	private bool IsBetween(double testValue, double bound1, double bound2)
@@ -393,18 +405,16 @@ public class MeshTask
 	public bool bothSides;
 	public float curveRadius;
 
-	public MeshTask(float curveRadius ,bool onRightSide, RoadSettings settings, int startPointIndex, NoiseChannel noiseChannel)
+	public MeshTask(bool onRightSide, RoadSettings settings, int startPointIndex, NoiseChannel noiseChannel)
 	{
-		this.curveRadius = curveRadius;
 		this.roadSettings = settings;
 		this.mirror = onRightSide;
 		this.startPointIndex = startPointIndex;
 		this.noiseChannel = noiseChannel;
 	}
 
-	public MeshTask(float curveRadius ,RoadSettings settings, int startPointIndex, NoiseChannel noiseChannel)
+	public MeshTask(RoadSettings settings, int startPointIndex, NoiseChannel noiseChannel)
 	{
-		this.curveRadius = curveRadius;
 		this.roadSettings = settings;
 		this.startPointIndex = startPointIndex;
 		this.noiseChannel = noiseChannel;
