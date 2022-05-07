@@ -14,35 +14,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   points:
   - vertex:
-      point: {x: 0, y: 0.5}
+      point: {x: 0, y: 0.3}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0.5}
     line: {x: 4, y: 0}
     inversedLine: {x: 4, y: 5}
     isHardEdge: 0
   - vertex:
-      point: {x: 0.09, y: 0.6}
+      point: {x: 0.09, y: 0.4}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0.625}
     line: {x: 0, y: 1}
     inversedLine: {x: 3, y: 4}
     isHardEdge: 0
   - vertex:
-      point: {x: 0, y: 0.7}
+      point: {x: 0, y: 0.5}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0.75}
     line: {x: 1, y: 2}
     inversedLine: {x: 2, y: 3}
     isHardEdge: 0
   - vertex:
-      point: {x: 0.09, y: 0.8}
+      point: {x: 0.09, y: 0.6}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0.875}
     line: {x: 2, y: 3}
     inversedLine: {x: 1, y: 2}
     isHardEdge: 0
   - vertex:
-      point: {x: 0, y: 0.9}
+      point: {x: 0, y: 0.7}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 1}
     line: {x: 3, y: 4}

@@ -364,6 +364,8 @@ public class VehicleController : MonoBehaviour
         float physicsWobble = 0f;
         foreach (Suspension w in suspensions)
         {
+            if (w.wheel.broken)
+                continue;
             switch (driveType)
             {
                 case DriveType.rearWheelDrive:

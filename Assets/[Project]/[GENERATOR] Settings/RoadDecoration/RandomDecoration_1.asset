@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   segmentIndex: 0
   wholeUnitsInPool: 5
-  mainCurveTime: 0.8
+  mainCurveTime: 0.5
   decor:
   - prefab: {fileID: 8706244027275456456, guid: 73323b6a35b9dd348ba9e1983a5e030b, type: 3}
     position: {x: 0, y: 0}
-    curveTime: 0.5
+    curveTime: 0
     noiseChannel: 1
-  RD_Type: 2
+  poolIndex: 2

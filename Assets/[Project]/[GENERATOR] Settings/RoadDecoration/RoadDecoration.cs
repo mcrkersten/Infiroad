@@ -10,7 +10,7 @@ public class RoadDecoration : ScriptableObject
     public int wholeUnitsInPool;
     public float mainCurveTime;
     public List<Decoration> decor = new List<Decoration>();
-    public RoadDecorationType RD_Type;
+    public int poolIndex;
 }
 
 [System.Serializable]
@@ -20,11 +20,4 @@ public class Decoration
     public Vector2 position;
     public float curveTime;
     public int noiseChannel;
-}
-
-public enum RoadDecorationType
-{
-    startLine = 0,
-    checkPoint,
-    Random,
 }

@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22ca3054f3958454899d9facee8e2a86, type: 3}
+  m_Name: Concrete_Blue_Surface
+  m_EditorClassIdentifier: 
+  slip:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.0008544922
+      value: 0.00390625
+      inSlope: 6.6248455
+      outSlope: 6.6248455
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.07769386
+    - serializedVersion: 3
+      time: 0.22922444
+      value: 0.8352038
+      inSlope: 1.0403264
+      outSlope: 1.0403264
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.09121907
+    - serializedVersion: 3
+      time: 0.79944366
+      value: 1
+      inSlope: 0
+      outSlope: -6.472043
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.18872166
+    - serializedVersion: 3
+      time: 0.8000909
+      value: 0.7307959
+      inSlope: -0.32794732
+      outSlope: -0.01631965
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.26358134
+      outWeight: 0.07458039
+    - serializedVersion: 3
+      time: 1.6135043
+      value: 0.89724696
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  material: {fileID: 2100000, guid: 0cec11090ad6ae1438cccc978883fb9c, type: 2}

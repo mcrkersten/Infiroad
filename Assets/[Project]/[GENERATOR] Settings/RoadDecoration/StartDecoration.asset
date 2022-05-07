@@ -80,4 +80,4 @@ MonoBehaviour:
     position: {x: -7.937585, y: 0}
     curveTime: -0.025
     noiseChannel: 1
-  RD_Type: 0
+  poolIndex: 0

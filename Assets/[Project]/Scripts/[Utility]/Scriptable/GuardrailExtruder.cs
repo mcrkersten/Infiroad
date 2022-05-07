@@ -65,9 +65,11 @@ public class GuardrailExtruder
 		Vector2 meshDirection = meshTask.mirror ? (Vector2.left) : (Vector2.right);
 		foreach (MeshTask.Point p in meshTask.points)
 		{
-			local_XOffset = meshTask.mirror ? Mathf.Min(0f, p.radius) : Mathf.Max(0f, p.radius);
+			if(guardrailSettings.guardrailExtends)
+				local_XOffset = meshTask.mirror ? Mathf.Min(0f, p.radius) : Mathf.Max(0f, p.radius);
+
 			Vector3 noise = Vector3.zero;
-			noise += guardrailSettings.guardrailExtends ? meshTask.noiseChannel.generatorInstance.getNoise(meshTask.startPointIndex + currentEdgeloop, meshTask.noiseChannel) : Vector3.zero;
+			noise += meshTask.noiseChannel.generatorInstance.getNoise(meshTask.startPointIndex + currentEdgeloop, meshTask.noiseChannel);
 
 			for (int i = 0; i < guardrailSettings.PointCount; i++)
 			{
@@ -75,11 +77,11 @@ public class GuardrailExtruder
 
 				Vector2 point = guardrailSettings.points[i].vertex.point * (Vector2.left + Vector2.up);
 
-				Vector3 offset = new Vector3(meshDirection.x * (point.x + guardrailSettings.guardRailWidth + Mathf.Abs(local_XOffset)), point.y, 0f) + noise;
+				Vector3 vertex = new Vector3(meshDirection.x * (point.x + guardrailSettings.guardRailWidth + Mathf.Abs(local_XOffset)), point.y, 0f) + noise;
 				if (guardrailSettings.hasCornerChamfer)
-					offset = Quaternion.Euler(0, 0, (p.radius / 10f) * guardrailSettings.maxChamfer) * offset;
+					vertex = Quaternion.Euler(0, 0, (p.radius / 10f) * guardrailSettings.maxChamfer) * vertex;
 
-				Vector3 relativePosition = p.rotation * offset;
+				Vector3 relativePosition = p.rotation * vertex;
 				Vector3 position = relativePosition + (p.position);
 				verts.Add(position);
 				uvs0.Add(uv);

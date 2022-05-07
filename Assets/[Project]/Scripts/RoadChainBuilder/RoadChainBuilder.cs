@@ -155,9 +155,7 @@ public class RoadChainBuilder : MonoBehaviour
             RoadSettings roadSettting = road.SelectRoadSetting(roadShape, segment);
             roadChain.InitializeSegmentMesh(roadSettting, segment);
             foreach (GuardrailSettings guardRailSetting in roadSettting.guardRails)
-            {
                 HandleMeshTasks(guardRailSetting, roadChain);
-            }
             meshtasks.Clear();
         }
         int index = Random.Range(1, organized.Count - 1);
@@ -173,20 +171,29 @@ public class RoadChainBuilder : MonoBehaviour
         if (!startLineIsGenerated)
         {
             //Create on first segment a startline
-            RoadDecoration deco_0 = road.standardDecoration.First(t => t.RD_Type == RoadDecorationType.startLine);
+            RoadDecoration deco_0 = road.standardDecoration.First(t => t.poolIndex == 0);
             roadChain.ActivateDecor(segments[0], deco_0, 0);
             startLineIsGenerated = true;
         }
 
         //Create on last segment a checkpoint
-        RoadDecoration deco_1 = road.standardDecoration.First(t => t.RD_Type == RoadDecorationType.checkPoint);
+        RoadDecoration deco_1 = road.standardDecoration.First(t => t.poolIndex == 1);
         int lastIndex = segments.Count - 2; //Always mark last index as checkpoint
         roadChain.ActivateDecor(segments[lastIndex], deco_1, lastIndex);
     }
 
     private void SpawnRandomRoadDecoration(RoadChain roadChain, RoadSegment segment, int segmentIndex)
     {
-        RoadDecoration deco = road.randomizedDecoration[Random.Range(0, road.randomizedDecoration.Count)];
+        if(road.randomizedDecoration.Count != 0)
+        {
+            RoadDecoration deco = road.randomizedDecoration[Random.Range(0, road.randomizedDecoration.Count)];
+            roadChain.ActivateDecor(segment, deco, segmentIndex);
+        }
+    }
+
+    private void SpawnRandomSceneryObjects(RoadChain roadChain, RoadSegment segment, int segmentIndex)
+    {
+        RoadDecoration deco = road.sceneryObjects[Random.Range(0, road.sceneryObjects.Count)];
         roadChain.ActivateDecor(segment, deco, segmentIndex);
     }
 

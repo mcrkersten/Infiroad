@@ -6,8 +6,10 @@ using System.Linq;
 
 public class Wheel_Raycast : MonoBehaviour
 {
+    public bool broken;
     [SerializeField] private GameObject wheelModel;
     [SerializeField] private Transform suspension;
+    public Collider wheelCollider;
     [SerializeField] private List<SuspensionPointer> suspensionPointers = new List<SuspensionPointer>();
 
     [Header("General Slip")]
@@ -51,12 +53,17 @@ public class Wheel_Raycast : MonoBehaviour
 
         foreach (SuspensionPointer s in suspensionPointers)
         {
-            s.UpdatePointer();
+            if(!broken)
+                s.UpdatePointer();
         }
     }
 
     public bool Raycast(float maxLenght, LayerMask layerMask, out RaycastHit hit)
     {
+        if (broken) {
+            hit = new RaycastHit();
+            return false;
+        }
         if (Physics.SphereCast(transform.position, wheelRadius, -transform.root.up, out RaycastHit hitPoint, maxLenght, layerMask))
         {
             wheelModel.transform.localPosition = wheelModelLocalStartPosition + (-Vector3.up * (hitPoint.distance));
@@ -181,6 +188,20 @@ public class Wheel_Raycast : MonoBehaviour
         LvelOverLt.limit = rb.velocity.magnitude;
         LvelOverLt.dampen = .2f;
         slipSmokeParticleSystem.Play();
+    }
+
+    public void DamageSuspension(Vector3 pointVelocity, Vector3 impactDirection, Vector3 contactNormal)
+    {
+
+
+        if (!broken)
+        {
+            rb.AddForceAtPosition(-impactDirection, this.transform.position);
+            broken = true;
+            this.gameObject.AddComponent<Rigidbody>();
+            this.wheelCollider.gameObject.layer = LayerMask.NameToLayer("Default");
+            this.transform.parent = null;
+        }
     }
 }
 

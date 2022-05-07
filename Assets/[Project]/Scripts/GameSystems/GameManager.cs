@@ -5,7 +5,6 @@ using UnityEngine;
 namespace GameSystems {
     public class GameManager : MonoBehaviour
     {
-        private static GameManager instance;
         public int gameTime;
         private float currentGameTime;
 
@@ -27,20 +26,35 @@ namespace GameSystems {
         private bool isRunning;
 
         public static GameManager Instance { get { return instance; } }
+        private static GameManager instance;
+        private GameModeManager gameModeManager;
 
         private void Awake()
         {
+            gameModeManager = GameModeManager.Instance;
             instance = this;
-            CountdownClock.timerFinished += GO_Timer;
-            CountdownClock.timerFinished += Game_Timer;
 
             bestRun = FileManager.LoadRaceData();
             currentRun = new RaceData(0, gameTime);
         }
 
-        private void Start()
+        private void StartGameMode()
         {
             startCountdownClock.StartCountdown(3, 2);
+            CountdownClock.timerFinished += GO_Timer;
+            switch (gameModeManager.gameMode)
+            {
+                case GameMode.Relaxed:
+                    break;
+                case GameMode.TimeTrial:
+                    CountdownClock.timerFinished += Game_Timer;
+                    break;
+            }
+        }
+
+        private void Start()
+        {
+            StartGameMode();
         }
 
         private void FixedUpdate()
@@ -63,14 +77,21 @@ namespace GameSystems {
         private void GO_Timer(CountdownClock clock) {
             if(startCountdownClock == clock)
             {
-                gameTimeCountdownClock.StartGameCountdown(gameTime);
-                currentGameTime = gameTime;
-                vehicleController.distanceTraveled = 0f;
-                distanceDifferenceClock.Activate();
-                distanceTotalClock.Activate();
+                switch (gameModeManager.gameMode)
+                {
+                    case GameMode.Relaxed:
+                        break;
+                    case GameMode.TimeTrial:
+                        gameTimeCountdownClock.StartGameCountdown(gameTime);
+                        currentGameTime = gameTime;
+                        vehicleController.distanceTraveled = 0f;
+                        distanceDifferenceClock.Activate();
+                        distanceTotalClock.Activate();
+                        isRunning = true;
+                        break;
+                }
                 vehicleController.UnlockPhysicsLock();
                 onStartGame?.Invoke();
-                isRunning = true;
             }
         }
 

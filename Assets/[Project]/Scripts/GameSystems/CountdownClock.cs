@@ -42,8 +42,6 @@ namespace GameSystems
 
         public void StartGameCountdown(int count)
         {
-            //numbersText.gameObject.transform.DOLocalMove(new Vector3(200, 400, 0), 1f).SetEase(DG.Tweening.Ease.InOutCubic);
-            //goText.gameObject.transform.DOLocalMove(new Vector3(200, 400, 0), 1f).SetEase(DG.Tweening.Ease.InOutCubic);
             this.count = count;
             currentTime = count;
             this.timerSpeed = 1f;

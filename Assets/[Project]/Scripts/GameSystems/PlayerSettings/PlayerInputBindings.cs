@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Linq;
 
 [CreateAssetMenu, System.Serializable]
 public class PlayerInputBindings : ScriptableObject

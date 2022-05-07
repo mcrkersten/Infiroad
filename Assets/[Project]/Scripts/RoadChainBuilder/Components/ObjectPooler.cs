@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using DG.Tweening;
 
 public class ObjectPooler
@@ -9,7 +8,7 @@ public class ObjectPooler
     private Dictionary<int, Queue<GameObject>> skyDecorations = new Dictionary<int, Queue<GameObject>>();
     private Queue<VegetationTriggerAsset> vegetationTriggerPool = new Queue<VegetationTriggerAsset>();
     private Dictionary<string, Dictionary<VegetationAssetTypeTag, Queue<GameObject>>> vegitationPoolDictionaries = new Dictionary<string, Dictionary<VegetationAssetTypeTag, Queue<GameObject>>>();
-    private Dictionary<RoadDecorationType, Queue<List<GameObject>>> roadDecorationPoolDictionary = new Dictionary<RoadDecorationType, Queue<List<GameObject>>>();
+    private Dictionary<int, Queue<List<GameObject>>> roadDecorationPoolDictionary = new Dictionary<int, Queue<List<GameObject>>>();
     private GameObject parent;
 
     #region Singleton
@@ -85,7 +84,7 @@ public class ObjectPooler
     public void InstantiateDecorationPool(RoadDecoration pool)
     {
         //Returns if pool already has been made.
-        if (roadDecorationPoolDictionary.ContainsKey(pool.RD_Type))
+        if (roadDecorationPoolDictionary.ContainsKey(pool.poolIndex))
             return;
 
         Queue<List<GameObject>> queueOfDecor = new Queue<List<GameObject>>();
@@ -102,7 +101,7 @@ public class ObjectPooler
             }
             queueOfDecor.Enqueue(instantiated);
         }
-        roadDecorationPoolDictionary.Add(pool.RD_Type, queueOfDecor);
+        roadDecorationPoolDictionary.Add(pool.poolIndex, queueOfDecor);
     }
 
     public void InstantiateAirDecoration(SkyDecoration skyDecoration)
@@ -177,11 +176,11 @@ public class ObjectPooler
         skyDecorations[skyDecor.key].Enqueue(decoration);
     }
 
-    public List<GameObject> GetRoadDecorationFromPool(RoadDecorationType RD_Type)
+    public List<GameObject> GetRoadDecorationFromPool(int poolIndex)
     {
-        if (!roadDecorationPoolDictionary.ContainsKey(RD_Type)) { return null; }
-        List<GameObject> decoration = roadDecorationPoolDictionary[RD_Type].Dequeue();
-        roadDecorationPoolDictionary[RD_Type].Enqueue(decoration);
+        if (!roadDecorationPoolDictionary.ContainsKey(poolIndex)) { return null; }
+        List<GameObject> decoration = roadDecorationPoolDictionary[poolIndex].Dequeue();
+        roadDecorationPoolDictionary[poolIndex].Enqueue(decoration);
         return decoration;
     }
     #endregion

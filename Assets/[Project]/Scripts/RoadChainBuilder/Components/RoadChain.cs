@@ -17,7 +17,6 @@
 //
 
 using UnityEngine;
-using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -91,7 +90,7 @@ public class RoadChain : MonoBehaviour {
     {
 		RoadChainBuilder roadChainBuilder = RoadChainBuilder.instance;
 		RoadSettings roadSettings = segment.roadSetting;
-		List<GameObject> decorObjects = ObjectPooler.Instance.GetRoadDecorationFromPool(roadDecoration.RD_Type);
+		List<GameObject> decorObjects = ObjectPooler.Instance.GetRoadDecorationFromPool(roadDecoration.poolIndex);
 		int segmendLoops = segment.edgeLoopCount;
 
 		int decorIndex = 0;

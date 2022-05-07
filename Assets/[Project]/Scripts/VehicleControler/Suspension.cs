@@ -45,6 +45,9 @@ public class Suspension : MonoBehaviour
 
     public float SimulatePhysics(float brakeInput, float engineForce)
     {
+        if (wheel.broken)
+            return 0f;
+
         float downForce = 0f;
         float physicsWobble = 0f;
         if (wheel.Raycast(maxLength, layerMask, out RaycastHit hit))

@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22ca3054f3958454899d9facee8e2a86, type: 3}
+  m_Name: Colored_Surface
+  m_EditorClassIdentifier: 
+  slip:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.0008544922
+      value: 0.00390625
+      inSlope: 1.7267396
+      outSlope: 1.7267396
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.056942206
+    - serializedVersion: 3
+      time: 2.2047539
+      value: 0.96315676
+      inSlope: 0.019086713
+      outSlope: -0.01631965
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.21343662
+      outWeight: 0.07458039
+    - serializedVersion: 3
+      time: 5.5119467
+      value: 0.73718476
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  material: {fileID: 2100000, guid: 9333220cad9b91b409adbac731081061, type: 2}

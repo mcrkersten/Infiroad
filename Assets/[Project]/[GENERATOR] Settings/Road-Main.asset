@@ -27,6 +27,7 @@ MonoBehaviour:
   randomizedDecoration:
   - {fileID: 11400000, guid: 306299adc04f7e94ba3a23e6aec46180, type: 2}
   - {fileID: 11400000, guid: 19a4c9ab5c52ef34cb3d5b34c6a79ce2, type: 2}
+  sceneryObjects: []
   skyDecoration: {fileID: 11400000, guid: b9fb149efbeafcb43b1a24d966d24f80, type: 2}
   assetSpawnPoint: {fileID: 4923321435712348272, guid: 0a906291cb590f14aac19b96c2eeb107, type: 3}
   assetSpawnPointPoolSize: 20000

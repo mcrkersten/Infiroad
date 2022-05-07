@@ -27,6 +27,7 @@ public class Road : ScriptableObject {
 	[Header("Road Decoration")]
 	public List<RoadDecoration> standardDecoration = new List<RoadDecoration>();
 	public List<RoadDecoration> randomizedDecoration = new List<RoadDecoration>();
+	public List<RoadDecoration> sceneryObjects = new List<RoadDecoration>();
 
 	[Header("Sky Decoration")]
 	public SkyDecoration skyDecoration;

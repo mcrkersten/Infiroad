@@ -74,13 +74,14 @@ public class RoadMeshExtruder {
 			roadChainBuilder.radiusDelay = CalculateCornerRadius(roadSettings, ring, t, bezier);
 			//Calculate corner chamfer based on radius of the corner
 			Quaternion chamferAngle = CalculateCornerChamfer(roadSettings, roadChainBuilder.radiusDelay);
-			//Create tasks to spawn meshes such as guardrails
-			HandleMeshTask(roadSettings, ring, segment, op, edgeLoopCount);
+			//Create tasks to spawn guardrails
+			CreateGuardrailMeshTask(roadSettings, ring, segment, op, edgeLoopCount);
 
 			// Foreach vertex in the 2D shape
 			bool assetPointOpen = false;
 			Vector3 openAssetPoint = Vector3.positiveInfinity;
 			List<AssetSpawnPoint> assetTypes = new List<AssetSpawnPoint>();
+
 			for (int i = 0; i < roadSettings.PointCount; i++) {
 
 				//Calculate corner extrusion
@@ -124,26 +125,25 @@ public class RoadMeshExtruder {
 					if (i != 0 && roadSettings.points[i - 1].extrudePoint)
 					{
 						x_UV = 0f;
-						uvs0.Add(new Vector2(x_UV, y_UV));
+						uvs0.Add(new Vector2(x_UV, y_UV + localUVPoint.y));
 						verts.Add(globalPoint);
 					}
 					//If different material
 					else if (i != 0 && roadSettings.points[i].materialIndex != roadSettings.points[i - 1].materialIndex)
 					{
-						x_UV = Mathf.InverseLerp(minMaxUvs[roadSettings.points[i - 1].materialIndex].x, minMaxUvs[roadSettings.points[i - 1].materialIndex].y, localUVPoint.x);
+						x_UV = Mathf.InverseLerp(minMaxUvs[roadSettings.points[i - 1].materialIndex].x, minMaxUvs[roadSettings.points[i - 1].materialIndex].y, localUVPoint.x + localUVPoint.y);
 						uvs0.Add(new Vector2(x_UV, y_UV));
 						verts.Add(globalPoint);
 					}
 
 					//MAIN MESH VERTEX
-					x_UV = Mathf.InverseLerp(currentUV_MinMax.x, currentUV_MinMax.y, localUVPoint.x);
+					x_UV = Mathf.InverseLerp(currentUV_MinMax.x, currentUV_MinMax.y, localUVPoint.x + localUVPoint.y);
 					uvs0.Add(new Vector2(x_UV, y_UV));
 					verts.Add(globalPoint);
 
 					//If hard edge vertex 
 					if (roadSettings.points[i].ishardEdge)
 					{
-						x_UV = Mathf.InverseLerp(currentUV_MinMax.x, currentUV_MinMax.y, localUVPoint.x);
 						uvs0.Add(new Vector2(x_UV, y_UV));
 						verts.Add(globalPoint);
 					}
@@ -173,20 +173,20 @@ public class RoadMeshExtruder {
 					else if (i != 0 && roadSettings.points[i].materialIndex != roadSettings.points[i - 1].materialIndex)
 					{
 						int material = roadSettings.points[i - 1].materialIndex;
-						x_UV = Mathf.InverseLerp(minMaxUvs[material].x, currentUV_MinMax.y, localUVPoint.x);
+						x_UV = Mathf.InverseLerp(minMaxUvs[material].x, currentUV_MinMax.y, localUVPoint.x - localUVPoint.y);
 						//Debug.Log("DEV MEM: "+i+" = is duplicate for UV fix");
 						uvs0.Add(new Vector2(x_UV, y_UV));
 						verts.Add(globalPoint);
 					}
 
 					//MAIN MESH VERTEX
-					x_UV = Mathf.InverseLerp(currentUV_MinMax.x, currentUV_MinMax.y, localUVPoint.x);
+					x_UV = Mathf.InverseLerp(currentUV_MinMax.x, currentUV_MinMax.y, localUVPoint.x - localUVPoint.y);
 					uvs0.Add(new Vector2(x_UV, y_UV));
 					verts.Add(globalPoint);
 
 					if (roadSettings.points[i].ishardEdge)
 					{
-						x_UV = Mathf.InverseLerp(currentUV_MinMax.x, currentUV_MinMax.y, localUVPoint.x);
+						x_UV = Mathf.InverseLerp(currentUV_MinMax.x, currentUV_MinMax.y, localUVPoint.x - localUVPoint.y);
 						uvs0.Add(new Vector2(x_UV, y_UV));
 						verts.Add(globalPoint);
 					}
@@ -195,7 +195,7 @@ public class RoadMeshExtruder {
 					if (roadSettings.points[i].extrudePoint)
 					{
 						x_UV = 0f;
-						uvs0.Add(new Vector2(x_UV, y_UV));
+						uvs0.Add(new Vector2(x_UV - localUVPoint.y, y_UV));
 						verts.Add(globalPoint);
 					}
 				}
@@ -219,6 +219,7 @@ public class RoadMeshExtruder {
 
 		//mesh.SetTriangles( triIndices, 0 ); // <------------  SECOND ENTREE IS MATERIAL INDEX OF MESH
 		mesh.RecalculateNormals();
+		mesh.RecalculateTangents();
 		List<SurfaceScriptable> m = new List<SurfaceScriptable>();
 		m.AddRange(roadSettings.allSurfaceSettings);
 
@@ -248,7 +249,7 @@ public class RoadMeshExtruder {
 		return Quaternion.identity;
 	}
 
-	private void HandleMeshTask(RoadSettings roadSettings, int ring, RoadSegment segment, OrientedPoint op, int edgeLoopCount)
+	private void CreateGuardrailMeshTask(RoadSettings roadSettings, int ring, RoadSegment segment, OrientedPoint op, int edgeLoopCount)
     {
 		//MESHTASK
 		if (!roadSettings.guardrailIsContinues && Mathf.Abs(roadChainBuilder.radiusDelay) < roadSettings.guardRailMinimalCornerRadius)
@@ -299,7 +300,7 @@ public class RoadMeshExtruder {
 		float min_Xuv = float.PositiveInfinity;
 		float max_Xuv = float.NegativeInfinity;
 
-		foreach (var item in roadSettings.points)
+		foreach (VertexPoint item in roadSettings.points)
 		{
 			if (item.vertex_1.point.x < min_Xuv)
 				min_Xuv = item.vertex_1.point.x;
@@ -322,16 +323,21 @@ public class RoadMeshExtruder {
         {
 			float min_Xuv = float.PositiveInfinity;
 			float max_Xuv = float.NegativeInfinity;
-
-			foreach (var p in roadSettings.points)
+			float plus_y = 0;
+			float min_y = 0;
+			foreach (VertexPoint p in roadSettings.points)
 			{
 				if(p.materialIndex == current)
                 {
-					if (p.vertex_1.point.x < min_Xuv)
-						min_Xuv = p.vertex_1.point.x;
+					if (float.IsNegative(p.vertex_1.point.x))
+						min_y += p.vertex_1.point.y;
+					if ((p.vertex_1.point.x - min_y) < min_Xuv)
+						min_Xuv = p.vertex_1.point.x - min_y;
 
-					if (p.vertex_1.point.x > max_Xuv)
-						max_Xuv = p.vertex_1.point.x;
+					if (!float.IsNegative(p.vertex_1.point.x))
+						plus_y += p.vertex_1.point.y;
+					if ((p.vertex_1.point.x + plus_y) > max_Xuv)
+						max_Xuv = p.vertex_1.point.x + plus_y;
                 }
 			}
 

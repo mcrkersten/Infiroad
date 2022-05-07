@@ -1454,6 +1454,10 @@ PrefabInstance:
       value: RoadChainBuilder
       objectReference: {fileID: 0}
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
+      propertyPath: road
+      value: 
+      objectReference: {fileID: 11400000, guid: 56fcc27d65d7bb84797a8bc1a9e6c4f7, type: 2}
+    - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: vehicle
       value: 
       objectReference: {fileID: 877377500}
