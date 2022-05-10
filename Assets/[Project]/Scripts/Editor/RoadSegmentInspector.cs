@@ -27,11 +27,11 @@ using System.Collections.Generic;
 // (I had to read up a lot to refresh my knowledge on this because holy heck this is convoluted)
 [CustomEditor(typeof(RoadSegment))]
 public class RoadSegmentInspector : Editor {
-
 	const string UNDO_STR_ADJUST = "adjust béziér tangent";
 
 	void OnSceneGUI() {
 		RoadSegment t = target as RoadSegment;
+		EditorUtility.SetDirty(this);
 
 		// Generate IDs for the UI controls
 		int arrowIDFrw  = GUIUtility.GetControlID( "Arrow Frw".GetHashCode(),  FocusType.Passive );

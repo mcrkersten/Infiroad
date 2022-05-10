@@ -28,7 +28,7 @@ MonoBehaviour:
       point: {x: 7.5, y: 0}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0}
-    line: {x: 1, y: 2}
+    line: {x: 2, y: 3}
     ishardEdge: 0
     noiseChannel: 0
     materialIndex: 1
@@ -39,7 +39,7 @@ MonoBehaviour:
       point: {x: 9.14, y: 0}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0}
-    line: {x: 5, y: 6}
+    line: {x: 4, y: 5}
     ishardEdge: 0
     noiseChannel: 0
     materialIndex: 1
@@ -50,7 +50,7 @@ MonoBehaviour:
       point: {x: 9.14, y: 0}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0}
-    line: {x: 7, y: 8}
+    line: {x: 6, y: 7}
     ishardEdge: 0
     noiseChannel: 0
     materialIndex: 2
@@ -61,7 +61,7 @@ MonoBehaviour:
       point: {x: 9.14, y: 1}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 1}
-    line: {x: 9, y: 10}
+    line: {x: 8, y: 9}
     ishardEdge: 1
     noiseChannel: 0
     materialIndex: 2
@@ -72,7 +72,7 @@ MonoBehaviour:
       point: {x: 9.8, y: 1}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0}
-    line: {x: 11, y: 12}
+    line: {x: 10, y: 11}
     ishardEdge: 1
     noiseChannel: 0
     materialIndex: 2
@@ -86,17 +86,6 @@ MonoBehaviour:
     line: {x: 12, y: 13}
     ishardEdge: 0
     noiseChannel: 0
-    materialIndex: 2
-    scalesWithCorner: 1
-    extrudePoint: 0
-    assetSpawnPoint: []
-  - vertex_1:
-      point: {x: 9.8, y: -0.03}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 1}
-    line: {x: 14, y: 15}
-    ishardEdge: 0
-    noiseChannel: 0
     materialIndex: 1
     scalesWithCorner: 1
     extrudePoint: 0
@@ -109,18 +98,7 @@ MonoBehaviour:
       point: {x: 15, y: -0.03}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0}
-    line: {x: 15, y: 16}
-    ishardEdge: 0
-    noiseChannel: 0
-    materialIndex: 1
-    scalesWithCorner: 1
-    extrudePoint: 0
-    assetSpawnPoint: []
-  - vertex_1:
-      point: {x: 15, y: -0.03}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
-    line: {x: 17, y: 18}
+    line: {x: 14, y: 15}
     ishardEdge: 0
     noiseChannel: 0
     materialIndex: 3
@@ -131,7 +109,7 @@ MonoBehaviour:
       point: {x: 15, y: -1.5}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0}
-    line: {x: 19, y: 20}
+    line: {x: 16, y: 17}
     ishardEdge: 1
     noiseChannel: 0
     materialIndex: 3
@@ -142,7 +120,7 @@ MonoBehaviour:
       point: {x: 0, y: -1.5}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0}
-    line: {x: 20, y: 21}
+    line: {x: 17, y: 18}
     ishardEdge: 0
     noiseChannel: 0
     materialIndex: 3
@@ -153,7 +131,7 @@ MonoBehaviour:
       point: {x: -15, y: -1.5}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0}
-    line: {x: 22, y: 23}
+    line: {x: 18, y: 19}
     ishardEdge: 0
     noiseChannel: 0
     materialIndex: 3
@@ -164,18 +142,7 @@ MonoBehaviour:
       point: {x: -15, y: -0.03}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0}
-    line: {x: 24, y: 25}
-    ishardEdge: 0
-    noiseChannel: 0
-    materialIndex: 3
-    scalesWithCorner: 1
-    extrudePoint: 0
-    assetSpawnPoint: []
-  - vertex_1:
-      point: {x: -15, y: -0.03}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
-    line: {x: 24, y: 25}
+    line: {x: 20, y: 21}
     ishardEdge: 0
     noiseChannel: 0
     materialIndex: 1
@@ -190,18 +157,7 @@ MonoBehaviour:
       point: {x: -9.8, y: -0.03}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0}
-    line: {x: 25, y: 26}
-    ishardEdge: 0
-    noiseChannel: 0
-    materialIndex: 1
-    scalesWithCorner: 1
-    extrudePoint: 0
-    assetSpawnPoint: []
-  - vertex_1:
-      point: {x: -9.8, y: -0.03}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
-    line: {x: 27, y: 28}
+    line: {x: 22, y: 23}
     ishardEdge: 0
     noiseChannel: 0
     materialIndex: 2
@@ -212,7 +168,7 @@ MonoBehaviour:
       point: {x: -9.8, y: -0.03}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0}
-    line: {x: 27, y: 28}
+    line: {x: 23, y: 24}
     ishardEdge: 0
     noiseChannel: 0
     materialIndex: 2
@@ -223,7 +179,7 @@ MonoBehaviour:
       point: {x: -9.8, y: 1}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 1}
-    line: {x: 29, y: 30}
+    line: {x: 25, y: 26}
     ishardEdge: 1
     noiseChannel: 0
     materialIndex: 2
@@ -234,7 +190,7 @@ MonoBehaviour:
       point: {x: -9.14, y: 1}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0}
-    line: {x: 31, y: 32}
+    line: {x: 27, y: 28}
     ishardEdge: 1
     noiseChannel: 0
     materialIndex: 2
@@ -245,29 +201,29 @@ MonoBehaviour:
       point: {x: -9.14, y: 0}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 1}
-    line: {x: 32, y: 33}
+    line: {x: 29, y: 30}
     ishardEdge: 0
     noiseChannel: 0
     materialIndex: 2
     scalesWithCorner: 1
-    extrudePoint: 0
+    extrudePoint: 1
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -9.14, y: 0}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0}
-    line: {x: 34, y: 35}
+    line: {x: 31, y: 32}
     ishardEdge: 0
     noiseChannel: 0
     materialIndex: 1
-    scalesWithCorner: 1
-    extrudePoint: 1
+    scalesWithCorner: 0
+    extrudePoint: 0
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -7.5, y: 0}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0}
-    line: {x: 36, y: 37}
+    line: {x: 33, y: 0}
     ishardEdge: 0
     noiseChannel: 0
     materialIndex: 0
@@ -284,8 +240,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d8a879d7ca112bc44a4e9113e252a7f2, type: 2}
   - {fileID: 11400000, guid: 8808c81f35bcac94cbd1a989d67cead5, type: 2}
   - {fileID: 11400000, guid: acf9619f996b36345b8d57426d926ec9, type: 2}
-  - {fileID: 11400000, guid: 067fe766fe8fd2247904b77aa6814951, type: 2}
-  runoffMaterial: {fileID: 11400000, guid: 067fe766fe8fd2247904b77aa6814951, type: 2}
+  - {fileID: 11400000, guid: 8808c81f35bcac94cbd1a989d67cead5, type: 2}
+  runoffMaterial: {fileID: 11400000, guid: 8808c81f35bcac94cbd1a989d67cead5, type: 2}
   hasGuardrail: 0
   guardRails:
   - {fileID: 11400000, guid: 0d430583a073a984caf4ad0fb0e144fa, type: 2}

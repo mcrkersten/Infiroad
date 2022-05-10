@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 public class RoadChainBuilder : MonoBehaviour
 {
@@ -25,8 +25,7 @@ public class RoadChainBuilder : MonoBehaviour
 
     //Mesh task variables
     [HideInInspector] public MeshTask currentMeshTask = null;
-    [HideInInspector] public float radiusDelay = 0f;
-    [HideInInspector] public float radiusVelocity = 0f;
+    [HideInInspector] public DelayVariables radiusDelay;
     [HideInInspector] public Vector3 lastMeshPosition = Vector3.positiveInfinity;
     [HideInInspector] public List<MeshTask> meshtasks = new List<MeshTask>();
     GuardrailExtruder guardRailExtruder = new GuardrailExtruder();
@@ -42,7 +41,7 @@ public class RoadChainBuilder : MonoBehaviour
     private void Awake()
     {
         UpdateAllRoadSettings();
-        radiusDelay = 0f;
+        radiusDelay = new DelayVariables(.1f);
         InstantiateAssetPools();
     }
 
@@ -705,6 +704,37 @@ public class EdgePoint
                 break;
         }
         return rotation;
+    }
+}
+
+public class DelayVariables
+{
+    private float lerpSpeed;
+    public float delay { get { return MainDelay; } set { UpdateDelay(value); } }
+    private float MainDelay = 0;
+    private float velocity;
+    public float leftDelay = 0;
+    public float rightDelay = 0;
+
+    public DelayVariables(float lerpSpeed)
+    {
+        this.lerpSpeed = lerpSpeed;
+    }
+
+    public void UpdateDelay(float extrusion)
+    {
+        velocity = Mathf.Lerp(velocity, extrusion, .1f);
+        MainDelay = Mathf.Lerp(MainDelay, velocity, lerpSpeed);
+        //Left is always negative
+        if (float.IsNegative(velocity))
+            leftDelay = MainDelay;
+        else
+            leftDelay = Mathf.Lerp(leftDelay, 0f, .05f);
+
+        if (!float.IsNegative(velocity))
+            rightDelay = MainDelay;
+        else
+            rightDelay = Mathf.Lerp(rightDelay, 0f, .05f);
     }
 }
 

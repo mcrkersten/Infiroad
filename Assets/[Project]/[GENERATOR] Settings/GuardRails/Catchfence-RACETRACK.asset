@@ -49,7 +49,7 @@ MonoBehaviour:
     inversedLine: {x: 0, y: 1}
     isHardEdge: 0
   closedLoop: 0
-  guardrailExtends: 0
+  guardrailExtends: 1
   guardrailPosition: {x: 0, y: 0}
   material: {fileID: 2100000, guid: 35fe2f69ff7d78a42b9c788c62345c32, type: 2}
   poleSpacing: 8
