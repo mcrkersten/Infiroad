@@ -7,4 +7,5 @@ public class SurfaceScriptable : ScriptableObject
 {
     public AnimationCurve slip;
     public Material material;
+    public bool UV_mirrored;
 }

@@ -65,7 +65,7 @@ public class RoadSettings : ScriptableObject
 		{
 			if (points[i].ishardEdge)
 				skippedPoints++;
-			if (i != 0 && points[i].materialIndex != points[i - 1].materialIndex)
+			else if (i != 0 && points[i].materialIndex != points[i - 1].materialIndex)
 				skippedPoints++;
 			else if (i != 0 && points[i].extrudePoint)
 				skippedPoints++;

@@ -1,0 +1,365 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78480d6fd9e273940bfa19342d1b589a, type: 3}
+  m_Name: ModernRaceTrack - MAINROAD - Extrusion
+  m_EditorClassIdentifier: 
+  points:
+  - vertex_1:
+      point: {x: 0, y: 0}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 0, y: 1}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 0
+    scalesWithCorner: 0
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: 7.5, y: 0}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 1, y: 2}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 1
+    scalesWithCorner: 0
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: 9.14, y: 0}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 5, y: 6}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 1
+    scalesWithCorner: 0
+    extrudePoint: 1
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: 9.14, y: 0}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 7, y: 8}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 2
+    scalesWithCorner: 1
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: 9.14, y: 1}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 1}
+    line: {x: 9, y: 10}
+    ishardEdge: 1
+    noiseChannel: 0
+    materialIndex: 2
+    scalesWithCorner: 1
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: 9.8, y: 1}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 11, y: 12}
+    ishardEdge: 1
+    noiseChannel: 0
+    materialIndex: 2
+    scalesWithCorner: 1
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: 9.8, y: -0.03}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 1}
+    line: {x: 12, y: 13}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 2
+    scalesWithCorner: 1
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: 9.8, y: -0.03}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 1}
+    line: {x: 14, y: 15}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 1
+    scalesWithCorner: 1
+    extrudePoint: 0
+    assetSpawnPoint:
+    - assetPointType: 01000000
+      spawnRadius: 1
+      spawnBetweenPoints: 1
+      spawnPointsBetweenAmount: 1
+  - vertex_1:
+      point: {x: 15, y: -0.03}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 15, y: 16}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 1
+    scalesWithCorner: 1
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: 15, y: -0.03}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 17, y: 18}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 3
+    scalesWithCorner: 1
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: 15, y: -1.5}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 19, y: 20}
+    ishardEdge: 1
+    noiseChannel: 0
+    materialIndex: 3
+    scalesWithCorner: 1
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: 0, y: -1.5}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 20, y: 21}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 3
+    scalesWithCorner: 0
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: -15, y: -1.5}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 22, y: 23}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 3
+    scalesWithCorner: 1
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: -15, y: -0.03}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 24, y: 25}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 3
+    scalesWithCorner: 1
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: -15, y: -0.03}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 24, y: 25}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 1
+    scalesWithCorner: 1
+    extrudePoint: 0
+    assetSpawnPoint:
+    - assetPointType: 01000000
+      spawnRadius: 1
+      spawnBetweenPoints: 1
+      spawnPointsBetweenAmount: 1
+  - vertex_1:
+      point: {x: -9.8, y: -0.03}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 25, y: 26}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 1
+    scalesWithCorner: 1
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: -9.8, y: -0.03}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 27, y: 28}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 2
+    scalesWithCorner: 1
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: -9.8, y: -0.03}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 27, y: 28}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 2
+    scalesWithCorner: 1
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: -9.8, y: 1}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 1}
+    line: {x: 29, y: 30}
+    ishardEdge: 1
+    noiseChannel: 0
+    materialIndex: 2
+    scalesWithCorner: 1
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: -9.14, y: 1}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 31, y: 32}
+    ishardEdge: 1
+    noiseChannel: 0
+    materialIndex: 2
+    scalesWithCorner: 1
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: -9.14, y: 0}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 1}
+    line: {x: 32, y: 33}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 2
+    scalesWithCorner: 1
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: -9.14, y: 0}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 34, y: 35}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 1
+    scalesWithCorner: 1
+    extrudePoint: 1
+    assetSpawnPoint: []
+  - vertex_1:
+      point: {x: -7.5, y: 0}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 36, y: 37}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 0
+    scalesWithCorner: 0
+    extrudePoint: 0
+    assetSpawnPoint: []
+  surfaceSettings:
+  - {fileID: 11400000, guid: 703cef44cc738ef479f351d37d7afea5, type: 2}
+  - {fileID: 11400000, guid: d8a879d7ca112bc44a4e9113e252a7f2, type: 2}
+  - {fileID: 11400000, guid: 8808c81f35bcac94cbd1a989d67cead5, type: 2}
+  - {fileID: 11400000, guid: acf9619f996b36345b8d57426d926ec9, type: 2}
+  allSurfaceSettings:
+  - {fileID: 11400000, guid: 703cef44cc738ef479f351d37d7afea5, type: 2}
+  - {fileID: 11400000, guid: d8a879d7ca112bc44a4e9113e252a7f2, type: 2}
+  - {fileID: 11400000, guid: 8808c81f35bcac94cbd1a989d67cead5, type: 2}
+  - {fileID: 11400000, guid: acf9619f996b36345b8d57426d926ec9, type: 2}
+  - {fileID: 11400000, guid: 067fe766fe8fd2247904b77aa6814951, type: 2}
+  runoffMaterial: {fileID: 11400000, guid: 067fe766fe8fd2247904b77aa6814951, type: 2}
+  hasGuardrail: 0
+  guardRails:
+  - {fileID: 11400000, guid: 0d430583a073a984caf4ad0fb0e144fa, type: 2}
+  guardrailIsContinues: 1
+  guardRailMinimalCornerRadius: 0
+  roadTypeTag: FOREST-BASIC
+  assetPools:
+  - tag: 1
+    prefabs:
+    - {fileID: 6583596778410102861, guid: 6305f2862102f394d8fef1073fa4cc58, type: 3}
+    - {fileID: 6390541770965817990, guid: 247f93ccef389b1419bfebb563d98c1b, type: 3}
+    size: 500
+  rotationEasing: 3
+  edgeLoopsPerMeter: 2
+  debugRoadCurveStrenght: 0
+  runoffAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0
+      value: -1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.00017643161
+      value: 1.0044234
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  noiseChannels:
+  - channel: 0
+    noises:
+    - noiseType: 0
+      noiseDirection: 0
+      noiseLenght: 0
+      noisePower: 0
+  - channel: 1
+    noises:
+    - noiseType: 3
+      noiseDirection: 1
+      noiseLenght: 0.999
+      noisePower: 20
+    - noiseType: 3
+      noiseDirection: 2
+      noiseLenght: 0.993
+      noisePower: 1
+  guardRailNoiseChannel: 0
+  hasCornerChamfer: 1
+  maxChamfer: 4

@@ -285,7 +285,7 @@ MonoBehaviour:
   allSurfaceSettings: []
   runoffMaterial: {fileID: 0}
   hasGuardrail: 1
-  guardRail: {fileID: 11400000, guid: b725fa6678e620548b413d7deddcc79e, type: 2}
+  guardRails: []
   guardrailIsContinues: 0
   guardRailMinimalCornerRadius: 0
   roadTypeTag: WHEATFIELD-BASIC
@@ -346,3 +346,5 @@ MonoBehaviour:
   - channel: 0
     noises: []
   guardRailNoiseChannel: 0
+  hasCornerChamfer: 0
+  maxChamfer: 0

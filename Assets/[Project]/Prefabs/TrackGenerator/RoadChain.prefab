@@ -176,7 +176,7 @@ MonoBehaviour:
   trackLayer:
     serializedVersion: 2
     m_Bits: 8
-  uvMode: 2
+  uvMode: 1
   meshSpawnPoints:
     pointRows:
     - index: 3
