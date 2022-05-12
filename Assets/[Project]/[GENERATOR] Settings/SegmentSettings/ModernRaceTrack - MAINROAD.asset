@@ -301,6 +301,24 @@ MonoBehaviour:
   rotationEasing: 3
   edgeLoopsPerMeter: 2
   debugRoadCurveStrenght: 0
+  noiseChannels:
+  - channel: 0
+    noises:
+    - noiseType: 0
+      noiseDirection: 0
+      noiseLenght: 0
+      noisePower: 0
+  - channel: 1
+    noises:
+    - noiseType: 3
+      noiseDirection: 1
+      noiseLenght: 0.999
+      noisePower: 20
+    - noiseType: 3
+      noiseDirection: 2
+      noiseLenght: 0.993
+      noisePower: 1
+  guardRailNoiseChannel: 0
   runoffAnimationCurve:
     serializedVersion: 2
     m_Curve:
@@ -343,23 +361,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  noiseChannels:
-  - channel: 0
-    noises:
-    - noiseType: 0
-      noiseDirection: 0
-      noiseLenght: 0
-      noisePower: 0
-  - channel: 1
-    noises:
-    - noiseType: 3
-      noiseDirection: 1
-      noiseLenght: 0.999
-      noisePower: 20
-    - noiseType: 3
-      noiseDirection: 2
-      noiseLenght: 0.993
-      noisePower: 1
-  guardRailNoiseChannel: 0
+  extrusionSize: 0
   hasCornerChamfer: 1
   maxChamfer: 4

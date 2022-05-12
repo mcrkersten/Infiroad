@@ -25,10 +25,11 @@ public class RoadChainBuilder : MonoBehaviour
 
     //Mesh task variables
     [HideInInspector] public MeshTask currentMeshTask = null;
-    [HideInInspector] public DelayVariables radiusDelay;
+    [HideInInspector] public ExtrusionVariables extrusionVariables;
     [HideInInspector] public Vector3 lastMeshPosition = Vector3.positiveInfinity;
     [HideInInspector] public List<MeshTask> meshtasks = new List<MeshTask>();
-    GuardrailExtruder guardRailExtruder = new GuardrailExtruder();
+
+    MeshtaskExtruder guardRailExtruder = new MeshtaskExtruder();
 
     public Road road;
     private ObjectPooler objectPooler;
@@ -41,7 +42,7 @@ public class RoadChainBuilder : MonoBehaviour
     private void Awake()
     {
         UpdateAllRoadSettings();
-        radiusDelay = new DelayVariables(.1f);
+        extrusionVariables = new ExtrusionVariables(.1f);
         InstantiateAssetPools();
     }
 
@@ -153,8 +154,11 @@ public class RoadChainBuilder : MonoBehaviour
         {
             RoadSettings roadSettting = road.SelectRoadSetting(roadShape, segment);
             roadChain.InitializeSegmentMesh(roadSettting, segment);
+
+            //Create Guardrails
             foreach (GuardrailSettings guardRailSetting in roadSettting.guardRails)
                 HandleMeshTasks(guardRailSetting, roadChain);
+
             meshtasks.Clear();
         }
         int index = Random.Range(1, organized.Count - 1);
@@ -256,35 +260,31 @@ public class RoadChainBuilder : MonoBehaviour
     {
         foreach (MeshTask task in meshtasks)
         {
-            if (task.bothSides)
+            switch (task.meshTaskType)
             {
-                task.mirror = false;
-                guardRailExtruder.Extrude(task, roadchain, settings);
-                task.mirror = true;
-                guardRailExtruder.Extrude(task, roadchain, settings);
+                case MeshTaskType.Guardrail:
+                    CreateGuardrailMesh(settings, roadchain, task);
+                    break;
+                case MeshTaskType.Other:
+                    break;
+                default:
+                    break;
             }
-            else
-            {
-                guardRailExtruder.Extrude(task, roadchain, settings);
-            }
+        }
+    }
 
-
-            //DEBUG ONLY
-            if (RoadChainBuilder.instance.settings.debug)
-            {
-                foreach (MeshTask.Point p in task.points)
-                {
-                    if (Mathf.Abs(p.radius) < 1000f)
-                    {
-                        GameObject g = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                        g.transform.position = p.position;
-                        g.transform.rotation = p.rotation;
-                        g.name = p.radius.ToString();
-                        float x = 1f - Mathf.Clamp(Mathf.Abs(p.radius), 1f, 500f) / 500f;
-                        g.GetComponent<Renderer>().material.color = RoadChainBuilder.instance.settings.gradient.Evaluate(x);
-                    }
-                }
-            }
+    private void CreateGuardrailMesh(GuardrailSettings settings, RoadChain roadchain, MeshTask task)
+    {
+        if (task.bothSides)
+        {
+            task.mirror = false;
+            guardRailExtruder.Extrude(task, roadchain, settings);
+            task.mirror = true;
+            guardRailExtruder.Extrude(task, roadchain, settings);
+        }
+        else
+        {
+            guardRailExtruder.Extrude(task, roadchain, settings);
         }
     }
 
@@ -637,7 +637,6 @@ public class RoadChainBuilder : MonoBehaviour
 
         [Header("Debug settings")]
         public Gradient gradient;
-        public bool debug;
 
         [Space]
         [Tooltip("Amount of points on the side of a RoadchainBlock")]
@@ -707,16 +706,24 @@ public class EdgePoint
     }
 }
 
-public class DelayVariables
+public class ExtrusionVariables
 {
     private float lerpSpeed;
-    public float delay { get { return MainDelay; } set { UpdateDelay(value); } }
-    private float MainDelay = 0;
+    public float mainExtrusion { get { return MainExtrusion; } set { UpdateDelay(value); } }
+    private float MainExtrusion = 0;
     private float velocity;
-    public float leftDelay = 0;
-    public float rightDelay = 0;
 
-    public DelayVariables(float lerpSpeed)
+    public float leftExtrusion = 0;
+    private float maxLeftExtrusion;
+    private float leftReductionVelocity;
+
+    public float rightExtrusion = 0;
+    private float maxRightExtrusion;
+    private float righReductiontVelocity;
+
+    public float averageExtrusion { get { return (rightExtrusion + leftExtrusion) / 2; } }
+
+    public ExtrusionVariables(float lerpSpeed)
     {
         this.lerpSpeed = lerpSpeed;
     }
@@ -724,17 +731,51 @@ public class DelayVariables
     public void UpdateDelay(float extrusion)
     {
         velocity = Mathf.Lerp(velocity, extrusion, .1f);
-        MainDelay = Mathf.Lerp(MainDelay, velocity, lerpSpeed);
+        MainExtrusion = Mathf.Lerp(MainExtrusion, velocity, lerpSpeed);
         //Left is always negative
-        if (float.IsNegative(velocity))
-            leftDelay = MainDelay;
-        else
-            leftDelay = Mathf.Lerp(leftDelay, 0f, .05f);
+        if (float.IsNegative(velocity) && MainExtrusion <= leftExtrusion)
+        {
+            leftExtrusion = MainExtrusion;
+            maxLeftExtrusion = MainExtrusion;
+            leftReductionVelocity = 0f;
+            if(Mathf.Abs(leftExtrusion) > .05f)
+                maxRightExtrusion = 0;
+        }
+        else if(maxLeftExtrusion == 0 || extrusion == 0)
+        {
+            leftExtrusion = Mathf.Lerp(leftExtrusion, 0f, leftReductionVelocity);
+            leftReductionVelocity += .0001f;
+        }
 
-        if (!float.IsNegative(velocity))
-            rightDelay = MainDelay;
-        else
-            rightDelay = Mathf.Lerp(rightDelay, 0f, .05f);
+        if (!float.IsNegative(velocity) && MainExtrusion >= rightExtrusion)
+        {
+            rightExtrusion = MainExtrusion;
+            maxRightExtrusion = MainExtrusion;
+            righReductiontVelocity = 0f;
+            if (Mathf.Abs(rightExtrusion) > .05f)
+                maxLeftExtrusion = 0;
+        }
+        else if (maxRightExtrusion == 0 || extrusion == 0)
+        {
+            rightExtrusion = Mathf.Lerp(rightExtrusion, 0f, righReductiontVelocity);
+            righReductiontVelocity += .0001f;
+        }
+    }
+}
+
+public struct ExtusionVariablesStruct
+{
+    public float mainExtrusion;
+    public float leftExtrusion;
+    public float rightExtrusion;
+    public float averageExtrusion;
+
+    public ExtusionVariablesStruct(ExtrusionVariables source)
+    {
+        mainExtrusion = source.mainExtrusion;
+        leftExtrusion = source.leftExtrusion;
+        rightExtrusion = source.rightExtrusion;
+        averageExtrusion = source.averageExtrusion;
     }
 }
 

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GuardrailExtruder
+public class MeshtaskExtruder
 {
 	// Used when generating the mesh
 	List<Vector3> verts = new List<Vector3>();
@@ -14,15 +14,15 @@ public class GuardrailExtruder
 
 	RoadChain currentRoadchain;
 	GameObject currentGuardrail;
-	public void Extrude(MeshTask meshTask, RoadChain parent, GuardrailSettings guardrailSettings)
+	public void Extrude(MeshTask meshTask, RoadChain parent, MeshtaskSettings meshTasksettings)
     {
 		currentRoadchain = parent;
-		Mesh mesh = CreateMeshFilters(guardrailSettings);
+		Mesh mesh = CreateMeshFilters(meshTasksettings);
 		ClearMesh(mesh);
 
-		CreateGuardrail(guardrailSettings, meshTask);
-		int hardEdgeCount = CalculateHardEdgeCount(guardrailSettings);
-		CreateTriangles(meshTask, guardrailSettings, hardEdgeCount);
+		CreateMeshtask(meshTasksettings, meshTask);
+		int hardEdgeCount = CalculateHardEdgeCount(meshTasksettings);
+		CreateTriangles(meshTask, meshTasksettings, hardEdgeCount);
 
 		AssignMesh(mesh);
 		AssignMeshCollider(mesh);
@@ -35,7 +35,7 @@ public class GuardrailExtruder
 		c.sharedMesh = mesh;
 	}
 
-    private Mesh CreateMeshFilters(GuardrailSettings settings)
+    private Mesh CreateMeshFilters(MeshtaskSettings settings)
     {
 		GameObject g = new GameObject();
 		currentGuardrail = g;
@@ -56,7 +56,7 @@ public class GuardrailExtruder
 		triIndices.Clear();
 	}
 
-	private void CreateGuardrail(GuardrailSettings guardrailSettings, MeshTask meshTask)
+	private void CreateMeshtask(GuardrailSettings guardrailSettings, MeshTask meshTask)
     {
 		int currentEdgeloop = 0;
 		int poleCount = 0;
@@ -66,8 +66,7 @@ public class GuardrailExtruder
 		foreach (MeshTask.Point p in meshTask.points)
 		{
 			if(guardrailSettings.guardrailExtends)
-				local_XOffset = meshTask.mirror ? Mathf.Min(0f, p.radius) : Mathf.Max(0f, p.radius);
-
+				local_XOffset = (meshTask.mirror ? Mathf.Min(0f, p.extrusionVariables.leftExtrusion) : Mathf.Max(0f, p.extrusionVariables.rightExtrusion)) * guardrailSettings.extrusionSize;
 			Vector3 noise = Vector3.zero;
 			noise += meshTask.noiseChannel.generatorInstance.getNoise(meshTask.startPointIndex + currentEdgeloop, meshTask.noiseChannel);
 
@@ -79,7 +78,7 @@ public class GuardrailExtruder
 
 				Vector3 vertex = new Vector3(meshDirection.x * (point.x + guardrailSettings.guardRailWidth + Mathf.Abs(local_XOffset)), point.y, 0f) + noise;
 				if (guardrailSettings.hasCornerChamfer)
-					vertex = Quaternion.Euler(0, 0, (p.radius / 10f) * guardrailSettings.maxChamfer) * vertex;
+					vertex = Quaternion.Euler(0, 0, (p.extrusionVariables.averageExtrusion) * guardrailSettings.maxChamfer) * vertex;
 
 				Vector3 relativePosition = p.rotation * vertex;
 				Vector3 position = relativePosition + (p.position);
@@ -102,7 +101,7 @@ public class GuardrailExtruder
 	}
 
 
-	private void CreateTriangles(MeshTask meshTask, GuardrailSettings guardrailSettings, int hardEdgeCount)
+	private void CreateTriangles(MeshTask meshTask, MeshtaskSettings meshtaskSettings, int hardEdgeCount)
     {
 		// Generate Trianges
 		// Foreach edge loop (except the last, since this looks ahead one step)
@@ -110,17 +109,17 @@ public class GuardrailExtruder
 		{
 			//Debug.Log("New Edgeloop");
 
-			int rootIndex = (guardrailSettings.PointCount + hardEdgeCount) * edgeLoop;
-			int rootIndexNext = (guardrailSettings.PointCount + hardEdgeCount) * (edgeLoop + 1);
+			int rootIndex = (meshtaskSettings.PointCount + hardEdgeCount) * edgeLoop;
+			int rootIndexNext = (meshtaskSettings.PointCount + hardEdgeCount) * (edgeLoop + 1);
 			// Foreach pair of line indices in the 2D shape
-			for (int line = 0; line < guardrailSettings.PointCount; line++)
+			for (int line = 0; line < meshtaskSettings.PointCount; line++)
 			{
-				if (!guardrailSettings.closedLoop && line == 0) continue; //Skip closing line
+				if (!meshtaskSettings.meshIsClosed && line == 0) continue; //Skip closing line
 
-				int vertex1 = meshTask.mirror ? guardrailSettings.points[line].line.x : guardrailSettings.points[line].inversedLine.x;
+				int vertex1 = meshTask.mirror ? meshtaskSettings.points[line].line.x : meshtaskSettings.points[line].inversedLine.x;
 
 
-				int vertex2 = meshTask.mirror ? guardrailSettings.points[line].line.y : guardrailSettings.points[line].inversedLine.y;
+				int vertex2 = meshTask.mirror ? meshtaskSettings.points[line].line.y : meshtaskSettings.points[line].inversedLine.y;
 				//Bottom
 				Vector2Int current = new Vector2Int();
 				current[0] = vertex1 + rootIndex;
@@ -149,7 +148,7 @@ public class GuardrailExtruder
 	{
 		Vector3 offset = new Vector3(direction.x * (guardrailSettings.guardrailPosition.x + guardrailSettings.guardRailWidth + X_offset), guardrailSettings.guardrailPosition.y, 0f) + noise;
 		if (guardrailSettings.hasCornerChamfer)
-			offset = Quaternion.Euler(0, 0, (p.radius / 10f) * guardrailSettings.maxChamfer) * offset;
+			offset = Quaternion.Euler(0, 0, (p.extrusionVariables.mainExtrusion / 10f) * guardrailSettings.maxChamfer) * offset;
 
 		Vector3 relativePosition = p.rotation * offset;
 		Vector3 position = relativePosition + (p.position);
@@ -168,7 +167,7 @@ public class GuardrailExtruder
 	}
 
 
-	private int CalculateHardEdgeCount(GuardrailSettings guardrailSettings)
+	private int CalculateHardEdgeCount(MeshtaskSettings guardrailSettings)
     {
 		int hardEdgeCount = 0;
 		foreach (var item in guardrailSettings.points)

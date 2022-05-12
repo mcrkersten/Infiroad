@@ -3,19 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu, System.Serializable]
-public class GuardrailSettings : ScriptableObject
+public class GuardrailSettings : MeshtaskSettings
 {
-
-
 	[Header("Shape")]
-    public VertexPosition[] points;
-	public bool closedLoop;
 	public bool guardrailExtends;
-	public int PointCount => points.Length;
 	public Vector2 guardrailPosition;
-
-	[Space]
-	public Material material;
 
 	[Range(0,10)]
 	public int poleSpacing;
@@ -30,6 +22,7 @@ public class GuardrailSettings : ScriptableObject
 
 	public bool hasCornerChamfer;
 	public float maxChamfer;
+	public float extrusionSize;
 
 	public float CalcUspan()
 	{

@@ -58,4 +58,5 @@ MonoBehaviour:
   sharpCornerGuardrailPolePrefab: {fileID: 5172932599711086609, guid: 66db0c81dfcaae34294ebf173cb629fd, type: 3}
   guardRailWidth: 9.513402
   hasCornerChamfer: 1
-  maxChamfer: 4
+  maxChamfer: 16
+  extrusionSize: 15

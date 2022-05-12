@@ -2143,11 +2143,11 @@ PrefabInstance:
       objectReference: {fileID: 925232241}
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: settings.corner_NpointsBetween
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: settings.straight_NpointsBetween
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7288201750910135066, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: m_RootOrder

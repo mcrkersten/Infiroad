@@ -13,9 +13,7 @@ public class RoadSettings : ScriptableObject
 	public int PointCount => points.Length;
 
 	[Header("Guardrail")]
-	public bool hasGuardrail;
 	public List<GuardrailSettings> guardRails = new List<GuardrailSettings>();
-	public bool guardrailIsContinues;
 	public float guardRailMinimalCornerRadius;
 
 	[Space]
@@ -26,12 +24,12 @@ public class RoadSettings : ScriptableObject
 	public float edgeLoopsPerMeter;
 
 	public float debugRoadCurveStrenght;
-	public AnimationCurve runoffAnimationCurve;
 
 	[Header("Noise settings")]
 	public List<NoiseChannel> noiseChannels = new List<NoiseChannel>();
-	public int guardRailNoiseChannel;
 
+	public AnimationCurve runoffAnimationCurve;
+	public float extrusionSize;
 	public bool hasCornerChamfer;
 	public float maxChamfer;
 
