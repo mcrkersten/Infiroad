@@ -28,7 +28,7 @@ public class RoadSettingsInspector : Editor
 
 		Draw3DShape(t);
 		DrawHandles(t);
-        foreach (GuardrailSettings g in t.guardRails)
+        foreach (MeshtaskSettings g in t.meshtaskSettings)
         {
 			Undo.RecordObject(g, "GuardrailSettings" + g.ToString());
 			DrawRightGuardrail(g);
@@ -142,12 +142,12 @@ public class RoadSettingsInspector : Editor
 		}
 	}
 
-	private void DrawRightGuardrail(GuardrailSettings gr)
+	private void DrawRightGuardrail(MeshtaskSettings gr)
 	{
 		Handles.color = Color.white;
 		for (int i = 0; i < gr.PointCount; i++)
         {
-			float offset = gr.guardRailWidth;
+			float offset = gr.meshtaskWidth;
             for (int row = 0; row < 9; row++)
             {
 				if (i < gr.PointCount - 1)
@@ -167,12 +167,12 @@ public class RoadSettingsInspector : Editor
 		}
 	}
 
-	private void DrawLeftGuardrail(GuardrailSettings gr)
+	private void DrawLeftGuardrail(MeshtaskSettings gr)
     {
 		Handles.color = Color.white;
 		for (int i = 0; i < gr.PointCount; i++)
 		{
-			float offset = gr.guardRailWidth;
+			float offset = gr.meshtaskWidth;
 			for (int row = 0; row < 9; row++)
 			{
 				if (i < gr.PointCount - 1)
@@ -192,12 +192,12 @@ public class RoadSettingsInspector : Editor
 		}
 	}
 
-	private void DrawGuardrailHandle(GuardrailSettings gr)
+	private void DrawGuardrailHandle(MeshtaskSettings gr)
     {
-		Vector3 position = new Vector3(gr.guardRailWidth, 0, 13.5f);
+		Vector3 position = new Vector3(gr.meshtaskWidth, 0, 13.5f);
 		Vector3 endResult = Handles.PositionHandle(position, Quaternion.identity);
-		Handles.Label(position + new Vector3(.2f, .5f, 0), "Guardrail");
-		gr.guardRailWidth = endResult.x;
+		Handles.Label(position + new Vector3(.2f, .5f, 0), gr.meshTaskType.ToString());
+		gr.meshtaskWidth = endResult.x;
 
 	}
 

@@ -73,7 +73,7 @@ public class RoadChain : MonoBehaviour {
 
 	public void CreateMesh(RoadSettings roadSettings, RoadSegment segment)
 	{
-        foreach (GuardrailSettings g in roadSettings.guardRails)
+        foreach (MeshtaskSettings g in roadSettings.meshtaskSettings)
         {
 			g.CalculateLine();
 			g.CalculateInverseLine();

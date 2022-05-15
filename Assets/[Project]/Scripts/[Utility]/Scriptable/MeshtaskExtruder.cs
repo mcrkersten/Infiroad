@@ -9,39 +9,41 @@ public class MeshtaskExtruder
 	List<Vector3> verts = new List<Vector3>();
 	List<Vector3> normals = new List<Vector3>();
 	List<Vector2> uvs0 = new List<Vector2>();
-	List<Vector2> uvs1 = new List<Vector2>();
 	List<int> triIndices = new List<int>();
 
 	RoadChain currentRoadchain;
-	GameObject currentGuardrail;
+	GameObject currentMeshObject;
 	public void Extrude(MeshTask meshTask, RoadChain parent, MeshtaskSettings meshTasksettings)
     {
 		currentRoadchain = parent;
-		Mesh mesh = CreateMeshFilters(meshTasksettings);
+		Mesh mesh = CreateMeshFilters(meshTasksettings, meshTask.meshPosition);
 		ClearMesh(mesh);
+		ExecuteMeshtask(meshTasksettings, meshTask);
 
-		CreateMeshtask(meshTasksettings, meshTask);
 		int hardEdgeCount = CalculateHardEdgeCount(meshTasksettings);
 		CreateTriangles(meshTask, meshTasksettings, hardEdgeCount);
 
 		AssignMesh(mesh);
-		AssignMeshCollider(mesh);
+
+		if(meshTask.meshTaskType != MeshTaskType.GrandStand)
+			AssignMeshCollider(mesh);
 
 	}
 
     private void AssignMeshCollider(Mesh mesh)
     {
-		MeshCollider c = currentGuardrail.AddComponent<MeshCollider>();
+		MeshCollider c = currentMeshObject.AddComponent<MeshCollider>();
 		c.sharedMesh = mesh;
 	}
 
-    private Mesh CreateMeshFilters(MeshtaskSettings settings)
-    {
+	private Mesh CreateMeshFilters(MeshtaskSettings settings, MeshtaskPosition meshtaskPosition)
+	{
 		GameObject g = new GameObject();
-		currentGuardrail = g;
-		currentGuardrail.transform.parent = currentRoadchain.transform;
-		MeshFilter mf = currentGuardrail.AddComponent<MeshFilter>();
-		MeshRenderer mr = currentGuardrail.AddComponent<MeshRenderer>();
+		currentMeshObject = g;
+		g.name = settings.meshtaskPosition.ToString() + " " + meshtaskPosition.ToString();
+		currentMeshObject.transform.parent = currentRoadchain.transform;
+		MeshFilter mf = currentMeshObject.AddComponent<MeshFilter>();
+		MeshRenderer mr = currentMeshObject.AddComponent<MeshRenderer>();
 		mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.TwoSided;
 		mr.material = settings.material;
 		return mf.mesh;
@@ -56,46 +58,60 @@ public class MeshtaskExtruder
 		triIndices.Clear();
 	}
 
-	private void CreateMeshtask(GuardrailSettings guardrailSettings, MeshTask meshTask)
+	private void ExecuteMeshtask(MeshtaskSettings meshtaskSettings, MeshTask meshTask)
     {
 		int currentEdgeloop = 0;
 		int poleCount = 0;
+		if (meshtaskSettings.meshTaskType != meshTask.meshTaskType)
+			return;
+		Vector2 meshDirection = meshTask.meshPosition == MeshtaskPosition.Left ? (Vector2.left) : (Vector2.right);
 
-		float local_XOffset = 0f;//The offset on the X-axis when in curve
-		Vector2 meshDirection = meshTask.mirror ? (Vector2.left) : (Vector2.right);
 		foreach (MeshTask.Point p in meshTask.points)
 		{
-			if(guardrailSettings.guardrailExtends)
-				local_XOffset = (meshTask.mirror ? Mathf.Min(0f, p.extrusionVariables.leftExtrusion) : Mathf.Max(0f, p.extrusionVariables.rightExtrusion)) * guardrailSettings.extrusionSize;
+			float local_XOffset = meshTask.meshPosition == MeshtaskPosition.Left ? Mathf.Min(0f, p.extrusionVariables.leftExtrusion) : Mathf.Max(0f, p.extrusionVariables.rightExtrusion);
+			local_XOffset = local_XOffset * meshtaskSettings.extrusionSize;
+
 			Vector3 noise = Vector3.zero;
 			noise += meshTask.noiseChannel.generatorInstance.getNoise(meshTask.startPointIndex + currentEdgeloop, meshTask.noiseChannel);
 
-			for (int i = 0; i < guardrailSettings.PointCount; i++)
+			for (int i = 0; i < meshtaskSettings.PointCount; i++)
 			{
-				Vector2 uv = new Vector2(currentEdgeloop/3f, guardrailSettings.points[i].vertex.uv.y);
-
-				Vector2 point = guardrailSettings.points[i].vertex.point * (Vector2.left + Vector2.up);
-
-				Vector3 vertex = new Vector3(meshDirection.x * (point.x + guardrailSettings.guardRailWidth + Mathf.Abs(local_XOffset)), point.y, 0f) + noise;
-				if (guardrailSettings.hasCornerChamfer)
-					vertex = Quaternion.Euler(0, 0, (p.extrusionVariables.averageExtrusion) * guardrailSettings.maxChamfer) * vertex;
-
+				Vector2 uv = new Vector2(currentEdgeloop/3f, meshtaskSettings.points[i].vertex.uv.y);
+				Vector2 point = meshtaskSettings.points[i].vertex.point * (Vector2.left + Vector2.up);
+				Vector3 vertex = new Vector3(meshDirection.x * (point.x + meshtaskSettings.meshtaskWidth + Mathf.Abs(local_XOffset)), point.y, 0f) + noise;
+				vertex = Quaternion.Euler(0, 0, (p.extrusionVariables.averageExtrusion) * meshtaskSettings.maxChamfer) * vertex;
 				Vector3 relativePosition = p.rotation * vertex;
 				Vector3 position = relativePosition + (p.position);
+
 				verts.Add(position);
 				uvs0.Add(uv);
 
-				if (guardrailSettings.points[i].isHardEdge)
-				{
-					verts.Add(position); //World position of point
+				if (meshtaskSettings.points[i].isHardEdge)
+                {
+					verts.Add(position);
+					uvs0.Add(uv);
 				}
 			}
 
-			if (currentEdgeloop - (poleCount * guardrailSettings.poleSpacing) == 0)
-			{
-				CreateGuardrailPole(meshDirection, guardrailSettings, p, noise, Mathf.Abs(local_XOffset));
-				poleCount++;
-			}
+			switch (meshtaskSettings.meshTaskType)
+            {
+                case MeshTaskType.Guardrail:
+					if (currentEdgeloop - (poleCount * ((GuardrailSettings)meshtaskSettings).poleSpacing) == 0)
+                    {
+						((GuardrailSettings)meshtaskSettings).CreateGuardrailPole(meshDirection, (GuardrailSettings)meshtaskSettings, p, noise, Mathf.Abs(local_XOffset), currentMeshObject);
+						poleCount++;
+					}
+					break;
+                case MeshTaskType.CatchFence:
+					if (currentEdgeloop - (poleCount * ((GuardrailSettings)meshtaskSettings).poleSpacing) == 0)
+					{
+						((GuardrailSettings)meshtaskSettings).CreateGuardrailPole(meshDirection, (GuardrailSettings)meshtaskSettings, p, noise, Mathf.Abs(local_XOffset), currentMeshObject);
+						poleCount++;
+					}
+					break;
+                default:
+                    break;
+            }
 			currentEdgeloop++;
 		}
 	}
@@ -116,10 +132,8 @@ public class MeshtaskExtruder
 			{
 				if (!meshtaskSettings.meshIsClosed && line == 0) continue; //Skip closing line
 
-				int vertex1 = meshTask.mirror ? meshtaskSettings.points[line].line.x : meshtaskSettings.points[line].inversedLine.x;
-
-
-				int vertex2 = meshTask.mirror ? meshtaskSettings.points[line].line.y : meshtaskSettings.points[line].inversedLine.y;
+				int vertex1 = meshTask.meshPosition == MeshtaskPosition.Left ? meshtaskSettings.points[line].line.x : meshtaskSettings.points[line].inversedLine.x;
+				int vertex2 = meshTask.meshPosition == MeshtaskPosition.Left ? meshtaskSettings.points[line].line.y : meshtaskSettings.points[line].inversedLine.y;
 				//Bottom
 				Vector2Int current = new Vector2Int();
 				current[0] = vertex1 + rootIndex;
@@ -140,32 +154,9 @@ public class MeshtaskExtruder
 				triIndices.Add(current.y);
 			}
 		}
-		if (meshTask.mirror)
+		if (meshTask.meshPosition == MeshtaskPosition.Left)
 			triIndices.Reverse();
 	}
-
-	private void CreateGuardrailPole(Vector2 direction, GuardrailSettings guardrailSettings, MeshTask.Point p, Vector3 noise, float X_offset)
-	{
-		Vector3 offset = new Vector3(direction.x * (guardrailSettings.guardrailPosition.x + guardrailSettings.guardRailWidth + X_offset), guardrailSettings.guardrailPosition.y, 0f) + noise;
-		if (guardrailSettings.hasCornerChamfer)
-			offset = Quaternion.Euler(0, 0, (p.extrusionVariables.mainExtrusion / 10f) * guardrailSettings.maxChamfer) * offset;
-
-		Vector3 relativePosition = p.rotation * offset;
-		Vector3 position = relativePosition + (p.position);
-
-		GameObject pole = null;
-		if (Mathf.Abs(guardrailSettings.sharpCornerRadius) < X_offset)
-			pole = GameObject.Instantiate(guardrailSettings.sharpCornerGuardrailPolePrefab, position, p.rotation, currentGuardrail.transform);
-		else
-			pole = GameObject.Instantiate(guardrailSettings.guardrailPolePrefab, position, p.rotation, currentGuardrail.transform);
-
-		if (offset.x < 0)
-			pole.transform.localScale = new Vector3(1, 1, 1);
-		else
-			pole.transform.localScale = new Vector3(-1, 1, 1);
-
-	}
-
 
 	private int CalculateHardEdgeCount(MeshtaskSettings guardrailSettings)
     {
@@ -176,15 +167,6 @@ public class MeshtaskExtruder
 				hardEdgeCount++;
 		}
 		return hardEdgeCount;
-	}
-
-	private float CalculatePositiveOrNegativeCurve(float xValue, float curveStrenght, RoadSettings roadSettings)
-	{
-		if (xValue > 0f) //Positive
-			return Mathf.Max(0f, curveStrenght);
-		if (xValue < 0f) //Negative
-			return Mathf.Min(0f, curveStrenght);
-		return 0f;
 	}
 
 	private void AssignMesh(Mesh mesh)

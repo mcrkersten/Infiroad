@@ -55,8 +55,8 @@ public class RoadMeshExtruder {
 			CalculateCornerRadius(roadSettings,ring, time, bezier);
 			//Calculate corner chamfer based on radius of the corner
 			Quaternion chamferAngle = CalculateCornerChamfer(roadSettings, roadChainBuilder.extrusionVariables.averageExtrusion);
-			//Create tasks to spawn guardrails
-			CreateMeshTasks(,roadSettings, ring, segment, op, edgeLoopCount);
+
+			CreateMeshTasks(roadSettings, ring, segment, op, edgeLoopCount);
 
 
 			// Foreach vertex in the 2D shape
@@ -182,15 +182,18 @@ public class RoadMeshExtruder {
 	{
 		//Gets bigger with larger radius
 		float exp = 0;
-		float extrusionSize = bezier.GetCornerRadius(t);
-		if(Mathf.Abs(extrusionSize) < 350f)
+		float cornerRadius = bezier.GetCornerRadius(t);
+		if(Mathf.Abs(cornerRadius) < 350f)
         {
-			float clampedRadius = Mathf.Clamp(extrusionSize, -350f, 350f);
+			float clampedRadius = Mathf.Clamp(cornerRadius, -350f, 350f);
 			exp = roadSettings.runoffAnimationCurve.Evaluate((clampedRadius / 350f));
 		}
 
 		if (ring != 0)
+        {
 			roadChainBuilder.extrusionVariables.mainExtrusion = exp;
+			roadChainBuilder.extrusionVariables.cornerRadius = cornerRadius;
+		}
 	}
 
 	private Quaternion CalculateCornerChamfer(RoadSettings roadSettings, float radius)
@@ -210,7 +213,7 @@ public class RoadMeshExtruder {
 
     private void CreateMeshTasks(RoadSettings roadSettings, int ring, RoadSegment segment, OrientedPoint op, int edgeLoopCount)
     {
-        foreach (MeshtaskSettings meshtaskSettings in roadSettings.guardRails)
+        foreach (MeshtaskSettings meshtaskSettings in roadSettings.meshtaskSettings)
         {
 			//MESHTASK
 			if (!meshtaskSettings.meshtaskContinues)
@@ -222,46 +225,67 @@ public class RoadMeshExtruder {
 
 	private void CreateBasedOnExtrusion(MeshtaskSettings meshtaskSettings, RoadSettings roadSettings, RoadSegment segment, OrientedPoint op, int edgeLoopCount)
     {
-		if(Mathf.Abs(roadChainBuilder.extrusionVariables.mainExtrusion) < roadSettings.guardRailMinimalCornerRadius)
+		float cornerRadius = roadChainBuilder.extrusionVariables.cornerRadius;
+		bool inRange = cornerRadius > meshtaskSettings.minimalCornerRadius && meshtaskSettings.maximumCornerRadius > cornerRadius;
+		if (inRange)
         {
 			Vector3 currentMeshPosition = segment.transform.TransformPoint(op.pos);
-			float distance = Vector3.Distance(roadChainBuilder.lastMeshPosition, currentMeshPosition);
-			if (distance > 2.5f)
+			float distanceToLastMeshtask = Vector3.Distance(roadChainBuilder.meshtaskTypeHandler.GetLastMeshtaskPosition(meshtaskSettings), currentMeshPosition);
+			if (distanceToLastMeshtask > 2.5f)
 			{
-				if (roadChainBuilder.currentMeshTask != null)
-					roadChainBuilder.meshtasks.Add(roadChainBuilder.currentMeshTask);
-				roadChainBuilder.currentMeshTask = new MeshTask(roadChainBuilder.extrusionVariables.mainExtrusion < 0,
-														roadSettings, roadChainBuilder.generatedRoadEdgeloops,
-														roadSettings.noiseChannels[meshtaskSettings.noiseChannel],
-														meshtaskSettings.meshTaskType);
+				if (roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskSettings) != null)
+					roadChainBuilder.meshtasks.Add(roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskSettings));
+
+
+				//MeshtaskPosition side = CalculateMeshtaskSide(roadChainBuilder.extrusionVariables.mainExtrusion);
+				MeshTask newMeshtask = new MeshTask(roadSettings, 
+												roadChainBuilder.generatedRoadEdgeloops,
+												roadSettings.noiseChannels[meshtaskSettings.noiseChannel],
+												meshtaskSettings.meshTaskType,
+												meshtaskSettings.meshtaskPosition);
+
+				roadChainBuilder.meshtaskTypeHandler.SetMeshtask(newMeshtask, meshtaskSettings);
+				Debug.Log(newMeshtask + " " + meshtaskSettings + " " + distanceToLastMeshtask);
 			}
 
-			if (distance > .01f) //Fish out duplicates
+			if (distanceToLastMeshtask > .01f) //Fish out duplicates
 			{
-				roadChainBuilder.lastMeshPosition = currentMeshPosition;
-				roadChainBuilder.currentMeshTask.AddPoint(roadChainBuilder.lastMeshPosition,
-					segment.transform.rotation * op.rot,
-					roadChainBuilder.extrusionVariables);
+				roadChainBuilder.meshtaskTypeHandler.SetLastMeshtaskPosition(meshtaskSettings, currentMeshPosition);
+				roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskSettings)
+														.AddPoint(currentMeshPosition,
+														segment.transform.rotation * op.rot,
+														roadChainBuilder.extrusionVariables);
 			}
 		}
 	}
+
+	public MeshtaskPosition CalculateMeshtaskSide(float directionOfCorner)
+    {
+		if (directionOfCorner < 0)
+			return MeshtaskPosition.Left;
+		else return MeshtaskPosition.Right;
+    }
 
 	private void CreateContinuedMeshtask(MeshtaskSettings meshtaskSettings, RoadSettings roadSettings, int ring, RoadSegment segment, OrientedPoint op, int edgeLoopCount)
     {
 		Vector3 currentMeshPosition = segment.transform.TransformPoint(op.pos);
 
 		if (ring == 0)
-			roadChainBuilder.currentMeshTask = new MeshTask(roadSettings, 
-				roadChainBuilder.generatedRoadEdgeloops, 
-				roadSettings.noiseChannels[meshtaskSettings.noiseChannel], 
-				MeshTaskType.Guardrail);
+        {
+			MeshTask newMeshtask = new MeshTask(roadSettings,
+				roadChainBuilder.generatedRoadEdgeloops,
+				roadSettings.noiseChannels[meshtaskSettings.noiseChannel],
+				meshtaskSettings.meshTaskType,
+				meshtaskSettings.meshtaskPosition);
+			roadChainBuilder.meshtaskTypeHandler.SetMeshtask(newMeshtask, meshtaskSettings);
+		}
 
-		roadChainBuilder.currentMeshTask.AddPoint(currentMeshPosition,
+		roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskSettings).AddPoint(currentMeshPosition,
 			segment.transform.rotation * op.rot,
 			roadChainBuilder.extrusionVariables);
 
 		if (ring == edgeLoopCount - 1)
-			roadChainBuilder.meshtasks.Add(roadChainBuilder.currentMeshTask);
+			roadChainBuilder.meshtasks.Add(roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskSettings));
 	}
 
     #region UV calculations
@@ -397,30 +421,19 @@ public class RoadMeshExtruder {
 public class MeshTask
 {
 	public MeshTaskType meshTaskType;
+	public MeshtaskPosition meshPosition;
 	public RoadSettings roadSettings;
 	public List<Point> points = new List<Point>();
 	public int startPointIndex;
 	public NoiseChannel noiseChannel;
 
-	public bool mirror;
-	public bool bothSides;
-
-	public MeshTask(bool onRightSide, RoadSettings settings, int startPointIndex, NoiseChannel noiseChannel, MeshTaskType meshTaskType)
-	{
-		this.roadSettings = settings;
-		this.mirror = onRightSide;
-		this.startPointIndex = startPointIndex;
-		this.noiseChannel = noiseChannel;
-		this.meshTaskType = meshTaskType;
-	}
-
-	public MeshTask(RoadSettings settings, int startPointIndex, NoiseChannel noiseChannel, MeshTaskType meshTaskType)
+	public MeshTask(RoadSettings settings, int startPointIndex, NoiseChannel noiseChannel, MeshTaskType meshTaskType, MeshtaskPosition meshPosition)
 	{
 		this.roadSettings = settings;
 		this.startPointIndex = startPointIndex;
 		this.noiseChannel = noiseChannel;
 		this.meshTaskType = meshTaskType;
-		bothSides = true;
+		this.meshPosition = meshPosition;
 	}
 
 	public void AddPoint(Vector3 position, Quaternion rotation, ExtrusionVariables extrusionVariables)
@@ -446,5 +459,6 @@ public class MeshTask
 public enum MeshTaskType
 {
 	Guardrail = 0,
-	Other
+	CatchFence,
+	GrandStand
 }

@@ -12,8 +12,8 @@ public class RoadSettings : ScriptableObject
 	public SurfaceScriptable runoffMaterial;
 	public int PointCount => points.Length;
 
-	[Header("Guardrail")]
-	public List<GuardrailSettings> guardRails = new List<GuardrailSettings>();
+	[Header("Meshtasks")]
+	public List<MeshtaskSettings> meshtaskSettings = new List<MeshtaskSettings>();
 	public float guardRailMinimalCornerRadius;
 
 	[Space]

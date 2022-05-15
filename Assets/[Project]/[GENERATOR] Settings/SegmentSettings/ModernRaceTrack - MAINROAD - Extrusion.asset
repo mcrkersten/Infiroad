@@ -242,10 +242,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: acf9619f996b36345b8d57426d926ec9, type: 2}
   - {fileID: 11400000, guid: 8808c81f35bcac94cbd1a989d67cead5, type: 2}
   runoffMaterial: {fileID: 11400000, guid: 8808c81f35bcac94cbd1a989d67cead5, type: 2}
-  hasGuardrail: 0
-  guardRails:
+  meshtaskSettings:
   - {fileID: 11400000, guid: 0d430583a073a984caf4ad0fb0e144fa, type: 2}
-  guardrailIsContinues: 1
+  - {fileID: 11400000, guid: 3a1abcd67f2c3cf449672eddcf35c267, type: 2}
   guardRailMinimalCornerRadius: 0
   roadTypeTag: FOREST-BASIC
   assetPools:
@@ -274,7 +273,6 @@ MonoBehaviour:
       noiseDirection: 2
       noiseLenght: 0.993
       noisePower: 1
-  guardRailNoiseChannel: 0
   runoffAnimationCurve:
     serializedVersion: 2
     m_Curve:
@@ -319,4 +317,4 @@ MonoBehaviour:
     m_RotationOrder: 4
   extrusionSize: 15
   hasCornerChamfer: 1
-  maxChamfer: 16
+  maxChamfer: 5

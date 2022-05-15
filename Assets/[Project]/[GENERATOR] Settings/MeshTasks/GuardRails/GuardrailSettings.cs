@@ -5,99 +5,34 @@ using UnityEngine;
 [CreateAssetMenu, System.Serializable]
 public class GuardrailSettings : MeshtaskSettings
 {
-	[Header("Shape")]
-	public bool guardrailExtends;
-	public Vector2 guardrailPosition;
-
 	[Range(0,10)]
 	public int poleSpacing;
 	public float sharpCornerRadius;
-
 
 	[Header("GameObjects")]
 	public GameObject guardrailPolePrefab;
 	public GameObject sharpCornerGuardrailPolePrefab;
 
-	public float guardRailWidth;
 
-	public bool hasCornerChamfer;
-	public float maxChamfer;
-	public float extrusionSize;
-
-	public float CalcUspan()
+	public void CreateGuardrailPole(Vector2 direction, GuardrailSettings guardrailSettings, MeshTask.Point p, Vector3 noise, float localX_offset, GameObject parent)
 	{
-		float dist = 0;
-		for (int i = 0; i < points.Length - 1; i++)
-		{
-			Vector2 a = points[i].vertex.point;
-			Vector2 b = points[i + 1].vertex.point;
-			dist += (a - b).magnitude;
-		}
-		return dist;
-	}
+		Vector3 offset = new Vector3(direction.x * (guardrailSettings.meshtaskWidth + localX_offset),0f, 0f) + noise;
+		offset = Quaternion.Euler(0, 0, (p.extrusionVariables.averageExtrusion) * guardrailSettings.maxChamfer) * offset;
 
-	public void CalculateLine()
-	{
-		int count1 = 0;
-		foreach (VertexPosition item in points)
-		{
-			if (item.isHardEdge)
-				count1++;
-		}
+		Vector3 relativePosition = p.rotation * offset;
+		Vector3 position = relativePosition + (p.position);
 
-		int count2 = 0;
-		for (int i = 0; i < points.Length; i++)
-		{
-			if (i == 0)
-				points[i].line = new Vector2Int(points.Length - 1 + count1, i);
-			else
-				points[i].line = new Vector2Int(i - 1 + count2, i + count2);
+		GameObject pole = null;
+		if (Mathf.Abs(guardrailSettings.sharpCornerRadius) < localX_offset)
+			pole = GameObject.Instantiate(guardrailSettings.sharpCornerGuardrailPolePrefab, position, p.rotation, parent.transform);
+		else
+			pole = GameObject.Instantiate(guardrailSettings.guardrailPolePrefab, position, p.rotation, parent.transform);
 
-			if (points[i].isHardEdge)
-				count2++;
+		if (offset.x < 0)
+			pole.transform.localScale = new Vector3(1, 1, 1);
+		else
+			pole.transform.localScale = new Vector3(-1, 1, 1);
 
-		}
-	}
-
-	public void CalculateInverseLine()
-	{
-		int count1 = 0;
-		foreach (VertexPosition item in points)
-		{
-			if (item.isHardEdge)
-				count1++;
-		}
-
-		int count2 = 0;
-		int x = 0;
-		for (int i = points.Length; i > 0; i--)
-		{
-			if (i == 0)
-				points[x].inversedLine = new Vector2Int( (points.Length - 1) + count1, i);
-			else
-				points[x].inversedLine = new Vector2Int( (i - 1 + count2) , i + count2);
-
-			if (points[x].isHardEdge)
-				count2++;
-			x++;
-		}
-	}
-
-	public void CalculateNormals()
-	{
-		for (int i = 0; i < points.Length; i++)
-		{
-			Vector2 nextPoint = Vector2.zero;
-			Vector2 currentPoint = points[i].vertex.point;
-			if (i == points.Length - 1)
-				nextPoint = points[0].vertex.point;
-			else
-				nextPoint = points[i + 1].vertex.point;
-
-			float dx = nextPoint.x - currentPoint.x;
-			float dy = nextPoint.y - currentPoint.y;
-			points[i].vertex.normal = new Vector2(-dy, dx);
-		}
 	}
 }
 

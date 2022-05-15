@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d78f2287300b104cae54ee3afbba403, type: 3}
   m_Name: Catchfence-RACETRACK
   m_EditorClassIdentifier: 
+  meshTaskType: 1
+  meshtaskPosition: 2
   points:
   - vertex:
       point: {x: 0, y: 0}
@@ -48,15 +50,16 @@ MonoBehaviour:
     line: {x: 3, y: 4}
     inversedLine: {x: 0, y: 1}
     isHardEdge: 0
-  closedLoop: 0
-  guardrailExtends: 1
-  guardrailPosition: {x: 0, y: 0}
+  meshtaskContinues: 1
+  noiseChannel: 0
+  maxChamfer: 5
+  extrusionSize: 15
+  meshtaskWidth: 9.464888
+  minimalCornerRadius: 0
+  maximumCornerRadius: 0
   material: {fileID: 2100000, guid: 35fe2f69ff7d78a42b9c788c62345c32, type: 2}
+  meshIsClosed: 0
   poleSpacing: 8
   sharpCornerRadius: 200
   guardrailPolePrefab: {fileID: 8594070437465435305, guid: 69167b2b72e68c046981abca42e7d523, type: 3}
   sharpCornerGuardrailPolePrefab: {fileID: 5172932599711086609, guid: 66db0c81dfcaae34294ebf173cb629fd, type: 3}
-  guardRailWidth: 9.513402
-  hasCornerChamfer: 1
-  maxChamfer: 16
-  extrusionSize: 15

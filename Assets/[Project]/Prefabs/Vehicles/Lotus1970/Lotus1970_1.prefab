@@ -596,7 +596,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 127
   brakeBias: 1
-  restLength: 0.15
+  springLenght: 0.15
   springTravel: 0.2
   springtStiffness: 30000
   damperStiffness: 900
@@ -760,7 +760,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 127
   brakeBias: 1
-  restLength: 0.15
+  springLenght: 0.15
   springTravel: 0.2
   springtStiffness: 30000
   damperStiffness: 900
@@ -6536,7 +6536,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 127
   brakeBias: 1
-  restLength: 0.15
+  springLenght: 0.15
   springTravel: 0.2
   springtStiffness: 30000
   damperStiffness: 900
@@ -7128,6 +7128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   breakForce: 12
+  rb: {fileID: 0}
   wheelRaycasts:
   - {fileID: 7626202904480008941}
   - {fileID: 5349295541575409109}
@@ -7728,7 +7729,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 127
   brakeBias: 1
-  restLength: 0.15
+  springLenght: 0.15
   springTravel: 0.2
   springtStiffness: 30000
   damperStiffness: 900

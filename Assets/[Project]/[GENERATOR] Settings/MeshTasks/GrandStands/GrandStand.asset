@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d506392ec772e1468e230060edab095, type: 3}
+  m_Name: GrandStand
+  m_EditorClassIdentifier: 
+  meshTaskType: 2
+  meshtaskPosition: 0
+  points:
+  - vertex:
+      point: {x: 0, y: -1}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 17, y: 0}
+    inversedLine: {x: 15, y: 16}
+    isHardEdge: 1
+  - vertex:
+      point: {x: 0, y: 1}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 1, y: 2}
+    inversedLine: {x: 13, y: 14}
+    isHardEdge: 1
+  - vertex:
+      point: {x: -2, y: 1}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 3, y: 4}
+    inversedLine: {x: 11, y: 12}
+    isHardEdge: 1
+  - vertex:
+      point: {x: -2, y: 0}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 5, y: 6}
+    inversedLine: {x: 9, y: 10}
+    isHardEdge: 1
+  - vertex:
+      point: {x: -9, y: 7}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 7, y: 8}
+    inversedLine: {x: 7, y: 8}
+    isHardEdge: 1
+  - vertex:
+      point: {x: 0, y: 7}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 9, y: 10}
+    inversedLine: {x: 5, y: 6}
+    isHardEdge: 1
+  - vertex:
+      point: {x: 0, y: 7.5}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 11, y: 12}
+    inversedLine: {x: 3, y: 4}
+    isHardEdge: 1
+  - vertex:
+      point: {x: -10, y: 7.5}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 13, y: 14}
+    inversedLine: {x: 1, y: 2}
+    isHardEdge: 1
+  - vertex:
+      point: {x: -10, y: -1}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 15, y: 16}
+    inversedLine: {x: 17, y: 0}
+    isHardEdge: 1
+  meshtaskContinues: 0
+  noiseChannel: 0
+  maxChamfer: 5
+  extrusionSize: 15
+  meshtaskWidth: 17.49484
+  minimalCornerRadius: -1000
+  maximumCornerRadius: -30
+  material: {fileID: 2100000, guid: 145ca30d246f02149bf18303cf03f79d, type: 2}
+  meshIsClosed: 1

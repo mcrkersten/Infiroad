@@ -14,8 +14,8 @@ public class Suspension : MonoBehaviour
     [HideInInspector] public float brakeBias;
 
     [Header("Suspension")]
-    [Tooltip("Position of spring under 0 load")]
-    public float restLength;
+    [Tooltip("Position of spring under standard vehicle load")]
+    public float springLenght;
     [Tooltip("Distance spring can travel in y axis")]
     public float springTravel;
 
@@ -36,8 +36,8 @@ public class Suspension : MonoBehaviour
     {
         rb = transform.root.GetComponent<Rigidbody>();
 
-        minLength = restLength - springTravel;
-        maxLength = restLength + springTravel;
+        minLength = springLenght - springTravel;
+        maxLength = springLenght + springTravel/10f;
 
         feedbackComponent = new FeedbackComponent("Suspension", .25f);
         FeedbackSystem.instance.RegisterFeedbackComponent(feedbackComponent);
@@ -58,9 +58,10 @@ public class Suspension : MonoBehaviour
 
             wheel.wheelVelocityLocalSpace = wheel.transform.InverseTransformDirection(rb.GetPointVelocity(hit.point));
 
-            float suspensionCompression;
-            Vector3 suspensionForce = CalculateSuspensionForce(hit, out suspensionCompression);
-            physicsWobble = suspensionCompression;
+            float suspensionVelocity;
+            Vector3 suspensionForce = CalculateSuspensionForce(hit, out suspensionVelocity);
+            physicsWobble = suspensionVelocity;
+
             rb.AddForceAtPosition(suspensionForce, hit.point);
             downForce = suspensionForce.y + (rb.mass);
 
@@ -117,19 +118,15 @@ public class Suspension : MonoBehaviour
 
     private Vector3 CalculateSuspensionForce(RaycastHit hit, out float suspensionCompresssion)
     {
-        float springLength = Mathf.Clamp(hit.distance, minLength, maxLength);
-        float springVelocity = (lastLength - springLength) / Time.fixedDeltaTime;
-        float springForce = springtStiffness * (restLength - springLength);
+        float springCompressedLength = Mathf.Clamp(hit.distance, minLength, maxLength);
+        float springVelocity = (lastLength - springCompressedLength) / Time.fixedDeltaTime;
+        float springForce = springtStiffness * (this.springLenght - springCompressedLength);
         float damperForce = damperStiffness * springVelocity;
-        lastLength = springLength;
+        lastLength = springCompressedLength;
         suspensionCompresssion = springVelocity;
-        if (springForce + damperForce > 0f)
-        {
-            Debug.DrawLine(this.transform.position, this.transform.position + this.transform.up * ((springForce + damperForce) / 2000f), Color.cyan);
-            return this.transform.up * (springForce + damperForce);
-        }
 
-        return Vector3.zero;
+        Debug.DrawLine(this.transform.position, this.transform.position + this.transform.up * ((springForce + damperForce) / 2000f), Color.cyan);
+        return this.transform.up * Mathf.Max(0f,(springForce + damperForce));
     }
 
     private float CalculateBrakingForce(float brakeInput)

@@ -24,12 +24,14 @@ public class RoadChainBuilder : MonoBehaviour
     public GameObject startSegment;
 
     //Mesh task variables
-    [HideInInspector] public MeshTask currentMeshTask = null;
+    [HideInInspector] public MeshtaskTypeHandler meshtaskTypeHandler;
+
+
     [HideInInspector] public ExtrusionVariables extrusionVariables;
     [HideInInspector] public Vector3 lastMeshPosition = Vector3.positiveInfinity;
     [HideInInspector] public List<MeshTask> meshtasks = new List<MeshTask>();
 
-    MeshtaskExtruder guardRailExtruder = new MeshtaskExtruder();
+    MeshtaskExtruder meshtaskExtruder = new MeshtaskExtruder();
 
     public Road road;
     private ObjectPooler objectPooler;
@@ -39,8 +41,13 @@ public class RoadChainBuilder : MonoBehaviour
     [Header("Debug")]
     public int generatedRoadEdgeloops = 0;
 
+    public List<MeshtaskSettings> meshtaskSettings = new List<MeshtaskSettings>();
+
     private void Awake()
     {
+        meshtaskTypeHandler = new MeshtaskTypeHandler();
+        foreach (MeshtaskSettings item in meshtaskSettings)
+            meshtaskTypeHandler.SetDictionary(item, null);
         UpdateAllRoadSettings();
         extrusionVariables = new ExtrusionVariables(.1f);
         InstantiateAssetPools();
@@ -156,8 +163,8 @@ public class RoadChainBuilder : MonoBehaviour
             roadChain.InitializeSegmentMesh(roadSettting, segment);
 
             //Create Guardrails
-            foreach (GuardrailSettings guardRailSetting in roadSettting.guardRails)
-                HandleMeshTasks(guardRailSetting, roadChain);
+            foreach (MeshtaskSettings meshtaskSettings in roadSettting.meshtaskSettings)
+                HandleMeshTasks(meshtaskSettings, roadChain);
 
             meshtasks.Clear();
         }
@@ -256,35 +263,25 @@ public class RoadChainBuilder : MonoBehaviour
         return RoadShape.corners;
     }
 
-    private void HandleMeshTasks(GuardrailSettings settings, RoadChain roadchain)
+    private void HandleMeshTasks(MeshtaskSettings settings, RoadChain roadchain)
     {
         foreach (MeshTask task in meshtasks)
-        {
-            switch (task.meshTaskType)
-            {
-                case MeshTaskType.Guardrail:
-                    CreateGuardrailMesh(settings, roadchain, task);
-                    break;
-                case MeshTaskType.Other:
-                    break;
-                default:
-                    break;
-            }
-        }
+            if(settings.meshTaskType == task.meshTaskType)
+                ExecuteMeshtask(settings, roadchain, task);
     }
 
-    private void CreateGuardrailMesh(GuardrailSettings settings, RoadChain roadchain, MeshTask task)
+    private void ExecuteMeshtask(MeshtaskSettings settings, RoadChain roadchain, MeshTask task)
     {
-        if (task.bothSides)
+        if (settings.meshtaskPosition == MeshtaskPosition.Both)
         {
-            task.mirror = false;
-            guardRailExtruder.Extrude(task, roadchain, settings);
-            task.mirror = true;
-            guardRailExtruder.Extrude(task, roadchain, settings);
+            task.meshPosition = MeshtaskPosition.Right;
+            meshtaskExtruder.Extrude(task, roadchain, settings);
+            task.meshPosition = MeshtaskPosition.Left;
+            meshtaskExtruder.Extrude(task, roadchain, settings);
         }
         else
         {
-            guardRailExtruder.Extrude(task, roadchain, settings);
+            meshtaskExtruder.Extrude(task, roadchain, settings);
         }
     }
 
@@ -721,6 +718,8 @@ public class ExtrusionVariables
     private float maxRightExtrusion;
     private float righReductiontVelocity;
 
+    public float cornerRadius;
+
     public float averageExtrusion { get { return (rightExtrusion + leftExtrusion) / 2; } }
 
     public ExtrusionVariables(float lerpSpeed)
@@ -786,4 +785,36 @@ public enum EdgeLocation
     Top,
     Bottom,
     none //automatically becomes bottom entry
+}
+
+public class MeshtaskTypeHandler
+{
+    private Dictionary<MeshtaskSettings, MeshTask> activeMeshtasks = new Dictionary<MeshtaskSettings, MeshTask>();
+    private Dictionary<MeshtaskSettings, Vector3> lastMeshtaskPositions = new Dictionary<MeshtaskSettings, Vector3>();
+
+    public void SetDictionary(MeshtaskSettings meshtaskSettings,MeshTask task)
+    {
+        activeMeshtasks.Add(meshtaskSettings, task);
+        lastMeshtaskPositions.Add(meshtaskSettings, Vector3.one * 1000f);
+    }
+
+    public void SetMeshtask(MeshTask newMeshtask, MeshtaskSettings meshtaskSettings)
+    {
+        activeMeshtasks[meshtaskSettings] = newMeshtask;
+    }
+
+    public void SetLastMeshtaskPosition(MeshtaskSettings meshtaskSettings, Vector3 position)
+    {
+        lastMeshtaskPositions[meshtaskSettings] = position;
+    }
+
+    public MeshTask GetMeshtask(MeshtaskSettings meshtaskSettings)
+    {
+        return activeMeshtasks[meshtaskSettings];
+    }
+
+    public Vector3 GetLastMeshtaskPosition(MeshtaskSettings meshTaskType)
+    {
+        return lastMeshtaskPositions[meshTaskType];
+    }
 }

@@ -305,10 +305,21 @@ MonoBehaviour:
     extrudePoint: 0
     assetSpawnPoint: []
   - vertex_1:
+      point: {x: -9.915564, y: -8.494927}
+      normal: {x: 0, y: 0}
+      uv: {x: 0, y: 0}
+    line: {x: 36, y: 37}
+    ishardEdge: 0
+    noiseChannel: 0
+    materialIndex: 0
+    scalesWithCorner: 0
+    extrudePoint: 0
+    assetSpawnPoint: []
+  - vertex_1:
       point: {x: -12.513186, y: -7.5885863}
       normal: {x: -3.249568, y: -3.424201}
       uv: {x: 0, y: 0}
-    line: {x: 35, y: 36}
+    line: {x: 38, y: 39}
     ishardEdge: 0
     noiseChannel: 0
     materialIndex: 2
@@ -319,7 +330,7 @@ MonoBehaviour:
       point: {x: -15.937387, y: -4.3390183}
       normal: {x: -3.3506017, y: -2.0626125}
       uv: {x: 0, y: 0}
-    line: {x: 36, y: 37}
+    line: {x: 39, y: 40}
     ishardEdge: 0
     noiseChannel: 0
     materialIndex: 2
@@ -330,7 +341,7 @@ MonoBehaviour:
       point: {x: -18, y: -0.9884167}
       normal: {x: -0.98810226, y: 0}
       uv: {x: 0, y: 0}
-    line: {x: 37, y: 38}
+    line: {x: 40, y: 41}
     ishardEdge: 0
     noiseChannel: 0
     materialIndex: 2
@@ -341,7 +352,7 @@ MonoBehaviour:
       point: {x: -18, y: -0.00031439494}
       normal: {x: -1.002184, y: 0}
       uv: {x: 0, y: 0}
-    line: {x: 38, y: 39}
+    line: {x: 41, y: 42}
     ishardEdge: 0
     noiseChannel: 0
     materialIndex: 2
@@ -352,7 +363,7 @@ MonoBehaviour:
       point: {x: -18, y: 1.0018697}
       normal: {x: -0.0034353733, y: 1}
       uv: {x: 0, y: 0}
-    line: {x: 40, y: 0}
+    line: {x: 43, y: 0}
     ishardEdge: 1
     noiseChannel: 0
     materialIndex: 2
@@ -369,11 +380,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 43696ef4e293c154e96a77cbd9e54ca8, type: 2}
   - {fileID: 11400000, guid: 067fe766fe8fd2247904b77aa6814951, type: 2}
   runoffMaterial: {fileID: 11400000, guid: 067fe766fe8fd2247904b77aa6814951, type: 2}
-  hasGuardrail: 0
-  guardRails:
-  - {fileID: 11400000, guid: 5750af715875c8d4e80fa4c7ef1f7013, type: 2}
+  meshtaskSettings:
   - {fileID: 11400000, guid: 0d430583a073a984caf4ad0fb0e144fa, type: 2}
-  guardrailIsContinues: 1
+  - {fileID: 11400000, guid: b725fa6678e620548b413d7deddcc79e, type: 2}
   guardRailMinimalCornerRadius: 0
   roadTypeTag: FOREST-BASIC
   assetPools:
@@ -416,7 +425,6 @@ MonoBehaviour:
       noiseDirection: 2
       noiseLenght: 0.993
       noisePower: 1
-  guardRailNoiseChannel: 1
   runoffAnimationCurve:
     serializedVersion: 2
     m_Curve:
@@ -461,4 +469,4 @@ MonoBehaviour:
     m_RotationOrder: 4
   extrusionSize: 10
   hasCornerChamfer: 1
-  maxChamfer: 5
+  maxChamfer: 16

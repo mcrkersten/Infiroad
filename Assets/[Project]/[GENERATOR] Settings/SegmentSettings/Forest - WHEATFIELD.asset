@@ -284,9 +284,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a2d20a9566f01da458310c9728b622a1, type: 2}
   allSurfaceSettings: []
   runoffMaterial: {fileID: 0}
-  hasGuardrail: 1
   guardRails: []
-  guardrailIsContinues: 0
   guardRailMinimalCornerRadius: 0
   roadTypeTag: WHEATFIELD-BASIC
   assetPools:
@@ -316,6 +314,11 @@ MonoBehaviour:
   rotationEasing: 0
   edgeLoopsPerMeter: 2
   debugRoadCurveStrenght: 0
+  noiseChannels:
+  - channel: 0
+    noises: []
+  - channel: 0
+    noises: []
   runoffAnimationCurve:
     serializedVersion: 2
     m_Curve:
@@ -340,11 +343,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  noiseChannels:
-  - channel: 0
-    noises: []
-  - channel: 0
-    noises: []
-  guardRailNoiseChannel: 0
+  extrusionSize: 0
   hasCornerChamfer: 0
   maxChamfer: 0
