@@ -117,7 +117,7 @@ public class Vertex
 {
 	public Vector2 point;
 	public Vector2 normal;
-	public Vector2 uv;
+	public float horizontal_UV;
 }
 
 public enum RoadShape

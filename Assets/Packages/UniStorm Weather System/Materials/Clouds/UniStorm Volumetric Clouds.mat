@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: UniStorm Volumetric Clouds
   m_Shader: {fileID: 4800000, guid: ddbd4e4baca832d458d83c6a67016a80, type: 3}
-  m_ShaderKeywords: HIGH VOLUMETRIC
+  m_ShaderKeywords: ULTRA VOLUMETRIC
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -88,7 +88,7 @@ Material:
     - _uCloudsBaseScale: 1.72
     - _uCloudsBottom: 1000
     - _uCloudsBottomSoftness: 0.4
-    - _uCloudsCoverage: 0.457
+    - _uCloudsCoverage: 0.469
     - _uCloudsCoverageBias: 0.02
     - _uCloudsDensity: 1
     - _uCloudsDetailScale: 1000

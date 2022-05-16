@@ -76,7 +76,8 @@ public class MeshtaskExtruder
 
 			for (int i = 0; i < meshtaskSettings.PointCount; i++)
 			{
-				Vector2 uv = new Vector2(currentEdgeloop/3f, meshtaskSettings.points[i].vertex.uv.y);
+				Vector2 uv = new Vector2(currentEdgeloop/3f, Mathf.InverseLerp(0, meshtaskSettings.uvLenght, meshtaskSettings.points[i].vertex.horizontal_UV));
+
 				Vector2 point = meshtaskSettings.points[i].vertex.point * (Vector2.left + Vector2.up);
 				Vector3 vertex = new Vector3(meshDirection.x * (point.x + meshtaskSettings.meshtaskWidth + Mathf.Abs(local_XOffset)), point.y, 0f) + noise;
 				vertex = Quaternion.Euler(0, 0, (p.extrusionVariables.averageExtrusion) * meshtaskSettings.maxChamfer) * vertex;
@@ -92,28 +93,35 @@ public class MeshtaskExtruder
 					uvs0.Add(uv);
 				}
 			}
-
+			
+			//Easy to spawn now to combat repetitiveness
 			switch (meshtaskSettings.meshTaskType)
             {
                 case MeshTaskType.Guardrail:
 					if (currentEdgeloop - (poleCount * ((GuardrailSettings)meshtaskSettings).poleSpacing) == 0)
                     {
-						((GuardrailSettings)meshtaskSettings).CreateGuardrailPole(meshDirection, (GuardrailSettings)meshtaskSettings, p, noise, Mathf.Abs(local_XOffset), currentMeshObject);
+						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, ((GuardrailSettings)meshtaskSettings).guardrailPolePrefab);
 						poleCount++;
 					}
 					break;
                 case MeshTaskType.CatchFence:
 					if (currentEdgeloop - (poleCount * ((GuardrailSettings)meshtaskSettings).poleSpacing) == 0)
 					{
-						((GuardrailSettings)meshtaskSettings).CreateGuardrailPole(meshDirection, (GuardrailSettings)meshtaskSettings, p, noise, Mathf.Abs(local_XOffset), currentMeshObject);
+						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, ((GuardrailSettings)meshtaskSettings).guardrailPolePrefab);
 						poleCount++;
 					}
 					break;
-                default:
-                    break;
+                case MeshTaskType.GrandStand:
+					if(currentEdgeloop == 0)
+						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, meshtaskSettings.modelOnMeshPrefab);
+					if(currentEdgeloop == meshTask.points.Count - 2)
+						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, meshtaskSettings.modelOnMeshPrefab);
+					break;
             }
 			currentEdgeloop++;
 		}
+		if(currentMeshObject != null)
+			meshtaskSettings.PopulateMeshtask(meshTask, currentMeshObject);
 	}
 
 
@@ -130,7 +138,8 @@ public class MeshtaskExtruder
 			// Foreach pair of line indices in the 2D shape
 			for (int line = 0; line < meshtaskSettings.PointCount; line++)
 			{
-				if (!meshtaskSettings.meshIsClosed && line == 0) continue; //Skip closing line
+				if (!meshtaskSettings.meshIsClosed && line == 0 && meshTask.meshPosition == MeshtaskPosition.Left) continue; //Skip closing line
+				if (!meshtaskSettings.meshIsClosed && line == (meshtaskSettings.PointCount -1) && meshTask.meshPosition == MeshtaskPosition.Right) continue; //Skip closing line
 
 				int vertex1 = meshTask.meshPosition == MeshtaskPosition.Left ? meshtaskSettings.points[line].line.x : meshtaskSettings.points[line].inversedLine.x;
 				int vertex2 = meshTask.meshPosition == MeshtaskPosition.Left ? meshtaskSettings.points[line].line.y : meshtaskSettings.points[line].inversedLine.y;

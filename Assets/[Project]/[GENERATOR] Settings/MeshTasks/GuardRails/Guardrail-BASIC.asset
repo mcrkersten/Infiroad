@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d78f2287300b104cae54ee3afbba403, type: 3}
   m_Name: Guardrail-BASIC
   m_EditorClassIdentifier: 
+  dataKey: 416663
   meshTaskType: 0
   meshtaskPosition: 2
   points:
@@ -20,36 +21,37 @@ MonoBehaviour:
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0.5}
     line: {x: 4, y: 0}
-    inversedLine: {x: 4, y: 5}
+    inversedLine: {x: 3, y: 4}
     isHardEdge: 0
   - vertex:
       point: {x: 0.09, y: 0.6}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0.625}
     line: {x: 0, y: 1}
-    inversedLine: {x: 3, y: 4}
+    inversedLine: {x: 2, y: 3}
     isHardEdge: 0
   - vertex:
       point: {x: 0, y: 0.7}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0.75}
     line: {x: 1, y: 2}
-    inversedLine: {x: 2, y: 3}
+    inversedLine: {x: 1, y: 2}
     isHardEdge: 0
   - vertex:
       point: {x: 0.09, y: 0.8}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 0.875}
     line: {x: 2, y: 3}
-    inversedLine: {x: 1, y: 2}
+    inversedLine: {x: 0, y: 1}
     isHardEdge: 0
   - vertex:
       point: {x: 0, y: 0.9}
       normal: {x: 0, y: 0}
       uv: {x: 0, y: 1}
     line: {x: 3, y: 4}
-    inversedLine: {x: 0, y: 1}
+    inversedLine: {x: 4, y: 0}
     isHardEdge: 0
+  meshResolution: 1
   meshtaskContinues: 1
   noiseChannel: 0
   maxChamfer: 5

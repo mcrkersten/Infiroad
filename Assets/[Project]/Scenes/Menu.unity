@@ -1419,7 +1419,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3247750686842169558, guid: d517d248e616af64391713101de4b41c, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3247750686842169558, guid: d517d248e616af64391713101de4b41c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2141,6 +2141,30 @@ PrefabInstance:
       propertyPath: startSegment
       value: 
       objectReference: {fileID: 925232241}
+    - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
+      propertyPath: meshtaskSettings.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
+      propertyPath: meshtaskSettings.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0d430583a073a984caf4ad0fb0e144fa, type: 2}
+    - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
+      propertyPath: meshtaskSettings.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 5750af715875c8d4e80fa4c7ef1f7013, type: 2}
+    - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
+      propertyPath: meshtaskSettings.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: b725fa6678e620548b413d7deddcc79e, type: 2}
+    - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
+      propertyPath: meshtaskSettings.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 98ba0afee227de04fbc307eec45d64bb, type: 2}
+    - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
+      propertyPath: meshtaskSettings.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: fb0d4b1afc5c2f740aa6168c17a49dcc, type: 2}
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: settings.corner_NpointsBetween
       value: 2
@@ -2981,7 +3005,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1294820319
 GameObject:

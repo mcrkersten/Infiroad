@@ -266,8 +266,9 @@ public class RoadChainBuilder : MonoBehaviour
     private void HandleMeshTasks(MeshtaskSettings settings, RoadChain roadchain)
     {
         foreach (MeshTask task in meshtasks)
-            if(settings.meshTaskType == task.meshTaskType)
-                ExecuteMeshtask(settings, roadchain, task);
+            if(settings == task.meshtaskSettings)
+                if(task.points.Count > 3)
+                    ExecuteMeshtask(settings, roadchain, task);
     }
 
     private void ExecuteMeshtask(MeshtaskSettings settings, RoadChain roadchain, MeshTask task)
@@ -789,32 +790,35 @@ public enum EdgeLocation
 
 public class MeshtaskTypeHandler
 {
-    private Dictionary<MeshtaskSettings, MeshTask> activeMeshtasks = new Dictionary<MeshtaskSettings, MeshTask>();
-    private Dictionary<MeshtaskSettings, Vector3> lastMeshtaskPositions = new Dictionary<MeshtaskSettings, Vector3>();
+    private Dictionary<string, MeshTask> activeMeshtasks = new Dictionary<string, MeshTask>();
+    private Dictionary<string, Vector3> lastMeshtaskPositions = new Dictionary<string, Vector3>();
 
-    public void SetDictionary(MeshtaskSettings meshtaskSettings,MeshTask task)
+    public void SetDictionary(MeshtaskSettings meshtaskSettings, MeshTask task)
     {
-        activeMeshtasks.Add(meshtaskSettings, task);
-        lastMeshtaskPositions.Add(meshtaskSettings, Vector3.one * 1000f);
+        int dataKey = Random.Range(0, 1000000);
+        meshtaskSettings.dataKey = dataKey;
+        activeMeshtasks.Add((meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey), task);
+        lastMeshtaskPositions.Add((meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey), Vector3.one * 1000f);
+        Debug.Log((meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey));
     }
 
     public void SetMeshtask(MeshTask newMeshtask, MeshtaskSettings meshtaskSettings)
     {
-        activeMeshtasks[meshtaskSettings] = newMeshtask;
+        activeMeshtasks[(meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey)] = newMeshtask;
     }
 
     public void SetLastMeshtaskPosition(MeshtaskSettings meshtaskSettings, Vector3 position)
     {
-        lastMeshtaskPositions[meshtaskSettings] = position;
+        lastMeshtaskPositions[(meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey)] = position;
     }
 
     public MeshTask GetMeshtask(MeshtaskSettings meshtaskSettings)
     {
-        return activeMeshtasks[meshtaskSettings];
+        return activeMeshtasks[(meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey)];
     }
 
-    public Vector3 GetLastMeshtaskPosition(MeshtaskSettings meshTaskType)
+    public Vector3 GetLastMeshtaskPosition(MeshtaskSettings meshtaskSettings)
     {
-        return lastMeshtaskPositions[meshTaskType];
+        return lastMeshtaskPositions[(meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey)];
     }
 }

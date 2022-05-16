@@ -5,9 +5,13 @@ using UnityEngine;
 [CreateAssetMenu, System.Serializable]
 public class MeshtaskSettings : ScriptableObject
 {
-    public MeshTaskType meshTaskType;
+	[HideInInspector] public int dataKey;
+	public float uvLenght;
+	public MeshTaskType meshTaskType;
 	public MeshtaskPosition meshtaskPosition;
     public VertexPosition[] points;
+	[Range(1f,10f)]
+	public float meshResolution;
     public bool meshtaskContinues;
     public int noiseChannel;
 
@@ -24,20 +28,31 @@ public class MeshtaskSettings : ScriptableObject
 
     public bool meshIsClosed;
 
+	public GameObject modelOnMeshPrefab;
 
-	public float CalcUspan()
+
+	public virtual void ClaculateV()
 	{
-		float dist = 0;
-		for (int i = 0; i < points.Length - 1; i++)
+		Vector2 lastUV = Vector2.zero;
+		float total = 0f;
+		for (int i = 0; i < points.Length; i++)
 		{
-			Vector2 a = points[i].vertex.point;
-			Vector2 b = points[i + 1].vertex.point;
-			dist += (a - b).magnitude;
+			if (i == 0)
+            {
+				lastUV = points[0].vertex.point;
+				points[0].vertex.horizontal_UV = total;
+            }
+            else
+            {
+				total += Vector2.Distance(lastUV, points[i].vertex.point);
+				points[i].vertex.horizontal_UV = total;
+				lastUV = points[i].vertex.point;
+			}
 		}
-		return dist;
+		uvLenght = total;
 	}
 
-	public void CalculateLine()
+	public virtual void CalculateLine()
 	{
 		int count1 = 0;
 		foreach (VertexPosition item in points)
@@ -60,7 +75,7 @@ public class MeshtaskSettings : ScriptableObject
 		}
 	}
 
-	public void CalculateInverseLine()
+	public virtual void CalculateInverseLine()
 	{
 		int x = 0;
 		for (int i = 0; i < points.Length; i++)
@@ -70,7 +85,7 @@ public class MeshtaskSettings : ScriptableObject
 		}
 	}
 
-	public void CalculateNormals()
+	public virtual void CalculateNormals()
 	{
 		for (int i = 0; i < points.Length; i++)
 		{
@@ -86,6 +101,37 @@ public class MeshtaskSettings : ScriptableObject
 			points[i].vertex.normal = new Vector2(-dy, dx);
 		}
 	}
+
+	public virtual void CreateModelOnMesh(Vector2 direction, MeshTask.Point p, Vector3 noise, float localX_offset, GameObject parent, GameObject model)
+	{
+		Vector3 offset = new Vector3(direction.x * (this.meshtaskWidth + localX_offset), 0f, 0f) + noise;
+		offset = Quaternion.Euler(0, 0, (p.extrusionVariables.averageExtrusion) * this.maxChamfer) * offset;
+
+		Vector3 relativePosition = p.rotation * offset;
+		Vector3 position = relativePosition + (p.position);
+
+		GameObject inst = null;
+		inst = GameObject.Instantiate(model, position, p.rotation, parent.transform);
+
+		if (offset.x > 0)
+			inst.transform.Rotate(inst.transform.up, 180);
+
+	}
+
+	public virtual void PopulateMeshtask(MeshTask meshTask, GameObject currentMeshObject)
+    {
+
+    }
+}
+
+
+[System.Serializable]
+public class VertexPosition
+{
+	public Vertex vertex;
+	public Vector2Int line;
+	public Vector2Int inversedLine;
+	public bool isHardEdge;
 }
 
 public enum MeshtaskPosition

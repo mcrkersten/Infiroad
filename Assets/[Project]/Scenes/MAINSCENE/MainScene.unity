@@ -1506,7 +1506,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: meshtaskSettings.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: meshtaskSettings.Array.data[0]
@@ -1523,7 +1523,11 @@ PrefabInstance:
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: meshtaskSettings.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: 3a1abcd67f2c3cf449672eddcf35c267, type: 2}
+      objectReference: {fileID: 11400000, guid: 98ba0afee227de04fbc307eec45d64bb, type: 2}
+    - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
+      propertyPath: meshtaskSettings.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: fb0d4b1afc5c2f740aa6168c17a49dcc, type: 2}
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: settings.corner_NpointsBetween
       value: 3
@@ -3094,6 +3098,10 @@ PrefabInstance:
     - target: {fileID: 6053509712107160178, guid: a5954d45e9fe2824fbde739f2885261b, type: 3}
       propertyPath: m_Name
       value: Lotus1970_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053509712107160178, guid: a5954d45e9fe2824fbde739f2885261b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6866216667751782600, guid: a5954d45e9fe2824fbde739f2885261b, type: 3}
       propertyPath: m_RootOrder

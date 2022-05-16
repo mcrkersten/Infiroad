@@ -77,6 +77,7 @@ public class RoadChain : MonoBehaviour {
         {
 			g.CalculateLine();
 			g.CalculateInverseLine();
+			g.ClaculateV();
 		}
 		segment.CreateMesh(Vector2.zero, roadSettings); //Creates mesh
 	}
