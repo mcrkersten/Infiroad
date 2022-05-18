@@ -119,6 +119,21 @@ public class MeshtaskSettings : ScriptableObject
 
 	}
 
+	protected virtual void SpawnMeshtaskObject(MeshTask meshTask, GameObject currentMeshObject, int meshtaskPoint, MeshtaskPoolType meshtaskType)
+	{
+		MeshTask.Point p = meshTask.points[meshtaskPoint];
+
+		Vector2 meshDirection = meshTask.meshPosition == MeshtaskPosition.Left ? (Vector2.left) : (Vector2.right);
+		float local_XOffset = meshTask.meshPosition == MeshtaskPosition.Left ? Mathf.Min(0f, p.extrusionVariables.leftExtrusion) : Mathf.Max(0f, p.extrusionVariables.rightExtrusion);
+		local_XOffset = local_XOffset * meshTask.meshtaskSettings.extrusionSize;
+
+		Vector3 noise = Vector3.zero;
+		noise += meshTask.noiseChannel.generatorInstance.getNoise(meshTask.startPointIndex + meshtaskPoint, meshTask.noiseChannel);
+
+		GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshTask.meshtaskSettings.meshTaskType, meshtaskType);
+		CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+	}
+
 	public virtual void PopulateMeshtask(MeshTask meshTask, GameObject currentMeshObject)
     {
 
@@ -147,5 +162,6 @@ public enum MeshtaskPoolType
 	GuardrailPoles = 0,
 	CatchfencePoles,
 	GrandstandSides,
-	SmokeBombs
+	SmokeBombs,
+	GrandstandArcs
 }

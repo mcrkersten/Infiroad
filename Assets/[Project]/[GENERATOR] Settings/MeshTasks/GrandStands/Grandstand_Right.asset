@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be9b3f1063355f4586f3ac956708616, type: 3}
   m_Name: Grandstand_Right
   m_EditorClassIdentifier: 
-  dataKey: 755070
+  dataKey: 419128
   uvLenght: 42.899494
   meshTaskType: 2
   meshtaskPosition: 1
@@ -90,16 +90,31 @@ MonoBehaviour:
   maximumCornerRadius: 1000
   material: {fileID: 2100000, guid: eb059cafb9d06ca489ffbc40095dcbea, type: 2}
   meshIsClosed: 0
-  modelOnMeshPrefab: {fileID: 625580239874158063, guid: 15bb9f154858dfe4f8918c2aa5baf0c9, type: 3}
+  meshtaskPoolingObjects:
+  - meshtaskPoolType: 2
+    unitsInPool: 20
+    prefab: {fileID: 625580239874158063, guid: 15bb9f154858dfe4f8918c2aa5baf0c9, type: 3}
+    position: {x: 0, y: 0}
+    curveTime: 0
+    noiseChannel: 0
+  - meshtaskPoolType: 3
+    unitsInPool: 20
+    prefab: {fileID: 2217057380066885025, guid: 39ede4268e72fc1488a9efde020fbe0c, type: 3}
+    position: {x: 0, y: 0}
+    curveTime: 0
+    noiseChannel: 0
+  - meshtaskPoolType: 4
+    unitsInPool: 100
+    prefab: {fileID: 3335014108244948374, guid: 174fc96841ac59c44bacf905a4b6d17d, type: 3}
+    position: {x: 0, y: 0}
+    curveTime: 0
+    noiseChannel: 0
   small:
-    smokeBombCount: 1
-    smokePrefab: {fileID: 2217057380066885025, guid: 39ede4268e72fc1488a9efde020fbe0c, type: 3}
+    smokeAmount: 1
     smokeSpawnPercentage: 25
   medium:
-    smokeBombCount: 2
-    smokePrefab: {fileID: 2217057380066885025, guid: 39ede4268e72fc1488a9efde020fbe0c, type: 3}
+    smokeAmount: 2
     smokeSpawnPercentage: 20
   large:
-    smokeBombCount: 3
-    smokePrefab: {fileID: 2217057380066885025, guid: 39ede4268e72fc1488a9efde020fbe0c, type: 3}
+    smokeAmount: 3
     smokeSpawnPercentage: 25
