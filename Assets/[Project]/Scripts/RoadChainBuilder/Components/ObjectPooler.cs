@@ -9,6 +9,7 @@ public class ObjectPooler
     private Queue<VegetationTriggerAsset> vegetationTriggerPool = new Queue<VegetationTriggerAsset>();
     private Dictionary<string, Dictionary<VegetationAssetTypeTag, Queue<GameObject>>> vegitationPoolDictionaries = new Dictionary<string, Dictionary<VegetationAssetTypeTag, Queue<GameObject>>>();
     private Dictionary<int, Queue<List<GameObject>>> roadDecorationPoolDictionary = new Dictionary<int, Queue<List<GameObject>>>();
+    private Dictionary<string, Queue<GameObject>> meshtaskObjectDictionary = new Dictionary<string, Queue<GameObject>>();
     private GameObject parent;
 
     #region Singleton
@@ -81,7 +82,7 @@ public class ObjectPooler
     /// Instantiate all decorations in dedicated pools
     /// </summary>
     /// <param name="pool"></param>
-    public void InstantiateDecorationPool(RoadDecoration pool)
+    public void InstantiateRoadDecorationDecorationPool(RoadDecoration pool)
     {
         //Returns if pool already has been made.
         if (roadDecorationPoolDictionary.ContainsKey(pool.poolIndex))
@@ -102,6 +103,27 @@ public class ObjectPooler
             queueOfDecor.Enqueue(instantiated);
         }
         roadDecorationPoolDictionary.Add(pool.poolIndex, queueOfDecor);
+    }
+
+    public void InstantiateMeshtaskObjects(MeshtaskSettings meshtaskSettings)
+    {
+        //Instantiate object and add to pool.
+        foreach (Decoration dec in meshtaskSettings.meshtaskPoolingObjects)
+        {
+            //Returns if pool already has been made.
+            if (meshtaskObjectDictionary.ContainsKey(meshtaskSettings.meshTaskType.ToString() + dec.meshtaskPoolType.ToString()))
+                continue;
+
+            Queue<GameObject> queueOfDecor = new Queue<GameObject>();
+            for (int i = 0; i < dec.unitsInPool; i++)
+            {
+                GameObject decoration = GameObject.Instantiate(dec.prefab);
+                decoration.transform.parent = parent.transform;
+                decoration.SetActive(false);
+                queueOfDecor.Enqueue(decoration);
+            }
+            meshtaskObjectDictionary.Add(meshtaskSettings.meshTaskType.ToString() + dec.meshtaskPoolType.ToString(), queueOfDecor);
+        }
     }
 
     public void InstantiateAirDecoration(SkyDecoration skyDecoration)
@@ -181,6 +203,15 @@ public class ObjectPooler
         if (!roadDecorationPoolDictionary.ContainsKey(poolIndex)) { return null; }
         List<GameObject> decoration = roadDecorationPoolDictionary[poolIndex].Dequeue();
         roadDecorationPoolDictionary[poolIndex].Enqueue(decoration);
+        return decoration;
+    }
+
+    public GameObject GetMeshtaskObject(MeshTaskType meshTaskType, MeshtaskPoolType meshtaskPoolType)
+    {
+        string keyS = meshTaskType.ToString() + meshtaskPoolType.ToString();
+        if (!meshtaskObjectDictionary.ContainsKey(keyS)) { Debug.Log(keyS); return null; }
+        GameObject decoration = meshtaskObjectDictionary[keyS].Dequeue();
+        meshtaskObjectDictionary[keyS].Enqueue(decoration);
         return decoration;
     }
     #endregion

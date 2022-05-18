@@ -28,8 +28,7 @@ public class MeshtaskSettings : ScriptableObject
 
     public bool meshIsClosed;
 
-	public GameObject modelOnMeshPrefab;
-
+	public List<Decoration> meshtaskPoolingObjects = new List<Decoration>();
 
 	public virtual void ClaculateV()
 	{
@@ -110,11 +109,13 @@ public class MeshtaskSettings : ScriptableObject
 		Vector3 relativePosition = p.rotation * offset;
 		Vector3 position = relativePosition + (p.position);
 
-		GameObject inst = null;
-		inst = GameObject.Instantiate(model, position, p.rotation, parent.transform);
+		model.transform.parent = parent.transform;
+		model.transform.localPosition = position;
+		model.transform.rotation = p.rotation;
+		model.SetActive(true);
 
 		if (offset.x > 0)
-			inst.transform.Rotate(inst.transform.up, 180);
+			model.transform.Rotate(model.transform.up, 180);
 
 	}
 
@@ -139,4 +140,12 @@ public enum MeshtaskPosition
 	Left = 0,
 	Right,
 	Both
+}
+
+public enum MeshtaskPoolType
+{
+	GuardrailPoles = 0,
+	CatchfencePoles,
+	GrandstandSides,
+	SmokeBombs
 }

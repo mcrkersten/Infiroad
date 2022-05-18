@@ -44,6 +44,7 @@ public class MeshtaskExtruder
 		currentMeshObject.transform.parent = currentRoadchain.transform;
 		MeshFilter mf = currentMeshObject.AddComponent<MeshFilter>();
 		MeshRenderer mr = currentMeshObject.AddComponent<MeshRenderer>();
+		currentMeshObject.AddComponent<ObjectPoolSaver>();
 		mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.TwoSided;
 		mr.material = settings.material;
 		return mf.mesh;
@@ -100,22 +101,30 @@ public class MeshtaskExtruder
                 case MeshTaskType.Guardrail:
 					if (currentEdgeloop - (poleCount * ((GuardrailSettings)meshtaskSettings).poleSpacing) == 0)
                     {
-						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, ((GuardrailSettings)meshtaskSettings).guardrailPolePrefab);
+						GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.GuardrailPoles);
+						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
 						poleCount++;
 					}
 					break;
                 case MeshTaskType.CatchFence:
 					if (currentEdgeloop - (poleCount * ((GuardrailSettings)meshtaskSettings).poleSpacing) == 0)
 					{
-						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, ((GuardrailSettings)meshtaskSettings).guardrailPolePrefab);
+						GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.CatchfencePoles);
+						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
 						poleCount++;
 					}
 					break;
                 case MeshTaskType.GrandStand:
 					if(currentEdgeloop == 0)
-						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, meshtaskSettings.modelOnMeshPrefab);
+                    {
+						GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.GrandstandSides);
+						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					}
 					if(currentEdgeloop == meshTask.points.Count - 2)
-						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, meshtaskSettings.modelOnMeshPrefab);
+                    {
+						GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.GrandstandSides);
+						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					}
 					break;
             }
 			currentEdgeloop++;

@@ -75,8 +75,8 @@ MonoBehaviour:
   UseAdditionalWeatherEffect: 1
   SpecialWeatherType: 1
   Season: 0
-  CloudHeight: 1000
-  CloudLevel: 2
+  CloudHeight: 600
+  CloudLevel: 3
   TemperatureType: 2
   ShaderControl: 2
   OverrideCloudColor: 1

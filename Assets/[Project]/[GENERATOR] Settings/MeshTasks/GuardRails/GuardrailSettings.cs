@@ -7,8 +7,4 @@ public class GuardrailSettings : MeshtaskSettings
 {
 	[Range(0,10)]
 	public int poleSpacing;
-
-	[Header("GameObjects")]
-	public GameObject guardrailPolePrefab;
-	public GameObject sharpCornerGuardrailPolePrefab;
 }

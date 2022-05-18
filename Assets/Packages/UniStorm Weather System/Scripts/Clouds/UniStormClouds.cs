@@ -190,7 +190,7 @@ namespace UniStorm.Utility
             if (this.performance != performance || this.CloudShadowsTypeRef != cloudShadowsType || this.cloudType != cloudType
                 || forceRecreateTextures)
             {
-                if (cloudShadowsBuffer != null && fullCloudsBuffer.Length > 0)
+                if (cloudShadowsBuffer != null && cloudShadowsBuffer.Length > 0)
                 {
                     cloudShadowsBuffer[0].Release();
                     cloudShadowsBuffer[1].Release();

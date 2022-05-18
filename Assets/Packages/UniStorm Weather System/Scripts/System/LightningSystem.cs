@@ -64,46 +64,6 @@ namespace UniStorm.Utility
         float CurrentIndex = 0;
         Vector3 Final;
 
-        void Start()
-        {
-            GameObject TempBolt = Resources.Load("Lightning Renderer") as GameObject;
-            LightningBolt = Instantiate(TempBolt, Vector3.zero, Quaternion.identity).GetComponent<LineRenderer>();
-            LightningBolt.transform.SetParent(FindObjectOfType<UniStormSystem>().transform);
-            LightningBolt.name = "Lightning Renderer";
-
-            GameObject TempEndPoint = Resources.Load("Lightning End Point") as GameObject;
-            EndingPoint = Instantiate(TempEndPoint, Vector3.zero, Quaternion.identity).transform;
-            EndingPoint.transform.SetParent(FindObjectOfType<UniStormSystem>().transform);
-            EndingPoint.name = "Lightning End Point";
-
-            StartingPoint = new GameObject().transform;
-            StartingPoint.transform.position = Vector3.zero;
-            StartingPoint.SetParent(FindObjectOfType<UniStormSystem>().transform);
-            StartingPoint.name = "Lightning Start Point";
-
-            m_Segments = 20;
-
-            LightningBolt.positionCount = m_Segments;
-            PointIndex = 1f / (float)m_Segments;
-
-            for (int i = 0; i < LightningBolt.positionCount; i++)
-            {
-                LightningPoints.Add(transform.position);
-            }
-
-
-            Vector3 GeneratedPosition = new Vector3(PlayerTransform.position.x, PlayerTransform.position.y, PlayerTransform.position.z) + new Vector3(Random.insideUnitSphere.x, 0, Random.insideUnitSphere.z) * LightningGenerationDistance;
-            StartingPoint.position = GeneratedPosition + new Vector3(0, 80, 0);
-            EndingPoint.position = GeneratedPosition;
-
-            LightningLightSource.transform.rotation = Quaternion.Euler(UnityEngine.Random.Range(35, 85), UnityEngine.Random.Range(0, 360), 0);
-            LightningLightIntensity = Random.Range(LightningLightIntensityMin, LightningLightIntensityMax);
-
-            if (UniStormSystem.Instance.LightningStrikes == UniStormSystem.EnableFeature.Disabled)
-            {
-                EndingPoint.gameObject.SetActive(false);
-            }
-        }
 
         void SetupLightningLight()
         {

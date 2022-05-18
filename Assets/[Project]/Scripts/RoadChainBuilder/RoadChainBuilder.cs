@@ -104,14 +104,18 @@ public class RoadChainBuilder : MonoBehaviour
     {
         objectPooler = new ObjectPooler();
         objectPooler.InstantiateVegetationTriggerPool(road.assetSpawnPointPoolSize, road.assetSpawnPoint);
+        objectPooler.InstantiateAirDecoration(road.skyDecoration);
         InstantiateVegetationPools();
         InstantiateRoadDecorationPools();
-        InstantiateSkyDecorationPools();
+        InstantiateMeshtaskPools();
     }
 
-    private void InstantiateSkyDecorationPools()
+    private void InstantiateMeshtaskPools()
     {
-        objectPooler.InstantiateAirDecoration(road.skyDecoration);
+        foreach (VariationSettings s in road.roadVariation)
+            foreach (VariationSettings.Variation v in s.roadSettings)
+                foreach (MeshtaskSettings mts in v.roadSettings.meshtaskSettings)
+                    objectPooler.InstantiateMeshtaskObjects(mts);
     }
 
     private void InstantiateVegetationPools()
@@ -124,9 +128,9 @@ public class RoadChainBuilder : MonoBehaviour
     private void InstantiateRoadDecorationPools()
     {
         foreach (RoadDecoration pool in road.standardDecoration)
-            objectPooler.InstantiateDecorationPool(pool);
+            objectPooler.InstantiateRoadDecorationDecorationPool(pool);
         foreach (RoadDecoration pool in road.randomizedDecoration)
-            objectPooler.InstantiateDecorationPool(pool);
+            objectPooler.InstantiateRoadDecorationDecorationPool(pool);
     }
 
     public void CreateNextRoadChain()

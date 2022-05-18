@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Partly Cloudy
   m_EditorClassIdentifier: 
   WeatherTypeName: Partly Cloudy
-  CloudProfileComponent: {fileID: 11400000, guid: 2abfa647742d6174bacc9b765f51f9c3, type: 2}
+  CloudProfileComponent: {fileID: 11400000, guid: 2abfa647742d6174bacc9b765f51f9c3,
+    type: 2}
   SunIntensity: 1
   CloudShadowIntensity: 0.75
   MoonIntensity: 0.9

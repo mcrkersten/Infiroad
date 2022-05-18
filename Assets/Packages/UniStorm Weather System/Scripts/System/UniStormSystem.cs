@@ -617,6 +617,12 @@ namespace UniStorm
                             AdditionalParticleSystemList.Add(AllWeatherTypes[i].AdditionalWeatherEffect);
                         }
                     }
+
+                    //Create a weather sound for each weather type that has one.
+                    if (AllWeatherTypes[i].UseWeatherSound == WeatherType.Yes_No.Yes && AllWeatherTypes[i].WeatherSound != null)
+                    {
+                        AllWeatherTypes[i].CreateWeatherSound();
+                    }
                 }
             }
 
@@ -664,7 +670,6 @@ namespace UniStorm
             CalculatePrecipiation();
             CreateSun();
             CreateMoon();            
-
 
             UniStormWindZone = GameObject.Find("UniStorm Windzone").GetComponent<WindZone>();
             m_StarsRenderer = GameObject.Find("UniStorm Stars").GetComponent<Renderer>();
@@ -1740,6 +1745,8 @@ namespace UniStorm
 
                 MoveSun();
                 UpdateColors();
+                PlayTimeOfDaySound();
+                PlayTimeOfDayMusic();
                 CalculateTimeOfDay();
 
                 //Generate our lightning, if the randomized lightning seconds have been met
@@ -2036,6 +2043,15 @@ namespace UniStorm
         }
 
         //Calculates our time of day sounds according to the hour and randomized seconds set by the user.
+        void PlayTimeOfDaySound()
+        {
+        }
+
+        //Calculates our time of day sounds according to the hour and randomized seconds set by the user.
+        void PlayTimeOfDayMusic()
+        {
+           
+        }
 
         //Check our generated weather to see if it's time to update the weather.
         //If it is, slowly transition the weather according to the current weather type scriptable object

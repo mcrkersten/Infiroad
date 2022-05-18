@@ -12,42 +12,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d78f2287300b104cae54ee3afbba403, type: 3}
   m_Name: Guardrail-RACETRACK
   m_EditorClassIdentifier: 
-  dataKey: 650899
+  dataKey: 102203
+  uvLenght: 0
   meshTaskType: 0
   meshtaskPosition: 2
   points:
   - vertex:
       point: {x: 0, y: 0.3}
       normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0.5}
+      horizontal_UV: 0
     line: {x: 4, y: 0}
     inversedLine: {x: 4, y: 5}
     isHardEdge: 0
   - vertex:
       point: {x: 0.09, y: 0.4}
       normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0.625}
+      horizontal_UV: 0
     line: {x: 0, y: 1}
     inversedLine: {x: 3, y: 4}
     isHardEdge: 0
   - vertex:
       point: {x: 0, y: 0.5}
       normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0.75}
+      horizontal_UV: 0
     line: {x: 1, y: 2}
     inversedLine: {x: 2, y: 3}
     isHardEdge: 0
   - vertex:
       point: {x: 0.09, y: 0.6}
       normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0.875}
+      horizontal_UV: 0
     line: {x: 2, y: 3}
     inversedLine: {x: 1, y: 2}
     isHardEdge: 0
   - vertex:
       point: {x: 0, y: 0.7}
       normal: {x: 0, y: 0}
-      uv: {x: 0, y: 1}
+      horizontal_UV: 0
     line: {x: 3, y: 4}
     inversedLine: {x: 0, y: 1}
     isHardEdge: 0
@@ -61,7 +62,11 @@ MonoBehaviour:
   maximumCornerRadius: 0
   material: {fileID: 2100000, guid: 7ce9870caa6ca8342ac605f7e4db18ba, type: 2}
   meshIsClosed: 0
+  meshtaskPoolingObjects:
+  - meshtaskPoolType: 0
+    unitsInPool: 2000
+    prefab: {fileID: 5404048526340345794, guid: 7a60bffdda92bb5419fa2270007496ce, type: 3}
+    position: {x: 0, y: 0}
+    curveTime: 0
+    noiseChannel: 0
   poleSpacing: 9
-  sharpCornerRadius: 200
-  guardrailPolePrefab: {fileID: 5404048526340345794, guid: 7a60bffdda92bb5419fa2270007496ce, type: 3}
-  sharpCornerGuardrailPolePrefab: {fileID: 5172932599711086609, guid: 66db0c81dfcaae34294ebf173cb629fd, type: 3}

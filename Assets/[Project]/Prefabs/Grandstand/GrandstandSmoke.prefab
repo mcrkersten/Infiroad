@@ -4942,7 +4942,7 @@ GameObject:
   - component: {fileID: 6485734577253545721}
   m_Layer: 0
   m_Name: GrandstandSmoke
-  m_TagString: Untagged
+  m_TagString: PooledObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

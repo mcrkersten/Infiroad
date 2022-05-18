@@ -104,6 +104,15 @@ namespace UniStorm
             No = 1
         }
 
+        public void CreateWeatherSound()
+        {
+            UniStormSystem UniStormSystemObject = FindObjectOfType<UniStormSystem>();
+            if (UniStormSystemObject.enabled)
+            {
+
+            }
+        }
+
         public void CreateWeatherEffect()
         {
             UniStormSystem UniStormSystemObject = FindObjectOfType<UniStormSystem>();
