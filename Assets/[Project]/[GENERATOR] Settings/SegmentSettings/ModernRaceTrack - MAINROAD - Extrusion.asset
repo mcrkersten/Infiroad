@@ -253,9 +253,9 @@ MonoBehaviour:
     prefabs:
     - {fileID: 6583596778410102861, guid: 6305f2862102f394d8fef1073fa4cc58, type: 3}
     - {fileID: 6390541770965817990, guid: 247f93ccef389b1419bfebb563d98c1b, type: 3}
-    size: 500
+    size: 200
   rotationEasing: 3
-  edgeLoopsPerMeter: 2
+  edgeLoopsPerMeter: 1
   debugRoadCurveStrenght: 0
   noiseChannels:
   - channel: 0
@@ -319,3 +319,11 @@ MonoBehaviour:
   extrusionSize: 15
   hasCornerChamfer: 1
   maxChamfer: 5
+  calculatedUs:
+  - {x: -7.5, y: 7.5}
+  - {x: 7.5, y: 15}
+  - {x: -9.8, y: 9.8}
+  - {x: -15, y: 15}
+  - {x: Infinity, y: -Infinity}
+  uSpan: 59.5
+  hardEdges: 15

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Guardrail-RACETRACK
   m_EditorClassIdentifier: 
   dataKey: 102203
+  calculatedUs: []
   uvLenght: 0
   meshTaskType: 0
   meshtaskPosition: 2
@@ -24,6 +25,7 @@ MonoBehaviour:
     line: {x: 4, y: 0}
     inversedLine: {x: 4, y: 5}
     isHardEdge: 0
+    materialIndex: 0
   - vertex:
       point: {x: 0.09, y: 0.4}
       normal: {x: 0, y: 0}
@@ -31,6 +33,7 @@ MonoBehaviour:
     line: {x: 0, y: 1}
     inversedLine: {x: 3, y: 4}
     isHardEdge: 0
+    materialIndex: 0
   - vertex:
       point: {x: 0, y: 0.5}
       normal: {x: 0, y: 0}
@@ -38,6 +41,7 @@ MonoBehaviour:
     line: {x: 1, y: 2}
     inversedLine: {x: 2, y: 3}
     isHardEdge: 0
+    materialIndex: 0
   - vertex:
       point: {x: 0.09, y: 0.6}
       normal: {x: 0, y: 0}
@@ -45,6 +49,7 @@ MonoBehaviour:
     line: {x: 2, y: 3}
     inversedLine: {x: 1, y: 2}
     isHardEdge: 0
+    materialIndex: 0
   - vertex:
       point: {x: 0, y: 0.7}
       normal: {x: 0, y: 0}
@@ -52,6 +57,7 @@ MonoBehaviour:
     line: {x: 3, y: 4}
     inversedLine: {x: 0, y: 1}
     isHardEdge: 0
+    materialIndex: 0
   meshResolution: 1
   meshtaskContinues: 1
   noiseChannel: 0
@@ -60,7 +66,8 @@ MonoBehaviour:
   meshtaskWidth: 8.477053
   minimalCornerRadius: 0
   maximumCornerRadius: 0
-  material: {fileID: 2100000, guid: 7ce9870caa6ca8342ac605f7e4db18ba, type: 2}
+  materials:
+  - {fileID: 2100000, guid: 7ce9870caa6ca8342ac605f7e4db18ba, type: 2}
   meshIsClosed: 0
   meshtaskPoolingObjects:
   - meshtaskPoolType: 0

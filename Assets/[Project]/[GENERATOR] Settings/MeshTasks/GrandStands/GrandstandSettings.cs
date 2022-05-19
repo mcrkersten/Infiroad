@@ -10,13 +10,13 @@ public class GrandstandSettings : MeshtaskSettings
     [SerializeField] private GrandstandSizeSettings large;
     public override void PopulateMeshtask(MeshTask meshtask, GameObject currentMeshObject)
     {
-        int size = meshtask.points.Count;
-        currentMeshObject.name = currentMeshObject.name + " " + meshtask.points.Count;
-        if (size <= 10)
+        int size = meshtask.positionPoints.Count;
+        currentMeshObject.name = currentMeshObject.name + " " + meshtask.positionPoints.Count;
+        if (size <= 5)
             SmallGrandstand(meshtask, currentMeshObject);
-        if (size > 10 && size <= 20)
+        if (size > 5 && size <= 10)
             MediumGrandstand(meshtask, currentMeshObject);
-        if (size > 20)
+        if (size > 10)
             LargeGrandstand(meshtask, currentMeshObject);
 
         CreateGrandstandAcrs(meshtask, currentMeshObject);
@@ -24,11 +24,11 @@ public class GrandstandSettings : MeshtaskSettings
 
     private void CreateGrandstandAcrs(MeshTask meshtask, GameObject currentMeshObject)
     {
-        int i = 2;
-        while(i < (meshtask.points.Count - 2))
+        int i = 1;
+        while(i < (meshtask.positionPoints.Count - 2))
         {
             SpawnMeshtaskObject(meshtask, currentMeshObject, i, MeshtaskPoolType.GrandstandArcs);
-            i += 2;
+            i++;
         }
     }
 
@@ -38,7 +38,7 @@ public class GrandstandSettings : MeshtaskSettings
         {
             int random = Random.Range(0, 101);
             if(random < small.smokeSpawnPercentage)
-                SpawnMeshtaskObject(meshTask, currentMeshObject, Random.Range(1, meshTask.points.Count - 2), MeshtaskPoolType.SmokeBombs);
+                SpawnMeshtaskObject(meshTask, currentMeshObject, Random.Range(1, meshTask.positionPoints.Count - 2), MeshtaskPoolType.SmokeBombs);
         }
     }
 
@@ -48,7 +48,7 @@ public class GrandstandSettings : MeshtaskSettings
         {
             int random = Random.Range(0, 101);
             if (random < medium.smokeSpawnPercentage)
-                SpawnMeshtaskObject(meshTask, currentMeshObject, Random.Range(1, meshTask.points.Count - 2), MeshtaskPoolType.SmokeBombs);
+                SpawnMeshtaskObject(meshTask, currentMeshObject, Random.Range(1, meshTask.positionPoints.Count - 2), MeshtaskPoolType.SmokeBombs);
         }
     }
 
@@ -58,7 +58,7 @@ public class GrandstandSettings : MeshtaskSettings
         {
             int random = Random.Range(0, 101);
             if (random < large.smokeSpawnPercentage)
-                SpawnMeshtaskObject(meshTask, currentMeshObject, Random.Range(1, meshTask.points.Count - 2), MeshtaskPoolType.SmokeBombs);
+                SpawnMeshtaskObject(meshTask, currentMeshObject, Random.Range(1, meshTask.positionPoints.Count - 2), MeshtaskPoolType.SmokeBombs);
         }
     }
 

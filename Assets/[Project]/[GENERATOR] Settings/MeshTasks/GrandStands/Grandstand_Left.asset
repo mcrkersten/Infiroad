@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be9b3f1063355f4586f3ac956708616, type: 3}
   m_Name: Grandstand_Left
   m_EditorClassIdentifier: 
-  dataKey: 19309
+  dataKey: 782878
+  calculatedUs: []
   uvLenght: 42.899494
   meshTaskType: 2
   meshtaskPosition: 0
@@ -24,6 +25,7 @@ MonoBehaviour:
     line: {x: 17, y: 0}
     inversedLine: {x: 15, y: 16}
     isHardEdge: 1
+    materialIndex: 0
   - vertex:
       point: {x: 0, y: 1}
       normal: {x: 0, y: 0}
@@ -31,6 +33,7 @@ MonoBehaviour:
     line: {x: 1, y: 2}
     inversedLine: {x: 13, y: 14}
     isHardEdge: 1
+    materialIndex: 0
   - vertex:
       point: {x: -2, y: 1}
       normal: {x: 0, y: 0}
@@ -38,6 +41,7 @@ MonoBehaviour:
     line: {x: 3, y: 4}
     inversedLine: {x: 11, y: 12}
     isHardEdge: 1
+    materialIndex: 0
   - vertex:
       point: {x: -2, y: 0}
       normal: {x: 0, y: 0}
@@ -45,6 +49,7 @@ MonoBehaviour:
     line: {x: 5, y: 6}
     inversedLine: {x: 9, y: 10}
     isHardEdge: 1
+    materialIndex: 0
   - vertex:
       point: {x: -9, y: 7}
       normal: {x: 0, y: 0}
@@ -52,6 +57,7 @@ MonoBehaviour:
     line: {x: 7, y: 8}
     inversedLine: {x: 7, y: 8}
     isHardEdge: 1
+    materialIndex: 0
   - vertex:
       point: {x: 0, y: 7}
       normal: {x: 0, y: 0}
@@ -59,6 +65,7 @@ MonoBehaviour:
     line: {x: 9, y: 10}
     inversedLine: {x: 5, y: 6}
     isHardEdge: 1
+    materialIndex: 0
   - vertex:
       point: {x: 0, y: 7.5}
       normal: {x: 0, y: 0}
@@ -66,6 +73,7 @@ MonoBehaviour:
     line: {x: 11, y: 12}
     inversedLine: {x: 3, y: 4}
     isHardEdge: 1
+    materialIndex: 0
   - vertex:
       point: {x: -10, y: 7.5}
       normal: {x: 0, y: 0}
@@ -73,6 +81,7 @@ MonoBehaviour:
     line: {x: 13, y: 14}
     inversedLine: {x: 1, y: 2}
     isHardEdge: 1
+    materialIndex: 0
   - vertex:
       point: {x: -10, y: -1}
       normal: {x: 0, y: 0}
@@ -80,6 +89,7 @@ MonoBehaviour:
     line: {x: 15, y: 16}
     inversedLine: {x: 17, y: 0}
     isHardEdge: 1
+    materialIndex: 0
   meshResolution: 10
   meshtaskContinues: 0
   noiseChannel: 0
@@ -88,7 +98,8 @@ MonoBehaviour:
   meshtaskWidth: 17.49484
   minimalCornerRadius: -1000
   maximumCornerRadius: -30
-  material: {fileID: 2100000, guid: eb059cafb9d06ca489ffbc40095dcbea, type: 2}
+  materials:
+  - {fileID: 2100000, guid: eb059cafb9d06ca489ffbc40095dcbea, type: 2}
   meshIsClosed: 0
   meshtaskPoolingObjects:
   - meshtaskPoolType: 2
@@ -98,13 +109,13 @@ MonoBehaviour:
     curveTime: 0
     noiseChannel: 0
   - meshtaskPoolType: 3
-    unitsInPool: 20
+    unitsInPool: 5
     prefab: {fileID: 2217057380066885025, guid: 39ede4268e72fc1488a9efde020fbe0c, type: 3}
     position: {x: 0, y: 0}
     curveTime: 0
     noiseChannel: 0
   - meshtaskPoolType: 4
-    unitsInPool: 100
+    unitsInPool: 40
     prefab: {fileID: 3335014108244948374, guid: 174fc96841ac59c44bacf905a4b6d17d, type: 3}
     position: {x: 0, y: 0}
     curveTime: 0

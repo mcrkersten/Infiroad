@@ -88,7 +88,7 @@ Material:
     - _uCloudsBaseScale: 1.72
     - _uCloudsBottom: 600
     - _uCloudsBottomSoftness: 0.4
-    - _uCloudsCoverage: 0.516
+    - _uCloudsCoverage: 0.519
     - _uCloudsCoverageBias: 0.02
     - _uCloudsDensity: 1
     - _uCloudsDetailScale: 1000
@@ -137,7 +137,7 @@ Material:
     - _uCloudsAmbientColorTop: {r: 0.85775673, g: 0.75389904, b: 0.7077742, a: 1}
     - _uCloudsColor: {r: 0.84313726, g: 0.84313726, b: 0.84313726, a: 1}
     - _uCloudsHorizonColor: {r: 0, g: 0, b: 0, a: 1}
-    - _uFogColor: {r: 0.34482804, g: 0.38478258, b: 0.43916714, a: 0.0014}
+    - _uFogColor: {r: 0.4396307, g: 0.40896466, b: 0.40454394, a: 0.0014}
     - _uHorizonColor: {r: 1, g: 1, b: 1, a: 1}
     - _uLightningColor: {r: 0.7647059, g: 0.8352941, b: 0.8862745, a: 1}
     - _uMoonColor: {r: 0.33023313, g: 0.36793935, b: 0.38679242, a: 1}

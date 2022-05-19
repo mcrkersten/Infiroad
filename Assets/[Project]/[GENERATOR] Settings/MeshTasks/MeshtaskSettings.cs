@@ -6,7 +6,10 @@ using UnityEngine;
 public class MeshtaskSettings : ScriptableObject
 {
 	[HideInInspector] public int dataKey;
-	public float uvLenght;
+	[HideInInspector] public List<Vector2> calculatedUs = new List<Vector2>();
+	[HideInInspector] public float uvLenght;
+
+
 	public MeshTaskType meshTaskType;
 	public MeshtaskPosition meshtaskPosition;
     public VertexPosition[] points;
@@ -24,7 +27,7 @@ public class MeshtaskSettings : ScriptableObject
     public int PointCount => points.Length;
 
     [Space]
-    public Material material;
+    public List<Material> materials = new List<Material>();
 
     public bool meshIsClosed;
 
@@ -109,8 +112,7 @@ public class MeshtaskSettings : ScriptableObject
 		Vector3 relativePosition = p.rotation * offset;
 		Vector3 position = relativePosition + (p.position);
 
-		model.transform.parent = parent.transform;
-		model.transform.localPosition = position;
+		model.transform.localPosition = position + parent.transform.position;
 		model.transform.rotation = p.rotation;
 		model.SetActive(true);
 
@@ -121,7 +123,7 @@ public class MeshtaskSettings : ScriptableObject
 
 	protected virtual void SpawnMeshtaskObject(MeshTask meshTask, GameObject currentMeshObject, int meshtaskPoint, MeshtaskPoolType meshtaskType)
 	{
-		MeshTask.Point p = meshTask.points[meshtaskPoint];
+		MeshTask.Point p = meshTask.positionPoints[meshtaskPoint];
 
 		Vector2 meshDirection = meshTask.meshPosition == MeshtaskPosition.Left ? (Vector2.left) : (Vector2.right);
 		float local_XOffset = meshTask.meshPosition == MeshtaskPosition.Left ? Mathf.Min(0f, p.extrusionVariables.leftExtrusion) : Mathf.Max(0f, p.extrusionVariables.rightExtrusion);
@@ -148,6 +150,7 @@ public class VertexPosition
 	public Vector2Int line;
 	public Vector2Int inversedLine;
 	public bool isHardEdge;
+	public int materialIndex;
 }
 
 public enum MeshtaskPosition

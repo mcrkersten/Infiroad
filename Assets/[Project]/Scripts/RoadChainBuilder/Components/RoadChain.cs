@@ -56,7 +56,6 @@ public class RoadChain : MonoBehaviour {
 		}
 	}
 
-
 	public void SetOrganizedSegments(List<RoadSegment> segments)
     {
 		organizedSegments = segments;
@@ -73,12 +72,6 @@ public class RoadChain : MonoBehaviour {
 
 	public void CreateMesh(RoadSettings roadSettings, RoadSegment segment)
 	{
-        foreach (MeshtaskSettings g in roadSettings.meshtaskSettings)
-        {
-			g.CalculateLine();
-			g.CalculateInverseLine();
-			g.ClaculateV();
-		}
 		segment.CreateMesh(Vector2.zero, roadSettings); //Creates mesh
 	}
 

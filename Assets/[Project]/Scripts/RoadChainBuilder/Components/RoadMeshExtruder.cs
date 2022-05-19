@@ -36,14 +36,12 @@ public class RoadMeshExtruder {
 
 		ClearMesh(mesh);
 		roadChainBuilder = RoadChainBuilder.instance;
-		List<Vector2> calculatedUV = CalculateUV(roadSettings);;
-		roadSettings.CalculateLine();
 
 		// UVs/Texture fitting
 		LengthTable table = uvMode == UVMode.TiledDeltaCompensated ? new LengthTable(bezier, 12) : null;
 
 		float curveArcLength = bezier.GetArcLength(); // lenght of bezier
-		float tiling = CalculateTiling(roadSettings.CalcUspan(), uvMode, tilingAspectRatio, curveArcLength);
+		float tiling = CalculateTiling(roadSettings.uSpan, uvMode, tilingAspectRatio, curveArcLength);
 		int edgeLoopCount = CalculateEdgeloopCount(segment, edgeLoopsPerMeter, curveArcLength);
 
 
@@ -92,7 +90,7 @@ public class RoadMeshExtruder {
 				}
 
 				// Prepare UV coordinates. This branches lots based on type
-				Vector2 currentUV_MinMax = calculatedUV[roadSettings.points[i].materialIndex];
+				Vector2 currentUV_MinMax = roadSettings.calculatedUs[roadSettings.points[i].materialIndex];
 				Vector2 localUVPoint = roadSettings.points[i].vertex_1.point;
 
 				float tUv = uvMode == UVMode.TiledDeltaCompensated ? table.TToPercentage(time) : time;
@@ -113,7 +111,7 @@ public class RoadMeshExtruder {
 					//If different material
 					else if (i != 0 && roadSettings.points[i].materialIndex != roadSettings.points[i - 1].materialIndex)
 					{
-						Vector2 prev_currentUV_MinMax = calculatedUV[roadSettings.points[i - 1].materialIndex];
+						Vector2 prev_currentUV_MinMax = roadSettings.calculatedUs[roadSettings.points[i - 1].materialIndex];
 						bool prev_isMirrored = roadSettings.allSurfaceSettings[roadSettings.points[i - 1].materialIndex].UV_mirrored;
 						float prev_uvPoint = prev_isMirrored ? Mathf.Abs(localUVPoint.x + uY) : localUVPoint.x + uY;
 						x_UV = Mathf.InverseLerp(prev_currentUV_MinMax.x, prev_currentUV_MinMax.y, prev_uvPoint);
@@ -146,7 +144,7 @@ public class RoadMeshExtruder {
 			if (ring != edgeLoopCount - 1)
 				roadChainBuilder.generatedRoadEdgeloops++;
 		}
-		triIndices = CreateTriangles(roadSettings.CalculateLine(), edgeLoopCount, roadSettings);
+		triIndices = CreateTriangles(roadSettings.hardEdges, edgeLoopCount, roadSettings);
 
 
 		// Assign it all to the mesh
@@ -299,71 +297,7 @@ public class RoadMeshExtruder {
 	}
 
     #region UV calculations
-    private List<Vector2> CalculateUV(RoadSettings roadSettings)
-    {
-		int current = 0;
-		List<Vector2> uvs = new List<Vector2>();
-		List<SurfaceScriptable> sfsc = new List<SurfaceScriptable>();
-		sfsc.AddRange(roadSettings.allSurfaceSettings);
 
-		foreach (SurfaceScriptable m in sfsc)
-        {
-			if (m.UV_mirrored)
-			{
-				uvs.Add(CalculateMirroredUV_Width(roadSettings.points, current));
-			}
-			else
-			{
-				uvs.Add(CalculateFullUV_Width(roadSettings.points, current));
-			}
-			current++;
-		}
-		return uvs;
-    }
-
-    private Vector2 CalculateFullUV_Width(VertexPoint[] points, int materialIndex)
-    {
-		float min_Xuv = float.PositiveInfinity;
-		float max_Xuv = float.NegativeInfinity;
-		int current = 0;
-		foreach (VertexPoint p in points)
-		{
-			if (p.materialIndex == materialIndex)
-			{
-				if ((p.vertex_1.point.x) < min_Xuv)
-					min_Xuv = p.vertex_1.point.x;
-				if ((p.vertex_1.point.x) > max_Xuv)
-					max_Xuv = p.vertex_1.point.x;
-			}
-			else if(current != 0 && points[current - 1].materialIndex == materialIndex)
-            {
-				if ((p.vertex_1.point.x) < min_Xuv)
-					min_Xuv = p.vertex_1.point.x;
-				if ((p.vertex_1.point.x) > max_Xuv)
-					max_Xuv = p.vertex_1.point.x;
-			}
-			current++;
-		}
-		return new Vector2(min_Xuv, max_Xuv);
-	}
-
-    private Vector2 CalculateMirroredUV_Width(VertexPoint[] points, int materialIndex)
-    {
-		float min_Xuv = float.PositiveInfinity;
-		float max_Xuv = float.NegativeInfinity;
-		foreach (VertexPoint p in points)
-		{
-			if (p.materialIndex == materialIndex)
-			{
-				float abs = Mathf.Abs(p.vertex_1.point.x);
-				if (abs < min_Xuv)
-					min_Xuv = abs;
-				if (abs > max_Xuv)
-					max_Xuv = abs;
-			}
-		}
-		return new Vector2(min_Xuv, max_Xuv);
-	}
 
 	private float CalculateTiling(float uSpan, UVMode uvMode, float tilingAspectRatio, float curveArcLength)
 	{
@@ -386,13 +320,10 @@ public class RoadMeshExtruder {
 		triIndices.Clear();
 	}
 
-	private List<List<int>> CreateTriangles(int skippedVertex, int edgeLoopCount, RoadSettings roadSettings)
+	private List<List<int>> CreateTriangles(int vertexJumpedCount, int edgeLoopCount, RoadSettings roadSettings)
     {
 		List<List<int>> tries = new List<List<int>>();
-		List<SurfaceScriptable> surfaceScriptables = new List<SurfaceScriptable>();
-		surfaceScriptables.AddRange(roadSettings.allSurfaceSettings);
-
-		foreach (SurfaceScriptable surface in surfaceScriptables)
+		foreach (SurfaceScriptable surface in roadSettings.allSurfaceSettings)
 			tries.Add(new List<int>());
 
 		// Generate Trianges
@@ -400,16 +331,21 @@ public class RoadMeshExtruder {
 		for (int edgeLoop = 0; edgeLoop < edgeLoopCount - 1; edgeLoop++)
 		{
 			//Debug.Log("New Edgeloop");
-			int rootIndex = (roadSettings.PointCount + skippedVertex) * edgeLoop;
-			int rootIndexNext = (roadSettings.PointCount + skippedVertex) * (edgeLoop + 1);
+			int rootIndex = (roadSettings.PointCount + vertexJumpedCount) * edgeLoop;
+			int rootIndexNext = (roadSettings.PointCount + vertexJumpedCount) * (edgeLoop + 1);
 			// Foreach pair of line indices in the 2D shape
 			for (int i = 0; i < roadSettings.PointCount; i++)
 			{
 				int point_1 = roadSettings.points[i].line.x;
 				int point_2 = roadSettings.points[i].line.y;
 
-				Vector2Int current = new Vector2Int(point_1 + rootIndex, point_2 + rootIndex);
-				Vector2Int next = new Vector2Int(point_1 + rootIndexNext, point_2 + rootIndexNext);
+				Vector2Int current = new Vector2Int();
+				current[0] = point_1 + rootIndex;
+				current[1] = point_2 + rootIndex;
+
+				Vector2Int next = new Vector2Int();
+				next[0] = point_1 + rootIndexNext;
+				next[1] = point_2 + rootIndexNext;
 
 				int index = roadSettings.points[i].materialIndex;
 				if (roadSettings.points[i].extrudePoint)
@@ -434,7 +370,7 @@ public class MeshTask
 	public MeshTaskType meshTaskType;
 	public MeshtaskPosition meshPosition;
 	public RoadSettings roadSettings;
-	public List<Point> points = new List<Point>();
+	public List<Point> positionPoints = new List<Point>();
 	public int startPointIndex;
 	public NoiseChannel noiseChannel;
 	public int resolutionIndex = 1;
@@ -451,7 +387,7 @@ public class MeshTask
 
 	public void AddPoint(Vector3 position, Quaternion rotation, ExtrusionVariables extrusionVariables)
     {
-		points.Add(new Point(position, rotation, extrusionVariables));
+		positionPoints.Add(new Point(position, rotation, extrusionVariables));
     }
 
 	[System.Serializable]

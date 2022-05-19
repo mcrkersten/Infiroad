@@ -92,7 +92,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GroundColor: {r: 0.26708478, g: 0.32034656, b: 0.38235295, a: 1}
-    - _NightSkyTint: {r: 0.7103867, g: 0.7103867, b: 0.7103867, a: 1}
+    - _NightSkyTint: {r: 0.7951788, g: 0.60798633, b: 0.339817, a: 1}
     - _SkyTint: {r: 0.7951788, g: 0.60798633, b: 0.339817, a: 1}
     - _SunColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

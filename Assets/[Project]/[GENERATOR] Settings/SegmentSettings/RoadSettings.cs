@@ -33,18 +33,33 @@ public class RoadSettings : ScriptableObject
 	public bool hasCornerChamfer;
 	public float maxChamfer;
 
-	public void UpdateAllRoadSurfaces()
+	//CalculatedValues
+	[HideInInspector] public List<Vector2> calculatedUs = new List<Vector2>();
+	[HideInInspector] public float uSpan;
+	[HideInInspector] public int hardEdges;
+
+	public void InitializeRoadSettings()
     {
 		allSurfaceSettings = new List<SurfaceScriptable>();
 		allSurfaceSettings.AddRange(surfaceSettings);
 		allSurfaceSettings.Add(runoffMaterial);
-    }
+		CalculateUs();
+		hardEdges = CalculateLine();
+		CalcUspan();
+
+		foreach (MeshtaskSettings g in meshtaskSettings)
+		{
+			g.CalculateLine();
+			g.CalculateInverseLine();
+			g.ClaculateV();
+		}
+	}
 
 	/// <summary>
 	/// Total U Lenght of object AKA horizontal
 	/// </summary>
 	/// <returns></returns>
-	public float CalcUspan()
+	private void CalcUspan()
 	{
 		float dist = 0;
 		for (int i = 0; i < PointCount - 1; i++)
@@ -53,7 +68,7 @@ public class RoadSettings : ScriptableObject
 			Vector2 b = points[i + 1].vertex_1.point;
 			dist += (a - b).magnitude;
 		}
-		return Mathf.Abs(dist);
+		uSpan = Mathf.Abs(dist);
 	}
 
 	public int CalculateLine()
@@ -81,29 +96,71 @@ public class RoadSettings : ScriptableObject
 		return skippedPoints;
 	}
 
-	[ContextMenu("Calculate normals")]
-	public void CalculateNormals()
+	private void CalculateUs()
 	{
-		for (int i = 0; i < PointCount; i++)
-		{
-			Vector2 nextPoint = Vector2.zero;
-			Vector2 currentPoint = points[i].vertex_1.point;
-			if (i == PointCount - 1)
-				nextPoint = points[0].vertex_1.point;
-			else
-				nextPoint = points[i + 1].vertex_1.point;
+		int current = 0;
+		List<Vector2> uvs = new List<Vector2>();
+		List<SurfaceScriptable> sfsc = new List<SurfaceScriptable>();
+		sfsc.AddRange(allSurfaceSettings);
 
-			float dx = nextPoint.x - currentPoint.x;
-			float dy = nextPoint.y - currentPoint.y;
-			points[i].vertex_1.normal = new Vector2(-dy, dx);
+		foreach (SurfaceScriptable m in sfsc)
+		{
+			if (m.UV_mirrored)
+			{
+				uvs.Add(CalculateMirroredUV_Width(points, current));
+			}
+			else
+			{
+				uvs.Add(CalculateFullUV_Width(points, current));
+			}
+			current++;
 		}
+		calculatedUs = uvs;
 	}
 
-	public float NoiseCreator(int pointIndex)
-    {
-		float n = Mathf.PerlinNoise(pointIndex, pointIndex);
-		return n;
-    }
+	private Vector2 CalculateFullUV_Width(VertexPoint[] points, int materialIndex)
+	{
+		float min_Xuv = float.PositiveInfinity;
+		float max_Xuv = float.NegativeInfinity;
+		int current = 0;
+		foreach (VertexPoint p in points)
+		{
+			if (p.materialIndex == materialIndex)
+			{
+				if ((p.vertex_1.point.x) < min_Xuv)
+					min_Xuv = p.vertex_1.point.x;
+				if ((p.vertex_1.point.x) > max_Xuv)
+					max_Xuv = p.vertex_1.point.x;
+			}
+			else if (current != 0 && points[current - 1].materialIndex == materialIndex)
+			{
+				if ((p.vertex_1.point.x) < min_Xuv)
+					min_Xuv = p.vertex_1.point.x;
+				if ((p.vertex_1.point.x) > max_Xuv)
+					max_Xuv = p.vertex_1.point.x;
+			}
+			current++;
+		}
+		return new Vector2(min_Xuv, max_Xuv);
+	}
+
+	private Vector2 CalculateMirroredUV_Width(VertexPoint[] points, int materialIndex)
+	{
+		float min_Xuv = float.PositiveInfinity;
+		float max_Xuv = float.NegativeInfinity;
+		foreach (VertexPoint p in points)
+		{
+			if (p.materialIndex == materialIndex)
+			{
+				float abs = Mathf.Abs(p.vertex_1.point.x);
+				if (abs < min_Xuv)
+					min_Xuv = abs;
+				if (abs > max_Xuv)
+					max_Xuv = abs;
+			}
+		}
+		return new Vector2(min_Xuv, max_Xuv);
+	}
 }
 
 [System.Serializable]

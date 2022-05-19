@@ -60,7 +60,7 @@ public class RoadChainBuilder : MonoBehaviour
     {
         foreach (VariationSettings variation in road.roadVariation)
             foreach (VariationSettings.Variation var in variation.roadSettings)
-                var.roadSettings.UpdateAllRoadSurfaces();
+                var.roadSettings.InitializeRoadSettings();
     }
 
     private void Start()
@@ -271,7 +271,7 @@ public class RoadChainBuilder : MonoBehaviour
     {
         foreach (MeshTask task in meshtasks)
             if(settings == task.meshtaskSettings)
-                if(task.points.Count > 3)
+                if(task.positionPoints.Count > 3)
                     ExecuteMeshtask(settings, roadchain, task);
     }
 
@@ -803,7 +803,6 @@ public class MeshtaskTypeHandler
         meshtaskSettings.dataKey = dataKey;
         activeMeshtasks.Add((meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey), task);
         lastMeshtaskPositions.Add((meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey), Vector3.one * 1000f);
-        Debug.Log((meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey));
     }
 
     public void SetMeshtask(MeshTask newMeshtask, MeshtaskSettings meshtaskSettings)
