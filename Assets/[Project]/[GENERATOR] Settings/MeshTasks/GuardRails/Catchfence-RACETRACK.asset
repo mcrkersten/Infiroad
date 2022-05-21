@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d78f2287300b104cae54ee3afbba403, type: 3}
   m_Name: Catchfence-RACETRACK
   m_EditorClassIdentifier: 
-  dataKey: 558775
+  dataKey: 219309
   calculatedUs: []
   uvLenght: 3.9798255
   meshTaskType: 1
   meshtaskPosition: 2
+  meshtaskStyle: 2
   points:
   - vertex:
       point: {x: 0, y: 0}
-      normal: {x: 0, y: 0}
       horizontal_UV: 0
     line: {x: 4, y: 0}
     inversedLine: {x: 3, y: 4}
@@ -28,7 +28,6 @@ MonoBehaviour:
     materialIndex: 0
   - vertex:
       point: {x: 0, y: 2.8}
-      normal: {x: 0, y: 0}
       horizontal_UV: 2.8
     line: {x: 0, y: 1}
     inversedLine: {x: 2, y: 3}
@@ -36,7 +35,6 @@ MonoBehaviour:
     materialIndex: 0
   - vertex:
       point: {x: 0.11, y: 3.2}
-      normal: {x: 0, y: 0}
       horizontal_UV: 3.2148495
     line: {x: 1, y: 2}
     inversedLine: {x: 1, y: 2}
@@ -44,7 +42,6 @@ MonoBehaviour:
     materialIndex: 0
   - vertex:
       point: {x: 0.35, y: 3.5}
-      normal: {x: 0, y: 0}
       horizontal_UV: 3.599037
     line: {x: 2, y: 3}
     inversedLine: {x: 0, y: 1}
@@ -52,7 +49,6 @@ MonoBehaviour:
     materialIndex: 0
   - vertex:
       point: {x: 0.7, y: 3.65}
-      normal: {x: 0, y: 0}
       horizontal_UV: 3.9798255
     line: {x: 3, y: 4}
     inversedLine: {x: 4, y: 0}
@@ -66,6 +62,7 @@ MonoBehaviour:
   meshtaskWidth: 9.464888
   minimalCornerRadius: 0
   maximumCornerRadius: 0
+  minimalExtrusionSize: 0
   materials:
   - {fileID: 2100000, guid: 35fe2f69ff7d78a42b9c788c62345c32, type: 2}
   meshIsClosed: 0

@@ -114,11 +114,11 @@ public class Wheel_Raycast : MonoBehaviour
         return null;
     }
 
-    public float RotateWheelModel(float verticalForce, SuspensionPosition suspensionPosition)
+    public Vector2 RotateWheelModel(Vector2 force, SuspensionPosition suspensionPosition)
     {
-        float wheelLockPercentage = brakeLock.Evaluate(verticalForce);
-        float wheelSpinPercentage = wheelSpin.Evaluate(verticalForce);
-        float combinedPercentage = 1f - Mathf.Clamp((1f - wheelLockPercentage) + (1f - wheelSpinPercentage), 0f, 1f);
+        float wheelLockPercentage = brakeLock.Evaluate(Mathf.Abs(force.x));
+        float wheelSpinPercentage = wheelSpin.Evaluate(force.y);
+        float combinedPercentage = wheelLockPercentage;// + wheelSpinPercentage;
 
         float rotationSpeed = (wheelVelocityLocalSpace.z * 3.6f) / tireCircumference;
         if (suspensionPosition == SuspensionPosition.FrontRight || suspensionPosition == SuspensionPosition.RearRight)
@@ -130,7 +130,7 @@ public class Wheel_Raycast : MonoBehaviour
         RPM = meterPerSecond / wheelRadius;
 
         TyreLockSmoke(wheelLockPercentage, lastHitPosition);
-        return combinedPercentage;
+        return new Vector2(wheelLockPercentage, wheelSpinPercentage);
     }
 
     private float smokeDuration = 0f;
@@ -194,14 +194,14 @@ public class Wheel_Raycast : MonoBehaviour
     {
 
 
-        if (!broken)
-        {
-            rb.AddForceAtPosition(-impactDirection, this.transform.position);
-            broken = true;
-            this.gameObject.AddComponent<Rigidbody>();
-            this.wheelCollider.gameObject.layer = LayerMask.NameToLayer("Default");
-            this.transform.parent = null;
-        }
+        //if (!broken)
+        //{
+        //    rb.AddForceAtPosition(-impactDirection, this.transform.position);
+        //    broken = true;
+        //    this.gameObject.AddComponent<Rigidbody>();
+        //    this.wheelCollider.gameObject.layer = LayerMask.NameToLayer("Default");
+        //    this.transform.parent = null;
+        //}
     }
 }
 

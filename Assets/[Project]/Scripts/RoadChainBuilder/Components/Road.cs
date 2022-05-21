@@ -116,8 +116,7 @@ public class AssetSpawnPoint
 public class Vertex
 {
 	public Vector2 point;
-	public Vector2 normal;
-	public float horizontal_UV;
+	[HideInInspector]public float horizontal_UV;
 }
 
 public enum RoadShape

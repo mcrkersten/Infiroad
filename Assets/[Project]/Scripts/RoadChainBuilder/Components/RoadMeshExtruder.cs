@@ -27,7 +27,7 @@ public class RoadMeshExtruder {
 	// Used when generating the mesh
 	List<Vector3> verts = new List<Vector3>();
 	List<Vector3> normals = new List<Vector3>();
-	List<Vector2> uvs0 = new List<Vector2>();
+	List<Vector2> uvs = new List<Vector2>();
 	List<List<int>> triIndices = new List<List<int>>();
 
 	RoadChainBuilder roadChainBuilder;
@@ -105,7 +105,7 @@ public class RoadMeshExtruder {
 					if (i != 0 && roadSettings.points[i - 1].extrudePoint)
 					{
 						x_UV = 0f;
-						uvs0.Add(new Vector2(x_UV, y_UV));
+						uvs.Add(new Vector2(x_UV, y_UV));
 						verts.Add(globalPoint);
 					}
 					//If different material
@@ -115,19 +115,19 @@ public class RoadMeshExtruder {
 						bool prev_isMirrored = roadSettings.allSurfaceSettings[roadSettings.points[i - 1].materialIndex].UV_mirrored;
 						float prev_uvPoint = prev_isMirrored ? Mathf.Abs(localUVPoint.x + uY) : localUVPoint.x + uY;
 						x_UV = Mathf.InverseLerp(prev_currentUV_MinMax.x, prev_currentUV_MinMax.y, prev_uvPoint);
-						uvs0.Add(new Vector2(x_UV, y_UV));
+						uvs.Add(new Vector2(x_UV, y_UV));
 						verts.Add(globalPoint);
 					}
 					else if (roadSettings.points[i].ishardEdge)
 					{
 						x_UV = Mathf.InverseLerp(currentUV_MinMax.x, currentUV_MinMax.y, uvPoint);
-						uvs0.Add(new Vector2(x_UV, y_UV));
+						uvs.Add(new Vector2(x_UV, y_UV));
 						verts.Add(globalPoint);
 					}
 
 					//MAIN MESH VERTEX
 					x_UV = Mathf.InverseLerp(currentUV_MinMax.x, currentUV_MinMax.y, uvPoint);
-					uvs0.Add(new Vector2(x_UV, y_UV));
+					uvs.Add(new Vector2(x_UV, y_UV));
 					verts.Add(globalPoint);
 
 					//Opening edge of UV extrusion
@@ -135,7 +135,7 @@ public class RoadMeshExtruder {
 					{
 						float curve = roadSettings.points[i].vertex_1.point.x < 0f ? Mathf.Min(0f, roadChainBuilder.extrusionVariables.leftExtrusion) : Mathf.Max(0f, roadChainBuilder.extrusionVariables.rightExtrusion);
 						x_UV = Mathf.Abs(curve) /10f;
-						uvs0.Add(new Vector2(Mathf.Abs(x_UV), y_UV));
+						uvs.Add(new Vector2(Mathf.Abs(x_UV), y_UV));
 						verts.Add(globalPoint);
 					}
 				}
@@ -149,7 +149,7 @@ public class RoadMeshExtruder {
 
 		// Assign it all to the mesh
 		mesh.SetVertices(verts);
-		mesh.SetUVs(0, uvs0);
+		mesh.SetUVs(0, uvs);
 
 		int materialIndex = 0;
 		mesh.subMeshCount = triIndices.Count;
@@ -215,64 +215,36 @@ public class RoadMeshExtruder {
     {
         foreach (MeshtaskSettings meshtaskSettings in roadSettings.meshtaskSettings)
         {
-
-			//MESHTASK
-			if (!meshtaskSettings.meshtaskContinues)
-				CreateBasedOnExtrusion(meshtaskSettings, roadSettings, segment, op);
-			else if (meshtaskSettings.meshtaskContinues)
-				CreateContinuedMeshtask(meshtaskSettings, roadSettings, ring, segment, op, edgeLoopCount);
-
+            switch (meshtaskSettings.meshtaskStyle)
+            {
+                case MeshtaskStyle.CornerRadius:
+					CreateBasedOnCornerRadius(meshtaskSettings, roadSettings, segment, op);
+					break;
+                case MeshtaskStyle.ExtrusionSize:
+					CreateBasedOnExtrusionSize(meshtaskSettings, roadSettings, segment, op);
+					break;
+                case MeshtaskStyle.Continued:
+					CreateContinuedMeshtask(meshtaskSettings, roadSettings, ring, segment, op, edgeLoopCount);
+					break;
+            }
 		}
 	}
 
-	private void CreateBasedOnExtrusion(MeshtaskSettings meshtaskSettings, RoadSettings roadSettings, RoadSegment segment, OrientedPoint op)
+	private void CreateBasedOnCornerRadius(MeshtaskSettings meshtaskSettings, RoadSettings roadSettings, RoadSegment segment, OrientedPoint op)
     {
 		float cornerRadius = roadChainBuilder.extrusionVariables.cornerRadius;
 		bool inRange = cornerRadius > meshtaskSettings.minimalCornerRadius && meshtaskSettings.maximumCornerRadius > cornerRadius;
 		if (inRange)
-        {
-			Vector3 currentMeshPosition = segment.transform.TransformPoint(op.pos);
-			float distanceToLastMeshtask = Vector3.Distance(roadChainBuilder.meshtaskTypeHandler.GetLastMeshtaskPosition(meshtaskSettings), currentMeshPosition);
-			if (distanceToLastMeshtask > 5f)
-			{
-				if (roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskSettings) != null)
-					roadChainBuilder.meshtasks.Add(roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskSettings));
-
-
-				//MeshtaskPosition side = CalculateMeshtaskSide(roadChainBuilder.extrusionVariables.mainExtrusion);
-				MeshTask newMeshtask = new MeshTask(roadSettings, 
-												roadChainBuilder.generatedRoadEdgeloops,
-												roadSettings.noiseChannels[meshtaskSettings.noiseChannel],
-												meshtaskSettings,
-												meshtaskSettings.meshtaskPosition);
-
-				roadChainBuilder.meshtaskTypeHandler.SetMeshtask(newMeshtask, meshtaskSettings);
-			}
-
-			if (distanceToLastMeshtask > .01f) //Fish out duplicates
-			{
-				MeshTask mt = roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskSettings);
-
-				roadChainBuilder.meshtaskTypeHandler.SetLastMeshtaskPosition(meshtaskSettings, currentMeshPosition);
-
-				if(mt.resolutionIndex == meshtaskSettings.meshResolution)
-                {
-					mt.AddPoint(currentMeshPosition,
-						segment.transform.rotation * op.rot,
-						roadChainBuilder.extrusionVariables);
-					mt.resolutionIndex = 0;
-				}
-				mt.resolutionIndex += 1;
-			}
-		}
+			CreateMeshtaskPoint(meshtaskSettings, roadSettings, segment, op);
 	}
 
-	public MeshtaskPosition CalculateMeshtaskSide(float directionOfCorner)
+	private void CreateBasedOnExtrusionSize(MeshtaskSettings meshtaskSettings, RoadSettings roadSettings, RoadSegment segment, OrientedPoint op)
     {
-		if (directionOfCorner < 0)
-			return MeshtaskPosition.Left;
-		else return MeshtaskPosition.Right;
-    }
+		float extrusionSize = meshtaskSettings.meshtaskPosition == MeshtaskPosition.Left ? Mathf.Abs(roadChainBuilder.extrusionVariables.leftExtrusion) : Mathf.Abs(roadChainBuilder.extrusionVariables.rightExtrusion);
+		bool inRange = extrusionSize > meshtaskSettings.minimalExtrusionSize;
+		if (inRange)
+			CreateMeshtaskPoint(meshtaskSettings, roadSettings, segment, op);
+	}
 
 	private void CreateContinuedMeshtask(MeshtaskSettings meshtaskSettings, RoadSettings roadSettings, int ring, RoadSegment segment, OrientedPoint op, int edgeLoopCount)
     {
@@ -296,6 +268,43 @@ public class RoadMeshExtruder {
 			roadChainBuilder.meshtasks.Add(roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskSettings));
 	}
 
+	private void CreateMeshtaskPoint(MeshtaskSettings meshtaskSettings, RoadSettings roadSettings, RoadSegment segment, OrientedPoint op)
+    {
+		Vector3 currentMeshPosition = segment.transform.TransformPoint(op.pos);
+		float distanceToLastMeshtask = Vector3.Distance(roadChainBuilder.meshtaskTypeHandler.GetLastMeshtaskPosition(meshtaskSettings), currentMeshPosition);
+		if (distanceToLastMeshtask > 5f)
+		{
+			if (roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskSettings) != null)
+				roadChainBuilder.meshtasks.Add(roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskSettings));
+
+
+			//MeshtaskPosition side = CalculateMeshtaskSide(roadChainBuilder.extrusionVariables.mainExtrusion);
+			MeshTask newMeshtask = new MeshTask(roadSettings,
+											roadChainBuilder.generatedRoadEdgeloops,
+											roadSettings.noiseChannels[meshtaskSettings.noiseChannel],
+											meshtaskSettings,
+											meshtaskSettings.meshtaskPosition);
+
+			roadChainBuilder.meshtaskTypeHandler.SetMeshtask(newMeshtask, meshtaskSettings);
+		}
+
+		if (distanceToLastMeshtask > .01f) //Fish out duplicates
+		{
+			MeshTask mt = roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskSettings);
+
+			roadChainBuilder.meshtaskTypeHandler.SetLastMeshtaskPosition(meshtaskSettings, currentMeshPosition);
+
+			if (mt.resolutionIndex == meshtaskSettings.meshResolution)
+			{
+				mt.AddPoint(currentMeshPosition,
+					segment.transform.rotation * op.rot,
+					roadChainBuilder.extrusionVariables);
+				mt.resolutionIndex = 0;
+			}
+			mt.resolutionIndex += 1;
+		}
+	}
+
     #region UV calculations
 
 
@@ -316,7 +325,7 @@ public class RoadMeshExtruder {
 		mesh.Clear();
 		verts.Clear();
 		normals.Clear();
-		uvs0.Clear();
+		uvs.Clear();
 		triIndices.Clear();
 	}
 
@@ -409,5 +418,13 @@ public enum MeshTaskType
 {
 	Guardrail = 0,
 	CatchFence,
-	GrandStand
+	GrandStand,
+	TecproBarrier
+}
+
+public enum MeshtaskStyle
+{
+	CornerRadius = 0,
+	ExtrusionSize,
+	Continued,
 }

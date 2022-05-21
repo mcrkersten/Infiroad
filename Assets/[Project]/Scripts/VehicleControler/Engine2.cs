@@ -54,13 +54,13 @@ public class Engine2
         FeedbackSystem.instance.RegisterFeedbackComponent(feedbackComponent);
     }
 
-    public float Run(float currentForwardSpeed, float throttle, float clutch, float physicsWobble)
+    public float Run(float currentForwardVelocity, float throttle, float clutch, float physicsWobble, float wheelSlip)
     {
         clutch = SemiAutomaticClutch(clutch);
-        float mechanicalForce = CalculateMechanicalFriction(currentForwardSpeed, throttle);
+        float mechanicalForce = CalculateMechanicalFriction(currentForwardVelocity, throttle);
 
         float effectiveGearRatio = gearRatios[currentEngagedGear] * finalDriveRatio;
-        float wheelRPM = currentForwardSpeed / (rollingCircumference / 60f);
+        float wheelRPM = (currentForwardVelocity / (rollingCircumference / 60f)) * wheelSlip;
         float enginewRPM = ((wheelRPM * effectiveGearRatio) - (physicsWobble * physicsImpact));
         float velocity = (enginewRPM * clutch) + (Mathf.Lerp(3500f, maxRPM, throttle ) * (1f - clutch)) - lastRPM;
         lastRPM = Mathf.Lerp(lastRPM + velocity, enginewRPM, clutch);
@@ -72,7 +72,7 @@ public class Engine2
         velocityAudio.SetGlobalValue(velocity);
 
         dashboard.UpdateMeter(lastRPM / maxRPM, DashboardMeter.MeterType.Tacheometer);
-        dashboard.UpdateMeter(currentForwardSpeed * 3.6f, DashboardMeter.MeterType.Speedometer);
+        dashboard.UpdateMeter(currentForwardVelocity * 3.6f, DashboardMeter.MeterType.Speedometer);
 
         feedbackComponent.UpdateHighFrequencyRumble( RPM_feedbackCurve.Evaluate(lastRPM / maxRPM));
         feedbackComponent.UpdateLowFrequencyRumble(velocity/100f);

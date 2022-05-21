@@ -2143,7 +2143,7 @@ PrefabInstance:
       objectReference: {fileID: 925232241}
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: meshtaskSettings.Array.size
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: meshtaskSettings.Array.data[0]
@@ -2165,6 +2165,14 @@ PrefabInstance:
       propertyPath: meshtaskSettings.Array.data[4]
       value: 
       objectReference: {fileID: 11400000, guid: fb0d4b1afc5c2f740aa6168c17a49dcc, type: 2}
+    - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
+      propertyPath: meshtaskSettings.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: c3ceba2d4ae154f4e93c12c9dba21faf, type: 2}
+    - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
+      propertyPath: meshtaskSettings.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: edbe6bcf1a897924d8edf99fca4d7726, type: 2}
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: settings.corner_NpointsBetween
       value: 2

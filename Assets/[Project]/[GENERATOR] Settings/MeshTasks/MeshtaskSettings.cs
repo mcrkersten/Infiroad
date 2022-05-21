@@ -12,7 +12,9 @@ public class MeshtaskSettings : ScriptableObject
 
 	public MeshTaskType meshTaskType;
 	public MeshtaskPosition meshtaskPosition;
-    public VertexPosition[] points;
+	public MeshtaskStyle meshtaskStyle;
+
+	public VertexPosition[] points;
 	[Range(1f,10f)]
 	public float meshResolution;
     public bool meshtaskContinues;
@@ -22,9 +24,14 @@ public class MeshtaskSettings : ScriptableObject
     public float extrusionSize;
     public float meshtaskWidth;
 
+	[Header("Corner radius style")]
 	public float minimalCornerRadius;
 	public float maximumCornerRadius;
-    public int PointCount => points.Length;
+
+	[Header("Extrusion size style")]
+	[Range(0f,1f)]
+	public float minimalExtrusionSize;
+	public int PointCount => points.Length;
 
     [Space]
     public List<Material> materials = new List<Material>();
@@ -84,23 +91,6 @@ public class MeshtaskSettings : ScriptableObject
 		{
 			points[x].inversedLine = points[points.Length - 1 - i].line;
 			x++;
-		}
-	}
-
-	public virtual void CalculateNormals()
-	{
-		for (int i = 0; i < points.Length; i++)
-		{
-			Vector2 nextPoint = Vector2.zero;
-			Vector2 currentPoint = points[i].vertex.point;
-			if (i == points.Length - 1)
-				nextPoint = points[0].vertex.point;
-			else
-				nextPoint = points[i + 1].vertex.point;
-
-			float dx = nextPoint.x - currentPoint.x;
-			float dy = nextPoint.y - currentPoint.y;
-			points[i].vertex.normal = new Vector2(-dy, dx);
 		}
 	}
 
@@ -166,5 +156,6 @@ public enum MeshtaskPoolType
 	CatchfencePoles,
 	GrandstandSides,
 	SmokeBombs,
-	GrandstandArcs
+	GrandstandArcs,
+	Tecpros
 }

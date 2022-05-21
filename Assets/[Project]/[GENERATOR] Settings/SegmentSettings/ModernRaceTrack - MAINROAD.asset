@@ -15,8 +15,7 @@ MonoBehaviour:
   points:
   - vertex_1:
       point: {x: 0, y: 0}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 0, y: 1}
     ishardEdge: 0
     noiseChannel: 0
@@ -26,8 +25,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 7.5, y: 0}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 1, y: 2}
     ishardEdge: 0
     noiseChannel: 0
@@ -37,8 +35,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 7.5, y: 0}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 3, y: 4}
     ishardEdge: 0
     noiseChannel: 0
@@ -48,8 +45,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 9.14, y: 0}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 4, y: 5}
     ishardEdge: 0
     noiseChannel: 0
@@ -59,8 +55,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 9.14, y: 0}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 6, y: 7}
     ishardEdge: 0
     noiseChannel: 0
@@ -70,8 +65,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 9.14, y: 1}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 1}
+      horizontal_UV: 0
     line: {x: 8, y: 9}
     ishardEdge: 1
     noiseChannel: 0
@@ -81,8 +75,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 9.8, y: 1}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 10, y: 11}
     ishardEdge: 1
     noiseChannel: 0
@@ -92,8 +85,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 9.8, y: -0.03}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 1}
+      horizontal_UV: 0
     line: {x: 11, y: 12}
     ishardEdge: 0
     noiseChannel: 0
@@ -103,8 +95,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 9.8, y: -0.03}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 1}
+      horizontal_UV: 0
     line: {x: 13, y: 14}
     ishardEdge: 0
     noiseChannel: 0
@@ -118,8 +109,7 @@ MonoBehaviour:
       spawnPointsBetweenAmount: 1
   - vertex_1:
       point: {x: 15, y: -0.03}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 14, y: 15}
     ishardEdge: 0
     noiseChannel: 0
@@ -129,8 +119,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 15, y: -0.03}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 16, y: 17}
     ishardEdge: 0
     noiseChannel: 0
@@ -140,8 +129,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 15, y: -1.5}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 18, y: 19}
     ishardEdge: 1
     noiseChannel: 0
@@ -151,8 +139,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 0, y: -1.5}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 19, y: 20}
     ishardEdge: 0
     noiseChannel: 0
@@ -162,8 +149,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -15, y: -1.5}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 21, y: 22}
     ishardEdge: 1
     noiseChannel: 0
@@ -173,8 +159,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -15, y: -0.03}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 23, y: 24}
     ishardEdge: 0
     noiseChannel: 0
@@ -188,8 +173,7 @@ MonoBehaviour:
       spawnPointsBetweenAmount: 1
   - vertex_1:
       point: {x: -9.8, y: -0.03}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 24, y: 25}
     ishardEdge: 0
     noiseChannel: 0
@@ -199,8 +183,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -9.8, y: -0.03}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 26, y: 27}
     ishardEdge: 0
     noiseChannel: 0
@@ -210,8 +193,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -9.8, y: 1}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 1}
+      horizontal_UV: 0
     line: {x: 28, y: 29}
     ishardEdge: 1
     noiseChannel: 0
@@ -221,8 +203,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -9.14, y: 1}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 30, y: 31}
     ishardEdge: 1
     noiseChannel: 0
@@ -232,8 +213,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -9.14, y: 0}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 1}
+      horizontal_UV: 0
     line: {x: 31, y: 32}
     ishardEdge: 0
     noiseChannel: 0
@@ -243,8 +223,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -9.14, y: 0}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 33, y: 34}
     ishardEdge: 0
     noiseChannel: 0
@@ -254,8 +233,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -7.5, y: 0}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 34, y: 35}
     ishardEdge: 0
     noiseChannel: 0
@@ -265,8 +243,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -7.5, y: 0}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 36, y: 0}
     ishardEdge: 0
     noiseChannel: 0
@@ -360,3 +337,6 @@ MonoBehaviour:
   extrusionSize: 0
   hasCornerChamfer: 1
   maxChamfer: 4
+  calculatedUs: []
+  uSpan: 0
+  hardEdges: 0

@@ -141,6 +141,18 @@ public class MeshtaskExtruder
 						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
 					}
 					break;
+				case MeshTaskType.TecproBarrier:
+					if (currentEdgeloop == 0)
+					{
+						GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.Tecpros);
+						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					}
+					if (currentEdgeloop == meshTask.positionPoints.Count - 2)
+					{
+						GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.Tecpros);
+						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					}
+					break;
             }
 			currentEdgeloop++;
 		}
@@ -168,8 +180,8 @@ public class MeshtaskExtruder
 				if (!meshtaskSettings.meshIsClosed && point == 0 && meshTask.meshPosition == MeshtaskPosition.Left) continue; //Skip closing line
 				if (!meshtaskSettings.meshIsClosed && point == (meshtaskSettings.PointCount -1) && meshTask.meshPosition == MeshtaskPosition.Right) continue; //Skip closing line
 
-				int vertex1 = meshTask.meshPosition == MeshtaskPosition.Left ? meshtaskSettings.points[point].line.x : meshtaskSettings.points[point].inversedLine.x;
-				int vertex2 = meshTask.meshPosition == MeshtaskPosition.Left ? meshtaskSettings.points[point].line.y : meshtaskSettings.points[point].inversedLine.y;
+				int vertex1 = meshTask.meshPosition == MeshtaskPosition.Left ? meshtaskSettings.points[point].line.y : meshtaskSettings.points[point].inversedLine.x;
+				int vertex2 = meshTask.meshPosition == MeshtaskPosition.Left ? meshtaskSettings.points[point].line.x : meshtaskSettings.points[point].inversedLine.y;
 
 				//Bottom
 				Vector2Int current = new Vector2Int();
