@@ -53,7 +53,6 @@ public class BindingMenuLogic : MonoBehaviour
         else
         {
             Debug.Log("START GAME");
-            bindingManager.selectedBinding = bindingManager.playerInputBindings.Where(i => i.inputBindings.inputType == selectedInputType).First();
             SceneManager.LoadScene(1);
         }
     }
@@ -342,13 +341,13 @@ public class BindingMenuLogic : MonoBehaviour
         switch (inputType)
         {
             case InputType.Keyboard:
-                x = Enum.GetValues(typeof(KeyboardBinding)).Length - 2;
+                x = Enum.GetValues(typeof(KeyboardBinding)).Length - 1;
                 break;
             case InputType.Gamepad:
-                x = Enum.GetValues(typeof(GamepadBinding)).Length - 2;
+                x = Enum.GetValues(typeof(GamepadBinding)).Length - 1;
                 break;
             case InputType.Wheel:
-                x = Enum.GetValues(typeof(WheelBinding)).Length - 2;
+                x = Enum.GetValues(typeof(WheelBinding)).Length - 1;
                 break;
         }
         return x;
@@ -362,9 +361,10 @@ public class BindingMenuLogic : MonoBehaviour
                 SetKeyboardBindingText();
                 break;
             case InputType.Gamepad:
-                SetGamepadBinding();
+                SetGamepadBindingText();
                 break;
             case InputType.Wheel:
+                SetWheelBindingText();
                 break;
             default:
                 break;
@@ -404,7 +404,7 @@ public class BindingMenuLogic : MonoBehaviour
         }
     }
 
-    private void SetGamepadBinding() {
+    private void SetGamepadBindingText() {
         switch ((GamepadBinding)selectedKeybinding)
         {
             case GamepadBinding.SteerLeft:
@@ -429,6 +429,36 @@ public class BindingMenuLogic : MonoBehaviour
                 bindingButton.bindingName.text = "Reset vehicle";
                 break;
             case GamepadBinding.Clutch:
+                bindingButton.bindingName.text = "Clutch";
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void SetWheelBindingText()
+    {
+        switch ((WheelBinding)selectedKeybinding)
+        {
+            case WheelBinding.Steering:
+                bindingButton.bindingName.text = "Steering";
+                break;
+            case WheelBinding.Shift_Up:
+                bindingButton.bindingName.text = "Shift up";
+                break;
+            case WheelBinding.Shift_Down:
+                bindingButton.bindingName.text = "Shift down";
+                break;
+            case WheelBinding.Brake:
+                bindingButton.bindingName.text = "Brake";
+                break;
+            case WheelBinding.Accelerate:
+                bindingButton.bindingName.text = "Accelerate";
+                break;
+            case WheelBinding.Reset:
+                bindingButton.bindingName.text = "Reset vehicle";
+                break;
+            case WheelBinding.Clutch:
                 bindingButton.bindingName.text = "Clutch";
                 break;
             default:

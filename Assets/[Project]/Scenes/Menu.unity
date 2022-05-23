@@ -2261,8 +2261,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 62925e5281b898f448e3e68d2a488ed4, type: 2}
   - {fileID: 11400000, guid: 6bdad498478d02d4e9816b5a0def9a15, type: 2}
   - {fileID: 11400000, guid: 5a67ccf199c12d546b037c5e925d0166, type: 2}
-  defaultPlayerInputBindings:
-  - {fileID: 0}
+  defaultPlayerInputBindings: []
 --- !u!4 &913496690
 Transform:
   m_ObjectHideFlags: 0

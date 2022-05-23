@@ -62,6 +62,7 @@ public class VehicleController : MonoBehaviour
         if (useBindingManager)
         {
             BindingManager.Instance.InitializeSelectedBinding();
+            Debug.Log(BindingManager.Instance.vehicleInputActions.Keyboard.Acceleration.bindings[0].path);
             vehicleInputActions = BindingManager.Instance.vehicleInputActions;
         }
 
@@ -203,7 +204,7 @@ public class VehicleController : MonoBehaviour
         float physicsWobble = ApplyForceToWheels(brakeInput, out wheelSlip);
 
         float localForwardVelocity = Vector3.Dot(rb.velocity, transform.forward);
-        engineForce = engine.Run(localForwardVelocity, accelerationInput, clutchInput, physicsWobble, wheelSlip);
+        engineForce = engine.Run(localForwardVelocity, accelerationInput, clutchInput, brakeInput, physicsWobble, wheelSlip);
 
         SetUserInterface(accelerationInput, brakeInput);
 
@@ -399,10 +400,7 @@ public class VehicleController : MonoBehaviour
 
         int i = 0;
         foreach (Suspension s in suspensions)
-        {
-            Debug.Log(i);
             rb.AddForceAtPosition(physics[i++], s.transform.position);
-        }
         return physicsWobble / suspensions.Count;
     }
 

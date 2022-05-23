@@ -277,25 +277,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1114408893 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1310743607430915519, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-  m_PrefabInstance: {fileID: 1368253489}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1114408897
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1114408893}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -6782788302594274715, guid: fbe1c54f047f3884baed90cd6383ad3a, type: 3}
 --- !u!1001 &1368253489
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -303,14 +284,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 952954432125781081, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1310743607430915519, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 1693877335096914509, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -355,45 +328,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3894144422264200207, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: springConstant
-      value: 9000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3894144422264200207, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: damperStiffness
-      value: 900
-      objectReference: {fileID: 0}
-    - target: {fileID: 5478222151546139566, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: springConstant
-      value: 9500
-      objectReference: {fileID: 0}
-    - target: {fileID: 5478222151546139566, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: damperStiffness
-      value: 950
-      objectReference: {fileID: 0}
-    - target: {fileID: 5764137815396227814, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: m_Constraints
-      value: 122
-      objectReference: {fileID: 0}
     - target: {fileID: 5859103045432505117, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
       propertyPath: m_Name
       value: Lotus1970_2
       objectReference: {fileID: 0}
-    - target: {fileID: 8268505483696282657, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: springConstant
-      value: 9500
-      objectReference: {fileID: 0}
-    - target: {fileID: 8268505483696282657, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: damperStiffness
-      value: 950
-      objectReference: {fileID: 0}
-    - target: {fileID: 8304962331406672593, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.109
-      objectReference: {fileID: 0}
-    - target: {fileID: 8304962331406672593, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.82
+    - target: {fileID: 7452415522373170925, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
+      propertyPath: field of view
+      value: 45.1
       objectReference: {fileID: 0}
     - target: {fileID: 8462864637646562068, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
       propertyPath: useWheel
@@ -402,14 +343,6 @@ PrefabInstance:
     - target: {fileID: 8462864637646562068, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
       propertyPath: useBindingManager
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8661194727327120160, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: springConstant
-      value: 9000
-      objectReference: {fileID: 0}
-    - target: {fileID: 8661194727327120160, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: damperStiffness
-      value: 900
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
@@ -618,14 +551,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1628733046}
-  m_LocalRotation: {x: -0.0066590607, y: -0, z: -0, w: 0.9999779}
+  m_LocalRotation: {x: -0.006629676, y: -0.00062488584, z: -0.09383783, w: 0.99556524}
   m_LocalPosition: {x: -6.43, y: -0.83, z: -180.74}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: -0.763, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.763, y: 0, z: -10.769}
 --- !u!1 &1634760350
 GameObject:
   m_ObjectHideFlags: 0

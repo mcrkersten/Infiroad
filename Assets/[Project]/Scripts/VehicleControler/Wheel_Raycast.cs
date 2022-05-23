@@ -70,8 +70,8 @@ public class Wheel_Raycast : MonoBehaviour
             suspension.transform.localPosition = suspensionLocalStartPosition + (-Vector3.up * (hitPoint.distance));
             lastHitPosition = hitPoint.point;
             hit = hitPoint;
-            Material m = GetMaterialFromRaycastHit(hit, hit.transform.GetComponent<Mesh>());
-            currentSurface = hit.transform.GetComponent<RoadSegment>()?.surfaceSettings.First(s => s.material == m);
+            //Material m = GetMaterialFromRaycastHit(hit, hit.transform.GetComponent<Mesh>());
+            //currentSurface = hit.transform.GetComponent<RoadSegment>()?.surfaceSettings.First(s => s.material == m);
             slipSmokeParticleSystem.transform.position = hit.point;
             return true;
         }
@@ -117,7 +117,7 @@ public class Wheel_Raycast : MonoBehaviour
     public Vector2 RotateWheelModel(Vector2 force, SuspensionPosition suspensionPosition)
     {
         float wheelLockPercentage = brakeLock.Evaluate(Mathf.Abs(force.x));
-        float wheelSpinPercentage = wheelSpin.Evaluate(force.y);
+        float wheelSpinPercentage = wheelSpin.Evaluate(Mathf.Abs(force.y));
         float combinedPercentage = wheelLockPercentage;// + wheelSpinPercentage;
 
         float rotationSpeed = (wheelVelocityLocalSpace.z * 3.6f) / tireCircumference;

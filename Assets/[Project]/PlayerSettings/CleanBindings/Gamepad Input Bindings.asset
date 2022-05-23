@@ -92,3 +92,14 @@ MonoBehaviour:
         m_Action: 
         m_Flags: 0
       key: 0
+    - bindingName: 
+      inputBinding:
+        m_Name: 
+        m_Id: 
+        m_Path: 
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: 
+        m_Flags: 0
+      key: 0

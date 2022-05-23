@@ -12,27 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 968972396982e854e9bbfb037c44c290, type: 3}
   m_Name: SectorPointDecoration
   m_EditorClassIdentifier: 
-  segmentIndex: 0
   wholeUnitsInPool: 4
+  segmentIndex: 0
   mainCurveTime: 0.7
   decor:
-  - prefab: {fileID: 9129019508651545179, guid: 08d7ecd3060fd86448e0955bc3b97b1e, type: 3}
-    position: {x: 0, y: 0}
-    curveTime: 0
-    noiseChannel: 1
-  - prefab: {fileID: 1952533968303655483, guid: 240a2e483e6372a46ada640916124e1d, type: 3}
-    position: {x: 6, y: 0}
-    curveTime: 0
-    noiseChannel: 1
-  - prefab: {fileID: 1952533968303655483, guid: 240a2e483e6372a46ada640916124e1d, type: 3}
-    position: {x: -6, y: 0}
-    curveTime: 0
-    noiseChannel: 1
-  - prefab: {fileID: 3064690595498032198, guid: 92355bd9a68a82145bbd03bb46020c09, type: 3}
-    position: {x: -8, y: 0}
-    curveTime: 0
-    noiseChannel: 1
-  - prefab: {fileID: 2639451264253111639, guid: 36c08b2a9adabb944a9ae990baafcc81, type: 3}
+  - meshtaskPoolType: 0
+    unitsInPool: 0
+    prefab: {fileID: 2639451264253111639, guid: 36c08b2a9adabb944a9ae990baafcc81, type: 3}
     position: {x: 0, y: 0}
     curveTime: 0
     noiseChannel: 1

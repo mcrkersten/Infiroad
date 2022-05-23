@@ -13,6 +13,8 @@ public class Engine2
     public AnimationCurve engineTorqueProfile;
     public AnimationCurve engineBrakeProfile;
     public AnimationCurve throttleProfile;
+    public AnimationCurve AntiStallProfile;
+
     public Dashboard dashboard;
     private float lastRPM = 0f;
 
@@ -54,10 +56,12 @@ public class Engine2
         FeedbackSystem.instance.RegisterFeedbackComponent(feedbackComponent);
     }
 
-    public float Run(float currentForwardVelocity, float throttle, float clutch, float physicsWobble, float wheelSlip)
+    public float Run(float currentForwardVelocity, float throttle, float clutch, float brake, float physicsWobble, float wheelSlip)
     {
         clutch = SemiAutomaticClutch(clutch);
-        float mechanicalForce = CalculateMechanicalFriction(currentForwardVelocity, throttle);
+        clutch *= AntiStall(brake);
+
+        float mechanicalForce = CalculateMechanicalFriction(currentForwardVelocity, throttle, clutch);
 
         float effectiveGearRatio = gearRatios[currentEngagedGear] * finalDriveRatio;
         float wheelRPM = (currentForwardVelocity / (rollingCircumference / 60f)) * wheelSlip;
@@ -79,6 +83,11 @@ public class Engine2
 
         throttleAudio.SetGlobalValue(throttle);
         return forceToApply;
+    }
+
+    private float AntiStall(float brake)
+    {
+        return 1f - AntiStallProfile.Evaluate(brake);
     }
 
     private float SemiAutomaticClutch(float clutch)
@@ -106,7 +115,7 @@ public class Engine2
         return clutch;
     }
 
-    float CalculateMechanicalFriction(float currentForwardSpeed, float throttle)
+    float CalculateMechanicalFriction(float currentForwardSpeed, float throttle, float clutch)
     {
         float effectiveGearRatio = gearRatios[currentSelectedGear] * finalDriveRatio;
         float wheelRPM = currentForwardSpeed / (rollingCircumference / 60f);
@@ -115,7 +124,7 @@ public class Engine2
         float idealEngineRPM = (3500f) * (1f - throttle);
         if(currentEngineRPM < idealEngineRPM)
             return idealEngineRPM == 0f ? 0f : CalculateEngineTorque(idealEngineRPM);
-        return CalculateEngineBrakeTorque(idealEngineRPM, currentEngineRPM);
+        return CalculateEngineBrakeTorque(idealEngineRPM, currentEngineRPM) * clutch;
     }
 
     private float CalculateEngineTorque(float rpm)

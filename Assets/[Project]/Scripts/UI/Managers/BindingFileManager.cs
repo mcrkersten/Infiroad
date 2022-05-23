@@ -38,7 +38,14 @@ public class BindingFileManager
             FileStream stream = new FileStream(path, FileMode.Open);
             InputBindings data = formatter.Deserialize(stream) as InputBindings;
             PlayerInputBindings newB = ScriptableObject.CreateInstance<PlayerInputBindings>();
-            newB.inputBindings = data;
+
+            newB.inputBindings = new InputBindings();
+            foreach (BindingObject item in data.bindings)
+            {
+                newB.inputBindings.bindings.Add(item);
+                newB.inputBindings.inputType = data.inputType;
+            }
+            stream.Close();
             return newB;
         }
         else

@@ -81,23 +81,21 @@ public class Suspension : MonoBehaviour
     private Vector3 CalculateForces(float accelerationForce, float brakeForce, float downForce, out float wheelSpin)
     {
         Vector2 forces = new Vector2(brakeForce / downForce, accelerationForce / downForce);
-        Vector2 slipGrip = wheel.RotateWheelModel(forces, suspensionPosition);
-        wheelSpin = slipGrip.y;
-        Vector3 slipBrakeForce = this.transform.root.InverseTransformDirection(rb.GetPointVelocity(transform.position));
-        float calc1 = Mathf.Lerp(-slipBrakeForce.x, -wheel.wheelVelocityLocalSpace.x, slipGrip.x);
-        float calc2 = calc1 * slipGrip.y;
-        Vector2 sideways = new Vector2(calc2 * downForce, 0f);
+        Vector2 slipForce = wheel.RotateWheelModel(forces, suspensionPosition);
+        wheelSpin = slipForce.y;
 
+        Vector3 worldSlipDirection = this.transform.root.InverseTransformDirection(rb.GetPointVelocity(this.transform.position));
+        float calculatedSlipDirection = Mathf.Lerp(-worldSlipDirection.x, -wheel.wheelVelocityLocalSpace.x, slipForce.x) * slipForce.y;
+
+        Vector2 sideways = new Vector2(calculatedSlipDirection * downForce, 0f);
         Vector2 forward = new Vector2(0f, accelerationForce + brakeForce);
         Vector2 rawForce = forward + sideways;
 
         //Normal force | No accelation or brake influence on sideforce
         float distance = Vector2.Distance(Vector2.zero, rawForce);
         float time = distance / downForce;
-
-        float gripPercentage = 0;
-        if (wheel.currentSurface != null)
-            gripPercentage = wheel.currentSurface.slip.Evaluate(Mathf.Abs(time));
+        float gripPercentage = wheel.currentSurface.slip.Evaluate(Mathf.Abs(time));
+        Debug.Log(time);
 
         float gripForce = downForce * gripPercentage;
         Vector3 clampedGripForce =  ClampForce(rawForce, gripForce);
@@ -131,14 +129,8 @@ public class Suspension : MonoBehaviour
 
         //Spring damper calculation
         float damperForce = -damperStiffness * compressionVelocity;
-        if (suspensionPosition == SuspensionPosition.RearLeft)
-            Debug.Log("Compression = " + springCompression + "|| compressionVelocity =" + compressionVelocity);
-        //damperForce = Mathf.Clamp(damperForce, -springConstant, springConstant);
-
 
         Debug.DrawLine(wheel.transform.position, wheel.transform.position + (-this.transform.up * (hit.distance + wheel.wheelRadius)), Color.green);
-        //Debug.DrawLine(this.transform.position, this.transform.position + this.transform.up * ((springForce + damperForce) / 2000f), Color.cyan);
-
 
         return wheel.transform.up * Mathf.Max(0f,(springForce + damperForce + rollbarForce));
     }

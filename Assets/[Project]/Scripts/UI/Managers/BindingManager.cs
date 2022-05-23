@@ -39,12 +39,12 @@ public class BindingManager : MonoBehaviour
         List<InputType> fixedErrors = new List<InputType>();
         foreach (InputType inputType in bindingErrors)
         {
-            //PlayerInputBindings selectedBinding = defaultPlayerInputBindings.Where(i => i.inputBindings.inputType == inputType).FirstOrDefault();
-            //if(selectedBinding != null)
-            //{
-            //    bindings.Add(selectedBinding);
-            //    fixedErrors.Add(inputType);
-            //}
+            PlayerInputBindings selectedBinding = defaultPlayerInputBindings.Where(i => i.inputBindings.inputType == inputType).FirstOrDefault();
+            if (selectedBinding != null)
+            {
+                bindings.Add(selectedBinding);
+                fixedErrors.Add(inputType);
+            }
         }
 
         foreach (InputType inputType in fixedErrors)
@@ -54,11 +54,9 @@ public class BindingManager : MonoBehaviour
 
         foreach (PlayerInputBindings binding in bindings)
         {
-            PlayerInputBindings selectedBinding = playerInputBindings.Where(i => i.inputBindings.inputType == binding.inputBindings.inputType).First();
-            var index = bindings.IndexOf(selectedBinding);
-
-            if (index != -1)
-                playerInputBindings[index] = binding;
+            selectedBinding = binding;
+            playerInputBindings[(int)selectedBinding.inputBindings.inputType] = binding;
+            InitializeSelectedBinding();
         }
         return bindingErrors;
     }
@@ -84,7 +82,6 @@ public class BindingManager : MonoBehaviour
         foreach (BindingObject binding in selectedBinding.inputBindings.bindings)
         {
             KeyboardBinding key = (KeyboardBinding)binding.key;
-            Debug.Log(vehicleInputActions);
             switch (key)
             {
                 case KeyboardBinding.SteerLeft:
