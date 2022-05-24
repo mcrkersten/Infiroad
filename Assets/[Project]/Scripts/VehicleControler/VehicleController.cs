@@ -61,7 +61,6 @@ public class VehicleController : MonoBehaviour
     {
         if (useBindingManager)
         {
-            BindingManager.Instance.InitializeSelectedBinding();
             Debug.Log(BindingManager.Instance.vehicleInputActions.Keyboard.Acceleration.bindings[0].path);
             vehicleInputActions = BindingManager.Instance.vehicleInputActions;
         }
@@ -114,7 +113,7 @@ public class VehicleController : MonoBehaviour
     {
         if (useBindingManager)
         {
-            switch (BindingManager.Instance.selectedBinding.inputBindings.inputType)
+            switch (BindingManager.Instance.selectedInputType)
             {
                 case InputType.Wheel:
                     ActivateWheelControls();
@@ -130,7 +129,7 @@ public class VehicleController : MonoBehaviour
             braking.Enable();
             acceleration.Enable();
             clutch.Enable();
-            userInputType = BindingManager.Instance.selectedBinding.inputBindings.inputType;
+            userInputType = BindingManager.Instance.selectedInputType;
         }
     }
 
@@ -413,7 +412,7 @@ public class VehicleController : MonoBehaviour
         acceleration.Disable();
         clutch.Disable();
 
-        switch (BindingManager.Instance.selectedBinding.inputBindings.inputType)
+        switch (BindingManager.Instance.selectedInputType)
         {
             case InputType.Wheel:
                 vehicleInputActions.SteeringWheel.ShiftUP.started -= engine.ShiftUp;

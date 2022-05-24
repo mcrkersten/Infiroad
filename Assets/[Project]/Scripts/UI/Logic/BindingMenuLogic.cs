@@ -27,12 +27,19 @@ public class BindingMenuLogic : MonoBehaviour
         Enable_NavigateInputSettings();
         Enable_InputTypeSetButtons();
         inputAction = bindingManager.vehicleInputActions;
-        UpdateBindingFiles();
     }
 
-    public void UpdateBindingFiles()
+    public void SaveNewBinding()
     {
-        bindingErrors = bindingManager.CheckBindingFiles();
+        bindingManager.SaveActionmap(selectedInputType, inputAction);
+    }
+
+    public void CancelBindingMenuLogic()
+    {
+        selectedInputType = 0;
+        selectedKeybinding = 0;
+        blibManager.DestroyAllBLibs();
+        this.gameObject.SetActive(false);
     }
 
     private void Enable_InputTypeSetButtons()
@@ -71,7 +78,7 @@ public class BindingMenuLogic : MonoBehaviour
     {
         navigateInputButtons.buttons[0].onClick.AddListener(() => NextBinding(selectedInputType));
         navigateInputButtons.buttons[1].onClick.AddListener(() => PreviousBinding(selectedInputType));
-        navigateInputButtons.buttons[2].onClick.AddListener(() => CancelBinding());
+        navigateInputButtons.buttons[2].onClick.AddListener(() => CancelBindingMenuLogic());
         navigateInputButtons.buttons[3].onClick.AddListener(() => StartBindingKey(selectedKeybinding, selectedInputType));
 
     }
@@ -120,19 +127,12 @@ public class BindingMenuLogic : MonoBehaviour
                     .Start();
     }
 
-    private void SetPlayerInputSetting(InputType type, int key, InputBinding binding)
-    {
-        PlayerInputBindings ps = bindingManager.playerInputBindings.First(x => x.inputBindings.inputType == type);
-        ps.SetBinding((int)key, binding);
-    }
-
     private void OnRebindComplete(InputAction actionToRebind)
     {
         actionToRebind.Enable();
         bindingButton.SetKeyText(actionToRebind.bindings[0]);
         rebindingOperation.Dispose();
         navigateInputButtons.buttons[3].onClick.AddListener(() => StartBindingKey(selectedKeybinding, selectedInputType));
-        SetPlayerInputSetting(selectedInputType, selectedKeybinding, actionToRebind.bindings[0]);
     }
 
     private void OnRebindAxisComplete(InputAction actionToRebind, InputAction newAction, bool isPositive)
@@ -141,14 +141,12 @@ public class BindingMenuLogic : MonoBehaviour
         {
             var negative = actionToRebind.bindings.IndexOf(b => b.name == "negative");
             actionToRebind.ApplyBindingOverride(negative, newAction.bindings[0]);
-            SetPlayerInputSetting(selectedInputType, selectedKeybinding, actionToRebind.bindings[1]);
             bindingButton.SetKeyText(actionToRebind.bindings[1]);
         }
         else
         {
             var positive = actionToRebind.bindings.IndexOf(b => b.name == "positive");
             actionToRebind.ApplyBindingOverride(positive, newAction.bindings[0]);
-            SetPlayerInputSetting(selectedInputType, selectedKeybinding, actionToRebind.bindings[2]);
             bindingButton.SetKeyText(actionToRebind.bindings[2]);
         }
 
@@ -257,9 +255,7 @@ public class BindingMenuLogic : MonoBehaviour
             selectedKeybinding += 1;
         blibManager.ActivateBlib((int)selectedKeybinding);
         SetBindingText(inputType);
-        SetBindingButtonText();
-
-        CheckBinding(inputType);
+        SetBoundButtonText(selectedKeybinding);
     }
 
     private void PreviousBinding(InputType inputType)
@@ -272,64 +268,21 @@ public class BindingMenuLogic : MonoBehaviour
             selectedKeybinding -= 1;
         blibManager.ActivateBlib((int)selectedKeybinding);
         SetBindingText(inputType);
-        SetBindingButtonText();
-
-        CheckBinding(inputType);
-
+        SetBoundButtonText(selectedKeybinding);
     }
 
-    private void CheckBinding(InputType inputType)
-    {
-        bool result = true;
-        switch (inputType)
-        {
-            case InputType.Keyboard:
-                foreach (BindingObject binding in bindingManager.playerInputBindings[0].inputBindings.bindings)
-                    if (binding.bindingName == "")
-                        result = false;
-                break;
-            case InputType.Gamepad:
-                foreach (BindingObject binding in bindingManager.playerInputBindings[1].inputBindings.bindings)
-                    if (binding.bindingName == "")
-                        result = false;
-                break;
-            case InputType.Wheel:
-                foreach (BindingObject binding in bindingManager.playerInputBindings[2].inputBindings.bindings)
-                    if (binding.bindingName == "")
-                        result = false;
-                break;
-        }
-
-        saveBindingButton.SetActive(result);
-    }
-
-    public void SaveCurrentBinding()
-    {
-        BindingFileManager.SaveBindingData(selectedInputType);
-        UpdateBindingFiles();
-        CancelBinding();
-    }
-
-    private void SetBindingButtonText()
+    private void SetBoundButtonText(int action, InputAction currentInputAction)
     {
         switch (selectedInputType)
         {
             case InputType.Keyboard:
-                if (bindingManager.playerInputBindings[0].inputBindings.bindings[selectedKeybinding].bindingName != "")
-                    bindingButton.SetKeyText(bindingManager.playerInputBindings[0].inputBindings.bindings[selectedKeybinding].inputBinding);
-                else
+                if(currentInputAction.GetBindingDisplayString() != "")
                     bindingButton.UnBound();
                 break;
             case InputType.Gamepad:
-                if (bindingManager.playerInputBindings[1].inputBindings.bindings[selectedKeybinding].bindingName != "")
-                    bindingButton.SetKeyText(bindingManager.playerInputBindings[1].inputBindings.bindings[selectedKeybinding].inputBinding);
-                else
                     bindingButton.UnBound();
                 break;
             case InputType.Wheel:
-                if (bindingManager.playerInputBindings[2].inputBindings.bindings[selectedKeybinding].bindingName != "")
-                    bindingButton.SetKeyText(bindingManager.playerInputBindings[2].inputBindings.bindings[selectedKeybinding].inputBinding);
-                else
                     bindingButton.UnBound();
                 break;
         }
@@ -466,14 +419,6 @@ public class BindingMenuLogic : MonoBehaviour
         }
     }
 
-    public void CancelBinding()
-    {
-        selectedInputType = 0;
-        selectedKeybinding = 0;
-        blibManager.DestroyAllBLibs();
-        this.gameObject.SetActive(false);
-    }
-
     private void OnDisable()
     {
         DisableButtons(inputTypeSelectionButtons);
@@ -499,4 +444,37 @@ public enum InputType
     Wheel
 }
 
+public enum WheelBinding
+{
+    Steering = 0,
+    Shift_Up,
+    Shift_Down,
+    Brake,
+    Accelerate,
+    Reset,
+    Clutch
+}
 
+public enum GamepadBinding
+{
+    SteerLeft = 0,
+    SteerRight,
+    Shift_Up,
+    Shift_Down,
+    Brake,
+    Accelerate,
+    Reset,
+    Clutch
+}
+
+public enum KeyboardBinding
+{
+    SteerLeft = 0,
+    SteerRight,
+    Shift_Up,
+    Shift_Down,
+    Brake,
+    Accelerate,
+    Reset,
+    Clutch
+}
