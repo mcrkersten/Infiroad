@@ -58,7 +58,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""name"": ""Clutch"",
                     ""type"": ""Value"",
                     ""id"": ""2569e045-4d67-4d60-96fd-f06ae46828a4"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -115,7 +115,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""638824c8-82fd-4909-9ae1-6a975cf14a66"",
-                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -126,7 +126,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""56c92af4-5632-4cac-8074-a9a6765d54e8"",
-                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -137,7 +137,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c0cf47cc-cc89-464a-a430-248e4c65d582"",
-                    ""path"": ""<Keyboard>/downArrow"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -148,7 +148,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0f790006-a774-41bd-bf51-7b97296e6029"",
-                    ""path"": ""<Keyboard>/upArrow"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -159,7 +159,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0448a37b-5f9a-439d-bca7-a037706ceba4"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -170,7 +170,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""8f137a5a-602a-46e8-a069-4de598e1ebc2"",
-                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -181,7 +181,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""886e6d23-9e88-4be8-ba1a-768402723e90"",
-                    ""path"": ""<Keyboard>/tab"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -192,7 +192,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6b113de5-db00-4afd-ba39-ef3ee3e8e67e"",
-                    ""path"": ""<Gamepad>/select"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -203,7 +203,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0e5fa782-79a0-4d2f-b263-e58642a65c18"",
-                    ""path"": ""<Keyboard>/rightShift"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -305,7 +305,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""b2bb3c52-6881-4b10-afdb-f9cfbd977237"",
-                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -316,7 +316,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""c2ef0a72-5af6-4cdb-a8fa-21ba842f0a09"",
-                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -327,7 +327,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""fff29810-ecfd-4c45-acef-9ac8909c82cc"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -338,7 +338,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b470d966-d091-43f6-a042-ee7dc2439292"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -349,7 +349,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""2ce73d3b-323f-4a9d-8f9f-8ae3877344e8"",
-                    ""path"": ""<XInputController>/buttonEast"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -360,18 +360,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""54ffeb16-1ba8-4471-a218-99832f24aed1"",
-                    ""path"": ""<Keyboard>/leftCtrl"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ShiftDOWN"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""39616249-4adf-43e2-8d9b-e8c6768a29a4"",
-                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -382,7 +371,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6c887497-ebd5-4128-8036-e7e070b9d109"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -393,7 +382,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""cd5e5ad6-a061-4876-8609-f3f202cbc381"",
-                    ""path"": ""<Gamepad>/select"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -404,7 +393,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a2f2be14-2750-46a1-a573-9354bbe190f1"",
-                    ""path"": ""<Keyboard>/rightShift"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -495,7 +484,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""359f5655-a0f0-4412-ad70-b3d6cb2b1eb1"",
-                    ""path"": ""<Logitech G HUB G29 Driving Force Racing Wheel USB•{80441800-D376-11EB-8003-444553540000}>/X"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -506,7 +495,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""984446b7-2492-4326-b007-85c550ed98cd"",
-                    ""path"": ""<Logitech G HUB G29 Driving Force Racing Wheel USB•{80441800-D376-11EB-8003-444553540000}>/RZ"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -517,7 +506,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0cea6fee-c649-49b0-86f3-232d91c50d24"",
-                    ""path"": ""<Logitech G HUB G29 Driving Force Racing Wheel USB•{80441800-D376-11EB-8003-444553540000}>/Y"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -528,7 +517,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""aa404ff1-814b-451b-a2f4-aad3281f2826"",
-                    ""path"": ""<Logitech G HUB G29 Driving Force Racing Wheel USB•{80441800-D376-11EB-8003-444553540000}>/Button004"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -539,7 +528,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7e23b331-85f6-4105-b582-196f3e0deb40"",
-                    ""path"": ""<Logitech G HUB G29 Driving Force Racing Wheel USB•{80441800-D376-11EB-8003-444553540000}>/Button005"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -550,7 +539,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6c9424dd-39b1-4f16-876d-a5ca77b8b8d6"",
-                    ""path"": ""<Logitech G HUB G29 Driving Force Racing Wheel USB•{80441800-D376-11EB-8003-444553540000}>/U"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -566,6 +555,17 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Reset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""14151374-08dc-4395-bdc2-5d3372cb2c56"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StartEngine"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }

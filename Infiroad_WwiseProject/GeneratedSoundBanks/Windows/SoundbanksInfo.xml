@@ -16,7 +16,7 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="2025709351" Language="SFX" Hash="4097177218">
+		<SoundBank Id="2025709351" Language="SFX" Hash="3975034518">
 			<ObjectPath>\SoundBanks\Default Work Unit\Vehicle</ObjectPath>
 			<ShortName>Vehicle</ShortName>
 			<Path>Vehicle.bnk</Path>
@@ -39,9 +39,9 @@
 				</Event>
 				<Event Id="639345804" Name="Play_Engine" ObjectPath="\Events\Default Work Unit\Play_Engine" MaxAttenuation="30." DurationType="Unknown">
 					<IncludedMemoryFiles>
-						<File Id="896025657" Language="SFX">
-							<ShortName>Dodge_Viper.model</ShortName>
-							<Path>Plugins\CrankcaseAudio REV\Dodge_Viper_EAEDC289.wem</Path>
+						<File Id="896025651" Language="SFX">
+							<ShortName>Dodge_Challenger_RT_71.model</ShortName>
+							<Path>Plugins\CrankcaseAudio REV\Dodge_Challenger_RT_71_AD7AA2E6.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -71,9 +71,9 @@
 					<ShortName>strong-wind-blowing-sound-background-sound-effect.wav</ShortName>
 					<Path>SFX\strong-wind-blowing-sound-background-sound-effect_80497B0C.wem</Path>
 				</File>
-				<File Id="896025657" Language="SFX">
-					<ShortName>Dodge_Viper.model</ShortName>
-					<Path>Plugins\CrankcaseAudio REV\Dodge_Viper_EAEDC289.wem</Path>
+				<File Id="896025651" Language="SFX">
+					<ShortName>Dodge_Challenger_RT_71.model</ShortName>
+					<Path>Plugins\CrankcaseAudio REV\Dodge_Challenger_RT_71_AD7AA2E6.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
 			<GameParameters>

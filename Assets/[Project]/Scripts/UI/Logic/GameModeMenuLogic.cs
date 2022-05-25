@@ -18,7 +18,7 @@ public class GameModeMenuLogic : MonoBehaviour
     {
         GameModeManager.Instance.gameMode = mode;
         bindingMenu.gameObject.SetActive(true);
-        bindingMenu.StartBindingMenuLogic();
+        bindingMenu.EnableBindingMenuLogicButtons();
         this.gameObject.SetActive(false);
     }
 }

@@ -161,20 +161,28 @@
 								<PluginMediaSource Name="" ID="{53BD263C-BFB3-4D84-8E31-0CEF6C9AD6F4}">
 									<ParentPluginID>27267154</ParentPluginID>
 									<PropertyList>
-										<Property Name="DataFileName" Type="string" Value="Dodge_Viper.model"/>
+										<Property Name="DataFileName" Type="string" Value="Dodge_Challenger_RT_71.model"/>
 									</PropertyList>
 									<MediaIDList>
-										<MediaID ID="896025657"/>
+										<MediaID ID="896025651"/>
 									</MediaIDList>
 								</PluginMediaSource>
 							</ChildrenList>
 							<Language>SFX</Language>
 							<PluginInnerObjectList>
+								<List Name="EngineSimulationControlData">
+									<PluginInnerObject Name="" ID="{BC76910E-D3A2-4905-87EB-E5AB07C5296E}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417">
+										<PropertyList>
+											<Property Name="UpShiftWobbleVolAmp" Type="Real32" Value="0"/>
+										</PropertyList>
+									</PluginInnerObject>
+									<PluginInnerObject Name="" ID="{DC271C04-8C68-4C9B-B254-272B760E2581}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
+								</List>
 								<List Name="AccelDecelModelControlData">
 									<PluginInnerObject Name="" ID="{297798B2-39AA-42EE-8836-AE065BA12066}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418">
 										<PropertyList>
-											<Property Name="IdleRampIn" Type="Real32" Value="0.05"/>
-											<Property Name="IdleVolume" Type="Real32" Value="0.49"/>
+											<Property Name="CrossfadeDuration" Type="int32" Value="150"/>
+											<Property Name="RPMSmoothness" Type="Real32" Value="5"/>
 											<Property Name="Version" Type="int32" Value="2"/>
 										</PropertyList>
 									</PluginInnerObject>
@@ -188,29 +196,9 @@
 									<PluginInnerObject Name="" ID="{5C2F01FB-7739-4E61-84B1-7DDDC8DD4940}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
 									<PluginInnerObject Name="" ID="{54403FE9-9C73-4244-90C5-20CBF5AD80A5}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
 									<PluginInnerObject Name="" ID="{4DCF4DDA-01EC-4E7A-B9DC-944BD20C0D43}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-								</List>
-								<List Name="EngineSimulationControlData">
-									<PluginInnerObject Name="" ID="{DF47A653-B7EC-4012-835E-B1D327806D99}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417">
-										<PropertyList>
-											<Property Name="ClutchRPMMergeTime" Type="Real32" Value="0.68"/>
-											<Property Name="ClutchRPMSpike" Type="Real32" Value="0.5"/>
-											<Property Name="DownShiftDuration" Type="Real32" Value="0.66"/>
-											<Property Name="UpShiftAttackThrottleTime" Type="Real32" Value="0.2"/>
-											<Property Name="UpShiftWobbleDuration" Type="Real32" Value="1.35"/>
-											<Property Name="UpShiftWobblePitchAmp" Type="Real32" Value="0.1"/>
-											<Property Name="UpShiftWobbleVolAmp" Type="Real32" Value="0.3"/>
-										</PropertyList>
-									</PluginInnerObject>
-									<PluginInnerObject Name="" ID="{12879895-A13F-4F74-AD81-321D1E64E170}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
-									<PluginInnerObject Name="" ID="{6FF1BCDD-7925-40F6-AD78-4AE207FEE55D}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
-									<PluginInnerObject Name="" ID="{2EB1C64E-C860-4329-B9FB-F419D5F3E95C}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
-									<PluginInnerObject Name="" ID="{C20E2701-D5D3-44F3-B929-13E9BD5E4C3D}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
-									<PluginInnerObject Name="" ID="{CBFAE213-EA34-4A56-9E0D-E5080A6F82B6}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
-									<PluginInnerObject Name="" ID="{C3F676E8-E75D-45F4-9663-F4EE7B5AB7B0}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
-									<PluginInnerObject Name="" ID="{1CD126C7-CAB4-421A-864B-6D84EBF4C3B4}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
-									<PluginInnerObject Name="" ID="{6E0C9E9F-2F12-4D37-ADAB-31260C1C8E5D}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
-									<PluginInnerObject Name="" ID="{4087951D-C4C8-458A-88F9-B72F1FF000E8}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
-									<PluginInnerObject Name="" ID="{7DC2E214-B40C-485A-8932-A373F609E3FE}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
+									<PluginInnerObject Name="" ID="{7022C350-AA72-4737-AB76-79FE27F1F26F}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{14B1B56C-60F5-4664-B0B5-3B79DA6F8E02}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{978ECF02-F17B-4612-B668-ECC789E7A264}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
 								</List>
 								<List Name="GranularModelControlData_Acceleration">
 									<PluginInnerObject Name="" ID="{87DA791D-8991-48B0-8B65-CEDFC4F7ECEB}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419">
@@ -218,10 +206,14 @@
 											<Property Name="LoadVolumeOff" Type="Real32" Value="0.3"/>
 										</PropertyList>
 									</PluginInnerObject>
+									<PluginInnerObject Name="" ID="{161D3A10-9874-4FC4-8F4E-C402B8DE81C4}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
+									<PluginInnerObject Name="" ID="{971D34F8-E46A-48D7-A45B-81D35FE2C71C}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
+									<PluginInnerObject Name="" ID="{5C46C818-107F-465D-9ED8-0D045D2E36B3}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
 								</List>
 								<List Name="GranularModelControlData_Deceleration">
 									<PluginInnerObject Name="" ID="{53FCDAAB-A1D3-4E68-85A0-B930AF58A03E}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419">
 										<PropertyList>
+											<Property Name="GrainWidth" Type="int32" Value="3"/>
 											<Property Name="LoadVolumeOff" Type="Real32" Value="1"/>
 											<Property Name="LoadVolumeOn" Type="Real32" Value="0"/>
 										</PropertyList>
@@ -236,6 +228,9 @@
 									<PluginInnerObject Name="" ID="{A0BB28A7-ED48-473C-8272-F50FE72241E7}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
 									<PluginInnerObject Name="" ID="{EFC80FC0-1D03-4D0F-B1B2-622485F67D71}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
 									<PluginInnerObject Name="" ID="{E3522A9B-CA4D-4A8A-8C8A-534B7ACCDADB}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
+									<PluginInnerObject Name="" ID="{D817A520-75D8-4EA9-A682-B937F62848DD}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
+									<PluginInnerObject Name="" ID="{F0A2C3D9-658C-4F0A-94D0-9088AF15120D}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
+									<PluginInnerObject Name="" ID="{8DD422C1-587C-44CE-AAF7-7FA07CB4D210}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
 								</List>
 							</PluginInnerObjectList>
 						</SourcePlugin>

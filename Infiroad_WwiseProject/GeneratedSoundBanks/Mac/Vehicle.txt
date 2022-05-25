@@ -22,5 +22,5 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	1018576071	CountDown	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Mac\SFX\mixkit-short-race-countdown-926_8A95F37A.wem		\Actor-Mixer Hierarchy\Default Work Unit\UI\CountDown		176580
 
 Plug-in Media	ID	Name	Source file	Type	Wwise Object Path	Notes	Data Size
-	896025657	CrankcaseAudio REV	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Mac\Plugins\CrankcaseAudio REV\Dodge_Viper_EAEDC289.wem	CrankcaseAudio REV (Custom)	\Actor-Mixer Hierarchy\Default Work Unit\Engine\CrankcaseAudio REV		1528592
+	896025651	CrankcaseAudio REV	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Mac\Plugins\CrankcaseAudio REV\Dodge_Challenger_RT_71_AD7AA2E6.wem	CrankcaseAudio REV (Custom)	\Actor-Mixer Hierarchy\Default Work Unit\Engine\CrankcaseAudio REV		3994544
 

@@ -7,41 +7,60 @@ using UnityEngine.SceneManagement;
 
 public class BindingMenuLogic : MonoBehaviour
 {
+    [SerializeField] private BindingManager bindingManager;
+
     [SerializeField] private GameObject bindingMenuWarning;
     [SerializeField] private GameObject saveBindingButton;
-    [SerializeField] private BindingManager bindingManager;
-    [SerializeField] private BindingButton bindingButton;
+    [SerializeField] private BindingButton remapButton;
     [SerializeField] private Buttons inputTypeSelectionButtons;
     [SerializeField] private Buttons navigateInputButtons;
+    [SerializeField] private Buttons startRemapButton;
     [SerializeField] private BlibManager blibManager;
 
-    [SerializeField] private VehicleInputActions inputAction;
-    private InputActionRebindingExtensions.RebindingOperation rebindingOperation;
-
-    private InputType selectedInputType = InputType.Gamepad;
-    private int selectedKeybinding = 0;
-    private List<InputType> bindingErrors = new List<InputType>();
-
-    public void StartBindingMenuLogic()
+    public void EnableBindingMenuLogicButtons()
     {
         Enable_NavigateInputSettings();
         Enable_InputTypeSetButtons();
-        inputAction = bindingManager.vehicleInputActions;
+        Enable_StartRemapProcessButtons();
+    }
+
+    public void EnableSaveButton()
+    {
+        saveBindingButton.gameObject.SetActive(true);
+    }
+
+    public void DisableSaveButton()
+    {
+        saveBindingButton.gameObject.SetActive(false);
+    }
+
+
+    #region UsedBySceneAssignedButtons
+    public void StartRemapProcessOnError()
+    {
+        navigateInputButtons.buttons[0].transform.parent.gameObject.SetActive(true);
+        inputTypeSelectionButtons.buttons[0].transform.parent.gameObject.SetActive(false);
+        blibManager.InstantiateBlibs(GetEnumCount(bindingManager.selectedInputType) + 1);
+        blibManager.ActivateBlib(0);
+        SetRemapKeyNameText(bindingManager.selectedInputType);
+        SetRemapButtonText(bindingManager.selectedInputType);
     }
 
     public void SaveNewBinding()
     {
-        bindingManager.SaveActionmap(selectedInputType, inputAction);
+        bindingManager.SaveActionmap(bindingManager.vehicleInputActions);
     }
 
     public void CancelBindingMenuLogic()
     {
-        selectedInputType = 0;
-        selectedKeybinding = 0;
+        bindingManager.selectedKeybinding = 0;
         blibManager.DestroyAllBLibs();
         this.gameObject.SetActive(false);
     }
 
+    #endregion
+
+    #region EnableCodeAssignedButtons
     private void Enable_InputTypeSetButtons()
     {
         inputTypeSelectionButtons.buttons[0].onClick.AddListener(() => SetInputType(0));
@@ -49,44 +68,342 @@ public class BindingMenuLogic : MonoBehaviour
         inputTypeSelectionButtons.buttons[2].onClick.AddListener(() => SetInputType(2));
     }
 
-    private void SetInputType(int i)
+    private void Enable_StartRemapProcessButtons()
     {
-        selectedInputType = (InputType)i;
-        if (bindingErrors.Contains(selectedInputType))
-        {
-            Debug.Log("BINDING MENU WARNING");
-            bindingMenuWarning.SetActive(true);
-        }
-        else
-        {
-            Debug.Log("START GAME");
-            SceneManager.LoadScene(1);
-        }
-    }
-
-    public void ActivateRebinding()
-    {
-        navigateInputButtons.buttons[0].transform.parent.gameObject.SetActive(true);
-        inputTypeSelectionButtons.buttons[0].transform.parent.gameObject.SetActive(false);
-        blibManager.InstantiateBlibs(GetEnumCount(selectedInputType) + 1);
-        blibManager.ActivateBlib(0);
-        SetBindingText(selectedInputType);
-        SetBindingButtonText();
+        startRemapButton.buttons[0].onClick.AddListener(() => StartRemapProcess(InputType.Keyboard));
+        startRemapButton.buttons[1].onClick.AddListener(() => StartRemapProcess(InputType.Gamepad));
+        startRemapButton.buttons[2].onClick.AddListener(() => StartRemapProcess(InputType.Wheel));
+        navigateInputButtons.transform.parent.gameObject.SetActive(true);
     }
 
     private void Enable_NavigateInputSettings()
     {
-        navigateInputButtons.buttons[0].onClick.AddListener(() => NextBinding(selectedInputType));
-        navigateInputButtons.buttons[1].onClick.AddListener(() => PreviousBinding(selectedInputType));
+        navigateInputButtons.buttons[0].onClick.AddListener(() => NextBinding(bindingManager.selectedInputType));
+        navigateInputButtons.buttons[1].onClick.AddListener(() => PreviousBinding(bindingManager.selectedInputType));
         navigateInputButtons.buttons[2].onClick.AddListener(() => CancelBindingMenuLogic());
-        navigateInputButtons.buttons[3].onClick.AddListener(() => StartBindingKey(selectedKeybinding, selectedInputType));
+        navigateInputButtons.buttons[3].onClick.AddListener(() => StartRemappingKey(bindingManager.selectedKeybinding, bindingManager.selectedInputType));
+    }
+    #endregion
 
+    #region UsedToNavigate
+
+    private void NextBinding(InputType inputType)
+    {
+        int x = GetEnumCount(inputType);
+        //if last jump to first
+        if (bindingManager.selectedKeybinding == x)
+            bindingManager.selectedKeybinding = 0;
+        else
+            bindingManager.selectedKeybinding += 1;
+        blibManager.ActivateBlib((int)bindingManager.selectedKeybinding);
+        SetRemapKeyNameText(inputType);
+        SetRemapButtonText(bindingManager.selectedInputType);
     }
 
-    private void StartBindingKey(int key, InputType type)
+    private void PreviousBinding(InputType inputType)
+    {
+        int x = GetEnumCount(inputType);
+        //if first jump to last
+        if (bindingManager.selectedKeybinding == 0)
+            bindingManager.selectedKeybinding = x;
+        else
+            bindingManager.selectedKeybinding -= 1;
+        blibManager.ActivateBlib((int)bindingManager.selectedKeybinding);
+        SetRemapKeyNameText(inputType);
+        SetRemapButtonText(bindingManager.selectedInputType);
+    }
+
+    #endregion
+
+    #region Remap
+    private void RemapWheelBinding(WheelBinding key)
+    {
+        VehicleInputActions vehicleInputActions = bindingManager.vehicleInputActions;
+        switch (key)
+        {
+            case WheelBinding.Steering:
+                bindingManager.RemapButton(vehicleInputActions.SteeringWheel.Steering);
+                break;
+            case WheelBinding.Shift_Up:
+                bindingManager.RemapButton(vehicleInputActions.SteeringWheel.ShiftUP);
+                break;
+            case WheelBinding.Shift_Down:
+                bindingManager.RemapButton(vehicleInputActions.SteeringWheel.ShiftDOWN);
+                break;
+            case WheelBinding.Brake:
+                bindingManager.RemapButton(vehicleInputActions.SteeringWheel.Braking);
+                break;
+            case WheelBinding.Accelerate:
+                bindingManager.RemapButton(vehicleInputActions.SteeringWheel.Acceleration);
+                break;
+            case WheelBinding.Reset:
+                bindingManager.RemapButton(vehicleInputActions.SteeringWheel.Reset);
+                break;
+            case WheelBinding.Clutch:
+                bindingManager.RemapButton(vehicleInputActions.SteeringWheel.Clutch);
+                break;
+            case WheelBinding.StartEngine:
+                bindingManager.RemapButton(vehicleInputActions.SteeringWheel.StartEngine);
+                break;
+        }
+    }
+
+    private void RemapKeyboardBinding(KeyboardBinding key)
+    {
+        VehicleInputActions vehicleInputActions = bindingManager.vehicleInputActions;
+        switch (key)
+        {
+            case KeyboardBinding.SteerLeft:
+                bindingManager.RemapAxis(vehicleInputActions.Keyboard.Steering, false);
+                break;
+            case KeyboardBinding.SteerRight:
+                bindingManager.RemapAxis(vehicleInputActions.Keyboard.Steering, true);
+                break;
+            case KeyboardBinding.Shift_Up:
+                bindingManager.RemapButton(vehicleInputActions.Keyboard.ShiftUP);
+                break;
+            case KeyboardBinding.Shift_Down:
+                bindingManager.RemapButton(vehicleInputActions.Keyboard.ShiftDOWN);
+                break;
+            case KeyboardBinding.Brake:
+                bindingManager.RemapButton(vehicleInputActions.Keyboard.Braking);
+                break;
+            case KeyboardBinding.Accelerate:
+                bindingManager.RemapButton(vehicleInputActions.Keyboard.Acceleration);
+                break;
+            case KeyboardBinding.Reset:
+                bindingManager.RemapButton(vehicleInputActions.Keyboard.Reset);
+                break;
+            case KeyboardBinding.Clutch:
+                bindingManager.RemapButton(vehicleInputActions.Keyboard.Clutch);
+                break;
+            case KeyboardBinding.StartEngine:
+                bindingManager.RemapButton(vehicleInputActions.Keyboard.StartEngine);
+                break;
+        }
+    }
+
+    private void RemapGamepadBinding(GamepadBinding key)
+    {
+        VehicleInputActions vehicleInputActions = bindingManager.vehicleInputActions;
+        switch (key)
+        {
+            case GamepadBinding.SteerLeft:
+                bindingManager.RemapAxis(vehicleInputActions.Gamepad.Steering, false);
+                break;
+            case GamepadBinding.SteerRight:
+                bindingManager.RemapAxis(vehicleInputActions.Gamepad.Steering, true);
+                break;
+            case GamepadBinding.Shift_Up:
+                bindingManager.RemapButton(vehicleInputActions.Gamepad.ShiftUP);
+                break;
+            case GamepadBinding.Shift_Down:
+                bindingManager.RemapButton(vehicleInputActions.Gamepad.ShiftDOWN);
+                break;
+            case GamepadBinding.Brake:
+                bindingManager.RemapButton(vehicleInputActions.Gamepad.Braking);
+                break;
+            case GamepadBinding.Accelerate:
+                bindingManager.RemapButton(vehicleInputActions.Gamepad.Acceleration);
+                break;
+            case GamepadBinding.Reset:
+                bindingManager.RemapButton(vehicleInputActions.Gamepad.Reset);
+                break;
+            case GamepadBinding.Clutch:
+                bindingManager.RemapButton(vehicleInputActions.Gamepad.Clutch);
+                break;
+            case GamepadBinding.StartEngine:
+                bindingManager.RemapButton(vehicleInputActions.Gamepad.StartEngine);
+                break;
+        }
+    }
+    #endregion
+
+    #region UI_UpdateFunctions
+    public void SetRemapButtonToInputAction(InputAction actionToRebind, int i)
+    {
+        remapButton.SetKeyText(actionToRebind.bindings[i]);
+        Debug.Log(actionToRebind.bindings[i]);
+        navigateInputButtons.buttons[3].onClick.AddListener(() => StartRemappingKey(bindingManager.selectedKeybinding, bindingManager.selectedInputType));
+    }
+
+    private void SetRemapButtonText(InputType inputType)
+    {
+        string k;
+        InputBinding b;
+        switch (inputType)
+        {
+            case InputType.Keyboard:
+                k = GetBinding(true, out b);
+                if (k != "") { remapButton.SetKeyText(b); return; }
+                break;
+            case InputType.Gamepad:
+                k = GetBinding(true, out b);
+                if (k != "") { remapButton.SetKeyText(b); return; }
+                break;
+            case InputType.Wheel:
+                k = GetBinding(false, out b);
+                if (k != "") { remapButton.SetKeyText(b); return; }
+                break;
+        }
+        remapButton.UnBound();
+    }
+
+    private void SetRemapKeyNameText(InputType inputType)
+    {
+        switch (inputType)
+        {
+            case InputType.Keyboard:
+                SetKeyboardBindingNameText();
+                break;
+            case InputType.Gamepad:
+                SetGamepadBindingNameText();
+                break;
+            case InputType.Wheel:
+                SetWheelBindingNameText();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void SetKeyboardBindingNameText()
+    {
+        switch ((KeyboardBinding)bindingManager.selectedKeybinding)
+        {
+            case KeyboardBinding.SteerLeft:
+                remapButton.bindingName.text = "Steer left";
+                break;
+            case KeyboardBinding.SteerRight:
+                remapButton.bindingName.text = "Steer right";
+                break;
+            case KeyboardBinding.Shift_Up:
+                remapButton.bindingName.text = "Shift up";
+                break;
+            case KeyboardBinding.Shift_Down:
+                remapButton.bindingName.text = "Shift down";
+                break;
+            case KeyboardBinding.Brake:
+                remapButton.bindingName.text = "Brake";
+                break;
+            case KeyboardBinding.Accelerate:
+                remapButton.bindingName.text = "Accelerate";
+                break;
+            case KeyboardBinding.Reset:
+                remapButton.bindingName.text = "Reset vehicle";
+                break;
+            case KeyboardBinding.Clutch:
+                remapButton.bindingName.text = "Clutch";
+                break;
+            case KeyboardBinding.StartEngine:
+                remapButton.bindingName.text = "Start engine";
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void SetGamepadBindingNameText()
+    {
+        switch ((GamepadBinding)bindingManager.selectedKeybinding)
+        {
+            case GamepadBinding.SteerLeft:
+                remapButton.bindingName.text = "Steer left";
+                break;
+            case GamepadBinding.SteerRight:
+                remapButton.bindingName.text = "Steer right";
+                break;
+            case GamepadBinding.Shift_Up:
+                remapButton.bindingName.text = "Shift up";
+                break;
+            case GamepadBinding.Shift_Down:
+                remapButton.bindingName.text = "Shift down";
+                break;
+            case GamepadBinding.Brake:
+                remapButton.bindingName.text = "Brake";
+                break;
+            case GamepadBinding.Accelerate:
+                remapButton.bindingName.text = "Accelerate";
+                break;
+            case GamepadBinding.Reset:
+                remapButton.bindingName.text = "Reset vehicle";
+                break;
+            case GamepadBinding.Clutch:
+                remapButton.bindingName.text = "Clutch";
+                break;
+            case GamepadBinding.StartEngine:
+                remapButton.bindingName.text = "Start engine";
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void SetWheelBindingNameText()
+    {
+        switch ((WheelBinding)bindingManager.selectedKeybinding)
+        {
+            case WheelBinding.Steering:
+                remapButton.bindingName.text = "Steering";
+                break;
+            case WheelBinding.Shift_Up:
+                remapButton.bindingName.text = "Shift up";
+                break;
+            case WheelBinding.Shift_Down:
+                remapButton.bindingName.text = "Shift down";
+                break;
+            case WheelBinding.Brake:
+                remapButton.bindingName.text = "Brake";
+                break;
+            case WheelBinding.Accelerate:
+                remapButton.bindingName.text = "Accelerate";
+                break;
+            case WheelBinding.Reset:
+                remapButton.bindingName.text = "Reset vehicle";
+                break;
+            case WheelBinding.Clutch:
+                remapButton.bindingName.text = "Clutch";
+                break;
+            case WheelBinding.StartEngine:
+                remapButton.bindingName.text = "Start engine";
+                break;
+            default:
+                break;
+        }
+    }
+    #endregion
+
+    #region UI_ButtonFunctions
+    private void StartRemapProcess(InputType type)
+    {
+        bindingManager.selectedInputType = type;
+        bindingManager.currentSelectedInputActionMap = bindingManager.vehicleInputActions.asset.actionMaps[(int)type];
+        navigateInputButtons.buttons[0].transform.parent.gameObject.SetActive(true);
+        inputTypeSelectionButtons.buttons[0].transform.parent.gameObject.SetActive(false);
+        blibManager.InstantiateBlibs(GetEnumCount(type) + 1);
+        blibManager.ActivateBlib(0);
+        SetRemapKeyNameText(type);
+        SetRemapButtonText(bindingManager.selectedInputType);
+    }
+    private void SetInputType(int i)
+    {
+        bindingManager.selectedInputType = (InputType)i;
+        bindingManager.currentSelectedInputActionMap = bindingManager.vehicleInputActions.asset.actionMaps[i];
+        if (bindingManager.LoadActionmap(bindingManager.vehicleInputActions))
+        {
+            Debug.Log("START GAME");
+            SceneManager.LoadScene(1);
+            return;
+        }
+
+        Debug.Log("BINDING MENU WARNING");
+        bindingMenuWarning.SetActive(true);
+    }
+
+    private void StartRemappingKey(int key, InputType type)
     {
         navigateInputButtons.buttons[3].onClick.RemoveAllListeners();
-        bindingButton.Listening();
+        remapButton.Listening();
         switch (type)
         {
             case InputType.Keyboard:
@@ -99,193 +416,30 @@ public class BindingMenuLogic : MonoBehaviour
                 RemapWheelBinding((WheelBinding)key);
                 break;
         }
-    }  
-
-    private void RemapButton(InputAction actionToRebind)
-    {
-        actionToRebind.Disable();
-        rebindingOperation = actionToRebind.PerformInteractiveRebinding()
-                    // To avoid accidental input from mouse motion
-                    .WithControlsExcluding("Mouse")
-                    .WithControlsExcluding("<Keyboard>/printScreen")
-                    .OnMatchWaitForAnother(0.1f)
-                    .OnComplete(operation => OnRebindComplete(actionToRebind))
-                    .Start();
-
     }
 
-    private void RemapAxis(InputAction actionToRebind, bool isPositive)
+    private void DisableButtons(Buttons buttons)
     {
-        var newAction = new InputAction(binding: "/*/<button>");
-        actionToRebind.Disable();
-        rebindingOperation = newAction.PerformInteractiveRebinding()
-                    // To avoid accidental input from mouse motion
-                    .WithControlsExcluding("Mouse")
-                    .WithControlsExcluding("<Keyboard>/printScreen")
-                    .OnMatchWaitForAnother(0.1f)
-                    .OnComplete(operation => OnRebindAxisComplete(actionToRebind, newAction, isPositive))
-                    .Start();
-    }
-
-    private void OnRebindComplete(InputAction actionToRebind)
-    {
-        actionToRebind.Enable();
-        bindingButton.SetKeyText(actionToRebind.bindings[0]);
-        rebindingOperation.Dispose();
-        navigateInputButtons.buttons[3].onClick.AddListener(() => StartBindingKey(selectedKeybinding, selectedInputType));
-    }
-
-    private void OnRebindAxisComplete(InputAction actionToRebind, InputAction newAction, bool isPositive)
-    {
-        if (!isPositive)
+        foreach (var b in buttons.buttons)
         {
-            var negative = actionToRebind.bindings.IndexOf(b => b.name == "negative");
-            actionToRebind.ApplyBindingOverride(negative, newAction.bindings[0]);
-            bindingButton.SetKeyText(actionToRebind.bindings[1]);
+            b.onClick.RemoveAllListeners();
         }
+    }
+    #endregion
+
+
+    private string GetBinding(bool hasAxis, out InputBinding binding)
+    {
+        if (hasAxis && bindingManager.selectedKeybinding == 0)
+            binding = bindingManager.currentSelectedInputActionMap.actions[0].bindings[1];
+        else if (hasAxis && bindingManager.selectedKeybinding == 1)
+            binding = bindingManager.currentSelectedInputActionMap.actions[0].bindings[2];
+        else if(hasAxis)
+            binding = bindingManager.currentSelectedInputActionMap.actions[bindingManager.selectedKeybinding - 1].bindings[0];
         else
-        {
-            var positive = actionToRebind.bindings.IndexOf(b => b.name == "positive");
-            actionToRebind.ApplyBindingOverride(positive, newAction.bindings[0]);
-            bindingButton.SetKeyText(actionToRebind.bindings[2]);
-        }
-
-        actionToRebind.Enable();
-        rebindingOperation.Dispose();
-        navigateInputButtons.buttons[3].onClick.AddListener(() => StartBindingKey(selectedKeybinding, selectedInputType));
-    }
-
-    private void RemapWheelBinding(WheelBinding key)
-    {
-        switch (key)
-        {
-            case WheelBinding.Steering:
-                RemapButton(inputAction.SteeringWheel.Steering);
-                break;
-            case WheelBinding.Shift_Up:
-                RemapButton(inputAction.SteeringWheel.ShiftUP);
-                break;
-            case WheelBinding.Shift_Down:
-                RemapButton(inputAction.SteeringWheel.ShiftDOWN);
-                break;
-            case WheelBinding.Brake:
-                RemapButton(inputAction.SteeringWheel.Braking);
-                break;
-            case WheelBinding.Accelerate:
-                RemapButton(inputAction.SteeringWheel.Acceleration);
-                break;
-            case WheelBinding.Reset:
-                RemapButton(inputAction.SteeringWheel.Reset);
-                break;
-            case WheelBinding.Clutch:
-                RemapButton(inputAction.SteeringWheel.Clutch);
-                break;
-        }
-    }
-
-    private void RemapKeyboardBinding(KeyboardBinding key)
-    {
-        switch (key)
-        {
-            case KeyboardBinding.SteerLeft:
-                RemapAxis(inputAction.Keyboard.Steering, false);
-                break;
-            case KeyboardBinding.SteerRight:
-                RemapAxis(inputAction.Keyboard.Steering, true);
-                break;
-            case KeyboardBinding.Shift_Up:
-                RemapButton(inputAction.Keyboard.ShiftUP);
-                break;
-            case KeyboardBinding.Shift_Down:
-                RemapButton(inputAction.Keyboard.ShiftDOWN);
-                break;
-            case KeyboardBinding.Brake:
-                RemapButton(inputAction.Keyboard.Braking);
-                break;
-            case KeyboardBinding.Accelerate:
-                RemapButton(inputAction.Keyboard.Acceleration);
-                break;
-            case KeyboardBinding.Reset:
-                RemapButton(inputAction.Keyboard.Reset);
-                break;
-            case KeyboardBinding.Clutch:
-                RemapButton(inputAction.Keyboard.Clutch);
-                break;
-        }
-    }
-
-    private void RemapGamepadBinding(GamepadBinding key)
-    {
-        switch (key)
-        {
-            case GamepadBinding.SteerLeft:
-                RemapAxis(inputAction.Keyboard.Steering, false);
-                break;
-            case GamepadBinding.SteerRight:
-                RemapAxis(inputAction.Keyboard.Steering, true);
-                break;
-            case GamepadBinding.Shift_Up:
-                RemapButton(inputAction.Gamepad.ShiftUP);
-                break;
-            case GamepadBinding.Shift_Down:
-                RemapButton(inputAction.Gamepad.ShiftDOWN);
-                break;
-            case GamepadBinding.Brake:
-                RemapButton(inputAction.Gamepad.Braking);
-                break;
-            case GamepadBinding.Accelerate:
-                RemapButton(inputAction.Gamepad.Acceleration);
-                break;
-            case GamepadBinding.Reset:
-                RemapButton(inputAction.Gamepad.Reset);
-                break;
-            case GamepadBinding.Clutch:
-                RemapButton(inputAction.Gamepad.Clutch);
-                break;
-        }
-    }
-
-    private void NextBinding(InputType inputType)
-    {
-        int x = GetEnumCount(inputType);
-        //if last jump to first
-        if (selectedKeybinding == x)
-            selectedKeybinding = 0;
-        else
-            selectedKeybinding += 1;
-        blibManager.ActivateBlib((int)selectedKeybinding);
-        SetBindingText(inputType);
-        SetBoundButtonText(selectedKeybinding);
-    }
-
-    private void PreviousBinding(InputType inputType)
-    {
-        int x = GetEnumCount(inputType);
-        //if first jump to last
-        if (selectedKeybinding == 0)
-            selectedKeybinding = x;
-        else
-            selectedKeybinding -= 1;
-        blibManager.ActivateBlib((int)selectedKeybinding);
-        SetBindingText(inputType);
-        SetBoundButtonText(selectedKeybinding);
-    }
-
-    private void SetBoundButtonText(int action, InputAction currentInputAction)
-    {
-        switch (selectedInputType)
-        {
-            case InputType.Keyboard:
-                if(currentInputAction.GetBindingDisplayString() != "")
-                    bindingButton.UnBound();
-                break;
-            case InputType.Gamepad:
-                    bindingButton.UnBound();
-                break;
-            case InputType.Wheel:
-                    bindingButton.UnBound();
-                break;
-        }
+            binding = bindingManager.currentSelectedInputActionMap.actions[bindingManager.selectedKeybinding].bindings[0];
+        string k = InputControlPath.ToHumanReadableString(binding.effectivePath);
+        return k;
     }
 
     private int GetEnumCount(InputType inputType)
@@ -306,134 +460,13 @@ public class BindingMenuLogic : MonoBehaviour
         return x;
     }
 
-    private void SetBindingText(InputType inputType)
-    {
-        switch (inputType)
-        {
-            case InputType.Keyboard:
-                SetKeyboardBindingText();
-                break;
-            case InputType.Gamepad:
-                SetGamepadBindingText();
-                break;
-            case InputType.Wheel:
-                SetWheelBindingText();
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void SetKeyboardBindingText()
-    {
-        switch ((KeyboardBinding)selectedKeybinding)
-        {
-            case KeyboardBinding.SteerLeft:
-                bindingButton.bindingName.text = "Steer left";
-                break;
-            case KeyboardBinding.SteerRight:
-                bindingButton.bindingName.text = "Steer right";
-                break;
-            case KeyboardBinding.Shift_Up:
-                bindingButton.bindingName.text = "Shift up";
-                break;
-            case KeyboardBinding.Shift_Down:
-                bindingButton.bindingName.text = "Shift down";
-                break;
-            case KeyboardBinding.Brake:
-                bindingButton.bindingName.text = "Brake";
-                break;
-            case KeyboardBinding.Accelerate:
-                bindingButton.bindingName.text = "Accelerate";
-                break;
-            case KeyboardBinding.Reset:
-                bindingButton.bindingName.text = "Reset vehicle";
-                break;
-            case KeyboardBinding.Clutch:
-                bindingButton.bindingName.text = "Clutch";
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void SetGamepadBindingText() {
-        switch ((GamepadBinding)selectedKeybinding)
-        {
-            case GamepadBinding.SteerLeft:
-                bindingButton.bindingName.text = "Steer left";
-                break;
-            case GamepadBinding.SteerRight:
-                bindingButton.bindingName.text = "Steer right";
-                break;
-            case GamepadBinding.Shift_Up:
-                bindingButton.bindingName.text = "Shift up";
-                break;
-            case GamepadBinding.Shift_Down:
-                bindingButton.bindingName.text = "Shift down";
-                break;
-            case GamepadBinding.Brake:
-                bindingButton.bindingName.text = "Brake";
-                break;
-            case GamepadBinding.Accelerate:
-                bindingButton.bindingName.text = "Accelerate";
-                break;
-            case GamepadBinding.Reset:
-                bindingButton.bindingName.text = "Reset vehicle";
-                break;
-            case GamepadBinding.Clutch:
-                bindingButton.bindingName.text = "Clutch";
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void SetWheelBindingText()
-    {
-        switch ((WheelBinding)selectedKeybinding)
-        {
-            case WheelBinding.Steering:
-                bindingButton.bindingName.text = "Steering";
-                break;
-            case WheelBinding.Shift_Up:
-                bindingButton.bindingName.text = "Shift up";
-                break;
-            case WheelBinding.Shift_Down:
-                bindingButton.bindingName.text = "Shift down";
-                break;
-            case WheelBinding.Brake:
-                bindingButton.bindingName.text = "Brake";
-                break;
-            case WheelBinding.Accelerate:
-                bindingButton.bindingName.text = "Accelerate";
-                break;
-            case WheelBinding.Reset:
-                bindingButton.bindingName.text = "Reset vehicle";
-                break;
-            case WheelBinding.Clutch:
-                bindingButton.bindingName.text = "Clutch";
-                break;
-            default:
-                break;
-        }
-    }
-
     private void OnDisable()
     {
         DisableButtons(inputTypeSelectionButtons);
         DisableButtons(navigateInputButtons);
-        SetBindingText(selectedInputType);
+        SetRemapKeyNameText(0);
         navigateInputButtons.buttons[0].transform.parent.gameObject.SetActive(false);
         inputTypeSelectionButtons.buttons[0].transform.parent.gameObject.SetActive(true);
-    }
-
-    private void DisableButtons(Buttons buttons)
-    {
-        foreach (var b in buttons.buttons)
-        {
-            b.onClick.RemoveAllListeners();
-        }
     }
 }
 
@@ -447,34 +480,37 @@ public enum InputType
 public enum WheelBinding
 {
     Steering = 0,
-    Shift_Up,
-    Shift_Down,
     Brake,
     Accelerate,
+    Clutch,
+    Shift_Up,
+    Shift_Down,
     Reset,
-    Clutch
+    StartEngine
 }
 
 public enum GamepadBinding
 {
     SteerLeft = 0,
     SteerRight,
-    Shift_Up,
-    Shift_Down,
     Brake,
     Accelerate,
+    Clutch,
+    Shift_Up,
+    Shift_Down,
     Reset,
-    Clutch
+    StartEngine
 }
 
 public enum KeyboardBinding
 {
     SteerLeft = 0,
     SteerRight,
-    Shift_Up,
-    Shift_Down,
     Brake,
     Accelerate,
+    Clutch,
+    Shift_Up,
+    Shift_Down,
     Reset,
-    Clutch
+    StartEngine
 }
