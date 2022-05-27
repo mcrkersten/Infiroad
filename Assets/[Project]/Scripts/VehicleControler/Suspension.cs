@@ -30,10 +30,13 @@ public class Suspension : MonoBehaviour
     private FeedbackComponent feedbackComponent;
     public AnimationCurve Slip_feedbackCurve;
 
-    private void Start()
+    private void Awake()
     {
         rb = transform.root.GetComponent<Rigidbody>();
+    }
 
+    private void Start()
+    {
         feedbackComponent = new FeedbackComponent("Suspension", .25f);
         FeedbackSystem.instance.RegisterFeedbackComponent(feedbackComponent);
     }
@@ -95,7 +98,6 @@ public class Suspension : MonoBehaviour
         float distance = Vector2.Distance(Vector2.zero, rawForce);
         float time = distance / downForce;
         float gripPercentage = wheel.currentSurface.slip.Evaluate(Mathf.Abs(time));
-        Debug.Log(time);
 
         float gripForce = downForce * gripPercentage;
         Vector3 clampedGripForce =  ClampForce(rawForce, gripForce);

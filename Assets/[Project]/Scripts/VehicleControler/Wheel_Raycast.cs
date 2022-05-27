@@ -39,9 +39,13 @@ public class Wheel_Raycast : MonoBehaviour
     public float gripDebug = 0.01f;
     private Rigidbody rb;
 
-    private void Start()
+    private void Awake()
     {
         rb = this.transform.root.GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
         tireCircumference = (Mathf.PI * 2f) * wheelRadius;
         wheelModelLocalStartPosition = new Vector3(wheelModel.transform.localPosition.x, 0, wheelModel.transform.localPosition.z);
         suspensionLocalStartPosition = new Vector3(suspension.transform.localPosition.x, 0, suspension.transform.localPosition.z);
@@ -72,7 +76,8 @@ public class Wheel_Raycast : MonoBehaviour
             hit = hitPoint;
             //Material m = GetMaterialFromRaycastHit(hit, hit.transform.GetComponent<Mesh>());
             //currentSurface = hit.transform.GetComponent<RoadSegment>()?.surfaceSettings.First(s => s.material == m);
-            slipSmokeParticleSystem.transform.position = hit.point;
+            if(slipSmokeParticleSystem != null)
+                slipSmokeParticleSystem.transform.position = hit.point;
             return true;
         }
         slipSmokeParticleSystem.transform.position = this.transform.position;
@@ -156,6 +161,7 @@ public class Wheel_Raycast : MonoBehaviour
     private void ReleaseSmoke(Vector3 position)
     {
         GameObject s = Instantiate(smokeParticleSystemPrefab, position, Quaternion.identity, wheelModel.transform);
+        s.GetComponent<SmokeParticleSystem>().rb = rb;
         ParticleSystem ps = s.GetComponent<ParticleSystem>();
 
         var emission = ps.emission;

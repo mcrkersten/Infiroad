@@ -5,7 +5,7 @@ using UnityEngine;
 public class SmokeParticleSystem : MonoBehaviour
 {
     private ParticleSystem pSystem;
-    private Rigidbody rb;
+    public Rigidbody rb;
 
     private void Awake()
     {
@@ -14,9 +14,6 @@ public class SmokeParticleSystem : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (rb == null)
-            rb = this.transform.root.GetComponent<Rigidbody>();
-
         //Sets velocity of particles as vehicle velocity;
         var main = pSystem.main;
         main.emitterVelocity = rb.velocity;

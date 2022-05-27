@@ -74,24 +74,11 @@ public class RoadChainBuilder : MonoBehaviour
             CreateNextRoadChain();
             CreateNextRoadChain();
             CreateNextRoadChain();
-            CenterCamera();
         }
         EventTriggerManager.roadChainTrigger += CreateNextRoadChain;
 
         if(vehicle != null)
             SetVehicleStartPosition();
-    }
-
-    private void CenterCamera()
-    {
-        Vector3 avarage = Vector3.zero;
-        foreach (RoadChain item in createdRoadChains)
-        {
-            avarage += item.transform.transform.position;
-        }
-        avarage = avarage / createdRoadChains.Count;
-        avarage[1] = 450;
-        Camera.main.transform.position = avarage;
     }
 
     private void SetVehicleStartPosition()
