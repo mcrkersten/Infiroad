@@ -35,7 +35,6 @@ public class VehiclePlatform : MonoBehaviour
         dragDistance = Input.mousePosition.x - positionLastFrame.x;
         positionLastFrame = Input.mousePosition;
         platform.Rotate(Vector3.up, -dragDistance/4f);
-        Debug.Log(dragDistance);
     }
 
     private void OnMouseUp()

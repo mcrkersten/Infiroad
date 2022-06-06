@@ -56,7 +56,7 @@ public class Engine2
         FeedbackSystem.instance.RegisterFeedbackComponent(feedbackComponent);
     }
 
-    public float Run(float currentForwardVelocity, float throttle, float clutch, float brake, float physicsWobble, float wheelSlip)
+    public float Run(float currentForwardVelocity, float throttle, float clutch, float brake, float physicsWobble, float wheelSpin)
     {
         clutch = SemiAutomaticClutch(clutch);
         clutch *= AntiStall(brake);
@@ -64,16 +64,17 @@ public class Engine2
         float mechanicalForce = CalculateMechanicalFriction(currentForwardVelocity, throttle, clutch);
 
         float effectiveGearRatio = gearRatios[currentEngagedGear] * finalDriveRatio;
-        float wheelRPM = (currentForwardVelocity / (rollingCircumference / 60f)) * wheelSlip;
+        float wheelRPM = (currentForwardVelocity / (rollingCircumference / 60f)) * wheelSpin;
         float enginewRPM = ((wheelRPM * effectiveGearRatio) - (physicsWobble * physicsImpact));
         float velocity = (enginewRPM * clutch) + (Mathf.Lerp(3500f, maxRPM, throttle ) * (1f - clutch)) - lastRPM;
         lastRPM = Mathf.Lerp(lastRPM + velocity, enginewRPM, clutch);
+        lastRPM = float.IsNaN(lastRPM) ? 0 : lastRPM;
+        lastRPM = float.IsInfinity(lastRPM) ? maxRPM : lastRPM;
         float wheelTorque = (mechanicalForce + (CalculateEngineTorque(lastRPM) * throttle * effectiveGearRatio)) * clutch;
         float forceToApply = wheelTorque / driveWheelRadiusInMeter;
 
-
-        engineRPMAudio.SetGlobalValue(enginewRPM);
-        velocityAudio.SetGlobalValue(velocity);
+        engineRPMAudio.SetGlobalValue(lastRPM);
+        velocityAudio.SetGlobalValue(currentForwardVelocity);
 
         dashboard.UpdateMeter(lastRPM / maxRPM, DashboardMeter.MeterType.Tacheometer);
         dashboard.UpdateMeter(currentForwardVelocity * 3.6f, DashboardMeter.MeterType.Speedometer);

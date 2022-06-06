@@ -17,7 +17,7 @@ MonoBehaviour:
   mainCurveTime: 0.7
   decor:
   - meshtaskPoolType: 0
-    unitsInPool: 0
+    unitsInPool: 4
     prefab: {fileID: 2639451264253111639, guid: 36c08b2a9adabb944a9ae990baafcc81, type: 3}
     position: {x: 0, y: 0}
     curveTime: 0

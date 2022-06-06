@@ -1469,7 +1469,7 @@ PrefabInstance:
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: vehicle
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 751016503}
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: startSegment
       value: 
@@ -1768,6 +1768,11 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &751016503 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5859103045432505117, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
+  m_PrefabInstance: {fileID: 1674912332}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &758472438
 GameObject:
   m_ObjectHideFlags: 0
@@ -3886,6 +3891,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lotus1970_2
       objectReference: {fileID: 0}
+    - target: {fileID: 8462864637646562068, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
+      propertyPath: resetScreen
+      value: 
+      objectReference: {fileID: 1998757023}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
 --- !u!114 &1674912333 stripped
@@ -3893,7 +3902,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8462864637646562068, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
   m_PrefabInstance: {fileID: 1674912332}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 751016503}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f4f9523e36c6ca4fa954702cf061fdc, type: 3}

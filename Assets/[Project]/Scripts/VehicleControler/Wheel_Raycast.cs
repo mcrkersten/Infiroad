@@ -36,7 +36,7 @@ public class Wheel_Raycast : MonoBehaviour
     [SerializeField] private ParticleSystem slipSmokeParticleSystem;
 
     [HideInInspector] public Vector3 forceDirectionDebug = Vector3.zero;
-    public float gripDebug = 0.01f;
+    public float grip_UI = 0.01f;
     private Rigidbody rb;
 
     private void Awake()
@@ -122,14 +122,13 @@ public class Wheel_Raycast : MonoBehaviour
     public Vector2 RotateWheelModel(Vector2 force, SuspensionPosition suspensionPosition)
     {
         float wheelLockPercentage = brakeLock.Evaluate(Mathf.Abs(force.x));
+        if (suspensionPosition == SuspensionPosition.RearLeft)
+            Debug.Log(force.y);
         float wheelSpinPercentage = wheelSpin.Evaluate(Mathf.Abs(force.y));
-        float combinedPercentage = wheelLockPercentage;// + wheelSpinPercentage;
+        float combinedPercentage = wheelLockPercentage + wheelSpinPercentage;
 
         float rotationSpeed = (wheelVelocityLocalSpace.z * 3.6f) / tireCircumference;
-        if (suspensionPosition == SuspensionPosition.FrontRight || suspensionPosition == SuspensionPosition.RearRight)
-            wheelModel.transform.Rotate(Vector3.right, rotationSpeed * combinedPercentage);
-        else
-            wheelModel.transform.Rotate(Vector3.left, rotationSpeed * combinedPercentage);
+        wheelModel.transform.Rotate(Vector3.right, rotationSpeed * combinedPercentage);
 
         float meterPerSecond = wheelVelocityLocalSpace.z;
         RPM = meterPerSecond / wheelRadius;

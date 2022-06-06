@@ -12,7 +12,6 @@ namespace GameSystems {
         public static event StartGame onStartGame;
 
         [SerializeField] private VehicleController vehicleController;
-        public InputType inputType;
 
         [Header("Game and UI systems")]
         [SerializeField] private CountdownClock startCountdownClock;

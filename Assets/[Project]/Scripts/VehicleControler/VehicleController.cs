@@ -185,9 +185,11 @@ public class VehicleController : MonoBehaviour
         lastFramePosition = transform.position;
         foreach (DownForceWing wing in downforceWing)
         {
-            float downforce = wing.CalculateLiftforce(1.1455f);
+            float downforce = wing.CalculateLiftforce(29.92f);
             Vector3 downForceVector = downforce * -wing.transform.up;
-            rb.AddForceAtPosition(downForceVector * 300f, wing.transform.position);
+            Vector3 dragForceVector = downforce * -wing.transform.forward;
+            rb.AddForceAtPosition(downForceVector, wing.transform.position);
+            rb.AddForceAtPosition(dragForceVector, wing.transform.position);
             Debug.DrawLine(wing.transform.position, wing.transform.position + downForceVector, Color.green);
         }
         Vector3 airResistance = CalculateAirResistance();
@@ -207,17 +209,11 @@ public class VehicleController : MonoBehaviour
 
         SetUserInterface(accelerationInput, brakeInput);
 
-        steerWeight = CalculateSteerWeight();
-
         float fibrationCompensation = localForwardVelocity * Time.deltaTime;
-        float playerSteeringForce = CalculateSteeringInputForce(steerInput, steerWeight, userInputType, fibrationCompensation);
-
+        float playerSteeringForce = CalculateSteeringInputForce(steerInput, userInputType, fibrationCompensation);
         ApplySteeringDirection(playerSteeringForce);
         SetWheelModelRotation(-playerSteeringForce);
         SetSteeringFrontWheels();
-
-        //Steering wheel input
-        steeringInput.SetInputWheelForce(Mathf.RoundToInt(-steerWeight * 100f));
     }
 
     private void SetWheelModelRotation(float rotation)
@@ -231,7 +227,7 @@ public class VehicleController : MonoBehaviour
                 steeringWheel.transform.localEulerAngles = new Vector3(steeringWheel.transform.localEulerAngles.x, rotation * (float)wheelInputAngle, steeringWheel.transform.localEulerAngles.z);
                 break;
             case WheelModelRotation.Z:
-                steeringWheel.transform.localEulerAngles = new Vector3(steeringWheel.transform.localEulerAngles.x, steeringWheel.transform.localEulerAngles.y, rotation * (float)wheelInputAngle);
+                steeringWheel.transform.localEulerAngles = new Vector3(steeringWheel.transform.localEulerAngles.x, steeringWheel.transform.localEulerAngles.y, .00001f + rotation * (float)wheelInputAngle);
                 break;
         }
     }
@@ -308,16 +304,23 @@ public class VehicleController : MonoBehaviour
         userInterface.brake = brakeInput;
     }
 
-    private float steeringForce = 0f;
-    private float CalculateSteeringInputForce(float steerInput, float steerWeight, InputType inputType, float power)
+    private float gamePadSteering = 0f;
+    private float CalculateSteeringInputForce(float steerInput, InputType inputType, float power)
     {
-        float steering = steeringForce;
-        if(inputType == InputType.Gamepad)
+        steerWeight = CalculateSteerWeight();
+        switch (inputType)
         {
-            steering += Mathf.Lerp(0f, steerInput + (steerWeight/(1.5f)), Time.deltaTime);
-            steering = Mathf.Clamp(steering, -1f, 1f);
-            steeringForce = steering;
-            return steeringForce;
+            case InputType.Keyboard:
+                break;
+            case InputType.Gamepad:
+                gamePadSteering = Mathf.Lerp(gamePadSteering, steerInput - (steerWeight/3), Time.fixedDeltaTime);
+                return gamePadSteering;
+            case InputType.Wheel:
+                //Steering wheel input
+                steeringInput.SetInputWheelForce(Mathf.RoundToInt(-steerWeight * 100f));
+                break;
+            default:
+                break;
         }
         return steerInput;
     }
@@ -373,7 +376,7 @@ public class VehicleController : MonoBehaviour
             {
                 case DriveType.rearWheelDrive:
                     if (w.suspensionPosition == SuspensionPosition.RearLeft || w.suspensionPosition == SuspensionPosition.RearRight)
-                        physics.Add(w.SimulatePhysics(brakeInput, engineForce, out wheelSlip, out physicsWobble));
+                        physics.Add(w.SimulatePhysics(brakeInput, engineForce/2f, out wheelSlip, out physicsWobble));
                     else
                     {
                         float d;
@@ -382,7 +385,7 @@ public class VehicleController : MonoBehaviour
                     break;
                 case DriveType.frontWheelDrive:
                     if (w.suspensionPosition == SuspensionPosition.FrontLeft || w.suspensionPosition == SuspensionPosition.FrontRight)
-                        physics.Add(w.SimulatePhysics(brakeInput, engineForce, out wheelSlip, out physicsWobble));
+                        physics.Add(w.SimulatePhysics(brakeInput, engineForce/2f, out wheelSlip, out physicsWobble));
                     else
                     {
                         float d;
@@ -390,7 +393,7 @@ public class VehicleController : MonoBehaviour
                     }
                     break;
                 case DriveType.allWheelDrive:
-                    physics.Add(w.SimulatePhysics(brakeInput, engineForce, out wheelSlip, out physicsWobble));
+                    physics.Add(w.SimulatePhysics(brakeInput, engineForce/4f, out wheelSlip, out physicsWobble));
                     break;
                 default:
                     break;
@@ -450,6 +453,7 @@ public class VehicleController : MonoBehaviour
 
     private void ResetVehicle()
     {
+        Debug.Log("Reset");
         LockPhysicsLock();
         transform.DOMove(resetPosition.position, .2f).SetEase(DG.Tweening.Ease.InOutCubic).OnComplete(UnlockPhysicsLock);
         transform.DORotate(resetPosition.eulerAngles, .2f).SetEase(DG.Tweening.Ease.InOutCubic);

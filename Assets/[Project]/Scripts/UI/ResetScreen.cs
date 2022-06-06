@@ -16,9 +16,8 @@ public class ResetScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        vehicleInputActions = new VehicleInputActions();
-        GameManager gm = GameManager.Instance;
-        switch (gm.inputType)
+        vehicleInputActions = BindingManager.Instance.vehicleInputActions;
+        switch (BindingManager.Instance.selectedInputType)
         {
             case InputType.Keyboard:
                 vehicleInputActions.Keyboard.Reset.Enable();
@@ -37,6 +36,7 @@ public class ResetScreen : MonoBehaviour
 
     public void ActivateResetScreen(InputAction.CallbackContext obj)
     {
+        Debug.Log("WORK");
         blackImage.DOColor(new Color(0, 0, 0, 255), .5f).SetEase(DG.Tweening.Ease.InCubic).OnComplete(DeactivateResetScreen);
     }
 
@@ -49,8 +49,7 @@ public class ResetScreen : MonoBehaviour
     // Update is called once per frame
     void OnDestroy()
     {
-        GameManager gm = GameManager.Instance;
-        switch (gm.inputType)
+        switch (BindingManager.Instance.selectedInputType)
         {
             case InputType.Keyboard:
                 vehicleInputActions.Keyboard.Reset.Disable();

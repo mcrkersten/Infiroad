@@ -51,7 +51,6 @@ public class Suspension : MonoBehaviour
 
         if (wheel.Raycast(springLenght + wheel.wheelRadius, layerMask, out RaycastHit hit))
         {
-
             //Debug.DrawLine(this.transform.position, this.transform.position + rb.GetPointVelocity(hit.point).normalized);
             Debug.DrawLine(wheel.transform.position, wheel.transform.position + wheel.transform.forward, Color.green);
             //Debug.DrawRay(transform.position, -this.transform.up * hit.distance, Color.red);
@@ -64,10 +63,8 @@ public class Suspension : MonoBehaviour
 
             result += suspensionForce;
 
-            float downForce = suspensionForce.y + rb.mass;
-            float accelerationForce = engineForce;
             float brakeForce = CalculateBrakingForce(brakeInput);
-            Vector3 localForceDirection = CalculateForces(accelerationForce, brakeForce, downForce, out wheelSpin);
+            Vector3 localForceDirection = CalculateForces(engineForce, brakeForce, suspensionForce.y, out wheelSpin);
             wheel.forceDirectionDebug = localForceDirection;
             Vector3 worldForceDirection = wheel.transform.TransformDirection(localForceDirection);
             //Check if valid
@@ -80,30 +77,34 @@ public class Suspension : MonoBehaviour
         }
         return result;
     }
-
+    bool slip;
     private Vector3 CalculateForces(float accelerationForce, float brakeForce, float downForce, out float wheelSpin)
     {
-        Vector2 forces = new Vector2(brakeForce / downForce, accelerationForce / downForce);
-        Vector2 slipForce = wheel.RotateWheelModel(forces, suspensionPosition);
-        wheelSpin = slipForce.y;
-
-        Vector3 worldSlipDirection = this.transform.root.InverseTransformDirection(rb.GetPointVelocity(this.transform.position));
-        float calculatedSlipDirection = Mathf.Lerp(-worldSlipDirection.x, -wheel.wheelVelocityLocalSpace.x, slipForce.x) * slipForce.y;
-
-        Vector2 sideways = new Vector2(calculatedSlipDirection * downForce, 0f);
+        Vector2 sideways = new Vector2(-wheel.wheelVelocityLocalSpace.x * downForce, 0f);
         Vector2 forward = new Vector2(0f, accelerationForce + brakeForce);
         Vector2 rawForce = forward + sideways;
 
         //Normal force | No accelation or brake influence on sideforce
         float distance = Vector2.Distance(Vector2.zero, rawForce);
-        float time = distance / downForce;
-        float gripPercentage = wheel.currentSurface.slip.Evaluate(Mathf.Abs(time));
+        float time = Mathf.Clamp(distance / downForce, 0f, 25f);
+        time = float.IsNaN(time) ? 25f : time;
 
+        float gripPercentage = 0F;
+        if(time > wheel.currentSurface.SlipValue && !slip)
+            slip = true;
+        if (time < wheel.currentSurface.UnSlipValue && slip)
+            slip = false;
+
+        gripPercentage = slip ? wheel.currentSurface.unslip.Evaluate(Mathf.Abs(time)) : wheel.currentSurface.slip.Evaluate(Mathf.Abs(time));
         float gripForce = downForce * gripPercentage;
-        Vector3 clampedGripForce =  ClampForce(rawForce, gripForce);
+        Vector3 clampedGripForce = ClampForce(rawForce, gripForce);
 
-        wheel.gripDebug = Mathf.Max(.01f, gripPercentage);
-        float horizontalForce = Mathf.Clamp(clampedGripForce.x/downForce, -1f, 1f) * -Mathf.Abs(gripPercentage);
+        Vector2 slipForces = new Vector2(Mathf.Abs(brakeForce / downForce), Mathf.Abs(accelerationForce / downForce));
+        Vector2 spinLockForce = wheel.RotateWheelModel(slipForces, suspensionPosition);
+        wheelSpin = spinLockForce.y;
+
+        wheel.grip_UI = Mathf.Max(.01f, gripPercentage);
+        float horizontalForce = clampedGripForce.normalized.x * gripPercentage;
         wheel.steeringWheelForce = horizontalForce;
         return clampedGripForce;
     }

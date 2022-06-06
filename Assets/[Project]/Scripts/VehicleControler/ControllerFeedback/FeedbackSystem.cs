@@ -88,7 +88,9 @@ public class FeedbackComponent
     /// <param name="i">0f - 1f</param>
     public void UpdateHighFrequencyRumble(float i)
     {
-        highFrequency = Mathf.Clamp(i, 0f, 1f * intensity);
+        i = float.IsNaN(i) ? 0 : i;
+        i = float.IsInfinity(i) ? intensity : i;
+        highFrequency = Mathf.Clamp(i, 0f, intensity);
     }
 
     /// <summary>
@@ -97,7 +99,9 @@ public class FeedbackComponent
     /// <param name="i">0f - 1f</param>
     public void UpdateLowFrequencyRumble(float i)
     {
-        lowFrequency = Mathf.Clamp(i, 0f, 1f * intensity);
+        i = float.IsNaN(i) ? 0 : i;
+        i = float.IsInfinity(i) ? intensity : i;
+        lowFrequency = Mathf.Clamp(i, 0f, intensity);
     }
 
 }

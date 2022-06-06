@@ -23,11 +23,11 @@ public class DownForceWing : MonoBehaviour
     {
         float cof = 2 * Mathf.PI * wingAngle * Mathf.Deg2Rad;
         float forwardPointVelocity = transform.InverseTransformDirection(rb.GetPointVelocity(transform.position)).z;
-        float lift = (cof * airDensity * Mathf.Sqrt(forwardPointVelocity) * GetArea()) / 2;
+        float force = (cof * airDensity * Mathf.Sqrt(forwardPointVelocity) * GetArea()) / 2;
 
-        if (float.IsNaN(lift))
+        if (float.IsNaN(force))
             return 0f;
 
-        return lift;
+        return force;
     }
 }

@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be9b3f1063355f4586f3ac956708616, type: 3}
   m_Name: Grandstand_Left
   m_EditorClassIdentifier: 
-  dataKey: 564436
+  dataKey: 594220
   calculatedUs: []
   uvLenght: 42.899494
   meshTaskType: 2
   meshtaskPosition: 0
-  meshtaskStyle: 1
+  meshtaskStyle: 0
   points:
   - vertex:
       point: {x: 0, y: -1}
@@ -90,7 +90,7 @@ MonoBehaviour:
   meshtaskWidth: 17.49484
   minimalCornerRadius: -1000
   maximumCornerRadius: -30
-  minimalExtrusionSize: 1
+  minimalExtrusionSize: 0
   materials:
   - {fileID: 2100000, guid: eb059cafb9d06ca489ffbc40095dcbea, type: 2}
   - {fileID: 2100000, guid: f08e44bc4a4d9c94dbe6efb61a25892d, type: 2}

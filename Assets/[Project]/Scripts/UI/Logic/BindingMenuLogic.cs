@@ -82,6 +82,7 @@ public class BindingMenuLogic : MonoBehaviour
         navigateInputButtons.buttons[1].onClick.AddListener(() => PreviousBinding(bindingManager.selectedInputType));
         navigateInputButtons.buttons[2].onClick.AddListener(() => CancelBindingMenuLogic());
         navigateInputButtons.buttons[3].onClick.AddListener(() => StartRemappingKey(bindingManager.selectedKeybinding, bindingManager.selectedInputType));
+        navigateInputButtons.buttons[4].onClick.AddListener(() => SetToDefaultInputType(bindingManager.selectedInputType));
     }
     #endregion
 
@@ -391,13 +392,29 @@ public class BindingMenuLogic : MonoBehaviour
         bindingManager.currentSelectedInputActionMap = bindingManager.vehicleInputActions.asset.actionMaps[i];
         if (bindingManager.LoadActionmap(bindingManager.vehicleInputActions))
         {
-            Debug.Log("START GAME");
+            Debug.Log("START GAME WITH CUSTOM BINDING");
             SceneManager.LoadScene(1);
             return;
         }
+        else if((InputType)i != InputType.Wheel)
+        {
+            Debug.Log("START GAME WITH DEFAULT BINDING");
+            SceneManager.LoadScene(1);
+            return;
+        }
+        else
+        {
+            Debug.Log("BINDING MENU WARNING");
+            bindingMenuWarning.SetActive(true);
+        }
+    }
 
-        Debug.Log("BINDING MENU WARNING");
-        bindingMenuWarning.SetActive(true);
+    private void SetToDefaultInputType(InputType i)
+    {
+        bindingManager.ResetToDefaultActionmap(bindingManager.vehicleInputActions);
+        CancelBindingMenuLogic();
+        EnableBindingMenuLogicButtons();
+        Debug.Log("Test");
     }
 
     private void StartRemappingKey(int key, InputType type)

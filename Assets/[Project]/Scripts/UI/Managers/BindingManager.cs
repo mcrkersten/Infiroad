@@ -53,22 +53,38 @@ public class BindingManager : MonoBehaviour
         {
             case InputType.Keyboard:
                 string keyboard = PlayerPrefs.GetString(selectedInputType.ToString());
-                Debug.Log(keyboard);
                 if (keyboard == "") return false;
-                Debug.Log("not aborted");
                 ((InputActionMap)inputAction.Keyboard).LoadBindingOverridesFromJson(keyboard);
                 break;
             case InputType.Gamepad:
                 string gamepad = PlayerPrefs.GetString(selectedInputType.ToString());
                 if (gamepad == "") return false;
-                ((InputActionMap)inputAction.Keyboard).LoadBindingOverridesFromJson(gamepad);
+                ((InputActionMap)inputAction.Gamepad).LoadBindingOverridesFromJson(gamepad);
                 break;
             case InputType.Wheel:
                 string wheel = PlayerPrefs.GetString(selectedInputType.ToString());
                 if (wheel == "") return false;
-                ((InputActionMap)inputAction.Keyboard).LoadBindingOverridesFromJson(wheel);
+                ((InputActionMap)inputAction.SteeringWheel).LoadBindingOverridesFromJson(wheel);
                 break;
         }
+        return true;
+    }
+
+    public bool ResetToDefaultActionmap(VehicleInputActions inputAction)
+    {
+        switch (selectedInputType)
+        {
+            case InputType.Keyboard:
+                ((InputActionMap)inputAction.Keyboard).RemoveAllBindingOverrides();
+                break;
+            case InputType.Gamepad:
+                ((InputActionMap)inputAction.Gamepad).RemoveAllBindingOverrides();
+                break;
+            case InputType.Wheel:
+                ((InputActionMap)inputAction.SteeringWheel).RemoveAllBindingOverrides();
+                break;
+        }
+        PlayerPrefs.SetString(selectedInputType.ToString(), "");
         return true;
     }
 

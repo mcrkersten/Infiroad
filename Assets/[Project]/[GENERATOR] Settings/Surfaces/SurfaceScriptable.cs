@@ -6,6 +6,9 @@ using UnityEngine;
 public class SurfaceScriptable : ScriptableObject
 {
     public AnimationCurve slip;
+    public AnimationCurve unslip;
+    public float SlipValue;
+    public float UnSlipValue;
     public Material material;
     public bool UV_mirrored;
 }

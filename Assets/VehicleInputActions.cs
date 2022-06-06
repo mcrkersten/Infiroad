@@ -219,12 +219,12 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Steering"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Value"",
                     ""id"": ""12bf9210-637f-438a-9029-a567cc364ab3"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Braking"",
@@ -292,42 +292,9 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""Gamepad"",
-                    ""id"": ""2f5b5918-c81f-493b-8a7c-7a733f9e1428"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Steering"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""b2bb3c52-6881-4b10-afdb-f9cfbd977237"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Steering"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""c2ef0a72-5af6-4cdb-a8fa-21ba842f0a09"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Steering"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""fff29810-ecfd-4c45-acef-9ac8909c82cc"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -338,7 +305,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b470d966-d091-43f6-a042-ee7dc2439292"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -349,7 +316,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""2ce73d3b-323f-4a9d-8f9f-8ae3877344e8"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -360,7 +327,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""54ffeb16-1ba8-4471-a218-99832f24aed1"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -371,7 +338,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6c887497-ebd5-4128-8036-e7e070b9d109"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -382,7 +349,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""cd5e5ad6-a061-4876-8609-f3f202cbc381"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -393,13 +360,46 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a2f2be14-2750-46a1-a573-9354bbe190f1"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""StartEngine"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""a092d08a-3c1f-4f87-94b5-6ea93a8d7f62"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Steering"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""0d09693c-d495-48c4-93f8-c3e8800dbcef"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Steering"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""7e68af28-8228-41dd-bce0-71f041467643"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Steering"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },

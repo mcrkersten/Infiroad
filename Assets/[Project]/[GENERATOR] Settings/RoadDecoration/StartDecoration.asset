@@ -30,6 +30,12 @@ MonoBehaviour:
     noiseChannel: 1
   - meshtaskPoolType: 0
     unitsInPool: 0
+    prefab: {fileID: 2639451264253111639, guid: 36c08b2a9adabb944a9ae990baafcc81, type: 3}
+    position: {x: 0, y: 0.3780157}
+    curveTime: -0.05
+    noiseChannel: 1
+  - meshtaskPoolType: 0
+    unitsInPool: 0
     prefab: {fileID: 8937104343192257952, guid: 925b5ab7d1573cf4a8fe2be566598541, type: 3}
     position: {x: 5.35, y: 0}
     curveTime: -0.032

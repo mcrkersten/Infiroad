@@ -25,6 +25,8 @@ public class DashboardMeter
     public void UpdateMeter(float value)
     {
         float angle;
+        value = float.IsNaN(value) ? maxValue : value;
+        value = float.IsInfinity(value) ? maxValue : value;
         switch (meterType)
         {
             case MeterType.Speedometer:

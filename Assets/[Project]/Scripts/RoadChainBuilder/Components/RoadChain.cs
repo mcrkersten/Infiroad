@@ -116,7 +116,10 @@ public class RoadChain : MonoBehaviour {
 			activatedPooledObjects.Add(decorObjects[decorIndex]);
 
 			if (decorObjects[decorIndex].CompareTag("StartPosition"))
-				roadChainBuilder.vehicleStartTransform = decorObjects[decorIndex].transform;
+            {
+				roadChainBuilder.vehicleStartTransform = decorObjects[decorIndex].transform.GetChild(0);
+				Debug.Log("CHILD_SET");
+			}
 			decorIndex++;
 		}
 	}
