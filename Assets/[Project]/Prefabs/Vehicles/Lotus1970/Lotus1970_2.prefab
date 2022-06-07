@@ -2947,7 +2947,6 @@ MonoBehaviour:
   distanceTraveled: 0
   playerInput: {fileID: 7643020044463179250}
   useWheel: 1
-  wheelInputAngle: 450
   steeringRatio: 1
   brakeBias: 0.55
   engine:
@@ -2957,16 +2956,16 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 0.0016445043
-        value: 198.23021
-        inSlope: 2720.8994
-        outSlope: 2720.8994
+        value: -3.6549225
+        inSlope: 3530.7642
+        outSlope: 3530.7642
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.06492988
+        outWeight: 0.049156796
       - serializedVersion: 3
-        time: 0.59777564
-        value: 864.344
+        time: 0.6428196
+        value: 898.025
         inSlope: -8.03515
         outSlope: -8.03515
         tangentMode: 0
@@ -2974,13 +2973,13 @@ MonoBehaviour:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 1.0075161
-        value: 560.2657
-        inSlope: -2267.2888
-        outSlope: -2267.2888
+        time: 1.0032437
+        value: -0.84246826
+        inSlope: -5858.398
+        outSlope: -5858.398
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.09443106
+        inWeight: 0.039774206
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -3070,12 +3069,12 @@ MonoBehaviour:
         maxAngle: 300
         maxValue: 270
     gearRatios:
-    - 3
-    - 2
-    - 1.5
-    - 1.25
+    - 3.1
+    - 2.07
+    - 1.43
     - 1
-    - 0.8
+    - 0.57
+    finalDriveRatio: 3.45
     driveWheels:
     - {fileID: 45243112761726561}
     - {fileID: 2771739072892434729}
@@ -3136,6 +3135,7 @@ MonoBehaviour:
   wheelModelRotation: 2
   steeringStrenght: 6
   resetScreen: {fileID: 0}
+  wheelInputAngle: 450
 --- !u!114 &7643020044463179250
 MonoBehaviour:
   m_ObjectHideFlags: 0

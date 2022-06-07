@@ -105,6 +105,7 @@ public class Suspension : MonoBehaviour
 
         wheel.grip_UI = Mathf.Max(.01f, gripPercentage);
         float horizontalForce = clampedGripForce.x / downForce;
+        horizontalForce = float.IsNaN(horizontalForce) ? 0f : horizontalForce;
         wheel.steeringWheelForce = horizontalForce;
         return clampedGripForce;
     }

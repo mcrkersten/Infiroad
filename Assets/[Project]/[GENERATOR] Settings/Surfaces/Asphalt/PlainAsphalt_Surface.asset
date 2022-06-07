@@ -26,7 +26,7 @@ MonoBehaviour:
       outWeight: 0.19824043
     - serializedVersion: 3
       time: 1.3055409
-      value: 1.0128433
+      value: 0.9991027
       inSlope: -0.0008300494
       outSlope: -0.0008300494
       tangentMode: 0
@@ -34,8 +34,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.6758809
-      value: 0.9923309
+      time: 3.7393575
+      value: 0.9668106
       inSlope: -0.03348846
       outSlope: -0.03348846
       tangentMode: 0
@@ -43,8 +43,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 3
-      value: 0.96
+      time: 6
+      value: 0.9115917
       inSlope: -0.005520553
       outSlope: -0.005520553
       tangentMode: 0
@@ -76,6 +76,15 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.07816988
     - serializedVersion: 3
+      time: 0.6804716
+      value: 0.91202223
+      inSlope: 0.34745714
+      outSlope: 0.34745714
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 1
       value: 0.96
       inSlope: 0.038934045
@@ -105,7 +114,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  SlipValue: 3
-  UnSlipValue: 0.9
+  SlipValue: 6
+  UnSlipValue: 0.68
   material: {fileID: 2100000, guid: 8d88879f40d29764ca72e05919467fca, type: 2}
   UV_mirrored: 0

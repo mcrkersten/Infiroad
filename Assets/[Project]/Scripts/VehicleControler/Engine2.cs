@@ -18,8 +18,8 @@ public class Engine2
     public Dashboard dashboard;
     private float lastRPM = 0f;
 
-    public float[] gearRatios =  { 2.36f, 1.88f, 1.5f, 1.19f, .97f };
-    private float finalDriveRatio = 6.49f;
+    public float[] gearRatios;
+    public float finalDriveRatio = 6.49f;
 
     public List<Wheel_Raycast> driveWheels = new List<Wheel_Raycast>();
     private float driveWheelRadiusInMeter;

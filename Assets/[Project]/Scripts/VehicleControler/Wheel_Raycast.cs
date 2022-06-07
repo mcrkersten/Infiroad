@@ -122,8 +122,6 @@ public class Wheel_Raycast : MonoBehaviour
     public Vector2 RotateWheelModel(Vector2 force, SuspensionPosition suspensionPosition)
     {
         float wheelLockPercentage = brakeLock.Evaluate(Mathf.Abs(force.x));
-        if (suspensionPosition == SuspensionPosition.RearLeft)
-            Debug.Log(force.y);
         float wheelSpinPercentage = wheelSpin.Evaluate(Mathf.Abs(force.y));
         float combinedPercentage = wheelLockPercentage + wheelSpinPercentage;
 

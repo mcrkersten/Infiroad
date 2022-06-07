@@ -56,6 +56,8 @@ public class VehicleController : MonoBehaviour
     private Vector3 lastFramePosition = new Vector3();
     private InputType userInputType = 0;
 
+    public int wheelInputAngle;
+
     void Awake()
     {
         if (useBindingManager)
@@ -211,12 +213,13 @@ public class VehicleController : MonoBehaviour
         float fibrationCompensation = localForwardVelocity * Time.deltaTime;
         float playerSteeringForce = CalculateSteeringInputForce(steerInput, userInputType, fibrationCompensation);
         ApplySteeringDirection(playerSteeringForce);
-        SetWheelModelRotation(-playerSteeringForce);
+        SetSteeringWheelModelRotation(-playerSteeringForce);
         SetSteeringFrontWheels();
     }
 
-    private void SetWheelModelRotation(float rotation)
+    private void SetSteeringWheelModelRotation(float rotation)
     {
+        Debug.Log(rotation);
         switch (wheelModelRotation)
         {
             case WheelModelRotation.X:
@@ -226,7 +229,7 @@ public class VehicleController : MonoBehaviour
                 steeringWheel.transform.localEulerAngles = new Vector3(steeringWheel.transform.localEulerAngles.x, rotation, steeringWheel.transform.localEulerAngles.z);
                 break;
             case WheelModelRotation.Z:
-                steeringWheel.transform.localEulerAngles = new Vector3(steeringWheel.transform.localEulerAngles.x, steeringWheel.transform.localEulerAngles.y, .00001f + rotation);
+                steeringWheel.transform.localEulerAngles = new Vector3(steeringWheel.transform.localEulerAngles.x, steeringWheel.transform.localEulerAngles.y, .00001f + (rotation * (float)wheelInputAngle));
                 break;
         }
     }
@@ -310,18 +313,18 @@ public class VehicleController : MonoBehaviour
         switch (inputType)
         {
             case InputType.Keyboard:
-                break;
+                gamePadSteering = Mathf.Lerp(gamePadSteering, steerInput - (steerWeight / 3), Time.fixedDeltaTime);
+                return gamePadSteering;
             case InputType.Gamepad:
                 gamePadSteering = Mathf.Lerp(gamePadSteering, steerInput - (steerWeight/3), Time.fixedDeltaTime);
                 return gamePadSteering;
             case InputType.Wheel:
                 //Steering wheel input
                 steeringInput.SetInputWheelForce(Mathf.RoundToInt(steerWeight * 100f));
-                break;
+                return steerInput;
             default:
-                break;
+                return steerInput;
         }
-        return steerInput;
     }
 
     /// <summary>
