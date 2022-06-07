@@ -66,7 +66,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: acfc11818922e14790e7d28625ee5da6
     GuidInternal: 
-    m_lastTime: -8585528410969175529
+    m_lastTime: -8585542708188715480
     List:
     - name: Vehicle
       guid: 52404c56dd6e7041bafedeb552ffcf74
@@ -94,48 +94,8 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: c4cf4d1e7951704b902fd134c90aed1b
     GuidInternal: 
-    m_lastTime: -8585528387764050321
+    m_lastTime: -8585542708276348578
     List:
-    - name: CountDown
-      guid: 3bafc2c05adcf74a8e80be9665e83604
-      id: 1505888634
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: c4cf4d1e7951704b902fd134c90aed1b
-      - ElementName: UI
-        ObjectType: 4
-        guid: 293360be0809cc4ba70e745c6de9bc4a
-      - ElementName: CountDown
-        ObjectType: 3
-        guid: 3bafc2c05adcf74a8e80be9665e83604
-      Path: Events\Default Work Unit\UI\CountDown
-      maxAttenuation: 0
-      maxDuration: 1.000648
-      minDuration: 1.000648
-    - name: GO
-      guid: f29ff44f9e18d4469765a08d28ca7c3d
-      id: 1786192775
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: c4cf4d1e7951704b902fd134c90aed1b
-      - ElementName: UI
-        ObjectType: 4
-        guid: 293360be0809cc4ba70e745c6de9bc4a
-      - ElementName: GO
-        ObjectType: 3
-        guid: f29ff44f9e18d4469765a08d28ca7c3d
-      Path: Events\Default Work Unit\UI\GO
-      maxAttenuation: 0
-      maxDuration: 0.80487
-      minDuration: 0.80487
     - name: Play_Engine
       guid: 66f2c9aa43bdde46bf9ec71a3a1a69bc
       id: 639345804
@@ -153,23 +113,6 @@ MonoBehaviour:
       maxAttenuation: 30
       maxDuration: -1
       minDuration: -1
-    - name: Play_Suspension
-      guid: 61c218e95993a44795c47f3c7f6c7f59
-      id: 4142784629
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: c4cf4d1e7951704b902fd134c90aed1b
-      - ElementName: Play_Suspension
-        ObjectType: 3
-        guid: 61c218e95993a44795c47f3c7f6c7f59
-      Path: Events\Default Work Unit\Play_Suspension
-      maxAttenuation: 30
-      maxDuration: 0.539849
-      minDuration: 0.381731
     - name: Play_Wind
       guid: 2ea4ecdb3b2f6943b933d8a0b920102f
       id: 1020223172
@@ -187,23 +130,6 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
-    - name: UI
-      guid: 293360be0809cc4ba70e745c6de9bc4a
-      id: 1551306167
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: c4cf4d1e7951704b902fd134c90aed1b
-      - ElementName: UI
-        ObjectType: 4
-        guid: 293360be0809cc4ba70e745c6de9bc4a
-      Path: Events\Default Work Unit\UI
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
   RtpcWwu:
   - PhysicalPath: Game Parameters\Default Work Unit.wwu
     PathAndIcons:
@@ -216,22 +142,8 @@ MonoBehaviour:
     ParentPath: Game Parameters\Default Work Unit
     guid: a6859f98e086594d9e2652b5370a782f
     GuidInternal: 
-    m_lastTime: -8585535260647580372
+    m_lastTime: -8585542708276338602
     List:
-    - name: FrontSuspension
-      guid: 3543d9625f36f34c8e06f3dd25be1e0c
-      id: 2076996661
-      PathAndIcons:
-      - ElementName: Game Parameters
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: a6859f98e086594d9e2652b5370a782f
-      - ElementName: FrontSuspension
-        ObjectType: 13
-        guid: 3543d9625f36f34c8e06f3dd25be1e0c
-      Path: Game Parameters\Default Work Unit\FrontSuspension
     - name: Gear
       guid: 330380d33678e443925b33358d3222fe
       id: 1172844112
@@ -342,7 +254,7 @@ MonoBehaviour:
     ParentPath: Triggers\Default Work Unit
     guid: 9b5e6fbce7e8a74d9514aa897955192f
     GuidInternal: 
-    m_lastTime: -8585541343467685064
+    m_lastTime: -8585547019565545989
     List: []
   ExpandedFileSystemItemIds: 
   ExpandedWaapiItemIds: 

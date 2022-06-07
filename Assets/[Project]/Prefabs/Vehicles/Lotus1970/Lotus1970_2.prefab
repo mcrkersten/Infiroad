@@ -2835,7 +2835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07d9a774f1600114498a73858ec62966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wingAngle: 4
+  wingAngle: 5
   width: 2
   lenght: 0.2
 --- !u!1 &5857873129718366801
@@ -4121,7 +4121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07d9a774f1600114498a73858ec62966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wingAngle: 5
+  wingAngle: 6
   width: 2.5
   lenght: 0.4
 --- !u!1 &7139714949697091171

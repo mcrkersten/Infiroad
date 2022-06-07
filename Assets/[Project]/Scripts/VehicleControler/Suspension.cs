@@ -104,7 +104,7 @@ public class Suspension : MonoBehaviour
         wheelSpin = spinLockForce.y;
 
         wheel.grip_UI = Mathf.Max(.01f, gripPercentage);
-        float horizontalForce = clampedGripForce.normalized.x * gripPercentage;
+        float horizontalForce = clampedGripForce.x / downForce;
         wheel.steeringWheelForce = horizontalForce;
         return clampedGripForce;
     }

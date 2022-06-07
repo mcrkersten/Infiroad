@@ -13,7 +13,6 @@ public class VehicleController : MonoBehaviour
     private bool physicsLocked;
     public PlayerInput playerInput;
     public bool useWheel;
-    public int wheelInputAngle;
     public float steeringRatio;
     private SteeringWheelInput steeringInput;
 
@@ -221,13 +220,13 @@ public class VehicleController : MonoBehaviour
         switch (wheelModelRotation)
         {
             case WheelModelRotation.X:
-                steeringWheel.transform.localEulerAngles = new Vector3(rotation * (float)wheelInputAngle, steeringWheel.transform.localEulerAngles.y, steeringWheel.transform.localEulerAngles.z);
+                steeringWheel.transform.localEulerAngles = new Vector3(rotation, steeringWheel.transform.localEulerAngles.y, steeringWheel.transform.localEulerAngles.z);
                 break;
             case WheelModelRotation.Y:
-                steeringWheel.transform.localEulerAngles = new Vector3(steeringWheel.transform.localEulerAngles.x, rotation * (float)wheelInputAngle, steeringWheel.transform.localEulerAngles.z);
+                steeringWheel.transform.localEulerAngles = new Vector3(steeringWheel.transform.localEulerAngles.x, rotation, steeringWheel.transform.localEulerAngles.z);
                 break;
             case WheelModelRotation.Z:
-                steeringWheel.transform.localEulerAngles = new Vector3(steeringWheel.transform.localEulerAngles.x, steeringWheel.transform.localEulerAngles.y, .00001f + rotation * (float)wheelInputAngle);
+                steeringWheel.transform.localEulerAngles = new Vector3(steeringWheel.transform.localEulerAngles.x, steeringWheel.transform.localEulerAngles.y, .00001f + rotation);
                 break;
         }
     }
@@ -317,7 +316,7 @@ public class VehicleController : MonoBehaviour
                 return gamePadSteering;
             case InputType.Wheel:
                 //Steering wheel input
-                steeringInput.SetInputWheelForce(Mathf.RoundToInt(-steerWeight * 100f));
+                steeringInput.SetInputWheelForce(Mathf.RoundToInt(steerWeight * 100f));
                 break;
             default:
                 break;

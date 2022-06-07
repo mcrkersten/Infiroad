@@ -739,7 +739,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameTime: 60
   vehicleController: {fileID: 1674912333}
-  inputType: 0
   startCountdownClock: {fileID: 335689545}
   gameTimeCountdownClock: {fileID: 828424400}
   distanceDifferenceClock: {fileID: 896297944}
@@ -2168,8 +2167,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4355889130073201737, guid: daf03894079c14e498be9500cb7d6c85, type: 3}
+      propertyPath: Day
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355889130073201737, guid: daf03894079c14e498be9500cb7d6c85, type: 3}
       propertyPath: Hour
-      value: 17
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 4355889130073201737, guid: daf03894079c14e498be9500cb7d6c85, type: 3}
       propertyPath: Year
@@ -2208,11 +2211,19 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4355889130073201737, guid: daf03894079c14e498be9500cb7d6c85, type: 3}
+      propertyPath: CloudShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355889130073201737, guid: daf03894079c14e498be9500cb7d6c85, type: 3}
       propertyPath: PlayerCamera
       value: 
       objectReference: {fileID: 1674912335}
     - target: {fileID: 4355889130073201737, guid: daf03894079c14e498be9500cb7d6c85, type: 3}
       propertyPath: CloudsFoldout
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355889130073201737, guid: daf03894079c14e498be9500cb7d6c85, type: 3}
+      propertyPath: CurrentSeason
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4355889130073201737, guid: daf03894079c14e498be9500cb7d6c85, type: 3}
@@ -2413,7 +2424,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4355889130073201737, guid: daf03894079c14e498be9500cb7d6c85, type: 3}
       propertyPath: SunShadowResolution
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4355889130073201737, guid: daf03894079c14e498be9500cb7d6c85, type: 3}
       propertyPath: SunSpotColor.ctime0

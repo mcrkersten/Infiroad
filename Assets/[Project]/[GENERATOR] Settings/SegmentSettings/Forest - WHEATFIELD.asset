@@ -15,8 +15,7 @@ MonoBehaviour:
   points:
   - vertex_1:
       point: {x: -17, y: 0}
-      normal: {x: -0.09277725, y: 1.6494141}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 0, y: 1}
     ishardEdge: 0
     noiseChannel: 0
@@ -26,8 +25,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -15.868011, y: 0}
-      normal: {x: -0.09277725, y: 1.6494141}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 1, y: 2}
     ishardEdge: 0
     noiseChannel: 0
@@ -41,8 +39,7 @@ MonoBehaviour:
       spawnPointsBetweenAmount: 4
   - vertex_1:
       point: {x: -6.7153015, y: 0}
-      normal: {x: -0.09277725, y: 1.6494141}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 2, y: 3}
     ishardEdge: 0
     noiseChannel: 0
@@ -52,8 +49,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -4.7922363, y: 0}
-      normal: {x: -0.09277725, y: 1.6494141}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 3, y: 4}
     ishardEdge: 0
     noiseChannel: 0
@@ -63,8 +59,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -4.7438965, y: 0.04948044}
-      normal: {x: -0.09277725, y: 1.6494141}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 4, y: 5}
     ishardEdge: 0
     noiseChannel: 0
@@ -74,8 +69,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -4.666748, y: 0.06966591}
-      normal: {x: -0.09277725, y: 1.6494141}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 5, y: 6}
     ishardEdge: 0
     noiseChannel: 0
@@ -85,8 +79,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 4.666748, y: 0.06966591}
-      normal: {x: -0.09277725, y: 1.6494141}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 6, y: 7}
     ishardEdge: 0
     noiseChannel: 0
@@ -96,8 +89,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 4.7438965, y: 0.04948044}
-      normal: {x: -0.09277725, y: 1.6494141}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 7, y: 8}
     ishardEdge: 0
     noiseChannel: 0
@@ -107,8 +99,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 4.7922363, y: 0}
-      normal: {x: -0.09277725, y: 1.6494141}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 8, y: 9}
     ishardEdge: 0
     noiseChannel: 0
@@ -118,8 +109,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 6.7630587, y: 0.00010681152}
-      normal: {x: -0.09277725, y: 1.6494141}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 9, y: 10}
     ishardEdge: 0
     noiseChannel: 0
@@ -133,8 +123,7 @@ MonoBehaviour:
       spawnPointsBetweenAmount: 0
   - vertex_1:
       point: {x: 7.1530457, y: 0.1028977}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 11, y: 12}
     ishardEdge: 0
     noiseChannel: 0
@@ -144,8 +133,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 7.5079327, y: 0.00010681152}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 13, y: 14}
     ishardEdge: 0
     noiseChannel: 0
@@ -159,8 +147,7 @@ MonoBehaviour:
       spawnPointsBetweenAmount: 0
   - vertex_1:
       point: {x: 7.877951, y: 0.11608875}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 14, y: 15}
     ishardEdge: 0
     noiseChannel: 0
@@ -170,8 +157,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 8.325631, y: 0.00010681152}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 15, y: 16}
     ishardEdge: 0
     noiseChannel: 0
@@ -185,8 +171,7 @@ MonoBehaviour:
       spawnPointsBetweenAmount: 0
   - vertex_1:
       point: {x: 8.714331, y: 0.117032886}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 16, y: 17}
     ishardEdge: 0
     noiseChannel: 0
@@ -196,8 +181,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 9.103031, y: 0.00010681152}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 17, y: 18}
     ishardEdge: 0
     noiseChannel: 0
@@ -211,8 +195,7 @@ MonoBehaviour:
       spawnPointsBetweenAmount: 0
   - vertex_1:
       point: {x: 9.508165, y: 0.13519704}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 18, y: 19}
     ishardEdge: 0
     noiseChannel: 0
@@ -222,8 +205,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 9.913299, y: 0.00010681152}
-      normal: {x: 0, y: 0}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 19, y: 20}
     ishardEdge: 0
     noiseChannel: 0
@@ -237,8 +219,7 @@ MonoBehaviour:
       spawnPointsBetweenAmount: 6
   - vertex_1:
       point: {x: 15.9410095, y: 0.00010681152}
-      normal: {x: -0.09277725, y: 1.6494141}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 20, y: 21}
     ishardEdge: 0
     noiseChannel: 0
@@ -248,8 +229,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 17, y: 0}
-      normal: {x: -0.09277725, y: 1.6494141}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 21, y: 22}
     ishardEdge: 0
     noiseChannel: 0
@@ -259,8 +239,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 17, y: -1}
-      normal: {x: 0.05774422, y: 0.07763672}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 22, y: 23}
     ishardEdge: 0
     noiseChannel: 0
@@ -270,8 +249,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -17, y: -1}
-      normal: {x: 0.05774422, y: 0.07763672}
-      uv: {x: 0, y: 0}
+      horizontal_UV: 0
     line: {x: 23, y: 0}
     ishardEdge: 0
     noiseChannel: 0
@@ -284,7 +262,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a2d20a9566f01da458310c9728b622a1, type: 2}
   allSurfaceSettings: []
   runoffMaterial: {fileID: 0}
-  guardRails: []
+  meshtaskSettings: []
   guardRailMinimalCornerRadius: 0
   roadTypeTag: WHEATFIELD-BASIC
   assetPools:
@@ -346,3 +324,6 @@ MonoBehaviour:
   extrusionSize: 0
   hasCornerChamfer: 0
   maxChamfer: 0
+  calculatedUs: []
+  uSpan: 0
+  hardEdges: 0
