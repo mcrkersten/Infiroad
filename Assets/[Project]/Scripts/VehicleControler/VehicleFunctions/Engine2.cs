@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class Engine2
 {
     private int currentSelectedGear;
-    private int currentEngagedGear;
 
     public int maxRPM;
     public AnimationCurve engineTorqueProfile;
@@ -63,7 +62,7 @@ public class Engine2
 
         float mechanicalForce = CalculateMechanicalFriction(currentForwardVelocity, throttle, clutch);
 
-        float effectiveGearRatio = gearRatios[currentEngagedGear] * finalDriveRatio;
+        float effectiveGearRatio = gearRatios[currentSelectedGear] * finalDriveRatio;
         float wheelRPM = (currentForwardVelocity / (rollingCircumference / 60f)) * wheelSpin;
         float enginewRPM = ((wheelRPM * effectiveGearRatio) - (physicsWobble * physicsImpact));
         float velocity = (enginewRPM * clutch) + (Mathf.Lerp(3500f, maxRPM, throttle ) * (1f - clutch)) - lastRPM;
@@ -101,7 +100,6 @@ public class Engine2
             {
                 isShifting = false;
                 //GEAR CHANGE NEEDS TO HAPPEN WHEN CLUTCH DISENGAGED
-                currentEngagedGear = currentSelectedGear;
                 GearAudio.SetGlobalValue(currentSelectedGear);
             }
         }
@@ -147,8 +145,10 @@ public class Engine2
     {
         if (!isShifting)
         {
-            StartAutomaticShift();
-            currentSelectedGear = Mathf.Min(gearRatios.Length - 1, currentSelectedGear + 1);
+            StartSemiAutomaticShift();
+            currentSelectedGear++;
+            currentSelectedGear = (int)Mathf.Clamp(currentSelectedGear, 0f, gearRatios.Length - 1);
+            dashboard.OnChangeGear(currentSelectedGear);
         }
     }
 
@@ -156,12 +156,14 @@ public class Engine2
     {
         if (!isShifting)
         {
-            StartAutomaticShift();
-            currentSelectedGear = Mathf.Max(0, currentSelectedGear - 1);
+            StartSemiAutomaticShift();
+            currentSelectedGear--;
+            currentSelectedGear = (int)Mathf.Clamp(currentSelectedGear, 0f, gearRatios.Length - 1);
+            dashboard.OnChangeGear(currentSelectedGear);
         }
     }
 
-    private void StartAutomaticShift()
+    private void StartSemiAutomaticShift()
     {
         isShifting = true;
         shiftTime = ShiftTime;

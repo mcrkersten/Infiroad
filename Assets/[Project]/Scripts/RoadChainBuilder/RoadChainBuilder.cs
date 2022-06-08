@@ -218,16 +218,24 @@ public class RoadChainBuilder : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Create and organize segments in right order
+    /// </summary>
+    /// <param name="lastExitPoint"></param>
+    /// <param name="roadShape"></param>
+    /// <returns></returns>
     private List<RoadSegment> CreateSegments(EdgePoint lastExitPoint, out RoadShape roadShape)
     {
         EdgePoint entryPoint = CreateEntry(lastExitPoint);
         EdgePoint exitPoint = CreateExit(entryPoint);
+
         //Create random points between entry and exit
         int nPoints = GetPointAmount(entryPoint, exitPoint);
         List<RoadSegment> unOrganized = CreatePointsbetweenEntryStart(entryPoint, exitPoint, nPoints);
         lastEdgePoint = exitPoint;
+
         roadShape = GetRoadShape(entryPoint, exitPoint);
-        return  OrganizeSegments(unOrganized, entryPoint, exitPoint);
+        return OrganizeSegments(unOrganized, entryPoint, exitPoint);
     }
 
     public RoadShape GetRoadShape(EdgePoint entry, EdgePoint exit)
@@ -509,14 +517,10 @@ public class RoadChainBuilder : MonoBehaviour
     /// <returns></returns>
     private bool ProximityAlert(List<RoadSegment> segments, Vector3 proximity)
     {
-        if (segments.Count < 1)
-            return false;
-
-        for (int i = 1; i < segments.Count - 1; i++)
+        foreach (RoadSegment item in segments)
         {
-            Vector3 behind = segments[i - 1].transform.position;
-            bool behindProxViolated = Vector3.Distance(proximity, behind) < settings.segmentDeletionProximity;
-            if (behindProxViolated)
+            bool violation = Vector3.Distance(item.transform.position, proximity) < settings.segmentDeletionProximity;
+            if (violation)
             {
                 Debug.Log("Proximity violation");
                 return true;
@@ -553,19 +557,17 @@ public class RoadChainBuilder : MonoBehaviour
     /// <param name="fromZero">New random from Zero</param>
     private void SetRandomHeightToSegments(List<RoadSegment> segments, bool fromZero, float heightRange)
     {
-        for (int i = 1; i < segments.Count; i++)
+        RoadSegment lastSegment = null;
+        foreach (RoadSegment currentSegment in segments)
         {
-
-            float baseHeight = baseHeight = segments[i - 1].transform.position.y;
-
-            if (fromZero)
-                baseHeight = 0;
-
-            float calculatedHeight = baseHeight + Random.Range(-heightRange, heightRange);
-
-            Transform segment = segments[i].transform;
-            Vector3 position = new Vector3(segment.position.x, calculatedHeight, segments[i].transform.position.z);
-            segments[i].transform.position = position;
+            if (lastSegment != null)
+            {
+                float baseHeight = fromZero ? 0f : lastSegment.transform.position.y;
+                float calculatedHeight = baseHeight + Random.Range(-heightRange, heightRange);
+                Vector3 position = currentSegment.transform.position + (Vector3.up * calculatedHeight);
+                currentSegment.transform.position = position;
+            }
+            lastSegment = currentSegment;
         }
     }
 
@@ -580,7 +582,7 @@ public class RoadChainBuilder : MonoBehaviour
         {
             Vector3 pos = segments[i].transform.localPosition;
             Vector3 random = new Vector3(Random.Range(-range, range), 0f, 0f);
-            segments[i].transform.localPosition = pos + random;
+            segments[i].transform.position = segments[i].transform.TransformPoint(random);
         }
     }
 
@@ -636,7 +638,7 @@ public class RoadChainBuilder : MonoBehaviour
         public int corner_NpointsBetween;
 
         [Header("New segment settings")]
-        [Range(0f, 50f)]
+        [Range(0f, 75f)]
         public float XaxisVariation;
 
         [Range(0f, 25f)]

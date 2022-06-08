@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu, System.Serializable]
 public class SurfaceScriptable : ScriptableObject
 {
-    public AnimationCurve slip;
-    public AnimationCurve unslip;
+    public AnimationCurve gripped;
+    public AnimationCurve unGripped;
     public float SlipValue;
     public float UnSlipValue;
     public Material material;

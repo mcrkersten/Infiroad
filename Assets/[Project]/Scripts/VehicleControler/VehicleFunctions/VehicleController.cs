@@ -205,7 +205,7 @@ public class VehicleController : MonoBehaviour
         float wheelSlip  = 0f;
         float physicsWobble = ApplyForceToWheels(brakeInput, out wheelSlip);
 
-        float localForwardVelocity = Vector3.Dot(rb.velocity, transform.forward);
+        float localForwardVelocity = transform.InverseTransformDirection(rb.velocity).z;
         engineForce = engine.Run(localForwardVelocity, accelerationInput, clutchInput, brakeInput, physicsWobble, wheelSlip);
 
         SetUserInterface(accelerationInput, brakeInput);
@@ -219,7 +219,6 @@ public class VehicleController : MonoBehaviour
 
     private void SetSteeringWheelModelRotation(float rotation)
     {
-        Debug.Log(rotation);
         switch (wheelModelRotation)
         {
             case WheelModelRotation.X:
@@ -370,32 +369,35 @@ public class VehicleController : MonoBehaviour
         float physicsWobble = 0f;
         wheelSlip = 0f;
         List<Vector3> physics = new List<Vector3>();
-        foreach (Suspension w in suspensions)
+        foreach (Suspension s in suspensions)
         {
-            if (w.wheel.broken)
+            if (s.wheel.broken)
+            {
+                physics.Add(Vector3.zero);
                 continue;
+            }
             switch (driveType)
             {
                 case DriveType.rearWheelDrive:
-                    if (w.suspensionPosition == SuspensionPosition.RearLeft || w.suspensionPosition == SuspensionPosition.RearRight)
-                        physics.Add(w.SimulatePhysics(brakeInput, engineForce/2f, out wheelSlip, out physicsWobble));
+                    if (s.suspensionPosition == SuspensionPosition.RearLeft || s.suspensionPosition == SuspensionPosition.RearRight)
+                        physics.Add(s.SimulatePhysics(brakeInput, engineForce/2f, out wheelSlip, out physicsWobble));
                     else
                     {
                         float d;
-                        physics.Add(w.SimulatePhysics(brakeInput, 0, out d, out physicsWobble));
+                        physics.Add(s.SimulatePhysics(brakeInput, 0, out d, out physicsWobble));
                     }
                     break;
                 case DriveType.frontWheelDrive:
-                    if (w.suspensionPosition == SuspensionPosition.FrontLeft || w.suspensionPosition == SuspensionPosition.FrontRight)
-                        physics.Add(w.SimulatePhysics(brakeInput, engineForce/2f, out wheelSlip, out physicsWobble));
+                    if (s.suspensionPosition == SuspensionPosition.FrontLeft || s.suspensionPosition == SuspensionPosition.FrontRight)
+                        physics.Add(s.SimulatePhysics(brakeInput, engineForce/2f, out wheelSlip, out physicsWobble));
                     else
                     {
                         float d;
-                        physics.Add(w.SimulatePhysics(brakeInput, 0, out d, out physicsWobble));
+                        physics.Add(s.SimulatePhysics(brakeInput, 0, out d, out physicsWobble));
                     }
                     break;
                 case DriveType.allWheelDrive:
-                    physics.Add(w.SimulatePhysics(brakeInput, engineForce/4f, out wheelSlip, out physicsWobble));
+                    physics.Add(s.SimulatePhysics(brakeInput, engineForce/4f, out wheelSlip, out physicsWobble));
                     break;
                 default:
                     break;

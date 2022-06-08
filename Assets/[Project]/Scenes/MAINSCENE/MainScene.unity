@@ -1475,15 +1475,19 @@ PrefabInstance:
       objectReference: {fileID: 1849681595}
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: settings.gridSize
-      value: 400
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: settings.XaxisVariation
-      value: 30
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: meshtaskSettings.Array.size
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
+      propertyPath: settings.isFixedBetweenRange
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: meshtaskSettings.Array.data[0]
@@ -2172,7 +2176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4355889130073201737, guid: daf03894079c14e498be9500cb7d6c85, type: 3}
       propertyPath: Hour
-      value: 14
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 4355889130073201737, guid: daf03894079c14e498be9500cb7d6c85, type: 3}
       propertyPath: Year
@@ -2192,7 +2196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4355889130073201737, guid: daf03894079c14e498be9500cb7d6c85, type: 3}
       propertyPath: TabNumber
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4355889130073201737, guid: daf03894079c14e498be9500cb7d6c85, type: 3}
       propertyPath: FogFoldout

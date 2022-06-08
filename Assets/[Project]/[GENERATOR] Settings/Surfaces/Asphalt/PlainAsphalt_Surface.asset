@@ -12,21 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ca3054f3958454899d9facee8e2a86, type: 3}
   m_Name: PlainAsphalt_Surface
   m_EditorClassIdentifier: 
-  slip:
+  gripped:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0.0009765625
       value: 0.0018920898
-      inSlope: 2.128353
-      outSlope: 2.128353
+      inSlope: 1.1166143
+      outSlope: 1.1166143
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.19824043
+      outWeight: 0.2743621
     - serializedVersion: 3
-      time: 1.3055409
-      value: 0.9991027
+      time: 1.42
+      value: 0.89844143
+      inSlope: 0.2461508
+      outSlope: 0.2461508
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2.7251883
+      value: 1.001361
       inSlope: -0.0008300494
       outSlope: -0.0008300494
       tangentMode: 0
@@ -34,87 +43,69 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 3.7393575
-      value: 0.9668106
-      inSlope: -0.03348846
-      outSlope: -0.03348846
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
       time: 6
-      value: 0.9115917
-      inSlope: -0.005520553
-      outSlope: -0.005520553
+      value: 0.9
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.18376273
-      outWeight: 0.049591325
+      inWeight: 0.7989667
+      outWeight: 0.062429193
     - serializedVersion: 3
       time: 25
-      value: 0.9248258
-      inSlope: -0.001507404
-      outSlope: -0.001507404
-      tangentMode: 0
+      value: 0.9
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 1
       weightedMode: 0
-      inWeight: 0.059094746
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  unslip:
+  unGripped:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0.0009765625
       value: 0.0018920898
-      inSlope: 2.7206967
-      outSlope: 2.7206967
+      inSlope: 1.1166143
+      outSlope: 1.1166143
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.07816988
+      outWeight: 0.2743621
     - serializedVersion: 3
-      time: 0.6804716
-      value: 0.91202223
-      inSlope: 0.34745714
-      outSlope: 0.34745714
+      time: 1.426081
+      value: 0.797516
+      inSlope: 0.22977474
+      outSlope: 0.22977474
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.24596809
+    - serializedVersion: 3
+      time: 2.9077902
+      value: 0.90043557
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
-      value: 0.96
-      inSlope: 0.038934045
-      outSlope: 0.038934045
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.5842141
-    - serializedVersion: 3
-      time: 3
-      value: 0.96
-      inSlope: -0.005520553
-      outSlope: -0.005520553
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.18376273
-      outWeight: 0.049591325
-    - serializedVersion: 3
       time: 25
-      value: 0.9248258
-      inSlope: -0.001507404
-      outSlope: -0.001507404
-      tangentMode: 0
+      value: 0.9
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 1
       weightedMode: 0
-      inWeight: 0.059094746
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   SlipValue: 6
-  UnSlipValue: 0.68
+  UnSlipValue: 1.426081
   material: {fileID: 2100000, guid: 8d88879f40d29764ca72e05919467fca, type: 2}
   UV_mirrored: 0

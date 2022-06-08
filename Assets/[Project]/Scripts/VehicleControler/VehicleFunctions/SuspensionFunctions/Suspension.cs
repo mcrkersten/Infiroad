@@ -95,7 +95,7 @@ public class Suspension : MonoBehaviour
         if (time < wheel.currentSurface.UnSlipValue && slip)
             slip = false;
 
-        gripPercentage = slip ? wheel.currentSurface.unslip.Evaluate(Mathf.Abs(time)) : wheel.currentSurface.slip.Evaluate(Mathf.Abs(time));
+        gripPercentage = slip ? wheel.currentSurface.unGripped.Evaluate(Mathf.Abs(time)) : wheel.currentSurface.gripped.Evaluate(Mathf.Abs(time));
         float gripForce = downForce * gripPercentage;
         Vector3 clampedGripForce = ClampForce(rawForce, gripForce);
 

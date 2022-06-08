@@ -195,16 +195,15 @@ public class Wheel_Raycast : MonoBehaviour
 
     public void DamageSuspension(Vector3 pointVelocity, Vector3 impactDirection, Vector3 contactNormal)
     {
-
-
-        //if (!broken)
-        //{
-        //    rb.AddForceAtPosition(-impactDirection, this.transform.position);
-        //    broken = true;
-        //    this.gameObject.AddComponent<Rigidbody>();
-        //    this.wheelCollider.gameObject.layer = LayerMask.NameToLayer("Default");
-        //    this.transform.parent = null;
-        //}
+        if (!broken)
+        {
+            rb.AddForceAtPosition(-impactDirection, this.transform.position);
+            broken = true;
+            this.gameObject.AddComponent<Rigidbody>();
+            this.wheelCollider.gameObject.layer = LayerMask.NameToLayer("Default");
+            this.transform.parent = null;
+            this.enabled = false;
+        }
     }
 }
 
