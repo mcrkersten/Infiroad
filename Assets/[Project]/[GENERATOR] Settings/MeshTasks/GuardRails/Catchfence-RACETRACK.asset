@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d78f2287300b104cae54ee3afbba403, type: 3}
   m_Name: Catchfence-RACETRACK
   m_EditorClassIdentifier: 
-  dataKey: 219309
+  dataKey: 949550
   calculatedUs: []
   uvLenght: 3.9798255
   meshTaskType: 1
@@ -68,7 +68,7 @@ MonoBehaviour:
   meshIsClosed: 0
   meshtaskPoolingObjects:
   - meshtaskPoolType: 1
-    unitsInPool: 250
+    unitsInPool: 300
     prefab: {fileID: 8594070437465435305, guid: 69167b2b72e68c046981abca42e7d523, type: 3}
     position: {x: 0, y: 0}
     curveTime: 0

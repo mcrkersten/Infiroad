@@ -148,7 +148,7 @@ public class Engine2
             StartSemiAutomaticShift();
             currentSelectedGear++;
             currentSelectedGear = (int)Mathf.Clamp(currentSelectedGear, 0f, gearRatios.Length - 1);
-            dashboard.OnChangeGear(currentSelectedGear);
+            dashboard.UpdateGear(currentSelectedGear + 1, DashboardMeter.MeterType.Tacheometer);
         }
     }
 
@@ -159,7 +159,7 @@ public class Engine2
             StartSemiAutomaticShift();
             currentSelectedGear--;
             currentSelectedGear = (int)Mathf.Clamp(currentSelectedGear, 0f, gearRatios.Length - 1);
-            dashboard.OnChangeGear(currentSelectedGear);
+            dashboard.UpdateGear(currentSelectedGear + 1, DashboardMeter.MeterType.Tacheometer);
         }
     }
 

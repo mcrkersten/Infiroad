@@ -580,6 +580,8 @@ public class RoadChainBuilder : MonoBehaviour
     {
         for (int i = 1; i < segments.Count; i++)
         {
+            if (createdRoadChains.Count == 1 && i == 1)
+                continue;
             Vector3 pos = segments[i].transform.localPosition;
             Vector3 random = new Vector3(Random.Range(-range, range), 0f, 0f);
             segments[i].transform.position = segments[i].transform.TransformPoint(random);
