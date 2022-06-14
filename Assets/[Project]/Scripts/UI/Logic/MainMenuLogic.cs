@@ -3,48 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using System.Linq;
 
 public class MainMenuLogic : MonoBehaviour
 {
+    private MenuType selectedMenu = MenuType.Null;
     [SerializeField] private Buttons mainMenuButtons;
     public List<Ui_AnimationObject> menuAnimationObjects = new List<Ui_AnimationObject>();
-    [SerializeField] private GameObject lastMenu;
 
     private void Start()
     {
+        ReturnButton.returnPressed += OnReturnButton;
         foreach (Ui_AnimationObject item in menuAnimationObjects)
             item.Init();
 
         mainMenuButtons.buttons[0].onClick.AddListener(() => StartGameButton());
         mainMenuButtons.buttons[1].onClick.AddListener(() => HighscoreButton());
         mainMenuButtons.buttons[2].onClick.AddListener(() => QuitGameButton());
-        ReturnButton.returnPressed += OnReturnButton;
-        AnimateFromTo(null, menuAnimationObjects[0]);
+        ActivateMenu(MenuType.Main);
     }
 
-    public void ModeSelected()
+    private void OnReturnButton(MenuType returnTo)
     {
-        AnimateFromTo(menuAnimationObjects[1], menuAnimationObjects[2]);
+        foreach (Ui_AnimationObject t in menuAnimationObjects.Where(ao => ao.menuType == returnTo))
+            t.AnimateAll_To();
+        foreach (Ui_AnimationObject t in menuAnimationObjects.Where(ao => ao.menuType == selectedMenu))
+            t.AnimateAll_Start();
+        selectedMenu = returnTo;
     }
 
-    private void OnReturnButton(ReturnButton.ReturnTo returnTo)
+    public void ActivateMenu(MenuType type)
     {
-        switch (returnTo)
-        {
-            case ReturnButton.ReturnTo.MainMenu:
-                AnimateFromTo(menuAnimationObjects[1], menuAnimationObjects[0]);
-                break;
-            case ReturnButton.ReturnTo.GamemodeSelection:
-                AnimateFromTo(menuAnimationObjects[2], menuAnimationObjects[1]);
-                break;
-            default:
-                break;
-        }
+        foreach (Ui_AnimationObject t in menuAnimationObjects.Where(ao => ao.menuType == type))
+            t.AnimateAll_To();
+        foreach (Ui_AnimationObject t in menuAnimationObjects.Where(ao => ao.menuType == selectedMenu))
+            t.AnimateAll_Start();
+        selectedMenu = type;
     }
 
     private void StartGameButton()
     {
-        AnimateFromTo(menuAnimationObjects[0], menuAnimationObjects[1]);
+        ActivateMenu(MenuType.GamemodeSelection);
         menuAnimationObjects[1].gameObject.GetComponent<GameModeMenuLogic>().gameModeButtons.SelectButton(0);
     }
 
@@ -58,33 +57,20 @@ public class MainMenuLogic : MonoBehaviour
 
     }
 
-    private void AnimateFromTo(Ui_AnimationObject from, Ui_AnimationObject to)
-    {
-        to.Animate_ToPosition();
-        Buttons b = to.rectTransform.GetComponent<Buttons>();
-        if (b != null && b.selectFirstOnAnimateFinished)
-            b.SelectButton(0);
-
-        if (from != null)
-        {
-            from?.Animate_ToStartPosition();
-            lastMenu = from?.gameObject;
-
-            GameModeMenuLogic gml = from?.gameObject.GetComponent<GameModeMenuLogic>();
-            if (gml != null)
-                gml.DeactivateExtensionPanel();
-        }
-    }
-
-    private void DisableLastMenu()
-    {
-        lastMenu.SetActive(false);
-    }
     private void OnDisable()
     {
         mainMenuButtons.buttons[0].onClick.RemoveAllListeners();
         mainMenuButtons.buttons[1].onClick.RemoveAllListeners();
         mainMenuButtons.buttons[2].onClick.RemoveAllListeners();
-        ReturnButton.returnPressed -= OnReturnButton;
     }
+}
+
+public enum MenuType
+{
+    Main = 0,
+    GamemodeSelection,
+    InputSelection,
+    InputType,
+    FixedSectorCreator,
+    Null
 }

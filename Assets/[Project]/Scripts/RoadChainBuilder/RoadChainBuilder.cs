@@ -121,6 +121,13 @@ public class RoadChainBuilder : MonoBehaviour
         for (int i = 1; i < segmentAmount; i++)
         {
             List<RoadSegment> segments_1 = CreateNextRandomRoadChain(lastEdgePoint, false);
+            GameObject oldChain = segments_1[0].transform.parent.gameObject;
+            for (int ii = 0; ii < segments_1.Count; ii++)
+            {
+                segments_1[ii].transform.SetParent(segments_0[0].transform.parent);
+                if (ii == segments_1.Count - 1)
+                    Destroy(oldChain);
+            }
             segments_0.AddRange(segments_1);
         }
         return new Sector(segments_0);
@@ -193,8 +200,6 @@ public class RoadChainBuilder : MonoBehaviour
     {
         //Instantiate
         RoadChain roadChain = InstantiateRoadChain();
-        createdRoadChains.Add(roadChain);
-
         Vector3 position = CalculateRoadChainObjectPosition(lastExitPoint);
         roadChain.transform.position = position;
         this.transform.position = position;
@@ -203,6 +208,7 @@ public class RoadChainBuilder : MonoBehaviour
         List<RoadSegment> organized = CreateSegments(lastExitPoint, out roadShape);
         if (decoration)
         {
+            createdRoadChains.Add(roadChain);
             CreateSegmentMeshes(organized, roadChain, roadShape);
             SpawnAllDecoration(organized, roadChain);
         }

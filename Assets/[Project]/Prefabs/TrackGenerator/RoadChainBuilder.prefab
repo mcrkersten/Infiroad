@@ -76,10 +76,10 @@ MonoBehaviour:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    sidePointAmount: 5
-    gridSize: 500
-    straight_NpointsBetween: 3
-    corner_NpointsBetween: 3
+    sidePointAmount: 6
+    gridSize: 600
+    straight_NpointsBetween: 4
+    corner_NpointsBetween: 4
     XaxisVariation: 50
     segmentHeightRange: 2.5
     isFixedBetweenRange: 1

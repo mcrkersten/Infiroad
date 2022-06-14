@@ -26,12 +26,30 @@ public class GameModeMenuLogic : MonoBehaviour
     {
         gameModeButtons.buttons[0].onClick.AddListener(() => SelectMode(GameMode.Relaxed));
         gameModeButtons.buttons[1].onClick.AddListener(() => SelectMode(GameMode.TimeTrial));
+        gameModeButtons.buttons[2].onClick.AddListener(() => SelectMode(GameMode.RandomSectors));
+        gameModeButtons.buttons[3].onClick.AddListener(() => SelectMode(GameMode.FixedSectors));
     }
 
     private void SelectMode(GameMode mode)
     {
         GameModeManager.Instance.gameMode = mode;
-        bindingMenu.EnableBindingMenuLogicButtons();
-        mainMenuLogic.ModeSelected();
+        switch (mode)
+        {
+            case GameMode.Relaxed:
+                bindingMenu.EnableBindingMenuLogicButtons();
+                mainMenuLogic.ActivateMenu(MenuType.InputSelection);
+                break;
+            case GameMode.TimeTrial:
+                bindingMenu.EnableBindingMenuLogicButtons();
+                mainMenuLogic.ActivateMenu(MenuType.InputSelection);
+                break;
+            case GameMode.RandomSectors:
+                bindingMenu.EnableBindingMenuLogicButtons();
+                mainMenuLogic.ActivateMenu(MenuType.InputSelection);
+                break;
+            case GameMode.FixedSectors:
+                mainMenuLogic.ActivateMenu(MenuType.FixedSectorCreator);
+                break;
+        }
     }
 }

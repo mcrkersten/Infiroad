@@ -7,7 +7,6 @@ using System.Linq;
 
 public class Buttons : MonoBehaviour
 {
-    public bool selectFirstOnAnimateFinished;
     public bool removeListenersOnDeactivate;
     public bool usesSprites = false;
     public bool colorBasedOnInputType;
@@ -67,7 +66,8 @@ public class Buttons : MonoBehaviour
 
     private void SetToSolid(GameObject button)
     {
-        Image image = button.GetComponent<Image>();
+
+        Image image = button.GetComponent<Button>().image;
         image.sprite = solid;
 
         //TEXT
@@ -80,7 +80,10 @@ public class Buttons : MonoBehaviour
         //IMAGE
         if (colors.Count == 0)
             foreach (Image t in button.GetComponentsInChildren<Image>().Where(go => go.gameObject != button.gameObject))
-                t.color = textColor;
+            {
+                if(image != t)
+                    t.color = textColor;
+            }
         else if (!colorBasedOnInputType)
             foreach (Image t in button.GetComponentsInChildren<Image>().Where(go => go.gameObject != button.gameObject))
                 t.color = colors[buttons.IndexOf(button.GetComponent<Button>())];
@@ -90,13 +93,16 @@ public class Buttons : MonoBehaviour
             foreach (TextMeshProUGUI t in button.GetComponentsInChildren<TextMeshProUGUI>())
                 t.color = colors[(int)BindingManager.Instance.selectedInputType];
             foreach (Image t in button.GetComponentsInChildren<Image>().Where(go => go.gameObject != button.gameObject))
-                t.color = colors[(int)BindingManager.Instance.selectedInputType];
+                if (image != t)
+                {
+                    t.color = colors[(int)BindingManager.Instance.selectedInputType];
+                }
         }
     }
 
     public void SetToHollow(GameObject button)
     {
-        Image image = button.GetComponent<Image>();
+        Image image = button.GetComponent<Button>().image;
         image.sprite = unSolid;
         foreach (TextMeshProUGUI t in button.GetComponentsInChildren<TextMeshProUGUI>())
             t.color = image.color;

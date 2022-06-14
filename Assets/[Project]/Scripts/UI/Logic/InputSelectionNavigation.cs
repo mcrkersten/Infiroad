@@ -53,7 +53,14 @@ public class InputSelectionNavigation : MonoBehaviour
 [System.Serializable]
 public class Ui_AnimationObject
 {
+    public MenuType menuType;
     public GameObject gameObject;
+
+    [Header("Select after ani")]
+    public Button buttonToSelect;
+    public bool selectAfterFrom;
+
+    [Header("Disable after ani")]
     public bool disableAfterToAnimation;
     public bool disableAfterFromAnimation;
     [Header("Position")]
@@ -134,11 +141,17 @@ public class Ui_AnimationObject
     {
         if (disableAfterToAnimation)
             gameObject.SetActive(false);
+
+        if(buttonToSelect != null && !selectAfterFrom)
+            buttonToSelect.Select();
     }
 
     private void DisableAfterFrom()
     {
         if (disableAfterFromAnimation)
             gameObject.SetActive(false);
+
+        if (buttonToSelect != null && selectAfterFrom)
+            buttonToSelect.Select();
     }
 }

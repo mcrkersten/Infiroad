@@ -15,7 +15,6 @@ public class BindingMenuLogic : MonoBehaviour
     [SerializeField] private Buttons startRemapButton;
     [SerializeField] private Buttons inputTypeSelectionButtons;
     [SerializeField] private Button returnToDefaultButton;
-    [SerializeField] private ReturnButton returnButton;
     [SerializeField] private BindingManager bindingManager;
 
     [SerializeField] private GameObject bindingMenuWarning;
@@ -28,7 +27,6 @@ public class BindingMenuLogic : MonoBehaviour
 
     private void Start()
     {
-        ReturnButton.returnPressed += OnReturnButton;
         foreach (Ui_AnimationObject item in keyboardPanel)
             item.Init();
         foreach (Ui_AnimationObject item in gamepadPanel)
@@ -329,25 +327,15 @@ public class BindingMenuLogic : MonoBehaviour
 
     private void ExecuteAnimationObjects(List<Ui_AnimationObject> animationObjects)
     {
-        returnButton.returnTo = ReturnButton.ReturnTo.InputSelection;
         foreach (Ui_AnimationObject item in animationObjects)
             item.AnimateAll_To();
         currentAnimated = animationObjects;
-        returnButton.GetComponent<Button>().Select();
     }
 
-    private void OnReturnButton(ReturnButton.ReturnTo returnTo)
+    public void OnReturnButton()
     {
-        returnButton.returnTo = ReturnButton.ReturnTo.GamemodeSelection;
-        switch (returnTo)
-        {
-            case ReturnButton.ReturnTo.InputSelection:
-                foreach (Ui_AnimationObject item in currentAnimated)
-                    item.AnimateAll_Start();
-                break;
-            default:
-                break;
-        }
+        foreach (Ui_AnimationObject item in currentAnimated)
+            item.AnimateAll_Start();
     }
 
     private void StartRemappingKey(BindingButton selectedButton)
