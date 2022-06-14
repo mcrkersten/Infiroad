@@ -23,6 +23,8 @@ public class VegetationAssetTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (objectPooler == null)
+            objectPooler = ObjectPooler.Instance;
         //Get tag from the gameObject that triggered this function
         VegetationTriggerAsset assetTag = other.GetComponent<VegetationTriggerAsset>();
         if (assetTag == null)

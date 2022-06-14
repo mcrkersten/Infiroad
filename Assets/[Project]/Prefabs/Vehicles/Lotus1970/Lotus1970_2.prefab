@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 011564a00cc37e141afb151491afae0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lit: {fileID: 2100000, guid: aea9e5dcc5723644a91cdb7ace076960, type: 2}
+  lit: {fileID: 2100000, guid: 875b555f1095b5e449a2e8b2ffb0cef1, type: 2}
   unlit: {fileID: 2100000, guid: f011e3af79712b94799b4b47cb8e75d9, type: 2}
   mr: {fileID: 4897271591391561785}
 --- !u!1 &126093805831489919
@@ -664,7 +664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 011564a00cc37e141afb151491afae0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lit: {fileID: 2100000, guid: 366ed019ed9ba45408c6c4d06a8908cc, type: 2}
+  lit: {fileID: 2100000, guid: aea9e5dcc5723644a91cdb7ace076960, type: 2}
   unlit: {fileID: 2100000, guid: f011e3af79712b94799b4b47cb8e75d9, type: 2}
   mr: {fileID: 4807375009948110569}
 --- !u!1 &589923212710040235
@@ -3745,7 +3745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 011564a00cc37e141afb151491afae0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lit: {fileID: 2100000, guid: aea9e5dcc5723644a91cdb7ace076960, type: 2}
+  lit: {fileID: 2100000, guid: 366ed019ed9ba45408c6c4d06a8908cc, type: 2}
   unlit: {fileID: 2100000, guid: f011e3af79712b94799b4b47cb8e75d9, type: 2}
   mr: {fileID: 5433453323489579872}
 --- !u!1 &4790223587325306032
@@ -4700,7 +4700,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5859103045432505117}
   serializedVersion: 2
-  m_Mass: 451
+  m_Mass: 526
   m_Drag: 0.05
   m_AngularDrag: 0
   m_UseGravity: 1
@@ -4725,7 +4725,7 @@ MonoBehaviour:
   playerInput: {fileID: 7643020044463179250}
   useWheel: 1
   steeringRatio: 1
-  brakeBias: 0.55
+  brakeBias: 0.602
   engine:
     maxRPM: 10000
     engineTorqueProfile:
@@ -8854,13 +8854,17 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -1.275
       objectReference: {fileID: 0}
+    - target: {fileID: 4826780320801792300, guid: 85e0b22e0d4d04b4c8e9e32e16f7b402, type: 3}
+      propertyPath: data.WwiseObjectReference
+      value: 
+      objectReference: {fileID: 11400000, guid: c8a21c9f7a348fe4fbb6946f60cc747c, type: 2}
     - target: {fileID: 6138708320663951018, guid: 85e0b22e0d4d04b4c8e9e32e16f7b402, type: 3}
       propertyPath: m_Name
       value: AudioEmitters
       objectReference: {fileID: 0}
     - target: {fileID: 8352400224604088729, guid: 85e0b22e0d4d04b4c8e9e32e16f7b402, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85e0b22e0d4d04b4c8e9e32e16f7b402, type: 3}

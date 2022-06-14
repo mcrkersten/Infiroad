@@ -16,7 +16,7 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="2025709351" Language="SFX" Hash="3975034518">
+		<SoundBank Id="2025709351" Language="SFX" Hash="3507612801">
 			<ObjectPath>\SoundBanks\Default Work Unit\Vehicle</ObjectPath>
 			<ShortName>Vehicle</ShortName>
 			<Path>Vehicle.bnk</Path>
@@ -53,11 +53,11 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1020223172" Name="Play_Wind" ObjectPath="\Events\Default Work Unit\Play_Wind" DurationType="Infinite">
+				<Event Id="1020223172" Name="Play_Wind" ObjectPath="\Events\Default Work Unit\Play_Wind" DurationType="OneShot" DurationMin="80.916664" DurationMax="80.916664">
 					<IncludedMemoryFiles>
-						<File Id="493693357" Language="SFX">
-							<ShortName>strong-wind-blowing-sound-background-sound-effect.wav</ShortName>
-							<Path>SFX\strong-wind-blowing-sound-background-sound-effect_80497B0C.wem</Path>
+						<File Id="903948939" Language="SFX">
+							<ShortName>WindEffect.wav</ShortName>
+							<Path>SFX\WindEffect_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -67,13 +67,13 @@
 					<ShortName>car-suspension-bounce-car-rear-suspension-bounce.wav</ShortName>
 					<Path>SFX\car-suspension-bounce-car-rear-suspension-bounce_3CD203DC.wem</Path>
 				</File>
-				<File Id="493693357" Language="SFX">
-					<ShortName>strong-wind-blowing-sound-background-sound-effect.wav</ShortName>
-					<Path>SFX\strong-wind-blowing-sound-background-sound-effect_80497B0C.wem</Path>
-				</File>
 				<File Id="896025651" Language="SFX">
 					<ShortName>Dodge_Challenger_RT_71.model</ShortName>
 					<Path>Plugins\CrankcaseAudio REV\Dodge_Challenger_RT_71_AD7AA2E6.wem</Path>
+				</File>
+				<File Id="903948939" Language="SFX">
+					<ShortName>WindEffect.wav</ShortName>
+					<Path>SFX\WindEffect_10C4C929.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
 			<GameParameters>

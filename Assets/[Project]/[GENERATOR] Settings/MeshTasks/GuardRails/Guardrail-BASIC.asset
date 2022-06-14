@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d78f2287300b104cae54ee3afbba403, type: 3}
   m_Name: Guardrail-BASIC
   m_EditorClassIdentifier: 
-  dataKey: 979312
+  dataKey: 405171
   calculatedUs: []
   uvLenght: 0.53814495
+  UV_scale: 1
   meshTaskType: 0
   meshtaskPosition: 2
+  meshtaskStyle: 0
   points:
   - vertex:
       point: {x: 0, y: 0.5}
-      normal: {x: 0, y: 0}
       horizontal_UV: 0
     line: {x: 4, y: 0}
     inversedLine: {x: 3, y: 4}
@@ -28,7 +29,6 @@ MonoBehaviour:
     materialIndex: 0
   - vertex:
       point: {x: 0.09, y: 0.6}
-      normal: {x: 0, y: 0}
       horizontal_UV: 0.13453627
     line: {x: 0, y: 1}
     inversedLine: {x: 2, y: 3}
@@ -36,7 +36,6 @@ MonoBehaviour:
     materialIndex: 0
   - vertex:
       point: {x: 0, y: 0.7}
-      normal: {x: 0, y: 0}
       horizontal_UV: 0.26907247
     line: {x: 1, y: 2}
     inversedLine: {x: 1, y: 2}
@@ -44,7 +43,6 @@ MonoBehaviour:
     materialIndex: 0
   - vertex:
       point: {x: 0.09, y: 0.8}
-      normal: {x: 0, y: 0}
       horizontal_UV: 0.40360874
     line: {x: 2, y: 3}
     inversedLine: {x: 0, y: 1}
@@ -52,7 +50,6 @@ MonoBehaviour:
     materialIndex: 0
   - vertex:
       point: {x: 0, y: 0.9}
-      normal: {x: 0, y: 0}
       horizontal_UV: 0.53814495
     line: {x: 3, y: 4}
     inversedLine: {x: 4, y: 0}
@@ -66,6 +63,7 @@ MonoBehaviour:
   meshtaskWidth: 6.39
   minimalCornerRadius: 0
   maximumCornerRadius: 0
+  minimalExtrusionSize: 0
   materials:
   - {fileID: 2100000, guid: 7ce9870caa6ca8342ac605f7e4db18ba, type: 2}
   meshIsClosed: 0

@@ -76,14 +76,13 @@ MonoBehaviour:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    debug: 0
     sidePointAmount: 5
-    gridSize: 400
-    straight_NpointsBetween: 2
-    corner_NpointsBetween: 2
+    gridSize: 500
+    straight_NpointsBetween: 3
+    corner_NpointsBetween: 3
     XaxisVariation: 50
-    segmentHeightRange: 5
-    isFixedBetweenRange: 0
+    segmentHeightRange: 2.5
+    isFixedBetweenRange: 1
     segmentDeletionProximity: 30
   vehicle: {fileID: 0}
   segmentPrefab: {fileID: 2490539787425671966, guid: 581f21a299defcb4d9142c7dd4a17603, type: 3}
@@ -91,18 +90,17 @@ MonoBehaviour:
   roadChainPrefab: {fileID: 6707775167756143377, guid: 8864714a39c351f45bc03981a7c61c00, type: 3}
   createdRoadChains: []
   startSegment: {fileID: 0}
-  currentMeshTask:
-    roadSettings: {fileID: 0}
-    points: []
-    startPointIndex: 0
-    noiseChannel:
-      channel: 0
-      noises: []
-    mirror: 0
-    bothSides: 0
-    curveRadius: 0
-  radiusDelay: Infinity
   lastMeshPosition: {x: Infinity, y: Infinity, z: Infinity}
   meshtasks: []
-  road: {fileID: 11400000, guid: 33567533da55e71438bc2e53f9e13ee4, type: 2}
+  road: {fileID: 11400000, guid: 56fcc27d65d7bb84797a8bc1a9e6c4f7, type: 2}
   generatedRoadEdgeloops: 0
+  meshtaskSettings:
+  - {fileID: 11400000, guid: 0d430583a073a984caf4ad0fb0e144fa, type: 2}
+  - {fileID: 11400000, guid: b725fa6678e620548b413d7deddcc79e, type: 2}
+  - {fileID: 11400000, guid: 5750af715875c8d4e80fa4c7ef1f7013, type: 2}
+  - {fileID: 11400000, guid: 98ba0afee227de04fbc307eec45d64bb, type: 2}
+  - {fileID: 11400000, guid: fb0d4b1afc5c2f740aa6168c17a49dcc, type: 2}
+  - {fileID: 11400000, guid: c3ceba2d4ae154f4e93c12c9dba21faf, type: 2}
+  - {fileID: 11400000, guid: edbe6bcf1a897924d8edf99fca4d7726, type: 2}
+  - {fileID: 11400000, guid: 489345ceb11fbd6468614704c7170c98, type: 2}
+  - {fileID: 11400000, guid: e51f9bdd50d73ba4f8623ec6cea5d600, type: 2}

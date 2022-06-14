@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class Buttons : MonoBehaviour
 {
+    public bool selectFirstOnAnimateFinished;
     public bool removeListenersOnDeactivate;
+    public bool usesSprites = false;
+    public bool colorBasedOnInputType;
     public List<Button> buttons = new List<Button>();
 
     [Header("Hover behaviour")]
@@ -14,6 +18,12 @@ public class Buttons : MonoBehaviour
     [SerializeField] private Sprite solid;
     [SerializeField] private Sprite unSolid;
     [SerializeField] private Color textColor;
+    [SerializeField] private List<Color> colors = new List<Color>();
+    public void SelectButton(int index)
+    {
+        buttons[index].Select();
+    }
+
     private void OnDisable()
     {
         foreach (Button b in buttons)
@@ -30,12 +40,10 @@ public class Buttons : MonoBehaviour
         switch (restState)
         {
             case RestState.Solid:
-                image.sprite = unSolid;
-                button.GetComponentInChildren<TextMeshProUGUI>().color = image.color;
+                SetToHollow(button);
                 break;
             case RestState.UnSolid:
-                image.sprite = solid;
-                button.GetComponentInChildren<TextMeshProUGUI>().color = textColor;
+                SetToSolid(button);
                 break;
             case RestState.NotSet:
                 break;
@@ -44,20 +52,56 @@ public class Buttons : MonoBehaviour
 
     public void OnHoverEnd(GameObject button)
     {
-        Image image = button.GetComponent<Image>();
         switch (restState)
         {
             case RestState.Solid:
-                image.sprite = solid;
-                button.GetComponentInChildren<TextMeshProUGUI>().color = textColor;
+                SetToSolid(button);
                 break;
             case RestState.UnSolid:
-                image.sprite = unSolid;
-                button.GetComponentInChildren<TextMeshProUGUI>().color = image.color;
+                SetToHollow(button);
                 break;
             case RestState.NotSet:
                 break;
         }
+    }
+
+    private void SetToSolid(GameObject button)
+    {
+        Image image = button.GetComponent<Image>();
+        image.sprite = solid;
+
+        //TEXT
+        if (colors.Count == 0)
+            foreach (TextMeshProUGUI t in button.GetComponentsInChildren<TextMeshProUGUI>())
+                t.color = textColor;
+        else if(!colorBasedOnInputType)
+            foreach (TextMeshProUGUI t in button.GetComponentsInChildren<TextMeshProUGUI>())
+                t.color = colors[buttons.IndexOf(button.GetComponent<Button>())];
+        //IMAGE
+        if (colors.Count == 0)
+            foreach (Image t in button.GetComponentsInChildren<Image>().Where(go => go.gameObject != button.gameObject))
+                t.color = textColor;
+        else if (!colorBasedOnInputType)
+            foreach (Image t in button.GetComponentsInChildren<Image>().Where(go => go.gameObject != button.gameObject))
+                t.color = colors[buttons.IndexOf(button.GetComponent<Button>())];
+
+        if (colorBasedOnInputType)
+        {
+            foreach (TextMeshProUGUI t in button.GetComponentsInChildren<TextMeshProUGUI>())
+                t.color = colors[(int)BindingManager.Instance.selectedInputType];
+            foreach (Image t in button.GetComponentsInChildren<Image>().Where(go => go.gameObject != button.gameObject))
+                t.color = colors[(int)BindingManager.Instance.selectedInputType];
+        }
+    }
+
+    public void SetToHollow(GameObject button)
+    {
+        Image image = button.GetComponent<Image>();
+        image.sprite = unSolid;
+        foreach (TextMeshProUGUI t in button.GetComponentsInChildren<TextMeshProUGUI>())
+            t.color = image.color;
+        foreach (Image t in button.GetComponentsInChildren<Image>().Where(go => go.gameObject != button.gameObject))
+            t.color = image.color;
     }
 
     private enum RestState

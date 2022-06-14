@@ -8,6 +8,7 @@ public class GameModeManager : MonoBehaviour
     private static GameModeManager instance;
 
     public GameMode gameMode;
+    public List<RoadSegment> fixedSegments = new List<RoadSegment>();
 
     private void Start()
     {
@@ -19,5 +20,7 @@ public class GameModeManager : MonoBehaviour
 public enum GameMode
 {
     Relaxed = 0,
-    TimeTrial
+    TimeTrial,
+    RandomSectors,
+    FixedSectors
 }

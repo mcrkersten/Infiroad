@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be9b3f1063355f4586f3ac956708616, type: 3}
   m_Name: Grandstand_Left
   m_EditorClassIdentifier: 
-  dataKey: 594220
+  dataKey: 457270
   calculatedUs: []
   uvLenght: 42.899494
+  UV_scale: 1
   meshTaskType: 2
   meshtaskPosition: 0
   meshtaskStyle: 0

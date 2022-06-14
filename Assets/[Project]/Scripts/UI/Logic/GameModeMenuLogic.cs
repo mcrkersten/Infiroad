@@ -2,11 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class GameModeMenuLogic : MonoBehaviour
 {
-    [SerializeField] private Buttons gameModeButtons;
+    public Buttons gameModeButtons;
+    [SerializeField] private MainMenuLogic mainMenuLogic;
     [SerializeField] private BindingMenuLogic bindingMenu;
+    [SerializeField] private Image extensionPanel;
+
+    public void ActivateExtensionPanel()
+    {
+        extensionPanel.GetComponent<RectTransform>().DOAnchorPos(new Vector2(362f, 200f), 1f).SetEase(DG.Tweening.Ease.OutCubic);
+    }
+
+    public void DeactivateExtensionPanel()
+    {
+        extensionPanel.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0f, 0f), 1f).SetEase(DG.Tweening.Ease.OutCubic);
+    }
 
     private void Start()
     {
@@ -17,8 +31,7 @@ public class GameModeMenuLogic : MonoBehaviour
     private void SelectMode(GameMode mode)
     {
         GameModeManager.Instance.gameMode = mode;
-        bindingMenu.gameObject.SetActive(true);
         bindingMenu.EnableBindingMenuLogicButtons();
-        this.gameObject.SetActive(false);
+        mainMenuLogic.ModeSelected();
     }
 }

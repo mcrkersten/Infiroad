@@ -66,7 +66,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: acfc11818922e14790e7d28625ee5da6
     GuidInternal: 
-    m_lastTime: -8585528410969175529
+    m_lastTime: -8585468016042003440
     List:
     - name: Vehicle
       guid: 52404c56dd6e7041bafedeb552ffcf74
@@ -94,7 +94,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: c4cf4d1e7951704b902fd134c90aed1b
     GuidInternal: 
-    m_lastTime: -8585528387764050321
+    m_lastTime: -8585468016042078369
     List:
     - name: CountDown
       guid: 3bafc2c05adcf74a8e80be9665e83604
@@ -185,8 +185,8 @@ MonoBehaviour:
         guid: 2ea4ecdb3b2f6943b933d8a0b920102f
       Path: Events\Default Work Unit\Play_Wind
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 80.916664
+      minDuration: 80.916664
     - name: UI
       guid: 293360be0809cc4ba70e745c6de9bc4a
       id: 1551306167
@@ -345,7 +345,7 @@ MonoBehaviour:
     m_lastTime: -8585541343467685064
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 
+  ExpandedWaapiItemIds: 0100000006000000070000001500000016000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

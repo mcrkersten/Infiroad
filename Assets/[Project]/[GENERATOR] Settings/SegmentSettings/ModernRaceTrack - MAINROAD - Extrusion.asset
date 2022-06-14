@@ -229,6 +229,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fb0d4b1afc5c2f740aa6168c17a49dcc, type: 2}
   - {fileID: 11400000, guid: c3ceba2d4ae154f4e93c12c9dba21faf, type: 2}
   - {fileID: 11400000, guid: edbe6bcf1a897924d8edf99fca4d7726, type: 2}
+  - {fileID: 11400000, guid: e51f9bdd50d73ba4f8623ec6cea5d600, type: 2}
+  - {fileID: 11400000, guid: 489345ceb11fbd6468614704c7170c98, type: 2}
   guardRailMinimalCornerRadius: 0
   roadTypeTag: FOREST-BASIC
   assetPools:

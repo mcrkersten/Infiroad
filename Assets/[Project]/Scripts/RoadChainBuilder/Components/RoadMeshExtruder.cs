@@ -419,7 +419,8 @@ public enum MeshTaskType
 	Guardrail = 0,
 	CatchFence,
 	GrandStand,
-	TecproBarrier
+	TecproBarrier,
+	VideoBillboard
 }
 
 public enum MeshtaskStyle

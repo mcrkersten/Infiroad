@@ -18,32 +18,23 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.0009765625
       value: 0.0018920898
-      inSlope: 1.1166143
-      outSlope: 1.1166143
+      inSlope: 0.7253079
+      outSlope: 0.7253079
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.2743621
+      outWeight: 0.28558958
     - serializedVersion: 3
-      time: 1.42
-      value: 0.89844143
-      inSlope: 0.2461508
-      outSlope: 0.2461508
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 2.7251883
-      value: 1.001361
-      inSlope: -0.0008300494
-      outSlope: -0.0008300494
+      time: 3.4009643
+      value: 1
+      inSlope: 0.00025632774
+      outSlope: 0.00025632774
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 6
+      time: 5.9835844
       value: 0.9
       inSlope: 0
       outSlope: 0
@@ -69,23 +60,23 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.0009765625
       value: 0.0018920898
-      inSlope: 1.1166143
-      outSlope: 1.1166143
+      inSlope: 0.7349414
+      outSlope: 0.7349414
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.2743621
+      outWeight: 0.11198387
     - serializedVersion: 3
-      time: 1.426081
-      value: 0.797516
-      inSlope: 0.22977474
-      outSlope: 0.22977474
+      time: 3.2590408
+      value: 0.8983188
+      inSlope: 0.002334617
+      outSlope: 0.002334617
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.24596809
+      outWeight: 0.33333334
     - serializedVersion: 3
-      time: 2.9077902
+      time: 6
       value: 0.90043557
       inSlope: 0
       outSlope: 0
@@ -106,6 +97,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   SlipValue: 6
-  UnSlipValue: 1.426081
+  UnSlipValue: 1.4
   material: {fileID: 2100000, guid: 8d88879f40d29764ca72e05919467fca, type: 2}
   UV_mirrored: 0

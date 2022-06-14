@@ -17,8 +17,8 @@ Source plug-ins	ID	Name	Type		Wwise Object Path	Notes
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	270640359	Suspension	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Windows\SFX\car-suspension-bounce-car-rear-suspension-bounce_3CD203DC.wem		\Actor-Mixer Hierarchy\Default Work Unit\Suspension		36992
-	493693357	Wind	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Windows\SFX\strong-wind-blowing-sound-background-sound-effect_80497B0C.wem		\Actor-Mixer Hierarchy\Default Work Unit\Wind		33714240
 	886748003	GO	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Windows\SFX\mixkit-short-race-countdown-926_AF0283F6.wem		\Actor-Mixer Hierarchy\Default Work Unit\UI\GO		142040
+	903948939	WindEffect_0	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Windows\SFX\WindEffect_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\WindEffect_0		15536064
 	1018576071	CountDown	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Windows\SFX\mixkit-short-race-countdown-926_8A95F37A.wem		\Actor-Mixer Hierarchy\Default Work Unit\UI\CountDown		176580
 
 Plug-in Media	ID	Name	Source file	Type	Wwise Object Path	Notes	Data Size

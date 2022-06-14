@@ -12,6 +12,7 @@ namespace GameSystems {
         public static event StartGame onStartGame;
 
         [SerializeField] private VehicleController vehicleController;
+        [SerializeField] private RoadChainBuilder roadChainBuilder;
 
         [Header("Game and UI systems")]
         [SerializeField] private CountdownClock startCountdownClock;
@@ -30,31 +31,41 @@ namespace GameSystems {
 
         private void Awake()
         {
-            gameModeManager = GameModeManager.Instance;
             instance = this;
+        }
 
-            bestRun = FileManager.LoadRaceData();
-            currentRun = new RaceData(0, gameTime);
+        private void Start()
+        {
+            gameModeManager = GameModeManager.Instance;
+            roadChainBuilder = RoadChainBuilder.instance;
+            if(GameManager.instance != null)
+                StartGameMode();
         }
 
         private void StartGameMode()
         {
+            roadChainBuilder.InitializeGenerator();
+            roadChainBuilder.GenerateRoadForGamemode(gameModeManager);
+
             startCountdownClock.StartCountdown(3, 2);
             CountdownClock.timerFinished += GO_Timer;
+
             switch (gameModeManager.gameMode)
             {
                 case GameMode.Relaxed:
                     break;
                 case GameMode.TimeTrial:
+                    bestRun = FileManager.LoadRaceData();
+                    currentRun = new RaceData(0, gameTime);
                     CountdownClock.timerFinished += Game_Timer;
+                    break;
+                case GameMode.RandomSectors:
+                    break;
+                case GameMode.FixedSectors:
                     break;
             }
         }
 
-        private void Start()
-        {
-            StartGameMode();
-        }
 
         private void FixedUpdate()
         {

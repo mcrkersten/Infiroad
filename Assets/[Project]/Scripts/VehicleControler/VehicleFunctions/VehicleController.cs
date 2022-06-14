@@ -60,11 +60,8 @@ public class VehicleController : MonoBehaviour
 
     void Awake()
     {
-        if (useBindingManager)
-        {
-            Debug.Log(BindingManager.Instance.vehicleInputActions.Keyboard.Acceleration.bindings[0].path);
+        if (useBindingManager && BindingManager.Instance != null)
             vehicleInputActions = BindingManager.Instance.vehicleInputActions;
-        }
 
         rb = this.GetComponent<Rigidbody>();
         feedbackSystem = new FeedbackSystem(playerInput);
@@ -112,7 +109,7 @@ public class VehicleController : MonoBehaviour
 
     private void OnEnable()
     {
-        if (useBindingManager)
+        if (useBindingManager && BindingManager.Instance != null)
         {
             switch (BindingManager.Instance.selectedInputType)
             {

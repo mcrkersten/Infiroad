@@ -29,10 +29,6 @@ public class RoadChain : MonoBehaviour {
 	public UVMode uvMode = UVMode.TiledDeltaCompensated; // More info on what this is in the enum!
 
 	public MeshSpawnPoints meshSpawnPoints;
-	//public List<SpawnableGameObject> spawnableGameObjects = new List<SpawnableGameObject>();
-
-	public PowerlineSettings powerlineSettings;
-	public FenceSettings fenceSettings;
 
 	private List<GameObject> activatedPooledObjects = new List<GameObject>();
 	[HideInInspector] public Road road;
@@ -63,7 +59,7 @@ public class RoadChain : MonoBehaviour {
 			rs.transform.SetParent(this.transform);
 	}
 
-	public void InitializeSegmentMesh(RoadSettings settings, RoadSegment roadSegment)
+	public void CreateSegmentMesh(RoadSettings settings, RoadSegment roadSegment)
     {
 		devSettings.Add(settings);
 		CreateMesh(settings, roadSegment);

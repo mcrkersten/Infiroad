@@ -8,23 +8,49 @@ using TMPro;
 
 public class BindingButton : MonoBehaviour
 {
-    [SerializeField] public TextMeshProUGUI bindingName;
-    [SerializeField] private TextElement unbound;
-    [SerializeField] private TextElement listening;
+    public Button button;
+    [HideInInspector] public int keyIndex;
+    [HideInInspector] public InputAction inputAction;
+    [HideInInspector] public int isPositive = -1;
 
-    public void SetNewBinding()
+    [SerializeField] private Image selectionOutline;
+    public TextMeshProUGUI bindingName;
+    public TextMeshProUGUI boundButtonName;
+    [SerializeField] private TextMeshProUGUI toolTip;
+
+    [SerializeField] private Color unboundColor;
+    [SerializeField] private Color listenColor;
+    [SerializeField] private Color boundColor;
+
+    public delegate void OnButtonSelection(int index);
+    public static event OnButtonSelection buttonSelected;
+
+    public void OnSelection()
     {
-        listening.gameObject.SetActive(false);
-        unbound.gameObject.SetActive(true);
+        toolTip.gameObject.SetActive(true);
+        toolTip.text = "Select to rebind";
+        selectionOutline.color = Color.white;
+
+        int childCount = transform.parent.childCount;
+        buttonSelected?.Invoke(keyIndex);
+        if (keyIndex < 1)
+            return;
+
+        float x = Mathf.Clamp(keyIndex, 0, childCount - 2);
+        transform.parent.GetComponent<RectTransform>().DOAnchorPosY(40 * (x - 1), .25f);
+    }
+
+    public void OnDeselection()
+    {
+        toolTip.gameObject.SetActive(false);
+        selectionOutline.color = Color.clear;
     }
 
     public void Listening()
     {
-        listening.UpdateTextElement(0, "Listening...");
-        listening.UpdateTextElement(1, "Click prefered button");
-
-        unbound.gameObject.SetActive(false);
-        listening.gameObject.SetActive(true);
+        boundButtonName.text = "Listening";
+        boundButtonName.color = listenColor;
+        toolTip.text = "Awaiting input";
     }
 
     public void SetKeyText(InputBinding binding)
@@ -37,15 +63,19 @@ public class BindingButton : MonoBehaviour
         else
             newStr = str;
 
-        unbound.gameObject.SetActive(false);
-        listening.gameObject.SetActive(true);
-        listening.UpdateTextElement(0, newStr);
-        listening.UpdateTextElement(1, "Click to rebind");
+        if (newStr != "")
+        {
+            boundButtonName.text = newStr;
+            boundButtonName.color = boundColor;
+        }
+        else
+            UnBound();
+        toolTip.text = "Select to rebind";
     }
 
     public void UnBound()
     {
-        listening.gameObject.SetActive(false);
-        unbound.gameObject.SetActive(true);
+        boundButtonName.text = "Unbound";
+        boundButtonName.color = unboundColor;
     }
 }

@@ -17,7 +17,6 @@ public class BindingManager : MonoBehaviour
 
     public InputType selectedInputType;
     public InputActionMap currentSelectedInputActionMap;
-    public int selectedKeybinding = 0;
 
     private int axisSkip = 0;
 
@@ -88,30 +87,29 @@ public class BindingManager : MonoBehaviour
         return true;
     }
 
-    public void RemapButton(InputAction actionToRebind)
+    public void RemapButton(BindingButton button)
     {
-        Debug.Log(actionToRebind);
-        actionToRebind.Disable();
-        rebindingOperation = actionToRebind.PerformInteractiveRebinding()
+        button.inputAction.Disable();
+        rebindingOperation = button.inputAction.PerformInteractiveRebinding()
                     // To avoid accidental input from mouse motion
                     .WithControlsExcluding("Mouse")
                     .WithControlsExcluding("<Keyboard>/printScreen")
                     .OnMatchWaitForAnother(0.1f)
-                    .OnComplete(operation => OnRemapButtonComplete(actionToRebind))
+                    .OnComplete(operation => OnRemapButtonComplete(button))
                     .Start();
 
     }
 
-    public void RemapAxis(InputAction actionToRebind, bool isPositive)
+    public void RemapAxis(BindingButton button, bool isPositive)
     {
         var newAction = new InputAction(binding: "/*/<button>");
-        actionToRebind.Disable();
+        button.inputAction.Disable();
         rebindingOperation = newAction.PerformInteractiveRebinding()
                     // To avoid accidental input from mouse motion
                     .WithControlsExcluding("Mouse")
                     .WithControlsExcluding("<Keyboard>/printScreen")
                     .OnMatchWaitForAnother(0.1f)
-                    .OnComplete(operation => OnRemapAxisComplete(actionToRebind, newAction, isPositive))
+                    .OnComplete(operation => OnRemapAxisComplete(button, newAction, isPositive))
                     .Start();
     }
 
@@ -125,39 +123,34 @@ public class BindingManager : MonoBehaviour
         return true;
     }
 
-    private void OnRemapButtonComplete(InputAction actionToRebind)
+    private void OnRemapButtonComplete(BindingButton button)
     {
-        actionToRebind.Enable();
+        button.inputAction.Enable();
         rebindingOperation.Dispose();
-        bindingMenuLogic.SetRemapButtonToInputAction(actionToRebind, 0);
-        if (CheckIfSelectedActionmapIsFullyBound())
-            bindingMenuLogic.EnableSaveButton();
-        else bindingMenuLogic.DisableSaveButton();
-
+        button.SetKeyText(button.inputAction.bindings[0]);
+        SaveActionmap(vehicleInputActions);
     }
 
-    private void OnRemapAxisComplete(InputAction actionToRebind, InputAction newAction, bool isPositive)
+    private void OnRemapAxisComplete(BindingButton button, InputAction newAction, bool isPositive)
     {
         int i;
         if (!isPositive)
         {
-            var negative = actionToRebind.bindings.IndexOf(b => b.name == "negative");
-            actionToRebind.ApplyBindingOverride(negative, newAction.bindings[0]);
+            var negative = button.inputAction.bindings.IndexOf(b => b.name == "negative");
+            button.inputAction.ApplyBindingOverride(negative, newAction.bindings[0]);
             i = 1;
         }
         else
         {
-            var positive = actionToRebind.bindings.IndexOf(b => b.name == "positive");
-            actionToRebind.ApplyBindingOverride(positive, newAction.bindings[0]);
+            var positive = button.inputAction.bindings.IndexOf(b => b.name == "positive");
+            button.inputAction.ApplyBindingOverride(positive, newAction.bindings[0]);
             i = 2;
             axisSkip = 1;
         }
 
-        actionToRebind.Enable();
+        button.inputAction.Enable();
         rebindingOperation.Dispose();
-        bindingMenuLogic.SetRemapButtonToInputAction(actionToRebind, i);
-        if (CheckIfSelectedActionmapIsFullyBound())
-            bindingMenuLogic.EnableSaveButton();
-        else bindingMenuLogic.DisableSaveButton();
+        button.SetKeyText(button.inputAction.bindings[i]);
+        SaveActionmap(vehicleInputActions);
     }
 }

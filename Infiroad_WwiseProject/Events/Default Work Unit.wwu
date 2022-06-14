@@ -19,7 +19,7 @@
 						<Action Name="" ID="{EC218846-8524-4D5D-8094-648A4132F6D4}" ShortID="1020027929">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="Wind" ID="{59574B0C-04F4-4A8A-AD09-A530C7B7FD5B}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}"/>
+									<ObjectRef Name="WindEffect_0" ID="{978EB1A9-50B5-4404-AA82-9AD121E2D1D9}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

@@ -8,6 +8,7 @@ public class MeshtaskSettings : ScriptableObject
 	[HideInInspector] public int dataKey;
 	[HideInInspector] public List<Vector2> calculatedUs = new List<Vector2>();
 	[HideInInspector] public float uvLenght;
+	public float UV_scale = 1f;
 
 
 	public MeshTaskType meshTaskType;
@@ -157,5 +158,6 @@ public enum MeshtaskPoolType
 	GrandstandSides,
 	SmokeBombs,
 	GrandstandArcs,
-	Tecpros
+	Tecpros,
+	VideoBillboardEdge
 }

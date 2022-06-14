@@ -170,36 +170,6 @@
 							</ChildrenList>
 							<Language>SFX</Language>
 							<PluginInnerObjectList>
-								<List Name="EngineSimulationControlData">
-									<PluginInnerObject Name="" ID="{BC76910E-D3A2-4905-87EB-E5AB07C5296E}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417">
-										<PropertyList>
-											<Property Name="UpShiftWobbleVolAmp" Type="Real32" Value="0"/>
-										</PropertyList>
-									</PluginInnerObject>
-									<PluginInnerObject Name="" ID="{DC271C04-8C68-4C9B-B254-272B760E2581}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
-								</List>
-								<List Name="AccelDecelModelControlData">
-									<PluginInnerObject Name="" ID="{297798B2-39AA-42EE-8836-AE065BA12066}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418">
-										<PropertyList>
-											<Property Name="CrossfadeDuration" Type="int32" Value="150"/>
-											<Property Name="RPMSmoothness" Type="Real32" Value="5"/>
-											<Property Name="Version" Type="int32" Value="2"/>
-										</PropertyList>
-									</PluginInnerObject>
-									<PluginInnerObject Name="" ID="{24A114E7-4D27-430A-B9E8-A16EE5A73216}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{A8641EAA-4734-491B-BC0B-F2E72D68B699}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{26BE8F13-AC9F-4D31-BBE6-2311F1210B01}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{E79870AE-444C-4D2F-BB31-001888389B66}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{ACD7084E-2AF3-4371-A00F-D731856A70E5}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{1E4FA36B-0453-4DDD-B428-04A6E3240384}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{86B64BF7-74C2-4468-9059-78D5BD5A52FC}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{5C2F01FB-7739-4E61-84B1-7DDDC8DD4940}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{54403FE9-9C73-4244-90C5-20CBF5AD80A5}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{4DCF4DDA-01EC-4E7A-B9DC-944BD20C0D43}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{7022C350-AA72-4737-AB76-79FE27F1F26F}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{14B1B56C-60F5-4664-B0B5-3B79DA6F8E02}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{978ECF02-F17B-4612-B668-ECC789E7A264}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-								</List>
 								<List Name="GranularModelControlData_Acceleration">
 									<PluginInnerObject Name="" ID="{87DA791D-8991-48B0-8B65-CEDFC4F7ECEB}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419">
 										<PropertyList>
@@ -232,6 +202,36 @@
 									<PluginInnerObject Name="" ID="{F0A2C3D9-658C-4F0A-94D0-9088AF15120D}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
 									<PluginInnerObject Name="" ID="{8DD422C1-587C-44CE-AAF7-7FA07CB4D210}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
 								</List>
+								<List Name="EngineSimulationControlData">
+									<PluginInnerObject Name="" ID="{BC76910E-D3A2-4905-87EB-E5AB07C5296E}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417">
+										<PropertyList>
+											<Property Name="UpShiftWobbleVolAmp" Type="Real32" Value="0"/>
+										</PropertyList>
+									</PluginInnerObject>
+									<PluginInnerObject Name="" ID="{DC271C04-8C68-4C9B-B254-272B760E2581}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
+								</List>
+								<List Name="AccelDecelModelControlData">
+									<PluginInnerObject Name="" ID="{297798B2-39AA-42EE-8836-AE065BA12066}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418">
+										<PropertyList>
+											<Property Name="CrossfadeDuration" Type="int32" Value="150"/>
+											<Property Name="RPMSmoothness" Type="Real32" Value="5"/>
+											<Property Name="Version" Type="int32" Value="2"/>
+										</PropertyList>
+									</PluginInnerObject>
+									<PluginInnerObject Name="" ID="{24A114E7-4D27-430A-B9E8-A16EE5A73216}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{A8641EAA-4734-491B-BC0B-F2E72D68B699}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{26BE8F13-AC9F-4D31-BBE6-2311F1210B01}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{E79870AE-444C-4D2F-BB31-001888389B66}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{ACD7084E-2AF3-4371-A00F-D731856A70E5}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{1E4FA36B-0453-4DDD-B428-04A6E3240384}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{86B64BF7-74C2-4468-9059-78D5BD5A52FC}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{5C2F01FB-7739-4E61-84B1-7DDDC8DD4940}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{54403FE9-9C73-4244-90C5-20CBF5AD80A5}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{4DCF4DDA-01EC-4E7A-B9DC-944BD20C0D43}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{7022C350-AA72-4737-AB76-79FE27F1F26F}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{14B1B56C-60F5-4664-B0B5-3B79DA6F8E02}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{978ECF02-F17B-4612-B668-ECC789E7A264}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+								</List>
 							</PluginInnerObjectList>
 						</SourcePlugin>
 					</ChildrenList>
@@ -247,90 +247,6 @@
 					<ObjectLists/>
 					<ActiveSourceList>
 						<ActiveSource Name="CrankcaseAudio REV" ID="{8E4FA085-86A2-48E7-A22B-9B945C5F541A}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
-				<Sound Name="Wind" ID="{59574B0C-04F4-4A8A-AD09-A530C7B7FD5B}" ShortID="627073069">
-					<PropertyList>
-						<Property Name="3DSpatialization" Type="int16" Value="1"/>
-						<Property Name="EnableAttenuation" Type="bool" Value="False"/>
-						<Property Name="Highpass" Type="int16">
-							<ValueList>
-								<Value>21</Value>
-							</ValueList>
-						</Property>
-						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
-						<Property Name="ListenerRelativeRouting" Type="bool" Value="False"/>
-						<Property Name="Lowpass" Type="int16">
-							<ValueList>
-								<Value>66</Value>
-							</ValueList>
-						</Property>
-						<Property Name="Pitch" Type="int32">
-							<ValueList>
-								<Value>1060</Value>
-							</ValueList>
-						</Property>
-						<Property Name="RenderEffect0" Type="bool">
-							<ValueList>
-								<Value>True</Value>
-							</ValueList>
-						</Property>
-						<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="0"/>
-						<Property Name="Volume" Type="Real64">
-							<ValueList>
-								<Value>-8</Value>
-							</ValueList>
-							<RTPCList>
-								<RTPC Name="" ID="{DF7EE1D0-524B-42BA-9CEC-C4295D23C75D}" ShortID="421323715">
-									<ReferenceList>
-										<Reference Name="ControlInput">
-											<ObjectRef Name="Throttle" ID="{04B0755B-3DB2-4FC3-B437-557F7F6C4CCC}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
-										</Reference>
-									</ReferenceList>
-									<Curve Name="" ID="{E03A81F1-75BA-4D81-BE94-F96D36C51BC2}">
-										<PropertyList>
-											<Property Name="Flags" Type="int32" Value="3"/>
-										</PropertyList>
-										<PointList>
-											<Point>
-												<XPos>0</XPos>
-												<YPos>0</YPos>
-												<Flags>5</Flags>
-											</Point>
-											<Point>
-												<XPos>1</XPos>
-												<YPos>-5</YPos>
-												<Flags>37</Flags>
-											</Point>
-										</PointList>
-									</Curve>
-								</RTPC>
-							</RTPCList>
-						</Property>
-					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
-						</Reference>
-						<Reference Name="Effect0" PluginName="Wwise Stereo Delay" CompanyID="0" PluginID="135" PluginType="3">
-							<ObjectRef Name="_500ms_Per_Hour" ID="{9CE2F0FB-CE0B-4CC7-A699-E30528959D0E}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="strong-wind-blowing-sound-background-sound-effect" ID="{80922DD5-1F6B-4135-8728-CD71AF7D124F}">
-							<Language>SFX</Language>
-							<AudioFile>strong-wind-blowing-sound-background-sound-effect.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="493693357"/>
-							</MediaIDList>
-						</AudioFileSource>
-					</ChildrenList>
-					<ObjectLists/>
-					<ActiveSourceList>
-						<ActiveSource Name="strong-wind-blowing-sound-background-sound-effect" ID="{80922DD5-1F6B-4135-8728-CD71AF7D124F}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
 				<RandomSequenceContainer Name="Screetch" ID="{E819F4A2-7D6D-47DA-A1A6-93B52B9A8C70}" ShortID="441689764">
@@ -783,6 +699,92 @@
 						</Sound>
 					</ChildrenList>
 				</Folder>
+				<Sound Name="WindEffect_0" ID="{978EB1A9-50B5-4404-AA82-9AD121E2D1D9}" ShortID="689930703">
+					<PropertyList>
+						<Property Name="Pitch" Type="int32">
+							<RTPCList>
+								<RTPC Name="" ID="{787E9BC4-46F8-4C5C-BA33-15F576339BB2}" ShortID="460227300">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="Velocity" ID="{671F2341-4E24-4808-A90D-EF6A2E7DE1CE}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{53AD6C58-1319-4C76-9AF0-54666E5A6512}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="65537"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>-3071</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>250</XPos>
+												<YPos>0</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+						<Property Name="Volume" Type="Real64">
+							<RTPCList>
+								<RTPC Name="" ID="{EF4E4C2A-405C-4386-879A-C980534485D1}" ShortID="67772364">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="Velocity" ID="{671F2341-4E24-4808-A90D-EF6A2E7DE1CE}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{C4F0CAB1-C2B7-4BDB-B212-79FDC84BECE2}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>-200</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>171.511627906977</XPos>
+												<YPos>1.72733526973803</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>250</XPos>
+												<YPos>2.33842</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="WindEffect" ID="{7FCFA1AA-DEA6-4CFC-93D9-D96CC68584EE}">
+							<Language>SFX</Language>
+							<AudioFile>WindEffect.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="903948939"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="WindEffect" ID="{7FCFA1AA-DEA6-4CFC-93D9-D96CC68584EE}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>
