@@ -4618,6 +4618,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3247750686842170155, guid: d517d248e616af64391713101de4b41c, type: 3}
+      propertyPath: m_TagString
+      value: Segment
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d517d248e616af64391713101de4b41c, type: 3}
 --- !u!1 &567403761 stripped
@@ -6841,7 +6845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2545326271903659418, guid: 2b880c8b1105d95498b48dfd518871e3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5569013666247335211, guid: 2b880c8b1105d95498b48dfd518871e3, type: 3}
       propertyPath: m_Interactable
@@ -7465,6 +7469,18 @@ PrefabInstance:
       propertyPath: startSegment
       value: 
       objectReference: {fileID: 567403761}
+    - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
+      propertyPath: settings.XaxisVariation
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
+      propertyPath: settings.corner_NpointsBetween
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
+      propertyPath: settings.straight_NpointsBetween
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7288201750910135066, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -13105,7 +13121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMode: 0
-  fixedSegments: []
+  fixedSectors: []
 --- !u!114 &1838616547 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5569013666247335211, guid: 2b880c8b1105d95498b48dfd518871e3, type: 3}
@@ -14197,7 +14213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttons: {fileID: 706062062}
-  trackRenderCamera: {fileID: 626078518}
+  trackRenderCamera: {fileID: 626078521}
   roadChainBuilder: {fileID: 920782847}
   segmtentAmount: 1
   resolution: 40

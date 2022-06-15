@@ -36,15 +36,12 @@ public class GameModeMenuLogic : MonoBehaviour
         switch (mode)
         {
             case GameMode.Relaxed:
-                bindingMenu.EnableBindingMenuLogicButtons();
                 mainMenuLogic.ActivateMenu(MenuType.InputSelection);
                 break;
             case GameMode.TimeTrial:
-                bindingMenu.EnableBindingMenuLogicButtons();
                 mainMenuLogic.ActivateMenu(MenuType.InputSelection);
                 break;
             case GameMode.RandomSectors:
-                bindingMenu.EnableBindingMenuLogicButtons();
                 mainMenuLogic.ActivateMenu(MenuType.InputSelection);
                 break;
             case GameMode.FixedSectors:

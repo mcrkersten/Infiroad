@@ -8,7 +8,7 @@ public class GameModeManager : MonoBehaviour
     private static GameModeManager instance;
 
     public GameMode gameMode;
-    public List<RoadSegment> fixedSegments = new List<RoadSegment>();
+    public List<Sector> fixedSectors = new List<Sector>();
 
     private void Start()
     {

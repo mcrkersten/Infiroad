@@ -7,10 +7,16 @@ using System.Linq;
 
 public class MainMenuLogic : MonoBehaviour
 {
+    public static MainMenuLogic Instance { get { return instance; } }
+    private static MainMenuLogic instance;
     private MenuType selectedMenu = MenuType.Null;
     [SerializeField] private Buttons mainMenuButtons;
     public List<Ui_AnimationObject> menuAnimationObjects = new List<Ui_AnimationObject>();
 
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
         ReturnButton.returnPressed += OnReturnButton;

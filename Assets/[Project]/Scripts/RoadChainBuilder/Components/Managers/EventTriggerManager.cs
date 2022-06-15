@@ -24,7 +24,6 @@ public class EventTriggerManager : MonoBehaviour
                     break;
                 case TriggerType.RoadChain:
                     roadChainTrigger?.Invoke();
-                    Destroy(other);
                     break;
                 default:
                     break;

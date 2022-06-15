@@ -25,6 +25,7 @@ using System;
 public class RoadChain : MonoBehaviour {
 	public bool loop = false; // Whether or not the last segment should connect to the first
 	public List<RoadSegment> organizedSegments = new List<RoadSegment>();
+	public LineRenderer line;
 	public LayerMask trackLayer;
 	public UVMode uvMode = UVMode.TiledDeltaCompensated; // More info on what this is in the enum!
 

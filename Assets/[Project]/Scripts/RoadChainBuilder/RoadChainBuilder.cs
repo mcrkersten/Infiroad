@@ -18,6 +18,9 @@ public class RoadChainBuilder : MonoBehaviour
     [Header("")]
     public List<RoadChain> createdRoadChains = new List<RoadChain>();
 
+    public Queue<RoadChain> fixedRoadChains = new Queue<RoadChain>();
+    private RoadChain lastFixedRoadChain;
+
     private EdgePoint lastEdgePoint;
     public GameObject startSegment;
 
@@ -44,6 +47,7 @@ public class RoadChainBuilder : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        PositionStartSegment();
     }
 
     public void InitializeGenerator()
@@ -71,7 +75,8 @@ public class RoadChainBuilder : MonoBehaviour
                 StartRandomRoadChain();
                 break;
             case GameMode.FixedSectors:
-                StartFixedRoadChain(gameModeManager.fixedSegments);
+                Debug.Log("BUILD");
+                StartFixedRoadChain(gameModeManager.fixedSectors);
                 break;
         }
 
@@ -79,7 +84,7 @@ public class RoadChainBuilder : MonoBehaviour
             SetVehicleStartPosition();
     }
 
-    public void CreateNextRandomRoadChain_Trigger()
+    public void CreateNextRoadChain()
     {
         CreateNextRandomRoadChain(lastEdgePoint);
         if (createdRoadChains.Count == 4)
@@ -88,7 +93,9 @@ public class RoadChainBuilder : MonoBehaviour
 
     public void CreateNextFixedSector_Trigger()
     {
-
+        RoadChain next = SelectAndPositionNextFixedRoadChain();
+        CreateSegmentMeshes(next.organizedSegments, next, RoadShape.straights);
+        SpawnAllDecoration(next.organizedSegments, next);
     }
 
     public RoadShape GetRoadShape(EdgePoint entry, EdgePoint exit)
@@ -115,34 +122,35 @@ public class RoadChainBuilder : MonoBehaviour
         return RoadShape.corners;
     }
 
-    public Sector GenerateSector(int segmentAmount)
+    public Sector GenerateSector()
     {
         List<RoadSegment> segments_0 = CreateNextRandomRoadChain(new EdgePoint(EdgeLocation.none, 3, startSegment), false);
-        for (int i = 1; i < segmentAmount; i++)
-        {
-            List<RoadSegment> segments_1 = CreateNextRandomRoadChain(lastEdgePoint, false);
-            GameObject oldChain = segments_1[0].transform.parent.gameObject;
-            for (int ii = 0; ii < segments_1.Count; ii++)
-            {
-                segments_1[ii].transform.SetParent(segments_0[0].transform.parent);
-                if (ii == segments_1.Count - 1)
-                    Destroy(oldChain);
-            }
-            segments_0.AddRange(segments_1);
-        }
-        return new Sector(segments_0);
+        RoadChain chain = segments_0[0].transform.root.GetComponent<RoadChain>();
+        chain.organizedSegments = segments_0;
+        return new Sector(chain);
+    }
+
+    private void PositionStartSegment()
+    {
+        startSegment.transform.position = new Vector3(0, 0, -settings.gridSize / 2f);
     }
 
     private void StartRandomRoadChain()
     {
         CreateNextRandomRoadChain(new EdgePoint(EdgeLocation.none, 3, startSegment));
-        CreateNextRandomRoadChain_Trigger();
-        EventTriggerManager.roadChainTrigger += CreateNextRandomRoadChain_Trigger;
+        CreateNextRoadChain();
+        EventTriggerManager.roadChainTrigger += CreateNextRoadChain;
     }
 
-    private void StartFixedRoadChain(List<RoadSegment> segments)
+    private void StartFixedRoadChain(List<Sector> sectors)
     {
+        foreach (Sector s in sectors)
+            fixedRoadChains.Enqueue(s.roadChain);
+
+        Debug.Log(fixedRoadChains.Count);
         EventTriggerManager.roadChainTrigger += CreateNextFixedSector_Trigger;
+        CreateNextFixedSector_Trigger();
+        CreateNextFixedSector_Trigger();
     }
 
     /// <summary>
@@ -206,14 +214,58 @@ public class RoadChainBuilder : MonoBehaviour
 
         RoadShape roadShape;
         List<RoadSegment> organized = CreateSegments(lastExitPoint, out roadShape);
+        roadChain.SetOrganizedSegments(organized);
         if (decoration)
         {
             createdRoadChains.Add(roadChain);
             CreateSegmentMeshes(organized, roadChain, roadShape);
             SpawnAllDecoration(organized, roadChain);
         }
-        roadChain.SetOrganizedSegments(organized);
         return organized;
+    }
+
+    private RoadChain SelectAndPositionNextFixedRoadChain()
+    {
+        if (lastFixedRoadChain == null)
+            return CreateFirstFixedRoadChain();
+
+        RoadChain next = fixedRoadChains.Dequeue();
+        next.gameObject.SetActive(true);
+        Transform lastSegment = lastFixedRoadChain.organizedSegments[lastFixedRoadChain.organizedSegments.Count - 1].transform;
+
+        List<Transform> toDestroy = new List<Transform>();
+        foreach (Transform child in next.transform)
+            if (!child.CompareTag("Segment"))
+                toDestroy.Add(child);
+
+        int count = toDestroy.Count;
+        for (int i = 0; i < count; i++)
+            Destroy(toDestroy[i].gameObject);
+
+
+        GameObject temp = new GameObject("Temp");
+        next.transform.rotation = lastSegment.rotation;
+        temp.transform.position = next.organizedSegments[0].transform.position;
+        next.transform.parent = temp.transform;
+        temp.transform.position = lastSegment.position;
+        next.transform.parent = null;
+        Destroy(temp);
+
+        fixedRoadChains.Enqueue(lastFixedRoadChain);
+        lastFixedRoadChain = next;
+        return next;
+    }
+
+    private RoadChain CreateFirstFixedRoadChain()
+    {
+        RoadChain next = fixedRoadChains.Dequeue();
+        next.gameObject.SetActive(true);
+        next.transform.rotation = Quaternion.identity;
+        next.transform.position = Vector3.zero;
+        lastFixedRoadChain = next;
+
+
+        return next;
     }
 
     private void PositionSegments(List<RoadSegment> segments)
@@ -383,7 +435,6 @@ public class RoadChainBuilder : MonoBehaviour
         segment.transform.position = GetEdgePointLocalLocationPosition(point) + this.transform.position;
         segment.transform.rotation = point.edgeRotation;
         segment.name = "ExitSegment";
-        Instantiate(roadChainTriggerObjectPrefab, segment.transform.position, segment.transform.rotation, segment.transform);
         return point;
     }
 
@@ -715,7 +766,7 @@ public class RoadChainBuilder : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventTriggerManager.roadChainTrigger -= CreateNextRandomRoadChain_Trigger;
+        EventTriggerManager.roadChainTrigger -= CreateNextRoadChain;
     }
 }
 

@@ -25,6 +25,10 @@ public class BindingMenuLogic : MonoBehaviour
     [SerializeField] private List<Ui_AnimationObject> wheelPanel = new List<Ui_AnimationObject>();
     private List<Ui_AnimationObject> currentAnimated = new List<Ui_AnimationObject>();
 
+    private void OnEnable()
+    {
+        EnableBindingMenuLogicButtons();
+    }
     private void Start()
     {
         foreach (Ui_AnimationObject item in keyboardPanel)
@@ -369,12 +373,6 @@ public class BindingMenuLogic : MonoBehaviour
                 break;
         }
         return x;
-    }
-
-    private void OnDisable()
-    {
-        DisableButtons(inputTypeSelectionButtons);
-        inputTypeSelectionButtons.buttons[0].transform.parent.gameObject.SetActive(true);
     }
 }
 

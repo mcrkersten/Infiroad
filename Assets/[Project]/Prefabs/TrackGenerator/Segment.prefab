@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2490539787425671967}
   m_Layer: 3
   m_Name: Segment
-  m_TagString: Untagged
+  m_TagString: Segment
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,7 +55,7 @@ MonoBehaviour:
   surfaceSettings: []
   tangentLength: 45
   roadSetting: {fileID: 0}
-  startEndLoop: {x: 0, y: 0}
+  startEndEdgeLoop: {x: 0, y: 0}
   edgeLoopCount: 0
 --- !u!33 &2490539787425671963
 MeshFilter:

@@ -10,6 +10,7 @@ TagManager:
   - StartPosition
   - Trigger
   - PooledObject
+  - Segment
   layers:
   - Default
   - TransparentFX

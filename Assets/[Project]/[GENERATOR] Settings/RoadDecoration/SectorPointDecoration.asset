@@ -20,6 +20,12 @@ MonoBehaviour:
     unitsInPool: 4
     prefab: {fileID: 2639451264253111639, guid: 36c08b2a9adabb944a9ae990baafcc81, type: 3}
     position: {x: 0, y: 0}
-    curveTime: 0
-    noiseChannel: 1
+    curveTime: 0.01
+    noiseChannel: 0
+  - meshtaskPoolType: 0
+    unitsInPool: 4
+    prefab: {fileID: 7696483532372454975, guid: c537102fda2ee344e8c1c56eaee6f2d4, type: 3}
+    position: {x: 0, y: 0}
+    curveTime: 0.01
+    noiseChannel: 0
   poolIndex: 1
