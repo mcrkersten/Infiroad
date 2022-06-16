@@ -2241,8 +2241,8 @@ MonoBehaviour:
     m_Bits: 27
   brakeBias: 1
   springLenght: 0.18
-  springConstant: 7500
-  damperStiffness: 750
+  springConstant: 8000
+  damperStiffness: 800
   suspensionPower:
     serializedVersion: 2
     m_Curve:
@@ -5699,7 +5699,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe8c4e05ef705742b05094247c237f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  antiRoll: 10
+  antiRoll: 15
 --- !u!1 &6275345984785328479
 GameObject:
   m_ObjectHideFlags: 0
@@ -6681,7 +6681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe8c4e05ef705742b05094247c237f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  antiRoll: 10
+  antiRoll: 15
 --- !u!1 &7045652105683729188
 GameObject:
   m_ObjectHideFlags: 0
@@ -8202,8 +8202,8 @@ MonoBehaviour:
     m_Bits: 27
   brakeBias: 1
   springLenght: 0.18
-  springConstant: 7500
-  damperStiffness: 750
+  springConstant: 8000
+  damperStiffness: 800
   suspensionPower:
     serializedVersion: 2
     m_Curve:
@@ -8594,8 +8594,8 @@ MonoBehaviour:
     m_Bits: 27
   brakeBias: 1
   springLenght: 0.18
-  springConstant: 8000
-  damperStiffness: 800
+  springConstant: 8500
+  damperStiffness: 850
   suspensionPower:
     serializedVersion: 2
     m_Curve:
@@ -9467,8 +9467,8 @@ MonoBehaviour:
     m_Bits: 27
   brakeBias: 1
   springLenght: 0.18
-  springConstant: 8000
-  damperStiffness: 800
+  springConstant: 8500
+  damperStiffness: 850
   suspensionPower:
     serializedVersion: 2
     m_Curve:
