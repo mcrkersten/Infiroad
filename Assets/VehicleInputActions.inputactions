@@ -76,6 +76,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MinimapRescale",
+                    "type": "Button",
+                    "id": "1eb7ee98-a88e-4f78-9f8d-337a5b32eb00",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -188,6 +197,17 @@
                     "action": "StartEngine",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e31aa3e9-2ab7-462e-967c-4d8c7b9336f8",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MinimapRescale",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -262,6 +282,15 @@
                     "name": "StartEngine",
                     "type": "Button",
                     "id": "1c6ecb50-4e95-4829-998c-67ed0c0c7100",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MinimapRescale",
+                    "type": "Button",
+                    "id": "f664c7e2-b1d8-4fb2-9383-9e48da108a25",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -378,6 +407,17 @@
                     "action": "Steering",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "7e024d82-ddab-4efd-a077-40c0129d2fc6",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MinimapRescale",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -452,6 +492,15 @@
                     "name": "StartEngine",
                     "type": "Button",
                     "id": "82cf9a1e-6f31-4058-86cc-0b815136baba",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MinimapRescale",
+                    "type": "Button",
+                    "id": "0b10ad29-be02-4272-99db-4cd37bcd5de4",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -544,6 +593,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "StartEngine",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c160323b-acd0-4ec6-8cd0-e9e23d667969",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MinimapRescale",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

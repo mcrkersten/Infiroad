@@ -1,15 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using DG.Tweening;
 
 public class MinimapBehaviour : MonoBehaviour
 {
+    [Header("Content")]
     [SerializeField] private Camera minimapCamera;
     private Rigidbody rb;
     [SerializeField] private float maxSpeed;
     [SerializeField] private float minZoom;
     [SerializeField] private float maxZoom;
     private Vector3 localStartPosition;
+    [SerializeField] private Ui_AnimationObject minimapScaleAnimation; 
+
+    private bool isZoomed;
 
     [SerializeField] private Material material;
 
@@ -34,5 +41,19 @@ public class MinimapBehaviour : MonoBehaviour
         Vector3 local = new Vector3(localStartPosition.x, Mathf.Lerp(minZoom, maxZoom, (rb.velocity.magnitude) / maxSpeed), localStartPosition.z);
         minimapCamera.transform.localPosition = local;
         minimapCamera.orthographicSize = Mathf.Lerp(minZoom, maxZoom, (rb.velocity.magnitude) / maxSpeed);
+    }
+
+    public void ScaleMinimap(InputAction.CallbackContext obj)
+    {
+        if (isZoomed)
+        {
+            minimapScaleAnimation.AnimateAll_Start();
+            isZoomed = true;
+        }
+        else
+        {
+            minimapScaleAnimation.AnimateAll_To();
+            isZoomed = false;
+        }
     }
 }

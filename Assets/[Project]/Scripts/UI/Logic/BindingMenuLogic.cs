@@ -167,7 +167,9 @@ public class BindingMenuLogic : MonoBehaviour
                     button.bindingName.text = "Start engine";
                     button.inputAction = keyboard.StartEngine;
                     break;
-                default:
+                case KeyboardBinding.ToggleMinimap:
+                    button.bindingName.text = "Minimap rescale";
+                    button.inputAction = keyboard.MinimapRescale;
                     break;
             }
             button.SetKeyText(button.inputAction.bindings[button.isPositive + 1]);
@@ -225,7 +227,9 @@ public class BindingMenuLogic : MonoBehaviour
                     button.bindingName.text = "Start engine";
                     button.inputAction = gamepad.StartEngine;
                     break;
-                default:
+                case GamepadBinding.ToggleMinimap:
+                    button.bindingName.text = "Minimap rescale";
+                    button.inputAction = gamepad.MinimapRescale;
                     break;
             }
             button.SetKeyText(button.inputAction.bindings[button.isPositive + 1]);
@@ -240,42 +244,44 @@ public class BindingMenuLogic : MonoBehaviour
             button.keyIndex = i;
             button.button.onClick.AddListener(() => StartRemappingKey(button));
             bindingButtons.Add(button);
-            VehicleInputActions.SteeringWheelActions gamepad = bindingManager.vehicleInputActions.SteeringWheel;
+            VehicleInputActions.SteeringWheelActions wheel = bindingManager.vehicleInputActions.SteeringWheel;
             switch ((WheelBinding)i)
             {
                 case WheelBinding.Steering:
                     button.bindingName.text = "Steering";
-                    button.inputAction = gamepad.Steering;
+                    button.inputAction = wheel.Steering;
                     break;
                 case WheelBinding.Shift_Up:
                     button.bindingName.text = "Shift up";
-                    button.inputAction = gamepad.ShiftUP;
+                    button.inputAction = wheel.ShiftUP;
                     break;
                 case WheelBinding.Shift_Down:
                     button.bindingName.text = "Shift down";
-                    button.inputAction = gamepad.ShiftDOWN;
+                    button.inputAction = wheel.ShiftDOWN;
                     break;
                 case WheelBinding.Brake:
                     button.bindingName.text = "Brake";
-                    button.inputAction = gamepad.Braking;
+                    button.inputAction = wheel.Braking;
                     break;
                 case WheelBinding.Accelerate:
                     button.bindingName.text = "Accelerate";
-                    button.inputAction = gamepad.Acceleration;
+                    button.inputAction = wheel.Acceleration;
                     break;
                 case WheelBinding.Reset:
                     button.bindingName.text = "Reset vehicle";
-                    button.inputAction = gamepad.Reset;
+                    button.inputAction = wheel.Reset;
                     break;
                 case WheelBinding.Clutch:
                     button.bindingName.text = "Clutch";
-                    button.inputAction = gamepad.Clutch;
+                    button.inputAction = wheel.Clutch;
                     break;
                 case WheelBinding.StartEngine:
                     button.bindingName.text = "Start engine";
-                    button.inputAction = gamepad.StartEngine;
+                    button.inputAction = wheel.StartEngine;
                     break;
-                default:
+                case WheelBinding.ToggleMinimap:
+                    button.bindingName.text = "Minimap rescale";
+                    button.inputAction = wheel.MinimapRescale;
                     break;
             }
             button.SetKeyText(button.inputAction.bindings[0]);
@@ -392,7 +398,8 @@ public enum WheelBinding
     Shift_Up,
     Shift_Down,
     Reset,
-    StartEngine
+    StartEngine,
+    ToggleMinimap
 }
 
 public enum GamepadBinding
@@ -405,7 +412,8 @@ public enum GamepadBinding
     Shift_Up,
     Shift_Down,
     Reset,
-    StartEngine
+    StartEngine,
+    ToggleMinimap
 }
 
 public enum KeyboardBinding
@@ -418,5 +426,6 @@ public enum KeyboardBinding
     Shift_Up,
     Shift_Down,
     Reset,
-    StartEngine
+    StartEngine,
+    ToggleMinimap
 }

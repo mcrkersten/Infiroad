@@ -98,6 +98,15 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MinimapRescale"",
+                    ""type"": ""Button"",
+                    ""id"": ""1eb7ee98-a88e-4f78-9f8d-337a5b32eb00"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -210,6 +219,17 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""StartEngine"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e31aa3e9-2ab7-462e-967c-4d8c7b9336f8"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MinimapRescale"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -284,6 +304,15 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""name"": ""StartEngine"",
                     ""type"": ""Button"",
                     ""id"": ""1c6ecb50-4e95-4829-998c-67ed0c0c7100"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MinimapRescale"",
+                    ""type"": ""Button"",
+                    ""id"": ""f664c7e2-b1d8-4fb2-9383-9e48da108a25"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -400,6 +429,17 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Steering"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7e024d82-ddab-4efd-a077-40c0129d2fc6"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MinimapRescale"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -474,6 +514,15 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""name"": ""StartEngine"",
                     ""type"": ""Button"",
                     ""id"": ""82cf9a1e-6f31-4058-86cc-0b815136baba"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MinimapRescale"",
+                    ""type"": ""Button"",
+                    ""id"": ""0b10ad29-be02-4272-99db-4cd37bcd5de4"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -568,6 +617,17 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""StartEngine"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c160323b-acd0-4ec6-8cd0-e9e23d667969"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MinimapRescale"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -645,6 +705,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         m_Keyboard_ShiftDOWN = m_Keyboard.FindAction("ShiftDOWN", throwIfNotFound: true);
         m_Keyboard_Reset = m_Keyboard.FindAction("Reset", throwIfNotFound: true);
         m_Keyboard_StartEngine = m_Keyboard.FindAction("StartEngine", throwIfNotFound: true);
+        m_Keyboard_MinimapRescale = m_Keyboard.FindAction("MinimapRescale", throwIfNotFound: true);
         // Gamepad
         m_Gamepad = asset.FindActionMap("Gamepad", throwIfNotFound: true);
         m_Gamepad_Steering = m_Gamepad.FindAction("Steering", throwIfNotFound: true);
@@ -655,6 +716,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         m_Gamepad_ShiftDOWN = m_Gamepad.FindAction("ShiftDOWN", throwIfNotFound: true);
         m_Gamepad_Reset = m_Gamepad.FindAction("Reset", throwIfNotFound: true);
         m_Gamepad_StartEngine = m_Gamepad.FindAction("StartEngine", throwIfNotFound: true);
+        m_Gamepad_MinimapRescale = m_Gamepad.FindAction("MinimapRescale", throwIfNotFound: true);
         // SteeringWheel
         m_SteeringWheel = asset.FindActionMap("SteeringWheel", throwIfNotFound: true);
         m_SteeringWheel_Steering = m_SteeringWheel.FindAction("Steering", throwIfNotFound: true);
@@ -665,6 +727,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         m_SteeringWheel_ShiftDOWN = m_SteeringWheel.FindAction("ShiftDOWN", throwIfNotFound: true);
         m_SteeringWheel_Reset = m_SteeringWheel.FindAction("Reset", throwIfNotFound: true);
         m_SteeringWheel_StartEngine = m_SteeringWheel.FindAction("StartEngine", throwIfNotFound: true);
+        m_SteeringWheel_MinimapRescale = m_SteeringWheel.FindAction("MinimapRescale", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -732,6 +795,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Keyboard_ShiftDOWN;
     private readonly InputAction m_Keyboard_Reset;
     private readonly InputAction m_Keyboard_StartEngine;
+    private readonly InputAction m_Keyboard_MinimapRescale;
     public struct KeyboardActions
     {
         private @VehicleInputActions m_Wrapper;
@@ -744,6 +808,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         public InputAction @ShiftDOWN => m_Wrapper.m_Keyboard_ShiftDOWN;
         public InputAction @Reset => m_Wrapper.m_Keyboard_Reset;
         public InputAction @StartEngine => m_Wrapper.m_Keyboard_StartEngine;
+        public InputAction @MinimapRescale => m_Wrapper.m_Keyboard_MinimapRescale;
         public InputActionMap Get() { return m_Wrapper.m_Keyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -777,6 +842,9 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @StartEngine.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnStartEngine;
                 @StartEngine.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnStartEngine;
                 @StartEngine.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnStartEngine;
+                @MinimapRescale.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMinimapRescale;
+                @MinimapRescale.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMinimapRescale;
+                @MinimapRescale.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMinimapRescale;
             }
             m_Wrapper.m_KeyboardActionsCallbackInterface = instance;
             if (instance != null)
@@ -805,6 +873,9 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @StartEngine.started += instance.OnStartEngine;
                 @StartEngine.performed += instance.OnStartEngine;
                 @StartEngine.canceled += instance.OnStartEngine;
+                @MinimapRescale.started += instance.OnMinimapRescale;
+                @MinimapRescale.performed += instance.OnMinimapRescale;
+                @MinimapRescale.canceled += instance.OnMinimapRescale;
             }
         }
     }
@@ -821,6 +892,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gamepad_ShiftDOWN;
     private readonly InputAction m_Gamepad_Reset;
     private readonly InputAction m_Gamepad_StartEngine;
+    private readonly InputAction m_Gamepad_MinimapRescale;
     public struct GamepadActions
     {
         private @VehicleInputActions m_Wrapper;
@@ -833,6 +905,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         public InputAction @ShiftDOWN => m_Wrapper.m_Gamepad_ShiftDOWN;
         public InputAction @Reset => m_Wrapper.m_Gamepad_Reset;
         public InputAction @StartEngine => m_Wrapper.m_Gamepad_StartEngine;
+        public InputAction @MinimapRescale => m_Wrapper.m_Gamepad_MinimapRescale;
         public InputActionMap Get() { return m_Wrapper.m_Gamepad; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -866,6 +939,9 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @StartEngine.started -= m_Wrapper.m_GamepadActionsCallbackInterface.OnStartEngine;
                 @StartEngine.performed -= m_Wrapper.m_GamepadActionsCallbackInterface.OnStartEngine;
                 @StartEngine.canceled -= m_Wrapper.m_GamepadActionsCallbackInterface.OnStartEngine;
+                @MinimapRescale.started -= m_Wrapper.m_GamepadActionsCallbackInterface.OnMinimapRescale;
+                @MinimapRescale.performed -= m_Wrapper.m_GamepadActionsCallbackInterface.OnMinimapRescale;
+                @MinimapRescale.canceled -= m_Wrapper.m_GamepadActionsCallbackInterface.OnMinimapRescale;
             }
             m_Wrapper.m_GamepadActionsCallbackInterface = instance;
             if (instance != null)
@@ -894,6 +970,9 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @StartEngine.started += instance.OnStartEngine;
                 @StartEngine.performed += instance.OnStartEngine;
                 @StartEngine.canceled += instance.OnStartEngine;
+                @MinimapRescale.started += instance.OnMinimapRescale;
+                @MinimapRescale.performed += instance.OnMinimapRescale;
+                @MinimapRescale.canceled += instance.OnMinimapRescale;
             }
         }
     }
@@ -910,6 +989,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_SteeringWheel_ShiftDOWN;
     private readonly InputAction m_SteeringWheel_Reset;
     private readonly InputAction m_SteeringWheel_StartEngine;
+    private readonly InputAction m_SteeringWheel_MinimapRescale;
     public struct SteeringWheelActions
     {
         private @VehicleInputActions m_Wrapper;
@@ -922,6 +1002,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         public InputAction @ShiftDOWN => m_Wrapper.m_SteeringWheel_ShiftDOWN;
         public InputAction @Reset => m_Wrapper.m_SteeringWheel_Reset;
         public InputAction @StartEngine => m_Wrapper.m_SteeringWheel_StartEngine;
+        public InputAction @MinimapRescale => m_Wrapper.m_SteeringWheel_MinimapRescale;
         public InputActionMap Get() { return m_Wrapper.m_SteeringWheel; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -955,6 +1036,9 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @StartEngine.started -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnStartEngine;
                 @StartEngine.performed -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnStartEngine;
                 @StartEngine.canceled -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnStartEngine;
+                @MinimapRescale.started -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnMinimapRescale;
+                @MinimapRescale.performed -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnMinimapRescale;
+                @MinimapRescale.canceled -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnMinimapRescale;
             }
             m_Wrapper.m_SteeringWheelActionsCallbackInterface = instance;
             if (instance != null)
@@ -983,6 +1067,9 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @StartEngine.started += instance.OnStartEngine;
                 @StartEngine.performed += instance.OnStartEngine;
                 @StartEngine.canceled += instance.OnStartEngine;
+                @MinimapRescale.started += instance.OnMinimapRescale;
+                @MinimapRescale.performed += instance.OnMinimapRescale;
+                @MinimapRescale.canceled += instance.OnMinimapRescale;
             }
         }
     }
@@ -1042,6 +1129,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         void OnShiftDOWN(InputAction.CallbackContext context);
         void OnReset(InputAction.CallbackContext context);
         void OnStartEngine(InputAction.CallbackContext context);
+        void OnMinimapRescale(InputAction.CallbackContext context);
     }
     public interface IGamepadActions
     {
@@ -1053,6 +1141,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         void OnShiftDOWN(InputAction.CallbackContext context);
         void OnReset(InputAction.CallbackContext context);
         void OnStartEngine(InputAction.CallbackContext context);
+        void OnMinimapRescale(InputAction.CallbackContext context);
     }
     public interface ISteeringWheelActions
     {
@@ -1064,5 +1153,6 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         void OnShiftDOWN(InputAction.CallbackContext context);
         void OnReset(InputAction.CallbackContext context);
         void OnStartEngine(InputAction.CallbackContext context);
+        void OnMinimapRescale(InputAction.CallbackContext context);
     }
 }

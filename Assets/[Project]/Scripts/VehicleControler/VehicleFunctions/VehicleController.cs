@@ -16,6 +16,7 @@ public class VehicleController : MonoBehaviour
     public float steeringRatio;
     private SteeringWheelInput steeringInput;
 
+    [SerializeField] MinimapBehaviour minimapBehaviour;
     public VehicleInputActions vehicleInputActions;
     private InputAction steering;
     private InputAction braking;
@@ -142,6 +143,9 @@ public class VehicleController : MonoBehaviour
         vehicleInputActions.SteeringWheel.ShiftUP.started += engine.ShiftUp;
         vehicleInputActions.SteeringWheel.ShiftDOWN.Enable();
         vehicleInputActions.SteeringWheel.ShiftDOWN.started += engine.ShiftDown;
+
+        vehicleInputActions.SteeringWheel.MinimapRescale.Enable();
+        vehicleInputActions.SteeringWheel.MinimapRescale.started += minimapBehaviour.ScaleMinimap;
     }
     private void ActivateKeyboardControls()
     {
@@ -154,6 +158,9 @@ public class VehicleController : MonoBehaviour
         vehicleInputActions.Keyboard.ShiftUP.started += engine.ShiftUp;
         vehicleInputActions.Keyboard.ShiftDOWN.Enable();
         vehicleInputActions.Keyboard.ShiftDOWN.started += engine.ShiftDown;
+
+        vehicleInputActions.Keyboard.MinimapRescale.Enable();
+        vehicleInputActions.Keyboard.MinimapRescale.started += minimapBehaviour.ScaleMinimap;
     }
     private void ActivateGamepadControls()
     {
@@ -166,6 +173,9 @@ public class VehicleController : MonoBehaviour
         vehicleInputActions.Gamepad.ShiftUP.started += engine.ShiftUp;
         vehicleInputActions.Gamepad.ShiftDOWN.Enable();
         vehicleInputActions.Gamepad.ShiftDOWN.started += engine.ShiftDown;
+
+        vehicleInputActions.Gamepad.MinimapRescale.Enable();
+        vehicleInputActions.Gamepad.MinimapRescale.started += minimapBehaviour.ScaleMinimap;
     }
     // Update is called once per frame
     void Update()
