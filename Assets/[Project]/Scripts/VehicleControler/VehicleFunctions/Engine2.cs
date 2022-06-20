@@ -32,7 +32,7 @@ public class Engine2
 
     [Header("Audio and feedback")]
     public AK.Wwise.RTPC engineRPMAudio;
-    public AK.Wwise.RTPC velocityAudio;
+    public AK.Wwise.RTPC windAudio;
     public AK.Wwise.RTPC throttleAudio;
     public AK.Wwise.RTPC GearAudio;
 
@@ -45,7 +45,7 @@ public class Engine2
         rollingCircumference = driveWheelRadiusInMeter * 2f * Mathf.PI;
 
         //Audio
-        velocityAudio.SetGlobalValue(0);
+        windAudio.SetGlobalValue(0);
         engineRPMAudio.SetGlobalValue(0);
         throttleAudio.SetGlobalValue(0);
         GearAudio.SetGlobalValue(1);
@@ -73,7 +73,7 @@ public class Engine2
         float forceToApply = wheelTorque / driveWheelRadiusInMeter;
 
         engineRPMAudio.SetGlobalValue(lastRPM);
-        velocityAudio.SetGlobalValue(currentForwardVelocity);
+        windAudio.SetGlobalValue(currentForwardVelocity);
 
         dashboard.UpdateMeter(lastRPM / maxRPM, DashboardMeter.MeterType.Tacheometer);
         dashboard.UpdateMeter(currentForwardVelocity * 3.6f, DashboardMeter.MeterType.Speedometer);

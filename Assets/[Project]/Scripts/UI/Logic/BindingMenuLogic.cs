@@ -119,7 +119,7 @@ public class BindingMenuLogic : MonoBehaviour
 
     private void CreateKeyboardList()
     {
-        for (int i = 0; i < GetEnumCount(InputType.Keyboard); i++)
+        for (int i = 0; i <= GetEnumCount(InputType.Keyboard); i++)
         {
             BindingButton button = Instantiate(bindingButtonPrefab, bindingButtonParent).GetComponent<BindingButton>();
             button.keyIndex = i;
@@ -163,8 +163,8 @@ public class BindingMenuLogic : MonoBehaviour
                     button.bindingName.text = "Clutch";
                     button.inputAction = keyboard.Clutch;
                     break;
-                case KeyboardBinding.StartEngine:
-                    button.bindingName.text = "Start engine";
+                case KeyboardBinding.Pause:
+                    button.bindingName.text = "Pause";
                     button.inputAction = keyboard.StartEngine;
                     break;
                 case KeyboardBinding.ToggleMinimap:
@@ -178,7 +178,7 @@ public class BindingMenuLogic : MonoBehaviour
 
     private void CreateGamepadList()
     {
-        for (int i = 0; i < GetEnumCount(InputType.Gamepad); i++)
+        for (int i = 0; i <= GetEnumCount(InputType.Gamepad); i++)
         {
             BindingButton button = Instantiate(bindingButtonPrefab, bindingButtonParent).GetComponent<BindingButton>();
             button.keyIndex = i;
@@ -223,8 +223,8 @@ public class BindingMenuLogic : MonoBehaviour
                     button.bindingName.text = "Clutch";
                     button.inputAction = gamepad.Clutch;
                     break;
-                case GamepadBinding.StartEngine:
-                    button.bindingName.text = "Start engine";
+                case GamepadBinding.Pause:
+                    button.bindingName.text = "Pause";
                     button.inputAction = gamepad.StartEngine;
                     break;
                 case GamepadBinding.ToggleMinimap:
@@ -238,7 +238,7 @@ public class BindingMenuLogic : MonoBehaviour
 
     private void CreateWheelList()
     {
-        for (int i = 0; i < GetEnumCount(InputType.Wheel); i++)
+        for (int i = 0; i <= GetEnumCount(InputType.Wheel); i++)
         {
             BindingButton button = Instantiate(bindingButtonPrefab, bindingButtonParent).GetComponent<BindingButton>();
             button.keyIndex = i;
@@ -275,8 +275,8 @@ public class BindingMenuLogic : MonoBehaviour
                     button.bindingName.text = "Clutch";
                     button.inputAction = wheel.Clutch;
                     break;
-                case WheelBinding.StartEngine:
-                    button.bindingName.text = "Start engine";
+                case WheelBinding.Pause:
+                    button.bindingName.text = "Pause";
                     button.inputAction = wheel.StartEngine;
                     break;
                 case WheelBinding.ToggleMinimap:
@@ -398,7 +398,7 @@ public enum WheelBinding
     Shift_Up,
     Shift_Down,
     Reset,
-    StartEngine,
+    Pause,
     ToggleMinimap
 }
 
@@ -412,7 +412,7 @@ public enum GamepadBinding
     Shift_Up,
     Shift_Down,
     Reset,
-    StartEngine,
+    Pause,
     ToggleMinimap
 }
 
@@ -426,6 +426,6 @@ public enum KeyboardBinding
     Shift_Up,
     Shift_Down,
     Reset,
-    StartEngine,
+    Pause,
     ToggleMinimap
 }

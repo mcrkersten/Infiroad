@@ -71,19 +71,19 @@ public class MeshtaskExtruder
 	private void ExecuteMeshtask(MeshtaskSettings meshtaskSettings, MeshTask meshTask)
     {
 		int currentEdgeloop = 0;
-		int poleCount = 0;
+		int objectCount = 0;
 		if (meshtaskSettings.meshTaskType != meshTask.meshTaskType)
 			return;
+
 		Vector2 meshDirection = meshTask.meshPosition == MeshtaskPosition.Left ? (Vector2.left) : (Vector2.right);
+
+		Vector3 noise = Vector3.zero;
+		noise += meshTask.noiseChannel.generatorInstance.getNoise(meshTask.startPointIndex + currentEdgeloop, meshTask.noiseChannel);
 
 		foreach (MeshTask.Point p in meshTask.positionPoints)
 		{
 			float local_XOffset = meshTask.meshPosition == MeshtaskPosition.Left ? Mathf.Min(0f, p.extrusionVariables.leftExtrusion) : Mathf.Max(0f, p.extrusionVariables.rightExtrusion);
 			local_XOffset = local_XOffset * meshtaskSettings.extrusionSize;
-
-			Vector3 noise = Vector3.zero;
-			noise += meshTask.noiseChannel.generatorInstance.getNoise(meshTask.startPointIndex + currentEdgeloop, meshTask.noiseChannel);
-
 
 			for (int i = 0; i < meshtaskSettings.PointCount; i++)
 			{
@@ -109,69 +109,83 @@ public class MeshtaskExtruder
 					uvs0.Add(uv);
 				}
 			}
-			
-			//Easy to spawn now to combat repetitiveness
-			switch (meshtaskSettings.meshTaskType)
-            {
-                case MeshTaskType.Guardrail:
-					if (currentEdgeloop - (poleCount * ((GuardrailSettings)meshtaskSettings).poleSpacing) == 0 || currentEdgeloop == meshTask.positionPoints.Count - 2)
-                    {
-						GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.GuardrailPoles);
-						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
-						poleCount++;
-					}
-					break;
-                case MeshTaskType.CatchFence:
-					if (currentEdgeloop - (poleCount * ((GuardrailSettings)meshtaskSettings).poleSpacing) == 0 || currentEdgeloop == meshTask.positionPoints.Count - 2)
-					{
-						GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.CatchfencePoles);
-						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
-						poleCount++;
-					}
-					break;
-                case MeshTaskType.GrandStand:
-					if(currentEdgeloop == 0)
-                    {
-						GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.GrandstandSides);
-						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
-					}
-					if(currentEdgeloop == meshTask.positionPoints.Count - 2)
-                    {
-						GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.GrandstandSides);
-						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
-					}
-					break;
-				case MeshTaskType.TecproBarrier:
-					if (currentEdgeloop == 0)
-					{
-						GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.Tecpros);
-						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
-					}
-					if (currentEdgeloop == meshTask.positionPoints.Count - 2)
-					{
-						GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.Tecpros);
-						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
-					}
-					break;
-				case MeshTaskType.VideoBillboard:
-					if (currentEdgeloop == 0)
-					{
-						GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.VideoBillboardEdge);
-						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
-					}
-					if (currentEdgeloop == meshTask.positionPoints.Count - 2)
-					{
-						GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.VideoBillboardEdge);
-						meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
-					}
-					break;
-			}
+
+			objectCount += CreateStaticObjects(currentEdgeloop, objectCount, meshtaskSettings, meshDirection, p, noise, local_XOffset, meshTask);
 			currentEdgeloop++;
 		}
+
 		if(currentMeshObject != null)
 			meshtaskSettings.PopulateMeshtask(meshTask, currentMeshObject);
 	}
 
+	private int CreateStaticObjects(int currentEdgeloop, int objectCount, MeshtaskSettings meshtaskSettings, Vector3 meshDirection, MeshTask.Point p, Vector3 noise, float local_XOffset, MeshTask meshTask)
+    {
+		//Easy to spawn now to combat repetitiveness
+		switch (meshtaskSettings.meshTaskType)
+		{
+			case MeshTaskType.Guardrail:
+				if (currentEdgeloop - (objectCount * ((GuardrailSettings)meshtaskSettings).poleSpacing) == 0 || currentEdgeloop == meshTask.positionPoints.Count - 2)
+				{
+					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.GuardrailPoles);
+					meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					return 1;
+				}
+				break;
+			case MeshTaskType.CatchFence:
+				if (currentEdgeloop - (objectCount * ((GuardrailSettings)meshtaskSettings).poleSpacing) == 0 || currentEdgeloop == meshTask.positionPoints.Count - 2)
+				{
+					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.CatchfencePoles);
+					meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					return 1;
+				}
+				break;
+			case MeshTaskType.GrandStand:
+				if (currentEdgeloop == 0)
+				{
+					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.GrandstandSides);
+					meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					return 1;
+				}
+				else if (currentEdgeloop == meshTask.positionPoints.Count - 2)
+				{
+					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.GrandstandSides);
+					meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					return 1;
+				}
+				break;
+			case MeshTaskType.TecproBarrier:
+				if (currentEdgeloop == 0)
+				{
+					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.Tecpros);
+					meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					return 1;
+				}
+				else if (currentEdgeloop == meshTask.positionPoints.Count - 2)
+				{
+					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.Tecpros);
+					meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					return 1;
+				}
+				break;
+			case MeshTaskType.VideoBillboard:
+				if (currentEdgeloop == 0)
+				{
+					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.VideoBillboardEdge);
+					meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					return 1;
+				}
+				else if (currentEdgeloop == meshTask.positionPoints.Count - 2)
+				{
+					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.VideoBillboardEdge);
+					meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					return 1;
+				}
+				break;
+			default:
+				break;
+		}
+		return 0;
+	}
 
 	private List<int>[] CreateTriangles(MeshTask meshTask, MeshtaskSettings meshtaskSettings, int vertexJumpedCount)
     {

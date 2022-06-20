@@ -17,11 +17,14 @@ public class VehicleController : MonoBehaviour
     private SteeringWheelInput steeringInput;
 
     [SerializeField] MinimapBehaviour minimapBehaviour;
+    [SerializeField] PauseMenuBehaviour pauseMenuBehaviour;
+
     public VehicleInputActions vehicleInputActions;
     private InputAction steering;
     private InputAction braking;
     private InputAction acceleration;
     private InputAction clutch;
+    [SerializeField] private RadioSystem radio;
 
     [Header("Vehicle configuration")]
     [Range(0f,1f)] public float brakeBias;
@@ -58,6 +61,7 @@ public class VehicleController : MonoBehaviour
     private InputType userInputType = 0;
 
     public int wheelInputAngle;
+    [SerializeField] AnimationCurve gamepadInputWeakener;
 
     void Awake()
     {
@@ -146,6 +150,8 @@ public class VehicleController : MonoBehaviour
 
         vehicleInputActions.SteeringWheel.MinimapRescale.Enable();
         vehicleInputActions.SteeringWheel.MinimapRescale.started += minimapBehaviour.ScaleMinimap;
+        vehicleInputActions.SteeringWheel.StartEngine.Enable();
+        vehicleInputActions.SteeringWheel.StartEngine.started += pauseMenuBehaviour.OnStartMenu;
     }
     private void ActivateKeyboardControls()
     {
@@ -161,6 +167,8 @@ public class VehicleController : MonoBehaviour
 
         vehicleInputActions.Keyboard.MinimapRescale.Enable();
         vehicleInputActions.Keyboard.MinimapRescale.started += minimapBehaviour.ScaleMinimap;
+        vehicleInputActions.Keyboard.StartEngine.Enable();
+        vehicleInputActions.Keyboard.StartEngine.started += pauseMenuBehaviour.OnStartMenu;
     }
     private void ActivateGamepadControls()
     {
@@ -176,6 +184,8 @@ public class VehicleController : MonoBehaviour
 
         vehicleInputActions.Gamepad.MinimapRescale.Enable();
         vehicleInputActions.Gamepad.MinimapRescale.started += minimapBehaviour.ScaleMinimap;
+        vehicleInputActions.Gamepad.StartEngine.Enable();
+        vehicleInputActions.Gamepad.StartEngine.started += pauseMenuBehaviour.OnStartMenu;
     }
     // Update is called once per frame
     void Update()
@@ -208,6 +218,7 @@ public class VehicleController : MonoBehaviour
         float clutchInput = ReadClutchInput(userInputType);
         float brakeInput = ReadBrakeInput(userInputType);
         float steerInput = ReadSteeringInput(userInputType);
+        steerInput = steerInput * gamepadInputWeakener.Evaluate(Mathf.Abs(steerInput));
 
         float wheelSlip  = 0f;
         float physicsWobble = ApplyForceToWheels(brakeInput, out wheelSlip);
@@ -222,6 +233,8 @@ public class VehicleController : MonoBehaviour
         ApplySteeringDirection(playerSteeringForce);
         SetSteeringWheelModelRotation(-playerSteeringForce);
         SetSteeringFrontWheels();
+
+        radio.SetRadioQuality((Mathf.Clamp(rb.velocity.magnitude * 3f, 0f, 200f) / 200f) * 100f);
     }
 
     private void SetSteeringWheelModelRotation(float rotation)
@@ -466,6 +479,8 @@ public class VehicleController : MonoBehaviour
     {
         Debug.Log("Reset");
         LockPhysicsLock();
+        foreach (Suspension sus in suspensions)
+            sus.OnReset();
         transform.DOMove(resetPosition.position, .2f).SetEase(DG.Tweening.Ease.InOutCubic).OnComplete(UnlockPhysicsLock);
         transform.DORotate(resetPosition.eulerAngles, .2f).SetEase(DG.Tweening.Ease.InOutCubic);
     }

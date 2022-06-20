@@ -212,7 +212,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0e5fa782-79a0-4d2f-b263-e58642a65c18"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -433,7 +433,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7e024d82-ddab-4efd-a077-40c0129d2fc6"",
-                    ""path"": ""<Keyboard>/t"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

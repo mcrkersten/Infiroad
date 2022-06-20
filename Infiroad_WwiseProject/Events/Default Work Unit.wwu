@@ -65,6 +65,53 @@
 						</Event>
 					</ChildrenList>
 				</Folder>
+				<Event Name="Play_Radio" ID="{AA5194AA-916F-45FD-A8E3-B33F183CDB45}">
+					<ChildrenList>
+						<Action Name="" ID="{E1EB1283-3851-4C72-92A5-4BBA406D3693}" ShortID="2210530">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RandomRadio" ID="{6E28F38D-EA72-4152-932F-90E7AB69AE64}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_Radionoise" ID="{6C5C7D6A-A8A6-4BA8-A026-A5ADC9C8D5D9}">
+					<ChildrenList>
+						<Action Name="" ID="{8F4F7F85-A96A-4A3C-9C19-F1B0C25DD35E}" ShortID="631536290">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RadioNoise" ID="{6C804A5C-A949-4405-BC77-F19EF2D92033}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_MainMenu" ID="{F32177DB-FE36-4639-B3F9-49F29E13CBDD}">
+					<ChildrenList>
+						<Action Name="" ID="{8CDF0BB4-88A2-49B0-8116-396FC2E6C6E0}" ShortID="272125689">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="mainMenuTheme" ID="{821E446E-C5C8-4F85-BF5C-5588F37C3ECC}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_MainMenu" ID="{A2905F43-6FCF-45A2-AF64-45CDFBD2929F}">
+					<ChildrenList>
+						<Action Name="" ID="{224636D8-8612-43F6-89B9-FCCA1D425E37}" ShortID="596537260">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="mainMenuTheme" ID="{821E446E-C5C8-4F85-BF5C-5588F37C3ECC}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

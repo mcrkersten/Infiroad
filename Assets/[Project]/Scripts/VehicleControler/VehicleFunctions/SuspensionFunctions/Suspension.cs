@@ -143,6 +143,12 @@ public class Suspension : MonoBehaviour
     {
         return (Mathf.Clamp(wheel.wheelVelocityLocalSpace.z, -1, 1) * (-VehicleConstants.BRAKE_FORCE * brakeBias)) * brakeInput;
     }
+
+    public void OnReset()
+    {
+        wheel.enabled = true;
+        wheel.OnReset();
+    }
 }
 [System.Serializable]
 public class SuspensionPointer

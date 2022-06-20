@@ -11,12 +11,12 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Language="SFX" Hash="674875077">
+		<SoundBank Id="1355168291" Language="SFX" Hash="566940366">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="2025709351" Language="SFX" Hash="3507612801">
+		<SoundBank Id="2025709351" Language="SFX" Hash="117248957">
 			<ObjectPath>\SoundBanks\Default Work Unit\Vehicle</ObjectPath>
 			<ShortName>Vehicle</ShortName>
 			<Path>Vehicle.bnk</Path>
@@ -45,6 +45,16 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
+				<Event Id="3738780720" Name="Play_MainMenu" ObjectPath="\Events\Default Work Unit\Play_MainMenu" DurationType="OneShot" DurationMin="267.81601" DurationMax="267.81601">
+					<IncludedMemoryFiles>
+						<File Id="506714936" Language="SFX">
+							<ShortName>mainMenuTheme.wav</ShortName>
+							<Path>SFX\mainMenuTheme_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2953849999" Name="Play_Radio" ObjectPath="\Events\Default Work Unit\Play_Radio" DurationType="Infinite"/>
+				<Event Id="1420258931" Name="Play_Radionoise" ObjectPath="\Events\Default Work Unit\Play_Radionoise" DurationType="Infinite"/>
 				<Event Id="4142784629" Name="Play_Suspension" ObjectPath="\Events\Default Work Unit\Play_Suspension" MaxAttenuation="30." DurationType="OneShot" DurationMin="0.381731" DurationMax="0.539849">
 					<IncludedMemoryFiles>
 						<File Id="270640359" Language="SFX">
@@ -53,19 +63,40 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1020223172" Name="Play_Wind" ObjectPath="\Events\Default Work Unit\Play_Wind" DurationType="OneShot" DurationMin="80.916664" DurationMax="80.916664">
+				<Event Id="1020223172" Name="Play_Wind" ObjectPath="\Events\Default Work Unit\Play_Wind" DurationType="Infinite">
 					<IncludedMemoryFiles>
 						<File Id="903948939" Language="SFX">
 							<ShortName>WindEffect.wav</ShortName>
-							<Path>SFX\WindEffect_10C4C929.wem</Path>
+							<Path>SFX\WindEffect_D79FB2B7.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
+				<Event Id="890527358" Name="Stop_MainMenu" ObjectPath="\Events\Default Work Unit\Stop_MainMenu" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
 				<File Id="270640359" Language="SFX">
 					<ShortName>car-suspension-bounce-car-rear-suspension-bounce.wav</ShortName>
 					<Path>SFX\car-suspension-bounce-car-rear-suspension-bounce_3CD203DC.wem</Path>
+				</File>
+				<File Id="361459702" Language="SFX">
+					<ShortName>RadioNoise.wav</ShortName>
+					<Path>SFX\RadioNoise_BD6FBB55.wem</Path>
+				</File>
+				<File Id="459079447" Language="SFX">
+					<ShortName>refresh-mountaineer.wav</ShortName>
+					<Path>SFX\refresh-mountaineer_10C4C929.wem</Path>
+				</File>
+				<File Id="506714936" Language="SFX">
+					<ShortName>mainMenuTheme.wav</ShortName>
+					<Path>SFX\mainMenuTheme_10C4C929.wem</Path>
+				</File>
+				<File Id="709655759" Language="SFX">
+					<ShortName>chrome-infraction.wav</ShortName>
+					<Path>SFX\chrome-infraction_10C4C929.wem</Path>
+				</File>
+				<File Id="815786558" Language="SFX">
+					<ShortName>infrared-infraction.wav</ShortName>
+					<Path>SFX\infrared-infraction_10C4C929.wem</Path>
 				</File>
 				<File Id="896025651" Language="SFX">
 					<ShortName>Dodge_Challenger_RT_71.model</ShortName>
@@ -73,12 +104,14 @@
 				</File>
 				<File Id="903948939" Language="SFX">
 					<ShortName>WindEffect.wav</ShortName>
-					<Path>SFX\WindEffect_10C4C929.wem</Path>
+					<Path>SFX\WindEffect_D79FB2B7.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
 			<GameParameters>
+				<GameParameter Id="510917340" Name="RadioNoise" ObjectPath="\Game Parameters\Default Work Unit\RadioNoise"/>
 				<GameParameter Id="1114824702" Name="RMP" ObjectPath="\Game Parameters\Default Work Unit\RMP"/>
 				<GameParameter Id="1172844112" Name="Gear" ObjectPath="\Game Parameters\Default Work Unit\Gear"/>
+				<GameParameter Id="1484270927" Name="RadioDistortion" ObjectPath="\Game Parameters\Default Work Unit\RadioDistortion"/>
 				<GameParameter Id="2076996661" Name="FrontSuspension" ObjectPath="\Game Parameters\Default Work Unit\FrontSuspension"/>
 				<GameParameter Id="2995819693" Name="Throttle" ObjectPath="\Game Parameters\Default Work Unit\Throttle"/>
 				<GameParameter Id="3519441192" Name="Velocity" ObjectPath="\Game Parameters\Default Work Unit\Velocity"/>

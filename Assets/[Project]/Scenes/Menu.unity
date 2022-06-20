@@ -3208,8 +3208,9 @@ MonoBehaviour:
       disableAfterToAnimation: 0
       disableAfterFromAnimation: 0
       animateTo: {x: 565, y: 39}
-      animateScaleTo: {x: 176, y: 600}
       animateRotateTo: {x: 0, y: 0, z: 0}
+      SizeIsScale: 0
+      animateScaleTo: {x: 176, y: 600}
       toSpeed: 0.5
       fromSpeed: 0.5
       rectTransform: {fileID: 0}
@@ -3223,8 +3224,9 @@ MonoBehaviour:
       disableAfterToAnimation: 0
       disableAfterFromAnimation: 0
       animateTo: {x: 765, y: 39}
-      animateScaleTo: {x: 176, y: 600}
       animateRotateTo: {x: 0, y: 0, z: 0}
+      SizeIsScale: 0
+      animateScaleTo: {x: 176, y: 600}
       toSpeed: 0.5
       fromSpeed: 0.5
       rectTransform: {fileID: 0}
@@ -3238,8 +3240,9 @@ MonoBehaviour:
       disableAfterToAnimation: 0
       disableAfterFromAnimation: 0
       animateTo: {x: 230, y: 39}
-      animateScaleTo: {x: 300, y: 600}
       animateRotateTo: {x: 0, y: 0, z: 0}
+      SizeIsScale: 0
+      animateScaleTo: {x: 300, y: 600}
       toSpeed: 0.5
       fromSpeed: 0.5
       rectTransform: {fileID: 0}
@@ -3253,8 +3256,9 @@ MonoBehaviour:
       disableAfterToAnimation: 0
       disableAfterFromAnimation: 0
       animateTo: {x: 260, y: 30}
-      animateScaleTo: {x: 255, y: 600}
       animateRotateTo: {x: 0, y: 0, z: 0}
+      SizeIsScale: 0
+      animateScaleTo: {x: 255, y: 600}
       toSpeed: 0.5
       fromSpeed: 0.5
       rectTransform: {fileID: 0}
@@ -3268,8 +3272,9 @@ MonoBehaviour:
       disableAfterToAnimation: 0
       disableAfterFromAnimation: 1
       animateTo: {x: 264, y: 0}
-      animateScaleTo: {x: 200, y: 100}
       animateRotateTo: {x: 0, y: 0, z: 0}
+      SizeIsScale: 0
+      animateScaleTo: {x: 200, y: 100}
       toSpeed: 0.5
       fromSpeed: 0.5
       rectTransform: {fileID: 0}
@@ -3283,8 +3288,9 @@ MonoBehaviour:
       disableAfterToAnimation: 0
       disableAfterFromAnimation: 0
       animateTo: {x: 0, y: 0}
-      animateScaleTo: {x: 500, y: 500}
       animateRotateTo: {x: 0, y: 0, z: 0}
+      SizeIsScale: 0
+      animateScaleTo: {x: 500, y: 500}
       toSpeed: 0.5
       fromSpeed: 0.5
       rectTransform: {fileID: 0}
@@ -3299,8 +3305,9 @@ MonoBehaviour:
       disableAfterToAnimation: 0
       disableAfterFromAnimation: 0
       animateTo: {x: 230, y: 39}
-      animateScaleTo: {x: 176, y: 600}
       animateRotateTo: {x: 0, y: 0, z: 0}
+      SizeIsScale: 0
+      animateScaleTo: {x: 176, y: 600}
       toSpeed: 0.5
       fromSpeed: 0.5
       rectTransform: {fileID: 0}
@@ -3314,8 +3321,9 @@ MonoBehaviour:
       disableAfterToAnimation: 0
       disableAfterFromAnimation: 0
       animateTo: {x: 765, y: 39}
-      animateScaleTo: {x: 176, y: 600}
       animateRotateTo: {x: 0, y: 0, z: 0}
+      SizeIsScale: 0
+      animateScaleTo: {x: 176, y: 600}
       toSpeed: 0.5
       fromSpeed: 0.5
       rectTransform: {fileID: 0}
@@ -3329,8 +3337,9 @@ MonoBehaviour:
       disableAfterToAnimation: 0
       disableAfterFromAnimation: 0
       animateTo: {x: 430, y: 39}
-      animateScaleTo: {x: 300, y: 600}
       animateRotateTo: {x: 0, y: 0, z: 0}
+      SizeIsScale: 0
+      animateScaleTo: {x: 300, y: 600}
       toSpeed: 0.5
       fromSpeed: 0.5
       rectTransform: {fileID: 0}
@@ -3344,8 +3353,9 @@ MonoBehaviour:
       disableAfterToAnimation: 0
       disableAfterFromAnimation: 0
       animateTo: {x: 260, y: 30}
-      animateScaleTo: {x: 255, y: 600}
       animateRotateTo: {x: 0, y: 0, z: 0}
+      SizeIsScale: 0
+      animateScaleTo: {x: 255, y: 600}
       toSpeed: 0.5
       fromSpeed: 0.5
       rectTransform: {fileID: 0}
@@ -3359,8 +3369,9 @@ MonoBehaviour:
       disableAfterToAnimation: 1
       disableAfterFromAnimation: 0
       animateTo: {x: 264, y: 0}
-      animateScaleTo: {x: 200, y: 100}
       animateRotateTo: {x: 0, y: 0, z: 0}
+      SizeIsScale: 0
+      animateScaleTo: {x: 200, y: 100}
       toSpeed: 0.5
       fromSpeed: 0.5
       rectTransform: {fileID: 0}
@@ -3374,8 +3385,9 @@ MonoBehaviour:
       disableAfterToAnimation: 0
       disableAfterFromAnimation: 1
       animateTo: {x: 264, y: 0}
-      animateScaleTo: {x: 200, y: 100}
       animateRotateTo: {x: 0, y: 0, z: 0}
+      SizeIsScale: 0
+      animateScaleTo: {x: 200, y: 100}
       toSpeed: 0.5
       fromSpeed: 0.5
       rectTransform: {fileID: 0}
@@ -3389,8 +3401,9 @@ MonoBehaviour:
       disableAfterToAnimation: 0
       disableAfterFromAnimation: 0
       animateTo: {x: 0, y: 0}
-      animateScaleTo: {x: 500, y: 500}
       animateRotateTo: {x: 0, y: 0, z: 0}
+      SizeIsScale: 0
+      animateScaleTo: {x: 500, y: 500}
       toSpeed: 0.5
       fromSpeed: 0.5
       rectTransform: {fileID: 0}
@@ -3405,8 +3418,9 @@ MonoBehaviour:
       disableAfterToAnimation: 0
       disableAfterFromAnimation: 0
       animateTo: {x: 630, y: 39}
-      animateScaleTo: {x: 300, y: 600}
       animateRotateTo: {x: 0, y: 0, z: 0}
+      SizeIsScale: 0
+      animateScaleTo: {x: 300, y: 600}
       toSpeed: 0.5
       fromSpeed: 0.5
       rectTransform: {fileID: 0}
@@ -3420,8 +3434,9 @@ MonoBehaviour:
       disableAfterToAnimation: 0
       disableAfterFromAnimation: 0
       animateTo: {x: 260, y: 30}
-      animateScaleTo: {x: 255, y: 600}
       animateRotateTo: {x: 0, y: 0, z: 0}
+      SizeIsScale: 0
+      animateScaleTo: {x: 255, y: 600}
       toSpeed: 0.5
       fromSpeed: 0.5
       rectTransform: {fileID: 0}
@@ -3435,8 +3450,9 @@ MonoBehaviour:
       disableAfterToAnimation: 1
       disableAfterFromAnimation: 0
       animateTo: {x: 264, y: 0}
-      animateScaleTo: {x: 200, y: 100}
       animateRotateTo: {x: 0, y: 0, z: 0}
+      SizeIsScale: 0
+      animateScaleTo: {x: 200, y: 100}
       toSpeed: 0.5
       fromSpeed: 0.5
       rectTransform: {fileID: 0}
@@ -3450,8 +3466,9 @@ MonoBehaviour:
       disableAfterToAnimation: 0
       disableAfterFromAnimation: 0
       animateTo: {x: 430, y: 39}
-      animateScaleTo: {x: 176, y: 600}
       animateRotateTo: {x: 0, y: 0, z: 0}
+      SizeIsScale: 0
+      animateScaleTo: {x: 176, y: 600}
       toSpeed: 0.5
       fromSpeed: 0.5
       rectTransform: {fileID: 0}
@@ -3465,8 +3482,9 @@ MonoBehaviour:
       disableAfterToAnimation: 0
       disableAfterFromAnimation: 0
       animateTo: {x: 0, y: 0}
-      animateScaleTo: {x: 500, y: 500}
       animateRotateTo: {x: 0, y: 0, z: 0}
+      SizeIsScale: 0
+      animateScaleTo: {x: 500, y: 500}
       toSpeed: 0.5
       fromSpeed: 0.5
       rectTransform: {fileID: 0}
@@ -3528,8 +3546,9 @@ MonoBehaviour:
     disableAfterToAnimation: 1
     disableAfterFromAnimation: 0
     animateTo: {x: 1834, y: 39}
-    animateScaleTo: {x: 176, y: 600}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 176, y: 600}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -3543,8 +3562,9 @@ MonoBehaviour:
     disableAfterToAnimation: 1
     disableAfterFromAnimation: 0
     animateTo: {x: 1624, y: 39}
-    animateScaleTo: {x: 176, y: 600}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 176, y: 600}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -3558,8 +3578,9 @@ MonoBehaviour:
     disableAfterToAnimation: 0
     disableAfterFromAnimation: 0
     animateTo: {x: -350, y: 39}
-    animateScaleTo: {x: 2000, y: 2000}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 2000, y: 2000}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -3573,8 +3594,9 @@ MonoBehaviour:
     disableAfterToAnimation: 0
     disableAfterFromAnimation: 1
     animateTo: {x: 720, y: 516.2}
-    animateScaleTo: {x: 200, y: 100}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 200, y: 100}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -3588,8 +3610,9 @@ MonoBehaviour:
     disableAfterToAnimation: 1
     disableAfterFromAnimation: 0
     animateTo: {x: -521, y: -16}
-    animateScaleTo: {x: 150, y: 56}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 150, y: 56}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -3603,8 +3626,9 @@ MonoBehaviour:
     disableAfterToAnimation: 0
     disableAfterFromAnimation: 1
     animateTo: {x: 173.5, y: 0}
-    animateScaleTo: {x: 755, y: 295}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 755, y: 295}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -3618,8 +3642,9 @@ MonoBehaviour:
     disableAfterToAnimation: 1
     disableAfterFromAnimation: 0
     animateTo: {x: 78, y: -39}
-    animateScaleTo: {x: 100, y: 100}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 100, y: 100}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -3633,8 +3658,9 @@ MonoBehaviour:
     disableAfterToAnimation: 1
     disableAfterFromAnimation: 0
     animateTo: {x: -344.3, y: -105.8}
-    animateScaleTo: {x: 40, y: 40}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 40, y: 40}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -3648,8 +3674,9 @@ MonoBehaviour:
     disableAfterToAnimation: 0
     disableAfterFromAnimation: 1
     animateTo: {x: -344.3, y: -105.8}
-    animateScaleTo: {x: 40, y: 40}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 40, y: 40}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -3664,8 +3691,9 @@ MonoBehaviour:
     disableAfterToAnimation: 1
     disableAfterFromAnimation: 0
     animateTo: {x: -400, y: 39}
-    animateScaleTo: {x: 176, y: 600}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 176, y: 600}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -3679,8 +3707,9 @@ MonoBehaviour:
     disableAfterToAnimation: 1
     disableAfterFromAnimation: 0
     animateTo: {x: 1500, y: 39}
-    animateScaleTo: {x: 176, y: 600}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 176, y: 600}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -3694,8 +3723,9 @@ MonoBehaviour:
     disableAfterToAnimation: 0
     disableAfterFromAnimation: 0
     animateTo: {x: -350, y: 39}
-    animateScaleTo: {x: 2000, y: 2000}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 2000, y: 2000}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 1373117034}
@@ -3709,8 +3739,9 @@ MonoBehaviour:
     disableAfterToAnimation: 0
     disableAfterFromAnimation: 1
     animateTo: {x: 720, y: 516.2}
-    animateScaleTo: {x: 200, y: 100}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 200, y: 100}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 1675808212}
@@ -3724,8 +3755,9 @@ MonoBehaviour:
     disableAfterToAnimation: 1
     disableAfterFromAnimation: 0
     animateTo: {x: -521, y: -16}
-    animateScaleTo: {x: 150, y: 56}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 150, y: 56}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 1783698780}
@@ -3739,8 +3771,9 @@ MonoBehaviour:
     disableAfterToAnimation: 0
     disableAfterFromAnimation: 1
     animateTo: {x: 173.5, y: 0}
-    animateScaleTo: {x: 755, y: 295}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 755, y: 295}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -3754,8 +3787,9 @@ MonoBehaviour:
     disableAfterToAnimation: 1
     disableAfterFromAnimation: 0
     animateTo: {x: 78, y: -39}
-    animateScaleTo: {x: 100, y: 100}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 100, y: 100}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -3769,8 +3803,9 @@ MonoBehaviour:
     disableAfterToAnimation: 1
     disableAfterFromAnimation: 0
     animateTo: {x: -344.3, y: -105.8}
-    animateScaleTo: {x: 40, y: 40}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 40, y: 40}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -3784,8 +3819,9 @@ MonoBehaviour:
     disableAfterToAnimation: 0
     disableAfterFromAnimation: 1
     animateTo: {x: -344.3, y: -105.8}
-    animateScaleTo: {x: 40, y: 40}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 40, y: 40}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -3800,8 +3836,9 @@ MonoBehaviour:
     disableAfterToAnimation: 1
     disableAfterFromAnimation: 0
     animateTo: {x: -400, y: 39}
-    animateScaleTo: {x: 176, y: 600}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 176, y: 600}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 1373117034}
@@ -3815,8 +3852,9 @@ MonoBehaviour:
     disableAfterToAnimation: 1
     disableAfterFromAnimation: 0
     animateTo: {x: -400, y: 39}
-    animateScaleTo: {x: 176, y: 600}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 176, y: 600}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 1373117034}
@@ -3830,8 +3868,9 @@ MonoBehaviour:
     disableAfterToAnimation: 0
     disableAfterFromAnimation: 0
     animateTo: {x: -350, y: 39}
-    animateScaleTo: {x: 2000, y: 2000}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 2000, y: 2000}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 488342019}
@@ -3845,8 +3884,9 @@ MonoBehaviour:
     disableAfterToAnimation: 0
     disableAfterFromAnimation: 1
     animateTo: {x: 720, y: 516.2}
-    animateScaleTo: {x: 200, y: 100}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 200, y: 100}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 1475801461}
@@ -3860,8 +3900,9 @@ MonoBehaviour:
     disableAfterToAnimation: 1
     disableAfterFromAnimation: 0
     animateTo: {x: -521, y: -16}
-    animateScaleTo: {x: 150, y: 56}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 150, y: 56}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 153860430}
@@ -3875,8 +3916,9 @@ MonoBehaviour:
     disableAfterToAnimation: 1
     disableAfterFromAnimation: 0
     animateTo: {x: -344.3, y: -105.8}
-    animateScaleTo: {x: 40, y: 40}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 40, y: 40}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -3890,8 +3932,9 @@ MonoBehaviour:
     disableAfterToAnimation: 0
     disableAfterFromAnimation: 1
     animateTo: {x: -344.3, y: -105.8}
-    animateScaleTo: {x: 40, y: 40}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 40, y: 40}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -3905,8 +3948,9 @@ MonoBehaviour:
     disableAfterToAnimation: 0
     disableAfterFromAnimation: 1
     animateTo: {x: 173.5, y: 0}
-    animateScaleTo: {x: 755, y: 295}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 755, y: 295}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -4186,6 +4230,10 @@ GameObject:
   - component: {fileID: 501977815}
   - component: {fileID: 501977814}
   - component: {fileID: 501977813}
+  - component: {fileID: 501977819}
+  - component: {fileID: 501977818}
+  - component: {fileID: 501977817}
+  - component: {fileID: 501977820}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -4292,6 +4340,87 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 31.38, y: 0, z: 0}
+--- !u!54 &501977817
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501977812}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &501977818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501977812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb78fffa9617c84289ebc6b532bab69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDefaultListener: 1
+  listenerId: 0
+--- !u!114 &501977819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501977812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5887aa3c033e5034e94433ca9fe2582a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_listeners:
+    initialListenerList: []
+    useDefaultListeners: 1
+  isEnvironmentAware: 0
+  isStaticObject: 0
+  m_positionOffsetData:
+    KeepMe: 0
+    positionOffset: {x: 0, y: 0, z: 0}
+  m_posOffsetData: {fileID: 0}
+  listenerMask: 1
+--- !u!114 &501977820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501977812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38ced0a7f2579c249b928ecdb89be070, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: ae8d9d44
+  useOtherObject: 0
+  actionOnEventType: 0
+  curveInterpolation: 4
+  enableActionOnEvent: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 0b8f51822004e0a43b557f4d70aa4ad1, type: 2}
+  useCallbacks: 0
+  Callbacks: []
+  playingId: 0
+  soundEmitterObject: {fileID: 0}
+  transitionDuration: 0
+  eventIdInternal: 0
+  valueGuidInternal: 
+  m_callbackDataInternal: {fileID: 0}
 --- !u!1 &504383839 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 75ad56ab5866ab24183150fd5bcd0c48, type: 3}
@@ -4559,6 +4688,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platform: {fileID: 879647518}
   vehicle: {fileID: 1693877334849946630}
+--- !u!54 &542019155
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542019151}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &567403760
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13336,8 +13481,9 @@ MonoBehaviour:
     disableAfterToAnimation: 0
     disableAfterFromAnimation: 1
     animateTo: {x: -275, y: -815}
-    animateScaleTo: {x: 250, y: 214}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 250, y: 214}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -13351,8 +13497,9 @@ MonoBehaviour:
     disableAfterToAnimation: 0
     disableAfterFromAnimation: 1
     animateTo: {x: -130, y: -840}
-    animateScaleTo: {x: 506, y: 690}
     animateRotateTo: {x: 0, y: 0, z: -28.919}
+    SizeIsScale: 0
+    animateScaleTo: {x: 506, y: 690}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -13366,8 +13513,9 @@ MonoBehaviour:
     disableAfterToAnimation: 0
     disableAfterFromAnimation: 1
     animateTo: {x: 80, y: -807}
-    animateScaleTo: {x: 1102, y: 620}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 1102, y: 620}
     toSpeed: 0.5
     fromSpeed: 0.5
     rectTransform: {fileID: 0}
@@ -13381,8 +13529,9 @@ MonoBehaviour:
     disableAfterToAnimation: 0
     disableAfterFromAnimation: 1
     animateTo: {x: 185, y: -815}
-    animateScaleTo: {x: 1600, y: 300}
     animateRotateTo: {x: 0, y: 0, z: 0}
+    SizeIsScale: 0
+    animateScaleTo: {x: 1600, y: 300}
     toSpeed: 1
     fromSpeed: 1
     rectTransform: {fileID: 0}
@@ -20878,6 +21027,17 @@ MonoBehaviour:
   playerInput: {fileID: 7643020044811858873}
   useWheel: 0
   steeringRatio: 1
+  minimapBehaviour: {fileID: 0}
+  pauseMenuBehaviour: {fileID: 0}
+  radio:
+    radioSystemAudio:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 0}
+    radioNoiseAudio:
+      idInternal: 0
+      valueGuidInternal: 
+      WwiseObjectReference: {fileID: 0}
   brakeBias: 0.6
   engine:
     maxRPM: 10000
@@ -21012,7 +21172,7 @@ MonoBehaviour:
       idInternal: 0
       valueGuidInternal: 
       WwiseObjectReference: {fileID: 0}
-    velocityAudio:
+    windAudio:
       idInternal: 0
       valueGuidInternal: 
       WwiseObjectReference: {fileID: 0}
@@ -21062,6 +21222,30 @@ MonoBehaviour:
   steeringStrenght: 6
   resetScreen: {fileID: 0}
   wheelInputAngle: 0
+  gamepadInputWeakener:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 3.1117175
+      outSlope: 3.1117175
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.077679195
+    - serializedVersion: 3
+      time: 1
+      value: 0.99642944
+      inSlope: 0.9551781
+      outSlope: 0.9551781
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.060463786
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!33 &8546769599449596243
 MeshFilter:
   m_ObjectHideFlags: 0

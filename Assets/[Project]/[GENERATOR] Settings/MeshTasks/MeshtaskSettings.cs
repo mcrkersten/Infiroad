@@ -10,20 +10,22 @@ public class MeshtaskSettings : ScriptableObject
 	[HideInInspector] public float uvLenght;
 	public float UV_scale = 1f;
 
-
 	public MeshTaskType meshTaskType;
 	public MeshtaskPosition meshtaskPosition;
 	public MeshtaskStyle meshtaskStyle;
 
+	[Header("Mesh settings")]
 	public VertexPosition[] points;
 	[Range(1f,10f)]
 	public float meshResolution;
     public bool meshtaskContinues;
     public int noiseChannel;
 
-    public float maxChamfer;
-    public float extrusionSize;
     public float meshtaskWidth;
+
+	[Header("Track settings")]
+	public float maxChamfer;
+	public float extrusionSize;
 
 	[Header("Corner radius style")]
 	public float minimalCornerRadius;
@@ -112,7 +114,7 @@ public class MeshtaskSettings : ScriptableObject
 
 	}
 
-	protected virtual void SpawnMeshtaskObject(MeshTask meshTask, GameObject currentMeshObject, int meshtaskPoint, MeshtaskPoolType meshtaskType)
+	protected virtual void SpawnMeshtaskObject(MeshTask meshTask, GameObject parent, int meshtaskPoint, MeshtaskPoolType meshtaskPoolType)
 	{
 		MeshTask.Point p = meshTask.positionPoints[meshtaskPoint];
 
@@ -123,8 +125,8 @@ public class MeshtaskSettings : ScriptableObject
 		Vector3 noise = Vector3.zero;
 		noise += meshTask.noiseChannel.generatorInstance.getNoise(meshTask.startPointIndex + meshtaskPoint, meshTask.noiseChannel);
 
-		GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshTask.meshtaskSettings.meshTaskType, meshtaskType);
-		CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+		GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshTask.meshtaskSettings.meshTaskType, meshtaskPoolType);
+		CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), parent, instance);
 	}
 
 	public virtual void PopulateMeshtask(MeshTask meshTask, GameObject currentMeshObject)
@@ -159,5 +161,8 @@ public enum MeshtaskPoolType
 	SmokeBombs,
 	GrandstandArcs,
 	Tecpros,
-	VideoBillboardEdge
+	VideoBillboardEdge,
+	Building_Small,
+	Building_Medium,
+	Building_Large
 }

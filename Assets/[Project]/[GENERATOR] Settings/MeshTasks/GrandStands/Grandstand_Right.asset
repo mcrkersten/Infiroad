@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be9b3f1063355f4586f3ac956708616, type: 3}
   m_Name: Grandstand_Right
   m_EditorClassIdentifier: 
-  dataKey: 832052
+  dataKey: 593505
   calculatedUs: []
   uvLenght: 42.899494
   UV_scale: 1
@@ -88,7 +88,7 @@ MonoBehaviour:
   noiseChannel: 0
   maxChamfer: 5
   extrusionSize: 15
-  meshtaskWidth: 17.49484
+  meshtaskWidth: 15
   minimalCornerRadius: 30
   maximumCornerRadius: 1000
   minimalExtrusionSize: 0

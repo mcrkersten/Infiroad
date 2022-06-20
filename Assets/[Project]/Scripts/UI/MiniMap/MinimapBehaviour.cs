@@ -22,6 +22,7 @@ public class MinimapBehaviour : MonoBehaviour
 
     private void Start()
     {
+        minimapScaleAnimation.Init();
         rb = transform.root.GetComponent<Rigidbody>();
         localStartPosition = minimapCamera.transform.localPosition;
 
@@ -45,15 +46,16 @@ public class MinimapBehaviour : MonoBehaviour
 
     public void ScaleMinimap(InputAction.CallbackContext obj)
     {
+        Debug.Log("SCALE");
         if (isZoomed)
         {
-            minimapScaleAnimation.AnimateAll_Start();
-            isZoomed = true;
+            minimapScaleAnimation.Animate_ToStartScale();
+            isZoomed = false;
         }
         else
         {
-            minimapScaleAnimation.AnimateAll_To();
-            isZoomed = false;
+            minimapScaleAnimation.Animate_ToScale();
+            isZoomed = true;
         }
     }
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   WeatherTypeName: Race day
   CloudProfileComponent: {fileID: 11400000, guid: 2abfa647742d6174bacc9b765f51f9c3, type: 2}
   SunIntensity: 1.5
-  CloudShadowIntensity: 0.75
+  CloudShadowIntensity: 0.99
   MoonIntensity: 0.9
   UseAuroras: 1
   AuroraIntensity: 0.4
@@ -76,7 +76,7 @@ MonoBehaviour:
   SpecialWeatherType: 1
   Season: 0
   CloudHeight: 600
-  CloudLevel: 3
+  CloudLevel: 2
   TemperatureType: 2
   ShaderControl: 2
   OverrideCloudColor: 1

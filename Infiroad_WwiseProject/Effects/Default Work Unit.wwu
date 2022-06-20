@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{7903B995-3F1D-477F-9726-74E7F7604C0A}" SchemaVersion="103">
 	<Effects>
-		<WorkUnit Name="Default Work Unit" ID="{7903B995-3F1D-477F-9726-74E7F7604C0A}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{7903B995-3F1D-477F-9726-74E7F7604C0A}" PersistMode="Standalone">
+			<ChildrenList>
+				<Effect Name="New_Wwise_Guitar_Distortion" ID="{342C3CEF-34CB-46DD-9B84-C487E3A08263}" PluginName="Wwise Guitar Distortion" CompanyID="0" PluginID="126" PluginType="3">
+					<PropertyList>
+						<Property Name="DistortionDrive" Type="Real32">
+							<RTPCList>
+								<RTPC Name="" ID="{36B058B0-83C9-424B-90C0-C44BC2D892AA}" ShortID="988688441">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="RadioDistortion" ID="{BC87361F-FEE6-4C83-8615-E457329392BD}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{358BA814-E0FB-4E87-88B8-08F735D34FAF}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="1"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>-30</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>-100</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+						<Property Name="DistortionType" Type="int32" Value="4"/>
+						<Property Name="Rectification" Type="Real32" Value="1"/>
+					</PropertyList>
+				</Effect>
+			</ChildrenList>
+		</WorkUnit>
 	</Effects>
 </WwiseDocument>

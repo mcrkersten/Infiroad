@@ -65,8 +65,9 @@ public class Ui_AnimationObject
     public bool disableAfterFromAnimation;
     [Header("Position")]
     public Vector2 animateTo;
-    public Vector2 animateScaleTo;
     public Vector3 animateRotateTo;
+    public bool SizeIsScale;
+    public Vector2 animateScaleTo;
 
     [Header("Animation speed")]
     public float toSpeed;
@@ -80,7 +81,7 @@ public class Ui_AnimationObject
     {
         rectTransform = gameObject.GetComponent<RectTransform>();
         startPosition = rectTransform.anchoredPosition;
-        startSize = rectTransform.sizeDelta;
+        startSize = SizeIsScale ? gameObject.transform.localScale : rectTransform.sizeDelta;
         startRotation = rectTransform.localEulerAngles;
     }
 
@@ -107,6 +108,11 @@ public class Ui_AnimationObject
         gameObject.SetActive(true);
         rectTransform.DOSizeDelta(animateScaleTo, toSpeed).OnComplete(DisableAfterTo);
     }
+    public void Animate_ToScale()
+    {
+        gameObject.SetActive(true);
+        gameObject.transform.DOScale(animateScaleTo, toSpeed).OnComplete(DisableAfterTo);
+    }
     public void Animate_ToPosition()
     {
         gameObject.SetActive(true);
@@ -124,6 +130,11 @@ public class Ui_AnimationObject
     {
         gameObject.SetActive(true);
         rectTransform.DOSizeDelta(startSize, fromSpeed).OnComplete(DisableAfterFrom);
+    }
+    public void Animate_ToStartScale()
+    {
+        gameObject.SetActive(true);
+        gameObject.transform.DOScale(startSize, toSpeed).OnComplete(DisableAfterTo);
     }
     public void Animate_ToStartPosition()
     {

@@ -47,12 +47,6 @@ namespace GameSystems
             this.timerSpeed = 1f;
         }
 
-        [ContextMenu("DebugTimer")]
-        public void DebugTimer()
-        {
-            StartCountdown(3, 1.8f);
-        }
-
         private void ActivateNumbers()
         {
             numbersText.gameObject.SetActive(true);

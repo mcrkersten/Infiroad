@@ -35,6 +35,9 @@
 						<Property Name="Max" Type="Real64" Value="3"/>
 					</PropertyList>
 				</GameParameter>
+				<GameParameter Name="RadioDistortion" ID="{BC87361F-FEE6-4C83-8615-E457329392BD}"/>
+				<GameParameter Name="LowpassFilter" ID="{19739A4F-8856-4D5B-B5CF-322CF05F1D3C}"/>
+				<GameParameter Name="RadioNoise" ID="{775C8BB3-9059-4E6D-BD14-7CACA30BD0AC}"/>
 			</ChildrenList>
 		</WorkUnit>
 	</GameParameters>

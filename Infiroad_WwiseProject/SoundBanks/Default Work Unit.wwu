@@ -7,8 +7,12 @@
 					<ObjectInclusionList>
 						<ObjectRef Name="Suspension" ID="{CB349797-75AE-4037-AA60-6E716754968F}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Engine" ID="{9A41658E-BE16-4101-BD51-7FAB9AEFF422}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="RandomRadio" ID="{6E28F38D-EA72-4152-932F-90E7AB69AE64}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_Wind" ID="{DBECA42E-2F3B-4369-B933-D8A0B920102F}" WorkUnitID="{1E4DCFC4-5179-4B70-902F-D134C90AED1B}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="WindEffect_0" ID="{978EB1A9-50B5-4404-AA82-9AD121E2D1D9}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="RadioNoise" ID="{6C804A5C-A949-4405-BC77-F19EF2D92033}" WorkUnitID="{B952EF2D-AE64-4AEC-B7F2-02ECFABCEF2F}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Stop_MainMenu" ID="{A2905F43-6FCF-45A2-AF64-45CDFBD2929F}" WorkUnitID="{1E4DCFC4-5179-4B70-902F-D134C90AED1B}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_MainMenu" ID="{F32177DB-FE36-4639-B3F9-49F29E13CBDD}" WorkUnitID="{1E4DCFC4-5179-4B70-902F-D134C90AED1B}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="GO" ID="{4FF49FF2-189E-46D4-9765-A08D28CA7C3D}" WorkUnitID="{1E4DCFC4-5179-4B70-902F-D134C90AED1B}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_Engine" ID="{AAC9F266-BD43-46DE-BF9E-C71A3A1A69BC}" WorkUnitID="{1E4DCFC4-5179-4B70-902F-D134C90AED1B}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_Suspension" ID="{E918C261-9359-47A4-95C4-7F3C7F6C7F59}" WorkUnitID="{1E4DCFC4-5179-4B70-902F-D134C90AED1B}" Origin="Manual" Filter="7"/>

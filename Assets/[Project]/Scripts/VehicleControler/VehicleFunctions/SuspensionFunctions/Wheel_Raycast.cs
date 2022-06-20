@@ -39,9 +39,13 @@ public class Wheel_Raycast : MonoBehaviour
     public float grip_UI = 0.01f;
     private Rigidbody rb;
 
+    private Vector3 startPosition;
+    private Transform decoupleParent;
+
     private void Awake()
     {
         rb = this.transform.root.GetComponent<Rigidbody>();
+        decoupleParent = this.transform.parent;
     }
 
     private void Start()
@@ -195,15 +199,12 @@ public class Wheel_Raycast : MonoBehaviour
 
     public void DamageSuspension(Vector3 pointVelocity, Vector3 impactDirection, Vector3 contactNormal)
     {
-        if (!broken)
-        {
-            rb.AddForceAtPosition(-impactDirection, this.transform.position);
-            broken = true;
-            this.gameObject.AddComponent<Rigidbody>();
-            this.wheelCollider.gameObject.layer = LayerMask.NameToLayer("Default");
-            this.transform.parent = null;
-            this.enabled = false;
-        }
+        rb.AddForceAtPosition(impactDirection * (pointVelocity.magnitude/10f), this.transform.position);
+    }
+
+    public void OnReset()
+    {
+
     }
 }
 

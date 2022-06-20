@@ -420,7 +420,8 @@ public enum MeshTaskType
 	CatchFence,
 	GrandStand,
 	TecproBarrier,
-	VideoBillboard
+	VideoBillboard,
+	Building
 }
 
 public enum MeshtaskStyle
@@ -428,4 +429,5 @@ public enum MeshtaskStyle
 	CornerRadius = 0,
 	ExtrusionSize,
 	Continued,
+	Building
 }

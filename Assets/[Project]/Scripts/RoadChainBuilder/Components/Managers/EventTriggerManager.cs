@@ -10,6 +10,9 @@ public class EventTriggerManager : MonoBehaviour
     public delegate void OnRoadChainTrigger();
     public static event OnRoadChainTrigger roadChainTrigger;
 
+    public delegate void OnSectorTrigger();
+    public static event OnSectorTrigger sectorTrigger;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Trigger"))
@@ -24,10 +27,12 @@ public class EventTriggerManager : MonoBehaviour
                     break;
                 case TriggerType.RoadChain:
                     roadChainTrigger?.Invoke();
+                    sectorTrigger?.Invoke();
                     break;
                 default:
                     break;
             }
+            to.gameObject.SetActive(false);
         }
     }
 }

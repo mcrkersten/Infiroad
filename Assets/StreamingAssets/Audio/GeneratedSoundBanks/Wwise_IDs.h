@@ -16,14 +16,21 @@ namespace AK
         static const AkUniqueID COUNTDOWN = 1505888634U;
         static const AkUniqueID GO = 1786192775U;
         static const AkUniqueID PLAY_ENGINE = 639345804U;
+        static const AkUniqueID PLAY_MAINMENU = 3738780720U;
+        static const AkUniqueID PLAY_RADIO = 2953849999U;
+        static const AkUniqueID PLAY_RADIONOISE = 1420258931U;
         static const AkUniqueID PLAY_SUSPENSION = 4142784629U;
         static const AkUniqueID PLAY_WIND = 1020223172U;
+        static const AkUniqueID STOP_MAINMENU = 890527358U;
     } // namespace EVENTS
 
     namespace GAME_PARAMETERS
     {
         static const AkUniqueID FRONTSUSPENSION = 2076996661U;
         static const AkUniqueID GEAR = 1172844112U;
+        static const AkUniqueID LOWPASSFILTER = 2223055028U;
+        static const AkUniqueID RADIODISTORTION = 1484270927U;
+        static const AkUniqueID RADIONOISE = 510917340U;
         static const AkUniqueID RMP = 1114824702U;
         static const AkUniqueID SLIP = 686938995U;
         static const AkUniqueID THROTTLE = 2995819693U;

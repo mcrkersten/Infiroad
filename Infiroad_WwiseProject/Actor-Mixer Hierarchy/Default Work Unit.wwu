@@ -26,7 +26,7 @@
 						<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="50"/>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
-								<Value>-27</Value>
+								<Value>-10</Value>
 							</ValueList>
 						</Property>
 					</PropertyList>
@@ -170,6 +170,36 @@
 							</ChildrenList>
 							<Language>SFX</Language>
 							<PluginInnerObjectList>
+								<List Name="EngineSimulationControlData">
+									<PluginInnerObject Name="" ID="{BC76910E-D3A2-4905-87EB-E5AB07C5296E}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417">
+										<PropertyList>
+											<Property Name="UpShiftWobbleVolAmp" Type="Real32" Value="0"/>
+										</PropertyList>
+									</PluginInnerObject>
+									<PluginInnerObject Name="" ID="{DC271C04-8C68-4C9B-B254-272B760E2581}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
+								</List>
+								<List Name="AccelDecelModelControlData">
+									<PluginInnerObject Name="" ID="{297798B2-39AA-42EE-8836-AE065BA12066}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418">
+										<PropertyList>
+											<Property Name="CrossfadeDuration" Type="int32" Value="150"/>
+											<Property Name="RPMSmoothness" Type="Real32" Value="5"/>
+											<Property Name="Version" Type="int32" Value="2"/>
+										</PropertyList>
+									</PluginInnerObject>
+									<PluginInnerObject Name="" ID="{24A114E7-4D27-430A-B9E8-A16EE5A73216}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{A8641EAA-4734-491B-BC0B-F2E72D68B699}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{26BE8F13-AC9F-4D31-BBE6-2311F1210B01}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{E79870AE-444C-4D2F-BB31-001888389B66}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{ACD7084E-2AF3-4371-A00F-D731856A70E5}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{1E4FA36B-0453-4DDD-B428-04A6E3240384}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{86B64BF7-74C2-4468-9059-78D5BD5A52FC}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{5C2F01FB-7739-4E61-84B1-7DDDC8DD4940}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{54403FE9-9C73-4244-90C5-20CBF5AD80A5}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{4DCF4DDA-01EC-4E7A-B9DC-944BD20C0D43}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{7022C350-AA72-4737-AB76-79FE27F1F26F}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{14B1B56C-60F5-4664-B0B5-3B79DA6F8E02}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+									<PluginInnerObject Name="" ID="{978ECF02-F17B-4612-B668-ECC789E7A264}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
+								</List>
 								<List Name="GranularModelControlData_Acceleration">
 									<PluginInnerObject Name="" ID="{87DA791D-8991-48B0-8B65-CEDFC4F7ECEB}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419">
 										<PropertyList>
@@ -201,36 +231,6 @@
 									<PluginInnerObject Name="" ID="{D817A520-75D8-4EA9-A682-B937F62848DD}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
 									<PluginInnerObject Name="" ID="{F0A2C3D9-658C-4F0A-94D0-9088AF15120D}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
 									<PluginInnerObject Name="" ID="{8DD422C1-587C-44CE-AAF7-7FA07CB4D210}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
-								</List>
-								<List Name="EngineSimulationControlData">
-									<PluginInnerObject Name="" ID="{BC76910E-D3A2-4905-87EB-E5AB07C5296E}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417">
-										<PropertyList>
-											<Property Name="UpShiftWobbleVolAmp" Type="Real32" Value="0"/>
-										</PropertyList>
-									</PluginInnerObject>
-									<PluginInnerObject Name="" ID="{DC271C04-8C68-4C9B-B254-272B760E2581}" PluginName="EngineSimulationControlData" CompanyID="261" PluginID="417"/>
-								</List>
-								<List Name="AccelDecelModelControlData">
-									<PluginInnerObject Name="" ID="{297798B2-39AA-42EE-8836-AE065BA12066}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418">
-										<PropertyList>
-											<Property Name="CrossfadeDuration" Type="int32" Value="150"/>
-											<Property Name="RPMSmoothness" Type="Real32" Value="5"/>
-											<Property Name="Version" Type="int32" Value="2"/>
-										</PropertyList>
-									</PluginInnerObject>
-									<PluginInnerObject Name="" ID="{24A114E7-4D27-430A-B9E8-A16EE5A73216}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{A8641EAA-4734-491B-BC0B-F2E72D68B699}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{26BE8F13-AC9F-4D31-BBE6-2311F1210B01}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{E79870AE-444C-4D2F-BB31-001888389B66}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{ACD7084E-2AF3-4371-A00F-D731856A70E5}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{1E4FA36B-0453-4DDD-B428-04A6E3240384}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{86B64BF7-74C2-4468-9059-78D5BD5A52FC}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{5C2F01FB-7739-4E61-84B1-7DDDC8DD4940}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{54403FE9-9C73-4244-90C5-20CBF5AD80A5}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{4DCF4DDA-01EC-4E7A-B9DC-944BD20C0D43}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{7022C350-AA72-4737-AB76-79FE27F1F26F}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{14B1B56C-60F5-4664-B0B5-3B79DA6F8E02}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
-									<PluginInnerObject Name="" ID="{978ECF02-F17B-4612-B668-ECC789E7A264}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
 								</List>
 							</PluginInnerObjectList>
 						</SourcePlugin>
@@ -701,6 +701,7 @@
 				</Folder>
 				<Sound Name="WindEffect_0" ID="{978EB1A9-50B5-4404-AA82-9AD121E2D1D9}" ShortID="689930703">
 					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 						<Property Name="Pitch" Type="int32">
 							<RTPCList>
 								<RTPC Name="" ID="{787E9BC4-46F8-4C5C-BA33-15F576339BB2}" ShortID="460227300">
@@ -721,7 +722,7 @@
 											</Point>
 											<Point>
 												<XPos>250</XPos>
-												<YPos>0</YPos>
+												<YPos>-1013</YPos>
 												<Flags>37</Flags>
 											</Point>
 										</PointList>
@@ -748,13 +749,53 @@
 												<Flags>5</Flags>
 											</Point>
 											<Point>
-												<XPos>171.511627906977</XPos>
-												<YPos>1.72733526973803</YPos>
+												<XPos>26.57807</XPos>
+												<YPos>-21.43935</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>53.77907</XPos>
+												<YPos>-13.53391</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>78.90365</XPos>
+												<YPos>-8.36804</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>105.06645</XPos>
+												<YPos>-4.61817</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>135.38206</XPos>
+												<YPos>-1.13776</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>159.92365</XPos>
+												<YPos>2.20602</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>176.28738</XPos>
+												<YPos>4.8779</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>198.92026</XPos>
+												<YPos>6.4745</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>226.536544850498</XPos>
+												<YPos>7.15107019908016</YPos>
 												<Flags>0</Flags>
 											</Point>
 											<Point>
 												<XPos>250</XPos>
-												<YPos>2.33842</YPos>
+												<YPos>7.74564</YPos>
 												<Flags>37</Flags>
 											</Point>
 										</PointList>
@@ -783,6 +824,436 @@
 					<ObjectLists/>
 					<ActiveSourceList>
 						<ActiveSource Name="WindEffect" ID="{7FCFA1AA-DEA6-4CFC-93D9-D96CC68584EE}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="RadioNoise" ID="{6C804A5C-A949-4405-BC77-F19EF2D92033}" ShortID="276330854">
+					<PropertyList>
+						<Property Name="Highpass" Type="int16">
+							<ValueList>
+								<Value>50</Value>
+							</ValueList>
+						</Property>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="Lowpass" Type="int16">
+							<ValueList>
+								<Value>30</Value>
+							</ValueList>
+						</Property>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-10</Value>
+							</ValueList>
+							<RTPCList>
+								<RTPC Name="" ID="{CEFDED61-05B5-44C1-B335-0B3B434081F5}" ShortID="513303829">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="RadioNoise" ID="{775C8BB3-9059-4E6D-BD14-7CACA30BD0AC}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{E791E601-0B41-4DFE-8F3E-E1F94D0CB5B8}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>11.27973</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>1.78405</XPos>
+												<YPos>6.33529</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>4.61326</XPos>
+												<YPos>3.12883</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>8.20126</XPos>
+												<YPos>1.32321</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>14.10481</XPos>
+												<YPos>0.36706</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>20.12549</XPos>
+												<YPos>-0.49259</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>27.10793</XPos>
+												<YPos>-1.68237</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>36.56043</XPos>
+												<YPos>-5.50194</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>47.21548</XPos>
+												<YPos>-9.48864</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>76.84907</XPos>
+												<YPos>-24.13652</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>-200</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="RadioNoise" ID="{F7EE32AA-9247-4F9D-9D8F-BAB8FC58E186}">
+							<PropertyList>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+								<Property Name="TrimBegin" Type="Real64" Value="2924.2696345515"/>
+								<Property Name="TrimEnd" Type="Real64" Value="3280.00552823921"/>
+							</PropertyList>
+							<Language>SFX</Language>
+							<AudioFile>RadioNoise.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="361459702"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="RadioNoise" ID="{F7EE32AA-9247-4F9D-9D8F-BAB8FC58E186}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<RandomSequenceContainer Name="RandomRadio" ID="{6E28F38D-EA72-4152-932F-90E7AB69AE64}" ShortID="678859027">
+					<PropertyList>
+						<Property Name="Highpass" Type="int16">
+							<RTPCList>
+								<RTPC Name="" ID="{25CA1DE9-D66C-4D60-B35F-8178FC6F341E}" ShortID="368746058">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="RadioDistortion" ID="{BC87361F-FEE6-4C83-8615-E457329392BD}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{E65CC8A7-C0D9-4394-A3F9-677677383011}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="65537"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>50</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>14.86711</XPos>
+												<YPos>46</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>32.0598</XPos>
+												<YPos>39</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>48.42193</XPos>
+												<YPos>21</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>60.299</XPos>
+												<YPos>-8</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>71.34551</XPos>
+												<YPos>-34</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>86.04651</XPos>
+												<YPos>-51</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>-50</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+						<Property Name="Lowpass" Type="int16">
+							<RTPCList>
+								<RTPC Name="" ID="{04EA3D1E-C9C3-4042-BEC1-02F83C7E3C1A}" ShortID="1034331471">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="RadioDistortion" ID="{BC87361F-FEE6-4C83-8615-E457329392BD}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{00A97457-74A9-4251-996B-77B6D6B5EF4A}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="65537"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>-97</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>14.20266</XPos>
+												<YPos>-94</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>31.72757</XPos>
+												<YPos>-85</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>39.53489</XPos>
+												<YPos>-75</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>49.33555</XPos>
+												<YPos>-55</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>57.22591</XPos>
+												<YPos>-31</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>64.95017</XPos>
+												<YPos>-12</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>74.16943</XPos>
+												<YPos>1</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>84.80066</XPos>
+												<YPos>0</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>0</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+						<Property Name="PlayMechanismLoop" Type="bool" Value="True"/>
+						<Property Name="PlayMechanismResetPlaylistEachPlay" Type="bool" Value="False"/>
+						<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
+						<Property Name="Volume" Type="Real64">
+							<RTPCList>
+								<RTPC Name="" ID="{2B3D478A-FA91-4ED7-A5AE-69FC8DA063B9}" ShortID="1014363004">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="RadioDistortion" ID="{BC87361F-FEE6-4C83-8615-E457329392BD}" WorkUnitID="{989F85A6-86E0-4D59-9E26-52B5370A782F}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{02061880-39DC-4396-9411-197BEE785C34}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>-12.54085</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>1.24585</XPos>
+												<YPos>-12.55667</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>3.8206</XPos>
+												<YPos>-12.6578</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>8.9701</XPos>
+												<YPos>-8.02852</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>16.21199</XPos>
+												<YPos>-5.40546</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>27.32558</XPos>
+												<YPos>-3.3367</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>40.75517</XPos>
+												<YPos>-2.0771</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>55.30284</XPos>
+												<YPos>-1.13431</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>0</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="chrome-infraction" ID="{8E2074CB-611F-46B8-9872-4EECC31D4F59}" ShortID="41397605">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+								</Reference>
+								<Reference Name="Effect0" PluginName="Wwise Guitar Distortion" CompanyID="0" PluginID="126" PluginType="3">
+									<ObjectRef Name="New_Wwise_Guitar_Distortion" ID="{342C3CEF-34CB-46DD-9B84-C487E3A08263}" WorkUnitID="{7903B995-3F1D-477F-9726-74E7F7604C0A}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="chrome-infraction" ID="{2F681552-44F2-4E50-BC09-EF82E2F1F2AF}">
+									<Language>SFX</Language>
+									<AudioFile>chrome-infraction.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="709655759"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="chrome-infraction" ID="{2F681552-44F2-4E50-BC09-EF82E2F1F2AF}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="infrared-infraction" ID="{D45C4ACC-94FF-4A0D-817C-9E00F7A9DFD0}" ShortID="928916096">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+								</Reference>
+								<Reference Name="Effect0" PluginName="Wwise Guitar Distortion" CompanyID="0" PluginID="126" PluginType="3">
+									<ObjectRef Name="New_Wwise_Guitar_Distortion" ID="{342C3CEF-34CB-46DD-9B84-C487E3A08263}" WorkUnitID="{7903B995-3F1D-477F-9726-74E7F7604C0A}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="infrared-infraction" ID="{5D9C6DF0-FA73-42FD-8417-26CAA8B634CD}">
+									<Language>SFX</Language>
+									<AudioFile>infrared-infraction.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="815786558"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="infrared-infraction" ID="{5D9C6DF0-FA73-42FD-8417-26CAA8B634CD}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="refresh-mountaineer" ID="{A8873494-7093-4D1F-9E6F-662B1BA668FA}" ShortID="273126732">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+								</Reference>
+								<Reference Name="Effect0" PluginName="Wwise Guitar Distortion" CompanyID="0" PluginID="126" PluginType="3">
+									<ObjectRef Name="New_Wwise_Guitar_Distortion" ID="{342C3CEF-34CB-46DD-9B84-C487E3A08263}" WorkUnitID="{7903B995-3F1D-477F-9726-74E7F7604C0A}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="refresh-mountaineer" ID="{6500EA1D-B914-4B02-80B5-1E97FD0101EF}">
+									<Language>SFX</Language>
+									<AudioFile>refresh-mountaineer.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="459079447"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="refresh-mountaineer" ID="{6500EA1D-B914-4B02-80B5-1E97FD0101EF}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+					<ObjectLists/>
+					<Playlist>
+						<ItemRef Name="chrome-infraction" ID="{8E2074CB-611F-46B8-9872-4EECC31D4F59}"/>
+						<ItemRef Name="refresh-mountaineer" ID="{A8873494-7093-4D1F-9E6F-662B1BA668FA}"/>
+						<ItemRef Name="infrared-infraction" ID="{D45C4ACC-94FF-4A0D-817C-9E00F7A9DFD0}"/>
+					</Playlist>
+				</RandomSequenceContainer>
+				<Sound Name="mainMenuTheme" ID="{821E446E-C5C8-4F85-BF5C-5588F37C3ECC}" ShortID="165803597">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{78F5457B-4F81-4659-8448-F8C0D6992515}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2211C110-5D52-4EAD-B3E8-0ACBEC25D886}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="mainMenuTheme" ID="{5239AADA-41FC-4806-8E74-3BFA56B44C48}">
+							<Language>SFX</Language>
+							<AudioFile>mainMenuTheme.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="506714936"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="mainMenuTheme" ID="{5239AADA-41FC-4806-8E74-3BFA56B44C48}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
 			</ChildrenList>

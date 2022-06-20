@@ -177,4 +177,5 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d32c5aaf75420b9419faa4fcf2d0e686, type: 3}
   - {fileID: 21300000, guid: a86c0d526b7fd4a46b346abd434a7a44, type: 3}
   - {fileID: 21300000, guid: bb448e4a831ea9442b613049c1a31c93, type: 3}
+  - {fileID: 21300000, guid: afc8d99b8229f0946be3ff24c91637e3, type: 3}
   iconImageRenderer: {fileID: 756415030958396493}

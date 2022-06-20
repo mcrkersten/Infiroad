@@ -12,38 +12,91 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ca3054f3958454899d9facee8e2a86, type: 3}
   m_Name: WallBlue
   m_EditorClassIdentifier: 
-  slip:
+  gripped:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -0.0008544922
-      value: 0.00390625
-      inSlope: 1.7267396
-      outSlope: 1.7267396
+      time: 0.0009765625
+      value: 0.0018920898
+      inSlope: 0.7253079
+      outSlope: 0.7253079
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.056942206
+      outWeight: 0.28558958
     - serializedVersion: 3
-      time: 2.2047539
-      value: 0.96315676
-      inSlope: 0.019086713
-      outSlope: -0.01631965
-      tangentMode: 1
-      weightedMode: 0
-      inWeight: 0.21343662
-      outWeight: 0.07458039
-    - serializedVersion: 3
-      time: 5.5119467
-      value: 0.73718476
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
+      time: 3.4009643
+      value: 1
+      inSlope: 0.00025632774
+      outSlope: 0.00025632774
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 5.9835844
+      value: 0.9
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.7989667
+      outWeight: 0.062429193
+    - serializedVersion: 3
+      time: 25
+      value: 0.9
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  unGripped:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0009765625
+      value: 0.0018920898
+      inSlope: 0.7349414
+      outSlope: 0.7349414
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.11198387
+    - serializedVersion: 3
+      time: 3.2590408
+      value: 0.8983188
+      inSlope: 0.002334617
+      outSlope: 0.002334617
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 6
+      value: 0.90043557
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 25
+      value: 0.9
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  SlipValue: 6
+  UnSlipValue: 1.4
   material: {fileID: 2100000, guid: 218b4a25336dd3c45b9856ce0adebce3, type: 2}
   UV_mirrored: 0
