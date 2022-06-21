@@ -200,16 +200,6 @@
 									<PluginInnerObject Name="" ID="{14B1B56C-60F5-4664-B0B5-3B79DA6F8E02}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
 									<PluginInnerObject Name="" ID="{978ECF02-F17B-4612-B668-ECC789E7A264}" PluginName="AccelDecelModelControlData" CompanyID="261" PluginID="418"/>
 								</List>
-								<List Name="GranularModelControlData_Acceleration">
-									<PluginInnerObject Name="" ID="{87DA791D-8991-48B0-8B65-CEDFC4F7ECEB}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419">
-										<PropertyList>
-											<Property Name="LoadVolumeOff" Type="Real32" Value="0.3"/>
-										</PropertyList>
-									</PluginInnerObject>
-									<PluginInnerObject Name="" ID="{161D3A10-9874-4FC4-8F4E-C402B8DE81C4}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
-									<PluginInnerObject Name="" ID="{971D34F8-E46A-48D7-A45B-81D35FE2C71C}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
-									<PluginInnerObject Name="" ID="{5C46C818-107F-465D-9ED8-0D045D2E36B3}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
-								</List>
 								<List Name="GranularModelControlData_Deceleration">
 									<PluginInnerObject Name="" ID="{53FCDAAB-A1D3-4E68-85A0-B930AF58A03E}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419">
 										<PropertyList>
@@ -231,6 +221,16 @@
 									<PluginInnerObject Name="" ID="{D817A520-75D8-4EA9-A682-B937F62848DD}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
 									<PluginInnerObject Name="" ID="{F0A2C3D9-658C-4F0A-94D0-9088AF15120D}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
 									<PluginInnerObject Name="" ID="{8DD422C1-587C-44CE-AAF7-7FA07CB4D210}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
+								</List>
+								<List Name="GranularModelControlData_Acceleration">
+									<PluginInnerObject Name="" ID="{87DA791D-8991-48B0-8B65-CEDFC4F7ECEB}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419">
+										<PropertyList>
+											<Property Name="LoadVolumeOff" Type="Real32" Value="0.3"/>
+										</PropertyList>
+									</PluginInnerObject>
+									<PluginInnerObject Name="" ID="{161D3A10-9874-4FC4-8F4E-C402B8DE81C4}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
+									<PluginInnerObject Name="" ID="{971D34F8-E46A-48D7-A45B-81D35FE2C71C}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
+									<PluginInnerObject Name="" ID="{5C46C818-107F-465D-9ED8-0D045D2E36B3}" PluginName="GranularModelControlData" CompanyID="261" PluginID="419"/>
 								</List>
 							</PluginInnerObjectList>
 						</SourcePlugin>
@@ -928,8 +928,6 @@
 						<AudioFileSource Name="RadioNoise" ID="{F7EE32AA-9247-4F9D-9D8F-BAB8FC58E186}">
 							<PropertyList>
 								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
-								<Property Name="TrimBegin" Type="Real64" Value="2924.2696345515"/>
-								<Property Name="TrimEnd" Type="Real64" Value="3280.00552823921"/>
 							</PropertyList>
 							<Language>SFX</Language>
 							<AudioFile>RadioNoise.wav</AudioFile>

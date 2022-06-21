@@ -16,7 +16,7 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="2025709351" Language="SFX" Hash="117248957">
+		<SoundBank Id="2025709351" Language="SFX" Hash="2886626144">
 			<ObjectPath>\SoundBanks\Default Work Unit\Vehicle</ObjectPath>
 			<ShortName>Vehicle</ShortName>
 			<Path>Vehicle.bnk</Path>
@@ -80,15 +80,11 @@
 				</File>
 				<File Id="361459702" Language="SFX">
 					<ShortName>RadioNoise.wav</ShortName>
-					<Path>SFX\RadioNoise_BD6FBB55.wem</Path>
+					<Path>SFX\RadioNoise_C5579977.wem</Path>
 				</File>
 				<File Id="459079447" Language="SFX">
 					<ShortName>refresh-mountaineer.wav</ShortName>
 					<Path>SFX\refresh-mountaineer_10C4C929.wem</Path>
-				</File>
-				<File Id="506714936" Language="SFX">
-					<ShortName>mainMenuTheme.wav</ShortName>
-					<Path>SFX\mainMenuTheme_10C4C929.wem</Path>
 				</File>
 				<File Id="709655759" Language="SFX">
 					<ShortName>chrome-infraction.wav</ShortName>

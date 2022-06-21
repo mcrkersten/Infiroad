@@ -1,13 +1,19 @@
 Event	ID	Name			Wwise Object Path	Notes
 	639345804	Play_Engine			\Default Work Unit\Play_Engine	
+	890527358	Stop_MainMenu			\Default Work Unit\Stop_MainMenu	
 	1020223172	Play_Wind			\Default Work Unit\Play_Wind	
+	1420258931	Play_Radionoise			\Default Work Unit\Play_Radionoise	
 	1505888634	CountDown			\Default Work Unit\UI\CountDown	
 	1786192775	GO			\Default Work Unit\UI\GO	
+	2953849999	Play_Radio			\Default Work Unit\Play_Radio	
+	3738780720	Play_MainMenu			\Default Work Unit\Play_MainMenu	
 	4142784629	Play_Suspension			\Default Work Unit\Play_Suspension	
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
+	510917340	RadioNoise			\Default Work Unit\RadioNoise	
 	1114824702	RMP			\Default Work Unit\RMP	
 	1172844112	Gear			\Default Work Unit\Gear	
+	1484270927	RadioDistortion			\Default Work Unit\RadioDistortion	
 	2076996661	FrontSuspension			\Default Work Unit\FrontSuspension	
 	2995819693	Throttle			\Default Work Unit\Throttle	
 	3519441192	Velocity			\Default Work Unit\Velocity	
@@ -17,8 +23,13 @@ Source plug-ins	ID	Name	Type		Wwise Object Path	Notes
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	270640359	Suspension	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Mac\SFX\car-suspension-bounce-car-rear-suspension-bounce_3CD203DC.wem		\Actor-Mixer Hierarchy\Default Work Unit\Suspension		36992
+	361459702	RadioNoise	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Mac\SFX\RadioNoise_C5579977.wem		\Actor-Mixer Hierarchy\Default Work Unit\RadioNoise		41266576
+	459079447	refresh-mountaineer	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Mac\SFX\refresh-mountaineer_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\RandomRadio\refresh-mountaineer		19966528
+	506714936	mainMenuTheme	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Mac\SFX\mainMenuTheme_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\mainMenuTheme		51420736
+	709655759	chrome-infraction	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Mac\SFX\chrome-infraction_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\RandomRadio\chrome-infraction		16943680
+	815786558	infrared-infraction	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Mac\SFX\infrared-infraction_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\RandomRadio\infrared-infraction		22312000
 	886748003	GO	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Mac\SFX\mixkit-short-race-countdown-926_AF0283F6.wem		\Actor-Mixer Hierarchy\Default Work Unit\UI\GO		142040
-	903948939	WindEffect_0	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Mac\SFX\WindEffect_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\WindEffect_0		15536064
+	903948939	WindEffect_0	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Mac\SFX\WindEffect_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\WindEffect_0		15536064
 	1018576071	CountDown	C:\Repository\Infiroad\Infiroad_WwiseProject\.cache\Mac\SFX\mixkit-short-race-countdown-926_8A95F37A.wem		\Actor-Mixer Hierarchy\Default Work Unit\UI\CountDown		176580
 
 Plug-in Media	ID	Name	Source file	Type	Wwise Object Path	Notes	Data Size
