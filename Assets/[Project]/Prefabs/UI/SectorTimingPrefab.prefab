@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 3963331889064992634}
   - component: {fileID: 996555653861801064}
   m_Layer: 5
-  m_Name: SectorNR
+  m_Name: SectorINDEX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,7 +127,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -50, y: 0.000011444092}
+  m_AnchoredPosition: {x: -56.8, y: 0.000011444092}
   m_SizeDelta: {x: 95, y: 93}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3963331889064992634
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1`
+  m_text: 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: abb05ee6256259149ba25b2eb2ec8c2f, type: 2}
   m_sharedMaterial: {fileID: -3589131506663380744, guid: abb05ee6256259149ba25b2eb2ec8c2f, type: 2}
@@ -441,14 +441,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2264151, g: 0.2264151, b: 0.2264151, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1730427032, guid: c75d3df74a490834bb824f52b2331fb0, type: 3}
+  m_Sprite: {fileID: -263541872, guid: 1969ea5edce70bb4f96e0488ba63eeac, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -471,9 +471,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sectorIndex: 0
-  bestTime: 0
-  timingText: {fileID: 6270488924438482512}
-  timingImprovement: {fileID: 1040327057129291449}
+  bestSectorTime: 0
+  bestLapSectorTime: 0
+  improvementTimeText: {fileID: 1040327057129291449}
+  sectorTimeText: {fileID: 6270488924438482512}
   sectorIndexText: {fileID: 996555653861801064}
   ui_Animation:
     menuType: 0
@@ -492,8 +493,11 @@ MonoBehaviour:
     startPosition: {x: 0, y: 0}
     startSize: {x: 0, y: 0}
     startRotation: {x: 0, y: 0, z: 0}
-  imporovementColor: {r: 0.18039216, g: 0.8352941, b: 0.4509804, a: 1}
+  sectorImprovement: {r: 0.24200916, g: 1, b: 0, a: 1}
+  lapImprovement: {r: 0.59618235, g: 0, b: 1, a: 1}
   slowerColor: {r: 0.92549026, g: 0.10980393, b: 0.13725491, a: 1}
+  selectedSectorColor: {r: 1, g: 0, b: 0, a: 1}
+  unselectedSectorColor: {r: 0.27450982, g: 0.27450982, b: 0.27450982, a: 1}
 --- !u!1 &6270488924438482526
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,7 +565,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00:00.000
+  m_text: NO TIME SET
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a00954f9fc158744da7caae08b35049c, type: 2}
   m_sharedMaterial: {fileID: -9171313565243995259, guid: a00954f9fc158744da7caae08b35049c, type: 2}

@@ -9,32 +9,45 @@ using UnityEngine.UI;
 public class SectorTiming : MonoBehaviour
 {
     public int sectorIndex;
-    [SerializeField] private float bestTime = 0f;
-    [SerializeField] private TextMeshProUGUI timingText;
-    [SerializeField] private TextMeshProUGUI timingImprovement;
+    [SerializeField] private float bestSectorTime = 0f;
+    [SerializeField] private float bestLapSectorTime = 0f;
+    [SerializeField] private TextMeshProUGUI improvementTimeText;
+    [SerializeField] private TextMeshProUGUI sectorTimeText;
     [SerializeField] private TextMeshProUGUI sectorIndexText;
     [SerializeField] public Ui_AnimationObject ui_Animation;
     private RectTransform rectTransform;
+    private Image image;
 
-    [SerializeField] private Color imporovementColor;
+    [Header("Improvement Colours")]
+    [SerializeField] private Color sectorImprovement;
+    [SerializeField] private Color lapImprovement;
     [SerializeField] private Color slowerColor;
 
-    public void UpdateSectorTiming(float time)
+    [Header("Sector selection")]
+    [SerializeField] private Color selectedSectorColor;
+    [SerializeField] private Color unselectedSectorColor;
+
+    private void Awake()
     {
+        if (image == null)
+            image = this.GetComponent<Image>();
         if (rectTransform == null)
             rectTransform = this.GetComponent<RectTransform>();
 
-        if (bestTime != 0f)
-        {
-            float interval = time - bestTime;
-            if (time < bestTime)
-                bestTime = time;
-            OnTiming(interval);
-        }
-        else {
-            bestTime = time;
-        }
-        timingText.text = GenTimeSpanFromSeconds(time);
+    }
+    public void UpdateSectorTiming(float sector, float lap)
+    {
+        float sectorInterval = sector - bestSectorTime;
+        float lapInterval = lap - bestLapSectorTime;
+
+        if (bestLapSectorTime == 0f || bestSectorTime == 0f)
+            OnTiming(lapInterval, sector, lap, LapType.firstLap);
+        else if (lap < bestLapSectorTime)
+            OnTiming(lapInterval, sector, lap, LapType.fastLap);
+        else if (sector < bestSectorTime)
+            OnTiming(sectorInterval, sector, lap, LapType.fastSector);
+        else
+            OnTiming(lapInterval, sector, lap, LapType.slower);
     }
 
     public void UpdateSectorIndex(int index)
@@ -43,20 +56,38 @@ public class SectorTiming : MonoBehaviour
         sectorIndex = index;
     }
 
-    private void OnTiming(float interval)
+    private void OnTiming(float interval, float sector, float lap, LapType lapType)
     {
-        string timing = "";
+        switch (lapType)
+        {
+            case LapType.firstLap:
+                bestLapSectorTime = lap;
+                bestSectorTime = sector;
+                sectorTimeText.text = GenTimeSpanFromSeconds(bestSectorTime);
+                return;
+            case LapType.flyingLap:
+                bestLapSectorTime = lap;
+                bestSectorTime = sector;
+                improvementTimeText.color = lapImprovement;
+                break;
+            case LapType.slower:
+                improvementTimeText.color = slowerColor;
+                break;
+            case LapType.fastLap:
+                bestLapSectorTime = lap;
+                improvementTimeText.color = lapImprovement;
+                break;
+            case LapType.fastSector:
+                bestSectorTime = sector;
+                improvementTimeText.color = sectorImprovement;
+                break;
+        }
+
+        string sign = "+";
         if (interval < 0f)
-        {
-            timingImprovement.color = imporovementColor;
-            timing = "-";
-        }
-        else
-        {
-            timingImprovement.color = slowerColor;
-            timing = "+";
-        }
-        timingImprovement.text = timing + GenTimeSpanFromSeconds(interval);
+            sign = "-";
+        improvementTimeText.text = sign + GenTimeSpanFromSeconds(interval);
+        sectorTimeText.text = GenTimeSpanFromSeconds(bestSectorTime);
         OnTimingAnimation();
     }
 
@@ -87,4 +118,21 @@ public class SectorTiming : MonoBehaviour
         return String.Format(@"{0:mm\:ss\.fff}", interval);
     }
 
+    public void SelectSector()
+    {
+        image.color = selectedSectorColor;
+    }
+    public void UnselectSector()
+    {
+        image.color = unselectedSectorColor;
+    }
+
+    private enum LapType
+    {
+        firstLap,
+        flyingLap,
+        slower,
+        fastLap,
+        fastSector
+    }
 }

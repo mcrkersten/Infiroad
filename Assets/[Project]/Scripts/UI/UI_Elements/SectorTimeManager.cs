@@ -50,6 +50,9 @@ public class SectorTimeManager : MonoBehaviour
                     s.ui_Animation.Init();
                     sectors.Enqueue(s);
                 }
+                currentSector = sectors.Dequeue();
+                currentSector.SelectSector();
+                Debug.Log(currentSector);
                 break;
         }
     }
@@ -71,7 +74,8 @@ public class SectorTimeManager : MonoBehaviour
 
     private void UpdateCurrentSector()
     {
-        currentSector = sectors.Dequeue();
+        currentSector.UnselectSector();
+
         switch (gameMode)
         {
             case GameMode.Relaxed:
@@ -84,12 +88,15 @@ public class SectorTimeManager : MonoBehaviour
                 UpdateSector(currentSector);
                 break;
         }
+
         sectors.Enqueue(currentSector);
+        currentSector = sectors.Dequeue();
+        currentSector.SelectSector();
     }
 
     private void UpdateSector(SectorTiming index)
     {
-        index.UpdateSectorTiming(currentSectorTime);
+        index.UpdateSectorTiming(currentSectorTime, currenFullLapTime);
         currentSectorTime = 0f;
         if (index.sectorIndex == GameModeManager.Instance.fixedSectors.Count)
             UpdateLapTime();
