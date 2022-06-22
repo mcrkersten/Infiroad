@@ -152,6 +152,11 @@ public class VehicleController : MonoBehaviour
         vehicleInputActions.SteeringWheel.MinimapRescale.started += minimapBehaviour.ScaleMinimap;
         vehicleInputActions.SteeringWheel.StartEngine.Enable();
         vehicleInputActions.SteeringWheel.StartEngine.started += pauseMenuBehaviour.OnStartMenu;
+
+        vehicleInputActions.SteeringWheel.PauseRadio.Enable();
+        vehicleInputActions.SteeringWheel.PauseRadio.started += radio.PauseSong;
+        vehicleInputActions.SteeringWheel.NextRadioSong.Enable();
+        vehicleInputActions.SteeringWheel.NextRadioSong.started += radio.NextSong;
     }
     private void ActivateKeyboardControls()
     {
@@ -169,6 +174,12 @@ public class VehicleController : MonoBehaviour
         vehicleInputActions.Keyboard.MinimapRescale.started += minimapBehaviour.ScaleMinimap;
         vehicleInputActions.Keyboard.StartEngine.Enable();
         vehicleInputActions.Keyboard.StartEngine.started += pauseMenuBehaviour.OnStartMenu;
+
+
+        vehicleInputActions.Keyboard.PauseRadio.Enable();
+        vehicleInputActions.Keyboard.PauseRadio.started += radio.PauseSong;
+        vehicleInputActions.Keyboard.NextRadioSong.Enable();
+        vehicleInputActions.Keyboard.NextRadioSong.started += radio.NextSong;
     }
     private void ActivateGamepadControls()
     {
@@ -186,6 +197,11 @@ public class VehicleController : MonoBehaviour
         vehicleInputActions.Gamepad.MinimapRescale.started += minimapBehaviour.ScaleMinimap;
         vehicleInputActions.Gamepad.StartEngine.Enable();
         vehicleInputActions.Gamepad.StartEngine.started += pauseMenuBehaviour.OnStartMenu;
+
+        vehicleInputActions.Gamepad.PauseRadio.Enable();
+        vehicleInputActions.Gamepad.PauseRadio.started += radio.PauseSong;
+        vehicleInputActions.Gamepad.NextRadioSong.Enable();
+        vehicleInputActions.Gamepad.NextRadioSong.started += radio.NextSong;
     }
     // Update is called once per frame
     void Update()

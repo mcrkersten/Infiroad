@@ -240,10 +240,10 @@ MonoBehaviour:
   allSurfaceSettings:
   - {fileID: 11400000, guid: 703cef44cc738ef479f351d37d7afea5, type: 2}
   - {fileID: 11400000, guid: d8a879d7ca112bc44a4e9113e252a7f2, type: 2}
-  - {fileID: 11400000, guid: 8808c81f35bcac94cbd1a989d67cead5, type: 2}
+  - {fileID: 11400000, guid: a3c8fe4f5402f094e851d9d39abaffa9, type: 2}
   - {fileID: 11400000, guid: acf9619f996b36345b8d57426d926ec9, type: 2}
   - {fileID: 11400000, guid: a1990b02ff0e4ab47a8bb34d41533b25, type: 2}
-  - {fileID: 11400000, guid: 8808c81f35bcac94cbd1a989d67cead5, type: 2}
+  - {fileID: 11400000, guid: fe9b6908b303e2643ae5f6b848fa8a3f, type: 2}
   runoffMaterial: {fileID: 11400000, guid: fe9b6908b303e2643ae5f6b848fa8a3f, type: 2}
   meshtaskSettings:
   - {fileID: 11400000, guid: 0d430583a073a984caf4ad0fb0e144fa, type: 2}
@@ -329,8 +329,8 @@ MonoBehaviour:
   maxChamfer: 5
   calculatedUs:
   - {x: -7.5, y: 18}
-  - {x: 7.5, y: 18}
-  - {x: -9.8, y: 9.8}
+  - {x: 7.5, y: 17.97}
+  - {x: 8.14, y: 10.8}
   - {x: -18, y: 18}
   - {x: -14.671914, y: 14.845252}
   - {x: Infinity, y: -Infinity}

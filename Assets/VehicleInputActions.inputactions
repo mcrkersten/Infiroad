@@ -85,6 +85,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "NextRadioSong",
+                    "type": "Button",
+                    "id": "58343f64-6a60-4986-b4f9-635ba7785d2e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PauseRadio",
+                    "type": "Button",
+                    "id": "80fc5b20-739b-4a16-a31c-e5486cf0cb48",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -208,6 +226,28 @@
                     "action": "MinimapRescale",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6c48717f-d6d1-4d88-87af-6501aa15da0d",
+                    "path": "<Keyboard>/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextRadioSong",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3ca7a10b-ebf9-4935-a21f-05896a84a73b",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PauseRadio",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -291,6 +331,24 @@
                     "name": "MinimapRescale",
                     "type": "Button",
                     "id": "f664c7e2-b1d8-4fb2-9383-9e48da108a25",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NextRadioSong",
+                    "type": "Button",
+                    "id": "001e8b28-0e1b-48b4-a9ea-d264a755d02e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PauseRadio",
+                    "type": "Button",
+                    "id": "a2b96021-661d-4c78-a93b-5fec8cab81b8",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -418,6 +476,28 @@
                     "action": "MinimapRescale",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c5a96fb5-da21-490a-9b0b-ddac217dc877",
+                    "path": "<Keyboard>/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextRadioSong",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "85edfc63-4c6e-4d56-b64c-19317726d20e",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PauseRadio",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -501,6 +581,24 @@
                     "name": "MinimapRescale",
                     "type": "Button",
                     "id": "0b10ad29-be02-4272-99db-4cd37bcd5de4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NextRadioSong",
+                    "type": "Button",
+                    "id": "f6f923e4-505d-420a-a48f-5c8ca29417f8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PauseRadio",
+                    "type": "Button",
+                    "id": "74574e1a-bd84-4e9c-9832-291bece72e04",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -604,6 +702,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "MinimapRescale",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ab846ec9-5ffc-4743-8af9-f54539ab98e5",
+                    "path": "<Keyboard>/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextRadioSong",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2cec4135-6c83-4888-a6e8-63837ebeecee",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PauseRadio",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

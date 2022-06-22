@@ -107,6 +107,24 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextRadioSong"",
+                    ""type"": ""Button"",
+                    ""id"": ""58343f64-6a60-4986-b4f9-635ba7785d2e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseRadio"",
+                    ""type"": ""Button"",
+                    ""id"": ""80fc5b20-739b-4a16-a31c-e5486cf0cb48"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -230,6 +248,28 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""MinimapRescale"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6c48717f-d6d1-4d88-87af-6501aa15da0d"",
+                    ""path"": ""<Keyboard>/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextRadioSong"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3ca7a10b-ebf9-4935-a21f-05896a84a73b"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseRadio"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -313,6 +353,24 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""name"": ""MinimapRescale"",
                     ""type"": ""Button"",
                     ""id"": ""f664c7e2-b1d8-4fb2-9383-9e48da108a25"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextRadioSong"",
+                    ""type"": ""Button"",
+                    ""id"": ""001e8b28-0e1b-48b4-a9ea-d264a755d02e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseRadio"",
+                    ""type"": ""Button"",
+                    ""id"": ""a2b96021-661d-4c78-a93b-5fec8cab81b8"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -440,6 +498,28 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""MinimapRescale"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c5a96fb5-da21-490a-9b0b-ddac217dc877"",
+                    ""path"": ""<Keyboard>/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextRadioSong"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""85edfc63-4c6e-4d56-b64c-19317726d20e"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseRadio"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -523,6 +603,24 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""name"": ""MinimapRescale"",
                     ""type"": ""Button"",
                     ""id"": ""0b10ad29-be02-4272-99db-4cd37bcd5de4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextRadioSong"",
+                    ""type"": ""Button"",
+                    ""id"": ""f6f923e4-505d-420a-a48f-5c8ca29417f8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseRadio"",
+                    ""type"": ""Button"",
+                    ""id"": ""74574e1a-bd84-4e9c-9832-291bece72e04"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -628,6 +726,28 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""MinimapRescale"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ab846ec9-5ffc-4743-8af9-f54539ab98e5"",
+                    ""path"": ""<Keyboard>/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextRadioSong"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2cec4135-6c83-4888-a6e8-63837ebeecee"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseRadio"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -706,6 +826,8 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         m_Keyboard_Reset = m_Keyboard.FindAction("Reset", throwIfNotFound: true);
         m_Keyboard_StartEngine = m_Keyboard.FindAction("StartEngine", throwIfNotFound: true);
         m_Keyboard_MinimapRescale = m_Keyboard.FindAction("MinimapRescale", throwIfNotFound: true);
+        m_Keyboard_NextRadioSong = m_Keyboard.FindAction("NextRadioSong", throwIfNotFound: true);
+        m_Keyboard_PauseRadio = m_Keyboard.FindAction("PauseRadio", throwIfNotFound: true);
         // Gamepad
         m_Gamepad = asset.FindActionMap("Gamepad", throwIfNotFound: true);
         m_Gamepad_Steering = m_Gamepad.FindAction("Steering", throwIfNotFound: true);
@@ -717,6 +839,8 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         m_Gamepad_Reset = m_Gamepad.FindAction("Reset", throwIfNotFound: true);
         m_Gamepad_StartEngine = m_Gamepad.FindAction("StartEngine", throwIfNotFound: true);
         m_Gamepad_MinimapRescale = m_Gamepad.FindAction("MinimapRescale", throwIfNotFound: true);
+        m_Gamepad_NextRadioSong = m_Gamepad.FindAction("NextRadioSong", throwIfNotFound: true);
+        m_Gamepad_PauseRadio = m_Gamepad.FindAction("PauseRadio", throwIfNotFound: true);
         // SteeringWheel
         m_SteeringWheel = asset.FindActionMap("SteeringWheel", throwIfNotFound: true);
         m_SteeringWheel_Steering = m_SteeringWheel.FindAction("Steering", throwIfNotFound: true);
@@ -728,6 +852,8 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         m_SteeringWheel_Reset = m_SteeringWheel.FindAction("Reset", throwIfNotFound: true);
         m_SteeringWheel_StartEngine = m_SteeringWheel.FindAction("StartEngine", throwIfNotFound: true);
         m_SteeringWheel_MinimapRescale = m_SteeringWheel.FindAction("MinimapRescale", throwIfNotFound: true);
+        m_SteeringWheel_NextRadioSong = m_SteeringWheel.FindAction("NextRadioSong", throwIfNotFound: true);
+        m_SteeringWheel_PauseRadio = m_SteeringWheel.FindAction("PauseRadio", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -796,6 +922,8 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Keyboard_Reset;
     private readonly InputAction m_Keyboard_StartEngine;
     private readonly InputAction m_Keyboard_MinimapRescale;
+    private readonly InputAction m_Keyboard_NextRadioSong;
+    private readonly InputAction m_Keyboard_PauseRadio;
     public struct KeyboardActions
     {
         private @VehicleInputActions m_Wrapper;
@@ -809,6 +937,8 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         public InputAction @Reset => m_Wrapper.m_Keyboard_Reset;
         public InputAction @StartEngine => m_Wrapper.m_Keyboard_StartEngine;
         public InputAction @MinimapRescale => m_Wrapper.m_Keyboard_MinimapRescale;
+        public InputAction @NextRadioSong => m_Wrapper.m_Keyboard_NextRadioSong;
+        public InputAction @PauseRadio => m_Wrapper.m_Keyboard_PauseRadio;
         public InputActionMap Get() { return m_Wrapper.m_Keyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -845,6 +975,12 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @MinimapRescale.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMinimapRescale;
                 @MinimapRescale.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMinimapRescale;
                 @MinimapRescale.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMinimapRescale;
+                @NextRadioSong.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnNextRadioSong;
+                @NextRadioSong.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnNextRadioSong;
+                @NextRadioSong.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnNextRadioSong;
+                @PauseRadio.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPauseRadio;
+                @PauseRadio.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPauseRadio;
+                @PauseRadio.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPauseRadio;
             }
             m_Wrapper.m_KeyboardActionsCallbackInterface = instance;
             if (instance != null)
@@ -876,6 +1012,12 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @MinimapRescale.started += instance.OnMinimapRescale;
                 @MinimapRescale.performed += instance.OnMinimapRescale;
                 @MinimapRescale.canceled += instance.OnMinimapRescale;
+                @NextRadioSong.started += instance.OnNextRadioSong;
+                @NextRadioSong.performed += instance.OnNextRadioSong;
+                @NextRadioSong.canceled += instance.OnNextRadioSong;
+                @PauseRadio.started += instance.OnPauseRadio;
+                @PauseRadio.performed += instance.OnPauseRadio;
+                @PauseRadio.canceled += instance.OnPauseRadio;
             }
         }
     }
@@ -893,6 +1035,8 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gamepad_Reset;
     private readonly InputAction m_Gamepad_StartEngine;
     private readonly InputAction m_Gamepad_MinimapRescale;
+    private readonly InputAction m_Gamepad_NextRadioSong;
+    private readonly InputAction m_Gamepad_PauseRadio;
     public struct GamepadActions
     {
         private @VehicleInputActions m_Wrapper;
@@ -906,6 +1050,8 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         public InputAction @Reset => m_Wrapper.m_Gamepad_Reset;
         public InputAction @StartEngine => m_Wrapper.m_Gamepad_StartEngine;
         public InputAction @MinimapRescale => m_Wrapper.m_Gamepad_MinimapRescale;
+        public InputAction @NextRadioSong => m_Wrapper.m_Gamepad_NextRadioSong;
+        public InputAction @PauseRadio => m_Wrapper.m_Gamepad_PauseRadio;
         public InputActionMap Get() { return m_Wrapper.m_Gamepad; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -942,6 +1088,12 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @MinimapRescale.started -= m_Wrapper.m_GamepadActionsCallbackInterface.OnMinimapRescale;
                 @MinimapRescale.performed -= m_Wrapper.m_GamepadActionsCallbackInterface.OnMinimapRescale;
                 @MinimapRescale.canceled -= m_Wrapper.m_GamepadActionsCallbackInterface.OnMinimapRescale;
+                @NextRadioSong.started -= m_Wrapper.m_GamepadActionsCallbackInterface.OnNextRadioSong;
+                @NextRadioSong.performed -= m_Wrapper.m_GamepadActionsCallbackInterface.OnNextRadioSong;
+                @NextRadioSong.canceled -= m_Wrapper.m_GamepadActionsCallbackInterface.OnNextRadioSong;
+                @PauseRadio.started -= m_Wrapper.m_GamepadActionsCallbackInterface.OnPauseRadio;
+                @PauseRadio.performed -= m_Wrapper.m_GamepadActionsCallbackInterface.OnPauseRadio;
+                @PauseRadio.canceled -= m_Wrapper.m_GamepadActionsCallbackInterface.OnPauseRadio;
             }
             m_Wrapper.m_GamepadActionsCallbackInterface = instance;
             if (instance != null)
@@ -973,6 +1125,12 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @MinimapRescale.started += instance.OnMinimapRescale;
                 @MinimapRescale.performed += instance.OnMinimapRescale;
                 @MinimapRescale.canceled += instance.OnMinimapRescale;
+                @NextRadioSong.started += instance.OnNextRadioSong;
+                @NextRadioSong.performed += instance.OnNextRadioSong;
+                @NextRadioSong.canceled += instance.OnNextRadioSong;
+                @PauseRadio.started += instance.OnPauseRadio;
+                @PauseRadio.performed += instance.OnPauseRadio;
+                @PauseRadio.canceled += instance.OnPauseRadio;
             }
         }
     }
@@ -990,6 +1148,8 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_SteeringWheel_Reset;
     private readonly InputAction m_SteeringWheel_StartEngine;
     private readonly InputAction m_SteeringWheel_MinimapRescale;
+    private readonly InputAction m_SteeringWheel_NextRadioSong;
+    private readonly InputAction m_SteeringWheel_PauseRadio;
     public struct SteeringWheelActions
     {
         private @VehicleInputActions m_Wrapper;
@@ -1003,6 +1163,8 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         public InputAction @Reset => m_Wrapper.m_SteeringWheel_Reset;
         public InputAction @StartEngine => m_Wrapper.m_SteeringWheel_StartEngine;
         public InputAction @MinimapRescale => m_Wrapper.m_SteeringWheel_MinimapRescale;
+        public InputAction @NextRadioSong => m_Wrapper.m_SteeringWheel_NextRadioSong;
+        public InputAction @PauseRadio => m_Wrapper.m_SteeringWheel_PauseRadio;
         public InputActionMap Get() { return m_Wrapper.m_SteeringWheel; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1039,6 +1201,12 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @MinimapRescale.started -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnMinimapRescale;
                 @MinimapRescale.performed -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnMinimapRescale;
                 @MinimapRescale.canceled -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnMinimapRescale;
+                @NextRadioSong.started -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnNextRadioSong;
+                @NextRadioSong.performed -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnNextRadioSong;
+                @NextRadioSong.canceled -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnNextRadioSong;
+                @PauseRadio.started -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnPauseRadio;
+                @PauseRadio.performed -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnPauseRadio;
+                @PauseRadio.canceled -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnPauseRadio;
             }
             m_Wrapper.m_SteeringWheelActionsCallbackInterface = instance;
             if (instance != null)
@@ -1070,6 +1238,12 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @MinimapRescale.started += instance.OnMinimapRescale;
                 @MinimapRescale.performed += instance.OnMinimapRescale;
                 @MinimapRescale.canceled += instance.OnMinimapRescale;
+                @NextRadioSong.started += instance.OnNextRadioSong;
+                @NextRadioSong.performed += instance.OnNextRadioSong;
+                @NextRadioSong.canceled += instance.OnNextRadioSong;
+                @PauseRadio.started += instance.OnPauseRadio;
+                @PauseRadio.performed += instance.OnPauseRadio;
+                @PauseRadio.canceled += instance.OnPauseRadio;
             }
         }
     }
@@ -1130,6 +1304,8 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         void OnReset(InputAction.CallbackContext context);
         void OnStartEngine(InputAction.CallbackContext context);
         void OnMinimapRescale(InputAction.CallbackContext context);
+        void OnNextRadioSong(InputAction.CallbackContext context);
+        void OnPauseRadio(InputAction.CallbackContext context);
     }
     public interface IGamepadActions
     {
@@ -1142,6 +1318,8 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         void OnReset(InputAction.CallbackContext context);
         void OnStartEngine(InputAction.CallbackContext context);
         void OnMinimapRescale(InputAction.CallbackContext context);
+        void OnNextRadioSong(InputAction.CallbackContext context);
+        void OnPauseRadio(InputAction.CallbackContext context);
     }
     public interface ISteeringWheelActions
     {
@@ -1154,5 +1332,7 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         void OnReset(InputAction.CallbackContext context);
         void OnStartEngine(InputAction.CallbackContext context);
         void OnMinimapRescale(InputAction.CallbackContext context);
+        void OnNextRadioSong(InputAction.CallbackContext context);
+        void OnPauseRadio(InputAction.CallbackContext context);
     }
 }

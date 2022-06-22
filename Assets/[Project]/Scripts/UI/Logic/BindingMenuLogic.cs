@@ -171,6 +171,14 @@ public class BindingMenuLogic : MonoBehaviour
                     button.bindingName.text = "Minimap rescale";
                     button.inputAction = keyboard.MinimapRescale;
                     break;
+                case KeyboardBinding.NextSong:
+                    button.bindingName.text = "Next song";
+                    button.inputAction = keyboard.NextRadioSong;
+                    break;
+                case KeyboardBinding.PasueRadio:
+                    button.bindingName.text = "Pause radio";
+                    button.inputAction = keyboard.PauseRadio;
+                    break;
             }
             button.SetKeyText(button.inputAction.bindings[button.isPositive + 1]);
         }
@@ -231,6 +239,14 @@ public class BindingMenuLogic : MonoBehaviour
                     button.bindingName.text = "Minimap rescale";
                     button.inputAction = gamepad.MinimapRescale;
                     break;
+                case GamepadBinding.NextSong:
+                    button.bindingName.text = "Next song";
+                    button.inputAction = gamepad.NextRadioSong;
+                    break;
+                case GamepadBinding.PasueRadio:
+                    button.bindingName.text = "Pause radio";
+                    button.inputAction = gamepad.PauseRadio;
+                    break;
             }
             button.SetKeyText(button.inputAction.bindings[button.isPositive + 1]);
         }
@@ -282,6 +298,14 @@ public class BindingMenuLogic : MonoBehaviour
                 case WheelBinding.ToggleMinimap:
                     button.bindingName.text = "Minimap rescale";
                     button.inputAction = wheel.MinimapRescale;
+                    break;
+                case WheelBinding.NextSong:
+                    button.bindingName.text = "Next song";
+                    button.inputAction = wheel.NextRadioSong;
+                    break;
+                case WheelBinding.PasueRadio:
+                    button.bindingName.text = "Pause radio";
+                    button.inputAction = wheel.PauseRadio;
                     break;
             }
             button.SetKeyText(button.inputAction.bindings[0]);
@@ -399,7 +423,9 @@ public enum WheelBinding
     Shift_Down,
     Reset,
     Pause,
-    ToggleMinimap
+    ToggleMinimap,
+    NextSong,
+    PasueRadio
 }
 
 public enum GamepadBinding
@@ -413,7 +439,9 @@ public enum GamepadBinding
     Shift_Down,
     Reset,
     Pause,
-    ToggleMinimap
+    ToggleMinimap, 
+    NextSong,
+    PasueRadio
 }
 
 public enum KeyboardBinding
@@ -427,5 +455,7 @@ public enum KeyboardBinding
     Shift_Down,
     Reset,
     Pause,
-    ToggleMinimap
+    ToggleMinimap,
+    NextSong,
+    PasueRadio
 }

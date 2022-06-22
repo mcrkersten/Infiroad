@@ -21,14 +21,19 @@ public class SectorTimeManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI currentLapTimeText;
     [SerializeField] private TextMeshProUGUI bestLapTimeText;
     [SerializeField] private TextMeshProUGUI lapIntervalText;
-    [SerializeField] private Color imporovementColor;
-    [SerializeField] private Color slowerColor;
     private bool gameIsStarted = false;
 
+    [SerializeField] private Ui_AnimationGameObject onScreenTiming;
+
+    [Header("Improvement Colours")]
+    [SerializeField] private Color sectorImprovement;
+    [SerializeField] private Color lapImprovement;
+    [SerializeField] private Color slowerColor;
 
 
     private void Start()
     {
+        SectorTiming.sectorTimingUpdate += OnScreenTiming;
         gameMode = GameModeManager.Instance.gameMode;
         EventTriggerManager.sectorTrigger += UpdateCurrentSector;
         GameManager.onStartGame += StartTimer;
@@ -109,22 +114,23 @@ public class SectorTimeManager : MonoBehaviour
             float interval = currenFullLapTime - bestLapTime;
             if (currenFullLapTime < bestLapTime)
                 bestLapTime = currenFullLapTime;
-            OnTiming(interval);
+            OnLapTiming(interval);
             lapIntervalText.transform.DOMove(lapIntervalText.transform.position, 0f).SetDelay(3f).OnComplete(DeactivateLapInteval);
         }
-        else {
+        else
+        {
             bestLapTime = currenFullLapTime;
             bestLapTimeText.text = SectorTiming.GenTimeSpanFromSeconds(currenFullLapTime);
         }
         currenFullLapTime = 0f;
     }
 
-    private void OnTiming(float interval)
+    private void OnLapTiming(float interval)
     {
         string timing = "";
         if (interval < 0f)
         {
-            lapIntervalText.color = imporovementColor;
+            lapIntervalText.color = lapImprovement;
             timing = "-";
         }
         else
@@ -134,6 +140,7 @@ public class SectorTimeManager : MonoBehaviour
         }
         lapIntervalText.text = timing + SectorTiming.GenTimeSpanFromSeconds(interval);
         lapIntervalText.gameObject.SetActive(true);
+
     }
 
     private void DeactivateLapInteval()
@@ -144,5 +151,43 @@ public class SectorTimeManager : MonoBehaviour
     private void OnDestroy()
     {
         EventTriggerManager.sectorTrigger -= UpdateCurrentSector;
+    }
+
+    private void OnScreenTiming(float sectorInterval, float lap, SectorTiming.LapType laptype)
+    {
+        onScreenTiming.gameObject.SetActive(true);
+        onScreenTiming.gameObject.GetComponent<RectTransform>().DOSizeDelta(onScreenTiming.ui_Animation.animateScaleTo, .5f).OnComplete(UnscaleOnScreenTiming);
+        onScreenTiming.textElements[0].text = SectorTiming.GenTimeSpanFromSeconds(lap);
+
+        string sign = "+";
+        if (sectorInterval < 0f)
+            sign = "-";
+
+        switch (laptype)
+        {
+            case SectorTiming.LapType.firstLap:
+                return;
+            case SectorTiming.LapType.flyingLap:
+                onScreenTiming.textElements[1].color = lapImprovement;
+                onScreenTiming.textElements[1].text = sign + SectorTiming.GenTimeSpanFromSeconds(sectorInterval);
+                break;
+            case SectorTiming.LapType.slower:
+                onScreenTiming.textElements[1].color = slowerColor;
+                onScreenTiming.textElements[1].text = sign + SectorTiming.GenTimeSpanFromSeconds(sectorInterval);
+                break;
+            case SectorTiming.LapType.fastLap:
+                onScreenTiming.textElements[1].color = lapImprovement;
+                onScreenTiming.textElements[1].text = sign + SectorTiming.GenTimeSpanFromSeconds(sectorInterval);
+                break;
+            case SectorTiming.LapType.fastSector:
+                onScreenTiming.textElements[1].color = sectorImprovement;
+                onScreenTiming.textElements[1].text = sign + SectorTiming.GenTimeSpanFromSeconds(sectorInterval);
+                break;
+        }
+    }
+
+    private void UnscaleOnScreenTiming()
+    {
+        onScreenTiming.gameObject.GetComponent<RectTransform>().DOSizeDelta(onScreenTiming.ui_Animation.startSize, .5f).SetDelay(3f);
     }
 }

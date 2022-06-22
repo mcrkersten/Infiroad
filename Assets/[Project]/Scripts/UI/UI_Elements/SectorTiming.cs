@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 public class SectorTiming : MonoBehaviour
 {
+    public delegate void OnSectorTimingUpdate(float interval, float lap, LapType laptype);
+    public static event OnSectorTimingUpdate sectorTimingUpdate;
+
     public int sectorIndex;
     [SerializeField] private float bestSectorTime = 0f;
     [SerializeField] private float bestLapSectorTime = 0f;
@@ -58,6 +61,7 @@ public class SectorTiming : MonoBehaviour
 
     private void OnTiming(float interval, float sector, float lap, LapType lapType)
     {
+        sectorTimingUpdate?.Invoke(interval, lap, lapType);
         switch (lapType)
         {
             case LapType.firstLap:
@@ -127,7 +131,7 @@ public class SectorTiming : MonoBehaviour
         image.color = unselectedSectorColor;
     }
 
-    private enum LapType
+    public enum LapType
     {
         firstLap,
         flyingLap,

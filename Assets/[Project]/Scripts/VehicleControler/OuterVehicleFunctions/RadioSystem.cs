@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [System.Serializable]
 public class RadioSystem
@@ -13,7 +14,12 @@ public class RadioSystem
         radioNoiseAudio.SetGlobalValue(quality);
     }
 
-    public void SkipSong()
+    public void NextSong(InputAction.CallbackContext obj)
+    {
+
+    }
+
+    public void PauseSong(InputAction.CallbackContext obj)
     {
 
     }

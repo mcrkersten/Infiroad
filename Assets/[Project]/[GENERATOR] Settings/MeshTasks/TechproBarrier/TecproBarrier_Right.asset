@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d506392ec772e1468e230060edab095, type: 3}
   m_Name: TecproBarrier_Right
   m_EditorClassIdentifier: 
-  dataKey: 302704
+  dataKey: 482739
   calculatedUs: []
   uvLenght: 2.3447418
   UV_scale: 1
@@ -65,9 +65,9 @@ MonoBehaviour:
   meshResolution: 3
   meshtaskContinues: 0
   noiseChannel: 0
+  meshtaskWidth: 8.7670965
   maxChamfer: 5
   extrusionSize: 15
-  meshtaskWidth: 8.7670965
   minimalCornerRadius: 0
   maximumCornerRadius: 0
   minimalExtrusionSize: 0.4

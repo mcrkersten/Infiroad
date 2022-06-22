@@ -146,13 +146,16 @@ public class RoadSettings : ScriptableObject
 
 	private Vector2 CalculateMirroredUV_Width(VertexPoint[] points, int materialIndex)
 	{
+		float y = 0f;
 		float min_Xuv = float.PositiveInfinity;
 		float max_Xuv = float.NegativeInfinity;
 		foreach (VertexPoint p in points)
 		{
+			y = Mathf.Abs(y - (y - p.vertex_1.point.y));
+
 			if (p.materialIndex == materialIndex)
 			{
-				float abs = Mathf.Abs(p.vertex_1.point.x);
+				float abs = Mathf.Abs(p.vertex_1.point.x + y);
 				if (abs < min_Xuv)
 					min_Xuv = abs;
 				if (abs > max_Xuv)
