@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 968972396982e854e9bbfb037c44c290, type: 3}
   m_Name: RandomDecoration_1
   m_EditorClassIdentifier: 
-  segmentIndex: 0
   wholeUnitsInPool: 5
+  segmentIndex: 0
   mainCurveTime: 0.5
   decor:
-  - prefab: {fileID: 8706244027275456456, guid: 73323b6a35b9dd348ba9e1983a5e030b, type: 3}
+  - meshtaskPoolType: 0
+    unitsInPool: 0
+    prefab: {fileID: 8706244027275456456, guid: 73323b6a35b9dd348ba9e1983a5e030b, type: 3}
     position: {x: 0, y: 0}
     curveTime: 0
     noiseChannel: 1

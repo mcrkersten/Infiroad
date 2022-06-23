@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da5b658009ba4d547a0020df58e6cc1d, type: 3}
+  m_Name: Racetrack_Blue
+  m_EditorClassIdentifier: 
+  layers:
+  - {fileID: 11400000, guid: 703cef44cc738ef479f351d37d7afea5, type: 2}
+  - {fileID: 11400000, guid: d8a879d7ca112bc44a4e9113e252a7f2, type: 2}
+  - {fileID: 11400000, guid: a3c8fe4f5402f094e851d9d39abaffa9, type: 2}
+  - {fileID: 11400000, guid: acf9619f996b36345b8d57426d926ec9, type: 2}
+  - {fileID: 11400000, guid: a1990b02ff0e4ab47a8bb34d41533b25, type: 2}
+  runoffMaterial: {fileID: 11400000, guid: fe9b6908b303e2643ae5f6b848fa8a3f, type: 2}

@@ -2131,12 +2131,16 @@ PrefabInstance:
       objectReference: {fileID: 1849681595}
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: meshtaskSettings.Array.size
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: meshtaskSettings.Array.data[9]
       value: 
       objectReference: {fileID: 11400000, guid: 52e8cfdeb08219846b97462cb2539de7, type: 2}
+    - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
+      propertyPath: meshtaskSettings.Array.data[10]
+      value: 
+      objectReference: {fileID: 11400000, guid: a1a7c41af9be7f44a8a0b4ac03212ab8, type: 2}
     - target: {fileID: 7288201750910135066, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: m_RootOrder
       value: 13

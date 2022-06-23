@@ -23,6 +23,7 @@ using System;
 
 // This is the parent container for all the road segments
 public class RoadChain : MonoBehaviour {
+	[HideInInspector] public int index = 0;
 	public bool loop = false; // Whether or not the last segment should connect to the first
 	public List<RoadSegment> organizedSegments = new List<RoadSegment>();
 	public LineRenderer line;
@@ -69,7 +70,7 @@ public class RoadChain : MonoBehaviour {
 
 	public void CreateMesh(RoadSettings roadSettings, RoadSegment segment)
 	{
-		segment.CreateMesh(Vector2.zero, roadSettings); //Creates mesh
+		segment.CreateMesh(Vector2.zero, roadSettings, index); //Creates mesh
 	}
 
 	public OrientedPoint GetOrientedPointOnRoad(float percentage, int segmentIndex, Ease ease)
@@ -93,7 +94,7 @@ public class RoadChain : MonoBehaviour {
 			foreach (NoiseChannel nts in roadSettings.noiseChannels)
 				noise += nts.generatorInstance.getNoise(segment.startEndEdgeLoop.x + edgeLoop, nts);
 
-			Vector3 decorPosition = new Vector3(decorItem.position.x, decorItem.position.y, 0);
+			Vector3 decorPosition = decorItem.position;
 
 			OrientedPoint nextPoint = GetOrientedPointOnRoad(Mathf.Clamp01(roadDecoration.mainCurveTime + decorItem.curveTime + .15f), segmentIndex, segment.roadSetting.rotationEasing);
 			Vector3 next = segment.transform.TransformPoint(nextPoint.LocalToWorldPos(decorPosition + noise));

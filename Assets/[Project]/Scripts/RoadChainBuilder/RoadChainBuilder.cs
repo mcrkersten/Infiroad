@@ -37,8 +37,6 @@ public class RoadChainBuilder : MonoBehaviour
     public Road road;
     private ObjectPooler objectPooler;
 
-    private bool startLineIsGenerated = false;
-
     [Header("Debug")]
     public int generatedRoadEdgeloops = 0;
 
@@ -144,8 +142,12 @@ public class RoadChainBuilder : MonoBehaviour
 
     private void StartFixedRoadChain(List<Sector> sectors)
     {
+        int i = 0;
         foreach (Sector s in sectors)
+        {
+            s.roadChain.index = i++;
             fixedRoadChains.Enqueue(s.roadChain);
+        }
 
         Debug.Log(fixedRoadChains.Count);
         EventTriggerManager.roadChainTrigger += CreateNextFixedSector_Trigger;
@@ -208,6 +210,7 @@ public class RoadChainBuilder : MonoBehaviour
     {
         //Instantiate
         RoadChain roadChain = InstantiateRoadChain();
+        roadChain.index = createdRoadChains.Count;
         Vector3 position = CalculateRoadChainObjectPosition(lastExitPoint);
         roadChain.transform.position = position;
         this.transform.position = position;
@@ -297,25 +300,24 @@ public class RoadChainBuilder : MonoBehaviour
     {
         int index = Random.Range(1, segments.Count - 1);
         SpawnRandomRoadDecoration(roadChain, segments[index], index);
-        SpawnStandardRoadDecoration(roadChain, segments);
+        SpawnStandardRoadDecoration(roadChain);
         SpawnSkyDecoration();
     }
 
-    private void SpawnStandardRoadDecoration(RoadChain roadChain, List<RoadSegment> segments)
+    private void SpawnStandardRoadDecoration(RoadChain roadChain)
     {
         
-        if (!startLineIsGenerated)
+        if (roadChain.index == 0)
         {
             //Create on first segment a startline
             RoadDecoration deco_0 = road.standardDecoration.First(t => t.poolIndex == 0);
-            roadChain.ActivateDecor(segments[0], deco_0, 0);
-            startLineIsGenerated = true;
+            roadChain.ActivateDecor(roadChain.organizedSegments[0], deco_0, 0);
         }
 
         //Create on last segment a checkpoint
         RoadDecoration deco_1 = road.standardDecoration.First(t => t.poolIndex == 1);
-        int lastIndex = segments.Count - 2; //Always mark last index as checkpoint
-        roadChain.ActivateDecor(segments[lastIndex], deco_1, lastIndex);
+        int lastIndex = roadChain.organizedSegments.Count - 2; //Always mark last index as checkpoint
+        roadChain.ActivateDecor(roadChain.organizedSegments[lastIndex], deco_1, lastIndex);
     }
 
     private void SpawnRandomRoadDecoration(RoadChain roadChain, RoadSegment segment, int segmentIndex)

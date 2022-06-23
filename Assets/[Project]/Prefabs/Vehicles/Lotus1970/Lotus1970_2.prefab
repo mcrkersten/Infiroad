@@ -2201,7 +2201,6 @@ MonoBehaviour:
   slipSmokeParticleSystem: {fileID: 1545020766747694543}
   forceDirectionDebug: {x: 0, y: 0, z: 0}
   grip_UI: 0.01
-  personalRB: {fileID: 0}
 --- !u!1 &2940424408903564553
 GameObject:
   m_ObjectHideFlags: 0
@@ -4891,7 +4890,6 @@ MonoBehaviour:
   slipSmokeParticleSystem: {fileID: 6944448787465721658}
   forceDirectionDebug: {x: 0, y: 0, z: 0}
   grip_UI: 0.01
-  personalRB: {fileID: 0}
 --- !u!1 &5707879935568172121
 GameObject:
   m_ObjectHideFlags: 0
@@ -4938,7 +4936,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wingAngle: 5
   width: 1.5
-  lenght: 0.2
+  lenght: 0.4
 --- !u!1 &5857873129718366801
 GameObject:
   m_ObjectHideFlags: 0
@@ -5624,7 +5622,6 @@ MonoBehaviour:
   slipSmokeParticleSystem: {fileID: 899310398922969254}
   forceDirectionDebug: {x: 0, y: 0, z: 0}
   grip_UI: 0.01
-  personalRB: {fileID: 0}
 --- !u!1 &6117072448904584076
 GameObject:
   m_ObjectHideFlags: 0
@@ -7907,7 +7904,6 @@ MonoBehaviour:
   slipSmokeParticleSystem: {fileID: 388403916820289795}
   forceDirectionDebug: {x: 0, y: 0, z: 0}
   grip_UI: 0.01
-  personalRB: {fileID: 0}
 --- !u!1 &8277936383054772710
 GameObject:
   m_ObjectHideFlags: 0
@@ -9496,7 +9492,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3956179933839717013, guid: 7e50d65ce659e96489529cbaffe93330, type: 3}
       propertyPath: m_Radius
-      value: 150
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4188253307398240971, guid: 7e50d65ce659e96489529cbaffe93330, type: 3}
       propertyPath: m_IsActive
@@ -9580,11 +9576,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7899940916212916464, guid: 7e50d65ce659e96489529cbaffe93330, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8380567764373461072, guid: 7e50d65ce659e96489529cbaffe93330, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e50d65ce659e96489529cbaffe93330, type: 3}

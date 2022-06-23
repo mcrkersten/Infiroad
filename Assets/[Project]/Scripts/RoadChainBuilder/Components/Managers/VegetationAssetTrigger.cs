@@ -42,6 +42,7 @@ public class VegetationAssetTrigger : MonoBehaviour
                 ActivateGroupFromAssetPool(assetTag, Random.Range(0, amountOfAssetsOnPoint));
         }
         assetTag.scannedBy.Add(poolTag);
+        other.gameObject.SetActive(false);
     }
 
     //Activate a group of assets from the assetpool

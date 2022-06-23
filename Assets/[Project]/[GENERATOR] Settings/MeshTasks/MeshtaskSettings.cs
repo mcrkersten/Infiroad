@@ -97,7 +97,7 @@ public class MeshtaskSettings : ScriptableObject
 		}
 	}
 
-	public virtual void CreateModelOnMesh(Vector2 direction, MeshTask.Point p, Vector3 noise, float localX_offset, GameObject parent, GameObject model)
+	public virtual void PlaceModelOnMesh(Vector2 direction, MeshTask.Point p, Vector3 noise, float localX_offset, GameObject parent, GameObject model)
 	{
 		Vector3 offset = new Vector3(direction.x * (this.meshtaskWidth + localX_offset), 0f, 0f) + noise;
 		offset = Quaternion.Euler(0, 0, (p.extrusionVariables.averageExtrusion) * this.maxChamfer) * offset;
@@ -126,7 +126,7 @@ public class MeshtaskSettings : ScriptableObject
 		noise += meshTask.noiseChannel.generatorInstance.getNoise(meshTask.startPointIndex + meshtaskPoint, meshTask.noiseChannel);
 
 		GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshTask.meshtaskSettings.meshTaskType, meshtaskPoolType);
-		CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), parent, instance);
+		PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), parent, instance);
 	}
 
 	public virtual void PopulateMeshtask(MeshTask meshTask, GameObject currentMeshObject)

@@ -32,7 +32,7 @@ public class RoadMeshExtruder {
 
 	RoadChainBuilder roadChainBuilder;
 
-	public void ExtrudeRoad(RoadSegment segment, Mesh mesh, RoadSettings roadSettings, OrientedCubicBezier3D bezier, UVMode uvMode, Vector2 nrmCoordStartEnd, float edgeLoopsPerMeter, float tilingAspectRatio) {
+	public void ExtrudeRoad(RoadSegment segment, Mesh mesh, RoadSettings roadSettings, OrientedCubicBezier3D bezier, UVMode uvMode, Vector2 nrmCoordStartEnd, float edgeLoopsPerMeter, float tilingAspectRatio, int surfaceIndex = 0) {
 
 		ClearMesh(mesh);
 		roadChainBuilder = RoadChainBuilder.instance;
@@ -96,7 +96,8 @@ public class RoadMeshExtruder {
 				float tUv = uvMode == UVMode.TiledDeltaCompensated ? table.TToPercentage(time) : time;
 				float y_UV = tUv * tiling;
 				float x_UV = 0;
-				bool isMirrored = roadSettings.allSurfaceSettings[roadSettings.points[i].materialIndex].UV_mirrored;
+				List<SurfaceScriptable> sf = roadSettings.GetAllSurfaceSettings(0);
+				bool isMirrored = sf[roadSettings.points[i].materialIndex].UV_mirrored;
 
 				{//Place vertices
 					float uY = roadSettings.points[i].vertex_1.point.y;
@@ -112,7 +113,7 @@ public class RoadMeshExtruder {
 					else if (i != 0 && roadSettings.points[i].materialIndex != roadSettings.points[i - 1].materialIndex)
 					{
 						Vector2 prev_currentUV_MinMax = roadSettings.calculatedUs[roadSettings.points[i - 1].materialIndex];
-						bool prev_isMirrored = roadSettings.allSurfaceSettings[roadSettings.points[i - 1].materialIndex].UV_mirrored;
+						bool prev_isMirrored = sf[roadSettings.points[i - 1].materialIndex].UV_mirrored;
 						float prev_uvPoint = prev_isMirrored ? Mathf.Abs(localUVPoint.x + uY) : localUVPoint.x + uY;
 						x_UV = Mathf.InverseLerp(prev_currentUV_MinMax.x, prev_currentUV_MinMax.y, prev_uvPoint);
 						uvs.Add(new Vector2(x_UV, y_UV));
@@ -160,7 +161,7 @@ public class RoadMeshExtruder {
 		mesh.RecalculateNormals();
 		mesh.RecalculateTangents();
 		List<SurfaceScriptable> m = new List<SurfaceScriptable>();
-		m.AddRange(roadSettings.allSurfaceSettings);
+		m.AddRange(roadSettings.GetAllSurfaceSettings(surfaceIndex));
 
 		List<Material> mat = new List<Material>();
         foreach (SurfaceScriptable item in m)
@@ -332,7 +333,7 @@ public class RoadMeshExtruder {
 	private List<List<int>> CreateTriangles(int vertexJumpedCount, int edgeLoopCount, RoadSettings roadSettings)
     {
 		List<List<int>> tries = new List<List<int>>();
-		foreach (SurfaceScriptable surface in roadSettings.allSurfaceSettings)
+		foreach (SurfaceScriptable surface in roadSettings.GetAllSurfaceSettings(0))
 			tries.Add(new List<int>());
 
 		// Generate Trianges

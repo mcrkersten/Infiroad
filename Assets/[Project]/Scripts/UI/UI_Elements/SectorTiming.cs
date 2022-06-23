@@ -45,8 +45,8 @@ public class SectorTiming : MonoBehaviour
 
         if (bestLapSectorTime == 0f || bestSectorTime == 0f)
             OnTiming(lapInterval, sector, lap, LapType.firstLap);
-        else if (lap < bestLapSectorTime)
-            OnTiming(lapInterval, sector, lap, LapType.fastLap);
+        else if (lap < bestLapSectorTime && sector < bestSectorTime)
+            OnTiming(lapInterval, sector, lap, LapType.flyingLap);
         else if (sector < bestSectorTime)
             OnTiming(sectorInterval, sector, lap, LapType.fastSector);
         else

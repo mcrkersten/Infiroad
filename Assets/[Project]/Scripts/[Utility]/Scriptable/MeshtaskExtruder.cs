@@ -127,7 +127,7 @@ public class MeshtaskExtruder
 				if (currentEdgeloop - (objectCount * ((GuardrailSettings)meshtaskSettings).poleSpacing) == 0 || currentEdgeloop == meshTask.positionPoints.Count - 2)
 				{
 					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.GuardrailPoles);
-					meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					meshtaskSettings.PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
 					return 1;
 				}
 				break;
@@ -135,7 +135,7 @@ public class MeshtaskExtruder
 				if (currentEdgeloop - (objectCount * ((GuardrailSettings)meshtaskSettings).poleSpacing) == 0 || currentEdgeloop == meshTask.positionPoints.Count - 2)
 				{
 					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.CatchfencePoles);
-					meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					meshtaskSettings.PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
 					return 1;
 				}
 				break;
@@ -143,13 +143,13 @@ public class MeshtaskExtruder
 				if (currentEdgeloop == 0)
 				{
 					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.GrandstandSides);
-					meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					meshtaskSettings.PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
 					return 1;
 				}
 				else if (currentEdgeloop == meshTask.positionPoints.Count - 2)
 				{
 					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.GrandstandSides);
-					meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					meshtaskSettings.PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
 					return 1;
 				}
 				break;
@@ -157,13 +157,13 @@ public class MeshtaskExtruder
 				if (currentEdgeloop == 0)
 				{
 					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.Tecpros);
-					meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					meshtaskSettings.PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
 					return 1;
 				}
 				else if (currentEdgeloop == meshTask.positionPoints.Count - 2)
 				{
 					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.Tecpros);
-					meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					meshtaskSettings.PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
 					return 1;
 				}
 				break;
@@ -171,13 +171,13 @@ public class MeshtaskExtruder
 				if (currentEdgeloop == 0)
 				{
 					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.VideoBillboardEdge);
-					meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					meshtaskSettings.PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
 					return 1;
 				}
 				else if (currentEdgeloop == meshTask.positionPoints.Count - 2)
 				{
 					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.VideoBillboardEdge);
-					meshtaskSettings.CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
+					meshtaskSettings.PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
 					return 1;
 				}
 				break;

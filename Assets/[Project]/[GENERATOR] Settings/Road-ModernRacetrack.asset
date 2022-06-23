@@ -28,4 +28,4 @@ MonoBehaviour:
   sceneryObjects: []
   skyDecoration: {fileID: 11400000, guid: b9fb149efbeafcb43b1a24d966d24f80, type: 2}
   assetSpawnPoint: {fileID: 4923321435712348272, guid: 0a906291cb590f14aac19b96c2eeb107, type: 3}
-  assetSpawnPointPoolSize: 20000
+  assetSpawnPointPoolSize: 10000

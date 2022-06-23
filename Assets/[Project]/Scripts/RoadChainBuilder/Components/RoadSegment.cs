@@ -23,6 +23,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer) )]
 public class RoadSegment : UniqueMesh {
 
+	public bool usesSectorSurfaceScriptable;
 	[HideInInspector] public OrientedCubicBezier3D bezier;
 	[HideInInspector] public List<AssetSpawnEdge> assetSpawnEdges = new List<AssetSpawnEdge>();
 	[HideInInspector] public List<SurfaceScriptable> surfaceSettings = new List<SurfaceScriptable>();
@@ -44,8 +45,8 @@ public class RoadSegment : UniqueMesh {
 	// This will regenerate the mesh!
 	// uvzStartEnd is used for the (optional) normalized coordinates along the whole track,
 	// x = start coordinate, y = end coordinate
-	public void CreateMesh( Vector2 nrmCoordStartEnd, RoadSettings settings ) {
-		surfaceSettings.AddRange(settings.allSurfaceSettings);
+	public void CreateMesh( Vector2 nrmCoordStartEnd, RoadSettings settings , int index = 0) {
+		surfaceSettings.AddRange(settings.GetAllSurfaceSettings(index));
 		roadSetting = settings;
 		// Only generate a mesh if we've got a next control point
 		if ( HasValidNextPoint ) {
@@ -58,7 +59,8 @@ public class RoadSegment : UniqueMesh {
 				uvMode: RoadChain.uvMode,
 				nrmCoordStartEnd: nrmCoordStartEnd,
 				edgeLoopsPerMeter: settings.edgeLoopsPerMeter,
-				tilingAspectRatio: GetTextureAspectRatio()
+				tilingAspectRatio: GetTextureAspectRatio(),
+				index
 			);
 		} else if( meshCached != null ) {
 			DestroyImmediate( meshCached );

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26303b605fac74a46a4e98a3145306a3, type: 3}
   m_Name: BuildingLarge_Left
   m_EditorClassIdentifier: 
-  dataKey: 719126
+  dataKey: 702170
   calculatedUs: []
   uvLenght: 0
   UV_scale: 1
@@ -39,5 +39,5 @@ MonoBehaviour:
     curveTime: 0
     noiseChannel: 0
   minimalSizes:
-  - minimalMeshtaskPointSize: 10
+  - minimalMeshtaskPointSize: 4
     buildingSize: 9

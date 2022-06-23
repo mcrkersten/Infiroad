@@ -232,19 +232,9 @@ MonoBehaviour:
     extrudePoint: 0
     assetSpawnPoint: []
   surfaceSettings:
-  - {fileID: 11400000, guid: 703cef44cc738ef479f351d37d7afea5, type: 2}
-  - {fileID: 11400000, guid: d8a879d7ca112bc44a4e9113e252a7f2, type: 2}
-  - {fileID: 11400000, guid: a3c8fe4f5402f094e851d9d39abaffa9, type: 2}
-  - {fileID: 11400000, guid: acf9619f996b36345b8d57426d926ec9, type: 2}
-  - {fileID: 11400000, guid: a1990b02ff0e4ab47a8bb34d41533b25, type: 2}
-  allSurfaceSettings:
-  - {fileID: 11400000, guid: 703cef44cc738ef479f351d37d7afea5, type: 2}
-  - {fileID: 11400000, guid: d8a879d7ca112bc44a4e9113e252a7f2, type: 2}
-  - {fileID: 11400000, guid: a3c8fe4f5402f094e851d9d39abaffa9, type: 2}
-  - {fileID: 11400000, guid: acf9619f996b36345b8d57426d926ec9, type: 2}
-  - {fileID: 11400000, guid: a1990b02ff0e4ab47a8bb34d41533b25, type: 2}
-  - {fileID: 11400000, guid: fe9b6908b303e2643ae5f6b848fa8a3f, type: 2}
-  runoffMaterial: {fileID: 11400000, guid: fe9b6908b303e2643ae5f6b848fa8a3f, type: 2}
+  - {fileID: 11400000, guid: 1c0e656d9d11c2745a76ac8d9da21217, type: 2}
+  - {fileID: 11400000, guid: 6ebcd39843cd15440b5846a745d1f279, type: 2}
+  - {fileID: 11400000, guid: e0e142aa438c6ab459f8e42e56c0a2d4, type: 2}
   meshtaskSettings:
   - {fileID: 11400000, guid: 0d430583a073a984caf4ad0fb0e144fa, type: 2}
   - {fileID: 11400000, guid: 98ba0afee227de04fbc307eec45d64bb, type: 2}
@@ -254,6 +244,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e51f9bdd50d73ba4f8623ec6cea5d600, type: 2}
   - {fileID: 11400000, guid: 489345ceb11fbd6468614704c7170c98, type: 2}
   - {fileID: 11400000, guid: 52e8cfdeb08219846b97462cb2539de7, type: 2}
+  - {fileID: 11400000, guid: a1a7c41af9be7f44a8a0b4ac03212ab8, type: 2}
   guardRailMinimalCornerRadius: 0
   roadTypeTag: FOREST-BASIC
   assetPools:
@@ -261,7 +252,7 @@ MonoBehaviour:
     prefabs:
     - {fileID: 6583596778410102861, guid: 6305f2862102f394d8fef1073fa4cc58, type: 3}
     - {fileID: 6390541770965817990, guid: 247f93ccef389b1419bfebb563d98c1b, type: 3}
-    size: 200
+    size: 150
   rotationEasing: 3
   edgeLoopsPerMeter: 1
   debugRoadCurveStrenght: 0

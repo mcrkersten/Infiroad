@@ -29,7 +29,7 @@ public class BuildingSettings : MeshtaskSettings
         noise += meshTask.noiseChannel.generatorInstance.getNoise(meshTask.startPointIndex + meshtaskPoint, meshTask.noiseChannel);
 
         GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshTask.meshtaskSettings.meshTaskType, meshtaskPoolType);
-        CreateModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), parent, instance);
+        PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), parent, instance);
     }
 
     [System.Serializable]
