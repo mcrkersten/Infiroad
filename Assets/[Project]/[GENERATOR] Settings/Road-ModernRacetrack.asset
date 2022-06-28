@@ -12,15 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4dd1c8cabff4f844b62e2564016b8ce, type: 3}
   m_Name: Road-ModernRacetrack
   m_EditorClassIdentifier: 
-  roadVariation:
-  - shape: 0
-    roadSettings:
-    - weight: 1
-      roadSettings: {fileID: 11400000, guid: f921a1f30a412b44cac70be896332fed, type: 2}
-  - shape: 1
-    roadSettings:
-    - weight: 1
-      roadSettings: {fileID: 11400000, guid: f921a1f30a412b44cac70be896332fed, type: 2}
+  roadSettings:
+  - {fileID: 11400000, guid: f921a1f30a412b44cac70be896332fed, type: 2}
   standardDecoration:
   - {fileID: 11400000, guid: 3ef3e34d2c63c1446b3ffb9f1bde50c5, type: 2}
   - {fileID: 11400000, guid: cd718877663d0ca44aef8c11f696e2d3, type: 2}

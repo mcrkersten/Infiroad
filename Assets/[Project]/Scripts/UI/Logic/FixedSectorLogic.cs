@@ -27,6 +27,9 @@ public class FixedSectorLogic : MonoBehaviour
     [SerializeField] private Transform sectorList;
     private bool connectedViewActive;
 
+    [SerializeField] private TextMeshProUGUI startGuide;
+    [SerializeField] private TextMeshProUGUI generateGuide;
+
     private void Awake()
     {
         SectorButton.sectorDeleted += DeleteSector;
@@ -47,10 +50,15 @@ public class FixedSectorLogic : MonoBehaviour
         createdSector.sectorUI_Element.GetComponent<SectorButton>().sectorName.text = ("Sector: " + sectors.Count);
         createdSector = null;
         buttons.buttons[0].interactable = false;
-        buttons.buttons[2].interactable = true;
+
 
         if (sectors.Count > 1)
+        {
+            startGuide.gameObject.SetActive(false);
+            buttons.buttons[2].interactable = true;
+            buttons.buttons[2].gameObject.SetActive(true);
             buttons.buttons[3].gameObject.SetActive(true);
+        }
     }
 
     private void GenerateSectorButton()
@@ -185,10 +193,12 @@ public class FixedSectorLogic : MonoBehaviour
         Destroy(sector.sectorUI_Element);
         sectors.Remove(sector);
 
-        if(sectors.Count == 0)
-            buttons.buttons[2].interactable = false;
         if (sectors.Count < 2)
+        {
+            startGuide.gameObject.SetActive(true);
+            buttons.buttons[2].gameObject.SetActive(false);
             buttons.buttons[3].gameObject.SetActive(false);
+        }
 
         buttons.buttons[1].Select();
     }

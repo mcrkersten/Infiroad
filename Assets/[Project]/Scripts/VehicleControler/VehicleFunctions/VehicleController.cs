@@ -62,6 +62,7 @@ public class VehicleController : MonoBehaviour
 
     public int wheelInputAngle;
     [SerializeField] AnimationCurve gamepadInputWeakener;
+    public List<VegetationAssetScanner> vegetationAssetScanners = new List<VegetationAssetScanner>();
 
     void Awake()
     {
@@ -462,18 +463,48 @@ public class VehicleController : MonoBehaviour
                 vehicleInputActions.SteeringWheel.ShiftUP.Disable();
                 vehicleInputActions.SteeringWheel.ShiftDOWN.started -= engine.ShiftDown;
                 vehicleInputActions.SteeringWheel.ShiftDOWN.Disable();
+
+                vehicleInputActions.SteeringWheel.MinimapRescale.Disable();
+                vehicleInputActions.SteeringWheel.MinimapRescale.started -= minimapBehaviour.ScaleMinimap;
+                vehicleInputActions.SteeringWheel.StartEngine.Disable();
+                vehicleInputActions.SteeringWheel.StartEngine.started -= pauseMenuBehaviour.OnStartMenu;
+
+                vehicleInputActions.SteeringWheel.PauseRadio.Disable();
+                vehicleInputActions.SteeringWheel.PauseRadio.started -= radio.PauseSong;
+                vehicleInputActions.SteeringWheel.NextRadioSong.Disable();
+                vehicleInputActions.SteeringWheel.NextRadioSong.started -= radio.NextSong;
                 break;
             case InputType.Keyboard:
                 vehicleInputActions.Keyboard.ShiftUP.started -= engine.ShiftUp;
                 vehicleInputActions.Keyboard.ShiftUP.Disable();
                 vehicleInputActions.Keyboard.ShiftDOWN.started -= engine.ShiftDown;
                 vehicleInputActions.Keyboard.ShiftDOWN.Disable();
+
+                vehicleInputActions.Keyboard.MinimapRescale.Disable();
+                vehicleInputActions.Keyboard.MinimapRescale.started -= minimapBehaviour.ScaleMinimap;
+                vehicleInputActions.Keyboard.StartEngine.Disable();
+                vehicleInputActions.Keyboard.StartEngine.started -= pauseMenuBehaviour.OnStartMenu;
+
+                vehicleInputActions.Keyboard.PauseRadio.Disable();
+                vehicleInputActions.Keyboard.PauseRadio.started -= radio.PauseSong;
+                vehicleInputActions.Keyboard.NextRadioSong.Disable();
+                vehicleInputActions.Keyboard.NextRadioSong.started -= radio.NextSong;
                 break;
             case InputType.Gamepad:
                 vehicleInputActions.Gamepad.ShiftUP.started -= engine.ShiftUp;
                 vehicleInputActions.Gamepad.ShiftUP.Disable();
                 vehicleInputActions.Gamepad.ShiftDOWN.started -= engine.ShiftDown;
                 vehicleInputActions.Gamepad.ShiftDOWN.Disable();
+
+                vehicleInputActions.Gamepad.MinimapRescale.Disable();
+                vehicleInputActions.Gamepad.MinimapRescale.started -= minimapBehaviour.ScaleMinimap;
+                vehicleInputActions.Gamepad.StartEngine.Disable();
+                vehicleInputActions.Gamepad.StartEngine.started -= pauseMenuBehaviour.OnStartMenu;
+
+                vehicleInputActions.Gamepad.PauseRadio.Disable();
+                vehicleInputActions.Gamepad.PauseRadio.started -= radio.PauseSong;
+                vehicleInputActions.Gamepad.NextRadioSong.Disable();
+                vehicleInputActions.Gamepad.NextRadioSong.started -= radio.NextSong;
                 break;
         }
     }

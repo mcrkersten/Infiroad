@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26303b605fac74a46a4e98a3145306a3, type: 3}
   m_Name: BuildingLarge_Left
   m_EditorClassIdentifier: 
-  dataKey: 702170
+  dataKey: 118681
   calculatedUs: []
   uvLenght: 0
   UV_scale: 1
@@ -24,7 +24,7 @@ MonoBehaviour:
   meshtaskContinues: 0
   noiseChannel: 0
   meshtaskWidth: 20
-  maxChamfer: 5
+  maxChamfer: 15
   extrusionSize: 15
   minimalCornerRadius: 30
   maximumCornerRadius: 1000

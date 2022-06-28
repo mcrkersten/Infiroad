@@ -6,10 +6,10 @@ using DG.Tweening;
 public class ObjectPooler
 {
     private Dictionary<int, Queue<GameObject>> skyDecorations = new Dictionary<int, Queue<GameObject>>();
-    private Queue<VegetationTriggerAsset> vegetationTriggerPool = new Queue<VegetationTriggerAsset>();
-    private Dictionary<string, Dictionary<VegetationAssetTypeTag, Queue<GameObject>>> vegitationPoolDictionaries = new Dictionary<string, Dictionary<VegetationAssetTypeTag, Queue<GameObject>>>();
-    private Dictionary<int, Queue<List<GameObject>>> roadDecorationPoolDictionary = new Dictionary<int, Queue<List<GameObject>>>();
-    private Dictionary<string, Queue<GameObject>> meshtaskObjectDictionary = new Dictionary<string, Queue<GameObject>>();
+    private Queue<AssetTrigger> assetTriggerQueue = new Queue<AssetTrigger>();
+    private Dictionary<string, Dictionary<string, Queue<GameObject>>> assetQueueDictionaries = new Dictionary<string, Dictionary<string, Queue<GameObject>>>();
+    private Dictionary<int, Queue<List<GameObject>>> roadDecorationQueueDictionary = new Dictionary<int, Queue<List<GameObject>>>();
+    private Dictionary<string, Queue<GameObject>> meshtaskObjectQueueDictionary = new Dictionary<string, Queue<GameObject>>();
     private GameObject parent;
 
     #region Singleton
@@ -29,30 +29,33 @@ public class ObjectPooler
     /// </summary>
     /// <param name="assetPointAmount">Amount of points to instantiate</param>
     /// <param name="assetPointPrefab"></param>
-    public void InstantiateVegetationTriggerPool(int assetPointAmount, GameObject assetPointPrefab)
+    public void InstantiateAssetTriggersPool(int assetPointAmount, GameObject assetPointPrefab)
     {
         for (int i = 0; i < assetPointAmount; i++)
         {
             GameObject obj = GameObject.Instantiate(assetPointPrefab);
             obj.transform.parent = parent.transform;
             obj.SetActive(false);
-            vegetationTriggerPool.Enqueue(obj.GetComponent<VegetationTriggerAsset>());
+            assetTriggerQueue.Enqueue(obj.GetComponent<AssetTrigger>());
         }
     }
+
     /// <summary>
-    /// Instantiate VegetationAssets
+    /// 
     /// </summary>
     /// <param name="pools">Vegitation pools to spawn</param>
     /// <param name="roadType">The corresponding road of the vegetation</param>
-    public void InstantiateVegitationPool(List<VegitationPool> pools, string roadType)
+    /// <param name="multiPool"></param>
+    public void InstantiateAssetPool(List<AssetPool> pools, string roadType, bool multiPool = false)
     {
         //Returns if pool for this road already has been made.
-        if (vegitationPoolDictionaries.ContainsKey(roadType))
+        if (assetQueueDictionaries.ContainsKey(roadType))
             return;
 
         //Generate local dictionary to put in dictionary of pool dictionaries
-        Dictionary<VegetationAssetTypeTag, Queue<GameObject>> localDictionary = new Dictionary<VegetationAssetTypeTag, Queue<GameObject>>();
-        foreach (VegitationPool pool in pools)
+        int poolIndex = 0;
+        Dictionary<string, Queue<GameObject>> localDictionary = new Dictionary<string, Queue<GameObject>>();
+        foreach (AssetPool pool in pools)
         {
             //If object pool has no prefabs
             if (pool.prefabs.Count == 0)
@@ -73,19 +76,16 @@ public class ObjectPooler
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
-            localDictionary.Add(pool.tag, objectPool);
+            localDictionary.Add(multiPool ? poolIndex++.ToString() : pool.tag.ToString(), objectPool);
         }
 
-        vegitationPoolDictionaries.Add(roadType, localDictionary);
+        assetQueueDictionaries.Add(multiPool ? "Zero" : roadType, localDictionary);
     }
-    /// <summary>
     /// Instantiate all decorations in dedicated pools
-    /// </summary>
-    /// <param name="pool"></param>
     public void InstantiateRoadDecorationDecorationPool(RoadDecoration pool)
     {
         //Returns if pool already has been made.
-        if (roadDecorationPoolDictionary.ContainsKey(pool.poolIndex))
+        if (roadDecorationQueueDictionary.ContainsKey(pool.poolIndex))
             return;
 
         Queue<List<GameObject>> queueOfDecor = new Queue<List<GameObject>>();
@@ -102,16 +102,16 @@ public class ObjectPooler
             }
             queueOfDecor.Enqueue(instantiated);
         }
-        roadDecorationPoolDictionary.Add(pool.poolIndex, queueOfDecor);
+        roadDecorationQueueDictionary.Add(pool.poolIndex, queueOfDecor);
     }
-
+    /// Instantiate all decorations in dedicated pools
     public void InstantiateMeshtaskObjects(MeshtaskSettings meshtaskSettings)
     {
         //Instantiate object and add to pool.
         foreach (Decoration dec in meshtaskSettings.meshtaskPoolingObjects)
         {
             //Returns if pool already has been made.
-            if (meshtaskObjectDictionary.ContainsKey(meshtaskSettings.meshTaskType.ToString() + dec.meshtaskPoolType.ToString()))
+            if (meshtaskObjectQueueDictionary.ContainsKey(meshtaskSettings.meshTaskType.ToString() + dec.meshtaskPoolType.ToString()))
                 continue;
 
             Queue<GameObject> queueOfDecor = new Queue<GameObject>();
@@ -122,10 +122,10 @@ public class ObjectPooler
                 decoration.SetActive(false);
                 queueOfDecor.Enqueue(decoration);
             }
-            meshtaskObjectDictionary.Add(meshtaskSettings.meshTaskType.ToString() + dec.meshtaskPoolType.ToString(), queueOfDecor);
+            meshtaskObjectQueueDictionary.Add(meshtaskSettings.meshTaskType.ToString() + dec.meshtaskPoolType.ToString(), queueOfDecor);
         }
     }
-
+    /// Instantiate all decorations in dedicated pools
     public void InstantiateAirDecoration(SkyDecoration skyDecoration)
     {
         foreach (SkyDecor item in skyDecoration.skyDecors)
@@ -151,43 +151,43 @@ public class ObjectPooler
     /// <param name="position">Position to spawn trigger on</param>
     /// <param name="tags">Tags the trigger needs to hold</param>
     /// <returns></returns>
-    public VegetationTriggerAsset ActivateVegetationTriggerAsset(Vector3 position, List<VegetationAssetTypeTag> tags)
+    public AssetTrigger ActivateAssetTrigger(Vector3 position, List<VegetationScannerTypeTag> tags)
     {
-        VegetationTriggerAsset objectToSpawn = vegetationTriggerPool.Dequeue();
-        objectToSpawn.tags.Clear();
-        foreach (VegetationAssetTypeTag at in tags)
+        AssetTrigger objectToSpawn = assetTriggerQueue.Dequeue();
+        objectToSpawn.scanableByScannerType.Clear();
+        foreach (VegetationScannerTypeTag at in tags)
         {
-            objectToSpawn.tags.Add(at);
+            objectToSpawn.scanableByScannerType.Add(at);
         }
 
         objectToSpawn.gameObject.SetActive(true);
         objectToSpawn.transform.position = position;
-        vegetationTriggerPool.Enqueue(objectToSpawn);
+        assetTriggerQueue.Enqueue(objectToSpawn);
         return objectToSpawn;
     }
 
     /// <summary>
     /// Get a asse t from the vegetation pool
     /// </summary>
-    /// <param name="typeTag">Tag of vegitationPools</param>
+    /// <param name="assetType">tag of assetPool</param>
     /// <param name="roadTag">tag of road</param>
     /// <param name="position">Position to activate at</param>
     /// <param name="rotation">Rotation to activate at</param>
     /// <returns></returns>
-    public void ActivateVegetationAssetFromPool(VegetationAssetTypeTag typeTag, string roadTag, Vector3 position, Quaternion rotation)
+    public void ActivateAssetFromAssetQueue(string assetType, string roadTag, Vector3 position, Quaternion rotation)
     {
-        if (!vegitationPoolDictionaries.ContainsKey(roadTag)) { return; }
-        if (!vegitationPoolDictionaries[roadTag].ContainsKey(typeTag)) { return; }
+        if (!assetQueueDictionaries.ContainsKey(roadTag)) { return; }
+        if (!assetQueueDictionaries[roadTag].ContainsKey(assetType)) { return; }
 
         //Get object from Dictionary
-        GameObject objectToSpawn = vegitationPoolDictionaries[roadTag][typeTag].Dequeue();
+        GameObject objectToSpawn = assetQueueDictionaries[roadTag][assetType].Dequeue();
 
         //Activate and set position
         objectToSpawn.SetActive(true);
         SetGameObjectPosition(objectToSpawn, position, rotation);
 
         //Put object back in to dictionary
-        vegitationPoolDictionaries[roadTag][typeTag].Enqueue(objectToSpawn);
+        assetQueueDictionaries[roadTag][assetType].Enqueue(objectToSpawn);
     }
 
     public void ActivateSkyDecoration(SkyDecor skyDecor, Vector3 position)
@@ -200,18 +200,18 @@ public class ObjectPooler
 
     public List<GameObject> GetRoadDecorationFromPool(int poolIndex)
     {
-        if (!roadDecorationPoolDictionary.ContainsKey(poolIndex)) { return null; }
-        List<GameObject> decoration = roadDecorationPoolDictionary[poolIndex].Dequeue();
-        roadDecorationPoolDictionary[poolIndex].Enqueue(decoration);
+        if (!roadDecorationQueueDictionary.ContainsKey(poolIndex)) { return null; }
+        List<GameObject> decoration = roadDecorationQueueDictionary[poolIndex].Dequeue();
+        roadDecorationQueueDictionary[poolIndex].Enqueue(decoration);
         return decoration;
     }
 
     public GameObject GetMeshtaskObject(MeshTaskType meshTaskType, MeshtaskPoolType meshtaskPoolType)
     {
         string keyS = meshTaskType.ToString() + meshtaskPoolType.ToString();
-        if (!meshtaskObjectDictionary.ContainsKey(keyS)) { Debug.Log(keyS); return null; }
-        GameObject decoration = meshtaskObjectDictionary[keyS].Dequeue();
-        meshtaskObjectDictionary[keyS].Enqueue(decoration);
+        if (!meshtaskObjectQueueDictionary.ContainsKey(keyS)) { Debug.Log(keyS); return null; }
+        GameObject decoration = meshtaskObjectQueueDictionary[keyS].Dequeue();
+        meshtaskObjectQueueDictionary[keyS].Enqueue(decoration);
         return decoration;
     }
     #endregion
@@ -237,13 +237,13 @@ public class ObjectPooler
 }
 
 [System.Serializable]
-public class VegitationPool
+public class AssetPool
 {
-    public VegetationAssetTypeTag tag;
+    public VegetationScannerTypeTag tag;
     public List<GameObject> prefabs = new List<GameObject>();
     public int size;
 }
-public enum VegetationAssetTypeTag
+public enum VegetationScannerTypeTag
 {
     Grass = 0,
     Trees,

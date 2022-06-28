@@ -16,7 +16,7 @@ public class RoadSettings : ScriptableObject
 
 	[Space]
 	public string roadTypeTag;
-	public List<VegitationPool> assetPools = new List<VegitationPool>();
+	public List<AssetPool> assetPools = new List<AssetPool>();
 
 	public Ease rotationEasing = Ease.InOut;
 	public float edgeLoopsPerMeter;
@@ -154,10 +154,9 @@ public class RoadSettings : ScriptableObject
 		float max_Xuv = float.NegativeInfinity;
 		foreach (VertexPoint p in points)
 		{
-			y = Mathf.Abs(y - (y - p.vertex_1.point.y));
-
 			if (p.materialIndex == materialIndex)
 			{
+				y = Mathf.Abs(y - (y - p.vertex_1.point.y));
 				float abs = Mathf.Abs(p.vertex_1.point.x + y);
 				if (abs < min_Xuv)
 					min_Xuv = abs;

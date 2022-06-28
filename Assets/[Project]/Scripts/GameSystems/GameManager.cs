@@ -44,9 +44,10 @@ namespace GameSystems {
 
         private void StartGameMode()
         {
-            roadChainBuilder.InitializeGenerator();
-            roadChainBuilder.GenerateRoadForGamemode(gameModeManager);
+            foreach (VegetationAssetScanner item in vehicleController.vegetationAssetScanners)
+                item.multiPool = true;
 
+            roadChainBuilder.GenerateRoadForGamemode(gameModeManager);
             startCountdownClock.StartCountdown(3, 2);
             CountdownClock.timerFinished += GO_Timer;
 

@@ -340,26 +340,20 @@ MonoBehaviour:
     extrudePoint: 0
     assetSpawnPoint: []
   surfaceSettings:
-  - {fileID: 11400000, guid: 9913d07f23f03c844bdd446da8bff5b7, type: 2}
-  - {fileID: 11400000, guid: a2d20a9566f01da458310c9728b622a1, type: 2}
-  - {fileID: 11400000, guid: 43696ef4e293c154e96a77cbd9e54ca8, type: 2}
-  allSurfaceSettings:
-  - {fileID: 11400000, guid: 9913d07f23f03c844bdd446da8bff5b7, type: 2}
-  - {fileID: 11400000, guid: a2d20a9566f01da458310c9728b622a1, type: 2}
-  - {fileID: 11400000, guid: 43696ef4e293c154e96a77cbd9e54ca8, type: 2}
-  - {fileID: 11400000, guid: 067fe766fe8fd2247904b77aa6814951, type: 2}
-  runoffMaterial: {fileID: 11400000, guid: 067fe766fe8fd2247904b77aa6814951, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   meshtaskSettings:
   - {fileID: 11400000, guid: 0d430583a073a984caf4ad0fb0e144fa, type: 2}
   - {fileID: 11400000, guid: b725fa6678e620548b413d7deddcc79e, type: 2}
   guardRailMinimalCornerRadius: 0
   roadTypeTag: FOREST-BASIC
   assetPools:
-  - tag: 0
+  - scannerType: 0
     prefabs:
     - {fileID: 7086041046455506901, guid: 31535cc121e46d24f90bb8e4982bbd92, type: 3}
     size: 7500
-  - tag: 1
+  - scannerType: 0
     prefabs:
     - {fileID: 5046497780763908051, guid: 23c87bfdfe4caa447a06dd5f21b3d51a, type: 3}
     - {fileID: 5011165349289255016, guid: 7b5259cb6412fc04fa9fa2a020b683d5, type: 3}

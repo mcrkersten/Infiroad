@@ -39,13 +39,12 @@ public class Wheel_Raycast : MonoBehaviour
     public float grip_UI = 0.01f;
     private Rigidbody rb;
 
-    private Vector3 startPosition;
-    private Transform decoupleParent;
+    private Vector3 startEulerAngle;
 
     private void Awake()
     {
         rb = this.transform.root.GetComponent<Rigidbody>();
-        decoupleParent = this.transform.parent;
+        startEulerAngle = this.transform.localEulerAngles;
     }
 
     private void Start()
@@ -57,7 +56,7 @@ public class Wheel_Raycast : MonoBehaviour
 
     private void Update()
     {
-        transform.localEulerAngles = new Vector3(0, steerAngle, 0);
+        transform.localEulerAngles = new Vector3(0, steerAngle + startEulerAngle.y, startEulerAngle.z);
 
         foreach (SuspensionPointer s in suspensionPointers)
         {
@@ -72,7 +71,7 @@ public class Wheel_Raycast : MonoBehaviour
             hit = new RaycastHit();
             return false;
         }
-        if (Physics.SphereCast(transform.position, wheelRadius, -transform.root.up, out RaycastHit hitPoint, maxLenght, layerMask))
+        if (Physics.SphereCast(transform.position, wheelRadius, -transform.up, out RaycastHit hitPoint, maxLenght, layerMask))
         {
             wheelModel.transform.localPosition = wheelModelLocalStartPosition + (-Vector3.up * (hitPoint.distance));
             suspension.transform.localPosition = suspensionLocalStartPosition + (-Vector3.up * (hitPoint.distance));

@@ -10,12 +10,20 @@ public class MeshtaskExtruder
 	List<Vector3> normals = new List<Vector3>();
 	List<Vector2> uvs0 = new List<Vector2>();
 	List<int>[] triIndices;
+	int materialCount;
 
 	RoadChain currentRoadchain;
 	GameObject currentMeshObject;
 	public void Extrude(MeshTask meshTask, RoadChain parent, MeshtaskSettings meshTasksettings)
     {
 		currentRoadchain = parent;
+
+		List<Material> materials = new List<Material>();
+		materials.AddRange(meshTasksettings.materials);
+		if (meshTasksettings.variableMaterials.Count != 0)
+			materials.Add(meshTasksettings.variableMaterials[currentRoadchain.index]);
+		materialCount = materials.Count;
+
 		Mesh mesh = CreateMeshFilters(meshTasksettings, meshTask.meshPosition);
 		ClearMesh(mesh);
 		ExecuteMeshtask(meshTasksettings, meshTask);
@@ -24,6 +32,7 @@ public class MeshtaskExtruder
 		AssignMesh(mesh);
 		int vertexJumpCount = CalculateHardEdgeCount(meshTasksettings);
 		triIndices = CreateTriangles(meshTask, meshTasksettings, vertexJumpCount);
+
 		int materialIndex = 0;
 		mesh.subMeshCount = triIndices.Length;
 		foreach (List<int> tries in triIndices)
@@ -36,7 +45,7 @@ public class MeshtaskExtruder
 		if(meshTask.meshTaskType != MeshTaskType.GrandStand)
 			AssignMeshCollider(mesh);
 
-		currentMeshObject.GetComponent<MeshRenderer>().materials = meshTasksettings.materials.ToArray();
+		currentMeshObject.GetComponent<MeshRenderer>().materials = materials.ToArray();
 		mesh.RecalculateNormals();
 		mesh.RecalculateTangents();
 
@@ -91,7 +100,7 @@ public class MeshtaskExtruder
 
 				Vector2 point = meshtaskSettings.points[i].vertex.point * (Vector2.left + Vector2.up);
 				Vector3 vertex = new Vector3(meshDirection.x * (point.x + meshtaskSettings.meshtaskWidth + Mathf.Abs(local_XOffset)), point.y, 0f) + noise;
-				vertex = Quaternion.Euler(0, 0, (p.extrusionVariables.averageExtrusion) * meshtaskSettings.maxChamfer) * vertex;
+				vertex = Quaternion.Euler(0, 0, (p.extrusionVariables.cornerCamber) * meshtaskSettings.maxChamfer) * vertex;
 				Vector3 relativePosition = p.rotation * vertex;
 				Vector3 position = relativePosition + (p.position);
 
@@ -189,8 +198,8 @@ public class MeshtaskExtruder
 
 	private List<int>[] CreateTriangles(MeshTask meshTask, MeshtaskSettings meshtaskSettings, int vertexJumpedCount)
     {
-		List<int>[] tries = new List<int>[meshtaskSettings.materials.Count];
-        for (int i = 0; i < meshtaskSettings.materials.Count; i++)
+		List<int>[] tries = new List<int>[materialCount];
+        for (int i = 0; i < materialCount; i++)
 			tries[i] = new List<int>();
 		// Generate Trianges
 		// Foreach edge loop (except the last, since this looks ahead one step)
@@ -221,7 +230,6 @@ public class MeshtaskExtruder
 				next[1] = vertex2 + rootIndexNext;
 
 				int material = meshtaskSettings.points[point].materialIndex;
-
 				tries[material].Add(current.x);
 				tries[material].Add(next.x);
 				tries[material].Add(next.y);

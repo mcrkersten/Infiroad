@@ -22,7 +22,7 @@ using UnityEngine;
 [CreateAssetMenu, System.Serializable]
 public class Road : ScriptableObject {
 
-	public List<VariationSettings> roadVariation = new List<VariationSettings>();
+	public List<RoadSettings> roadSettings = new List<RoadSettings>();
 
 	[Header("Road Decoration")]
 	public List<RoadDecoration> standardDecoration = new List<RoadDecoration>();
@@ -34,26 +34,6 @@ public class Road : ScriptableObject {
 
 	public GameObject assetSpawnPoint;
 	public int assetSpawnPointPoolSize;
-
-	public RoadSettings SelectRoadSetting(RoadShape shape, RoadSegment segment)
-    {
-		List<VariationSettings.Variation> variations = new List<VariationSettings.Variation>();
-		foreach (VariationSettings vs in roadVariation)
-        {
-			if (vs.shape == shape)
-			{
-				variations.AddRange(vs.roadSettings);
-			}
-		}
-
-		foreach (VariationSettings.Variation vv in variations)
-        {
-			if (Random.value < vv.weight)
-				return vv.roadSettings;
-		}
-
-		return null;
-    }
 }
 
 [System.Serializable]
@@ -106,7 +86,7 @@ public class VertexPoint
 [System.Serializable]
 public class AssetSpawnPoint
 {
-	public List<VegetationAssetTypeTag> assetPointType;
+	public List<VegetationScannerTypeTag> assetPointType;
 	public float spawnRadius;
 	public bool spawnBetweenPoints;
 	public int spawnPointsBetweenAmount;

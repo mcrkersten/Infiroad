@@ -38,8 +38,10 @@ public class MeshtaskSettings : ScriptableObject
 
     [Space]
     public List<Material> materials = new List<Material>();
+	public List<Material> variableMaterials = new List<Material>();
 
-    public bool meshIsClosed;
+
+	public bool meshIsClosed;
 
 	public List<Decoration> meshtaskPoolingObjects = new List<Decoration>();
 
@@ -100,7 +102,7 @@ public class MeshtaskSettings : ScriptableObject
 	public virtual void PlaceModelOnMesh(Vector2 direction, MeshTask.Point p, Vector3 noise, float localX_offset, GameObject parent, GameObject model)
 	{
 		Vector3 offset = new Vector3(direction.x * (this.meshtaskWidth + localX_offset), 0f, 0f) + noise;
-		offset = Quaternion.Euler(0, 0, (p.extrusionVariables.averageExtrusion) * this.maxChamfer) * offset;
+		offset = Quaternion.Euler(0, 0, (p.extrusionVariables.cornerCamber) * this.maxChamfer) * offset;
 
 		Vector3 relativePosition = p.rotation * offset;
 		Vector3 position = relativePosition + (p.position);

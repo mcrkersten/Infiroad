@@ -12,7 +12,6 @@ public class RoadChainBuilder : MonoBehaviour
 
     [Header("")]
     public GameObject segmentPrefab;
-    public GameObject roadChainTriggerObjectPrefab;
     public GameObject roadChainPrefab;
 
     [Header("")]
@@ -28,7 +27,7 @@ public class RoadChainBuilder : MonoBehaviour
     [HideInInspector] public MeshtaskTypeHandler meshtaskTypeHandler;
 
 
-    [HideInInspector] public ExtrusionVariables extrusionVariables;
+    [HideInInspector] public RoadFormVariables roadFormVariables;
     [HideInInspector] public Vector3 lastMeshPosition = Vector3.positiveInfinity;
     [HideInInspector] public List<MeshTask> meshtasks = new List<MeshTask>();
 
@@ -48,14 +47,23 @@ public class RoadChainBuilder : MonoBehaviour
         PositionStartSegment();
     }
 
-    public void InitializeGenerator()
+    private void InitializeSinglePoolGenerator()
     {
         meshtaskTypeHandler = new MeshtaskTypeHandler();
         foreach (MeshtaskSettings item in meshtaskSettings)
             meshtaskTypeHandler.SetDictionary(item, null);
         UpdateAllRoadSettings();
-        extrusionVariables = new ExtrusionVariables(.1f);
-        InstantiateAssetPools();
+        roadFormVariables = new RoadFormVariables(.1f);
+        InstantiateAssetPools(false);
+    }
+
+    private void CreateMeshtaskDictionary()
+    {
+        meshtaskTypeHandler = new MeshtaskTypeHandler();
+        foreach (MeshtaskSettings item in meshtaskSettings)
+            meshtaskTypeHandler.SetDictionary(item, null);
+        UpdateAllRoadSettings();
+        roadFormVariables = new RoadFormVariables(.1f);
     }
 
     public void GenerateRoadForGamemode(GameModeManager gameModeManager)
@@ -73,7 +81,6 @@ public class RoadChainBuilder : MonoBehaviour
                 StartRandomRoadChain();
                 break;
             case GameMode.FixedSectors:
-                Debug.Log("BUILD");
                 StartFixedRoadChain(gameModeManager.fixedSectors);
                 break;
         }
@@ -135,6 +142,7 @@ public class RoadChainBuilder : MonoBehaviour
 
     private void StartRandomRoadChain()
     {
+        InitializeSinglePoolGenerator();
         CreateNextRandomRoadChain(new EdgePoint(EdgeLocation.none, 3, startSegment));
         CreateNextRoadChain();
         EventTriggerManager.roadChainTrigger += CreateNextRoadChain;
@@ -142,15 +150,18 @@ public class RoadChainBuilder : MonoBehaviour
 
     private void StartFixedRoadChain(List<Sector> sectors)
     {
+        CreateMeshtaskDictionary();
         int i = 0;
         foreach (Sector s in sectors)
         {
             s.roadChain.index = i++;
             fixedRoadChains.Enqueue(s.roadChain);
         }
-
+        InstantiateAssetPools(true);
         Debug.Log(fixedRoadChains.Count);
         EventTriggerManager.roadChainTrigger += CreateNextFixedSector_Trigger;
+
+        //Build first two sectors
         CreateNextFixedSector_Trigger();
         CreateNextFixedSector_Trigger();
     }
@@ -160,9 +171,8 @@ public class RoadChainBuilder : MonoBehaviour
     /// </summary>
     private void UpdateAllRoadSettings()
     {
-        foreach (VariationSettings variation in road.roadVariation)
-            foreach (VariationSettings.Variation var in variation.roadSettings)
-                var.roadSettings.InitializeRoadSettings();
+        foreach (RoadSettings variation in road.roadSettings)
+            variation.InitializeRoadSettings();
     }
 
     private void SetVehicleStartPosition()
@@ -172,29 +182,27 @@ public class RoadChainBuilder : MonoBehaviour
     }
 
     #region InstantiatePools
-    private void InstantiateAssetPools()
+    private void InstantiateAssetPools(bool multiPool)
     {
         objectPooler = new ObjectPooler();
-        objectPooler.InstantiateVegetationTriggerPool(road.assetSpawnPointPoolSize, road.assetSpawnPoint);
+        objectPooler.InstantiateAssetTriggersPool(road.assetSpawnPointPoolSize, road.assetSpawnPoint);
         objectPooler.InstantiateAirDecoration(road.skyDecoration);
-        InstantiateVegetationPools();
+        InstantiateVegetationPool(multiPool);
         InstantiateRoadDecorationPools();
         InstantiateMeshtaskPools();
     }
 
     private void InstantiateMeshtaskPools()
     {
-        foreach (VariationSettings s in road.roadVariation)
-            foreach (VariationSettings.Variation v in s.roadSettings)
-                foreach (MeshtaskSettings mts in v.roadSettings.meshtaskSettings)
+            foreach (RoadSettings v in road.roadSettings)
+                foreach (MeshtaskSettings mts in v.meshtaskSettings)
                     objectPooler.InstantiateMeshtaskObjects(mts);
     }
 
-    private void InstantiateVegetationPools()
+    private void InstantiateVegetationPool(bool multiPool = false)
     {
-        foreach (VariationSettings s in road.roadVariation)
-            foreach (VariationSettings.Variation v in s.roadSettings)
-                objectPooler.InstantiateVegitationPool(v.roadSettings.assetPools, v.roadSettings.roadTypeTag);
+        foreach (RoadSettings s in road.roadSettings)
+            objectPooler.InstantiateAssetPool(s.assetPools, s.roadTypeTag, multiPool);
     }
 
     private void InstantiateRoadDecorationPools()
@@ -285,10 +293,10 @@ public class RoadChainBuilder : MonoBehaviour
         roadChain.SetOrganizedSegments(segments);
         foreach (RoadSegment segment in segments)
         {
-            RoadSettings roadSettting = road.SelectRoadSetting(roadShape, segment);
+            RoadSettings roadSettting = road.roadSettings[0];
             roadChain.CreateSegmentMesh(roadSettting, segment);
 
-            //Create Guardrails
+            //Create Meshtasks
             foreach (MeshtaskSettings meshtaskSettings in roadSettting.meshtaskSettings)
                 HandleMeshTasks(meshtaskSettings, roadChain);
 
@@ -381,7 +389,7 @@ public class RoadChainBuilder : MonoBehaviour
     {
         foreach (MeshTask task in meshtasks)
             if(settings == task.meshtaskSettings)
-                if(task.positionPoints.Count > 3)
+                if(task.positionPoints.Count > 1)
                     ExecuteMeshtask(settings, roadchain, task);
     }
 
@@ -814,12 +822,16 @@ public class EdgePoint
     }
 }
 
-public class ExtrusionVariables
+public class RoadFormVariables
 {
     private float lerpSpeed;
     public float mainExtrusion { get { return MainExtrusion; } set { UpdateDelay(value); } }
+    public float conerCamber { get { return CornerCamber; } set { UpdateCornerCamber(value); } }
+
     private float MainExtrusion = 0;
-    private float velocity;
+    private float CornerCamber = 0;
+    private float extrusionVelocity;
+    private float camberVelocity;
 
     public float leftExtrusion = 0;
     private float maxLeftExtrusion;
@@ -830,20 +842,19 @@ public class ExtrusionVariables
     private float righReductiontVelocity;
 
     public float cornerRadius;
+    public float cornerCamber;
 
-    public float averageExtrusion { get { return (rightExtrusion + leftExtrusion) / 2; } }
-
-    public ExtrusionVariables(float lerpSpeed)
+    public RoadFormVariables(float lerpSpeed)
     {
         this.lerpSpeed = lerpSpeed;
     }
 
     public void UpdateDelay(float extrusion)
     {
-        velocity = Mathf.Lerp(velocity, extrusion, .1f);
-        MainExtrusion = Mathf.Lerp(MainExtrusion, velocity, lerpSpeed);
+        extrusionVelocity = Mathf.Lerp(extrusionVelocity, extrusion, .1f);
+        MainExtrusion = Mathf.Lerp(MainExtrusion, extrusionVelocity, lerpSpeed);
         //Left is always negative
-        if (float.IsNegative(velocity) && MainExtrusion <= leftExtrusion)
+        if (float.IsNegative(extrusionVelocity) && MainExtrusion <= leftExtrusion)
         {
             leftExtrusion = MainExtrusion;
             maxLeftExtrusion = MainExtrusion;
@@ -854,10 +865,10 @@ public class ExtrusionVariables
         else if(maxLeftExtrusion == 0 || extrusion == 0)
         {
             leftExtrusion = Mathf.Lerp(leftExtrusion, 0f, leftReductionVelocity);
-            leftReductionVelocity += .0001f;
+            leftReductionVelocity += .00005f;
         }
 
-        if (!float.IsNegative(velocity) && MainExtrusion >= rightExtrusion)
+        if (!float.IsNegative(extrusionVelocity) && MainExtrusion >= rightExtrusion)
         {
             rightExtrusion = MainExtrusion;
             maxRightExtrusion = MainExtrusion;
@@ -868,8 +879,14 @@ public class ExtrusionVariables
         else if (maxRightExtrusion == 0 || extrusion == 0)
         {
             rightExtrusion = Mathf.Lerp(rightExtrusion, 0f, righReductiontVelocity);
-            righReductiontVelocity += .0001f;
+            righReductiontVelocity += .00005f;
         }
+    }
+
+    private void UpdateCornerCamber(float extrusion)
+    {
+        camberVelocity = Mathf.Lerp(extrusionVelocity, extrusion, .1f);
+        CornerCamber = (rightExtrusion + leftExtrusion) / 2f;
     }
 }
 
@@ -878,14 +895,14 @@ public struct ExtusionVariablesStruct
     public float mainExtrusion;
     public float leftExtrusion;
     public float rightExtrusion;
-    public float averageExtrusion;
+    public float cornerCamber;
 
-    public ExtusionVariablesStruct(ExtrusionVariables source)
+    public ExtusionVariablesStruct(RoadFormVariables source)
     {
         mainExtrusion = source.mainExtrusion;
         leftExtrusion = source.leftExtrusion;
         rightExtrusion = source.rightExtrusion;
-        averageExtrusion = source.averageExtrusion;
+        cornerCamber = source.conerCamber;
     }
 }
 

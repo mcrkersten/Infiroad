@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d506392ec772e1468e230060edab095, type: 3}
   m_Name: BillboardLeft
   m_EditorClassIdentifier: 
-  dataKey: 163068
+  dataKey: 551915
   calculatedUs: []
   uvLenght: 4.24
   UV_scale: 0.2
@@ -65,9 +65,9 @@ MonoBehaviour:
   meshResolution: 10
   meshtaskContinues: 0
   noiseChannel: 0
-  maxChamfer: 5
-  extrusionSize: 15
   meshtaskWidth: 9.919744
+  maxChamfer: 15
+  extrusionSize: 15
   minimalCornerRadius: 30
   maximumCornerRadius: 1000
   minimalExtrusionSize: 0

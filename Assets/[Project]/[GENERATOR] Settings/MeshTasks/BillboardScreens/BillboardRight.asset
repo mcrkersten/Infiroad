@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d506392ec772e1468e230060edab095, type: 3}
   m_Name: BillboardRight
   m_EditorClassIdentifier: 
-  dataKey: 569159
+  dataKey: 870825
   calculatedUs: []
   uvLenght: 4.24
   UV_scale: 0.2
@@ -66,7 +66,7 @@ MonoBehaviour:
   meshtaskContinues: 0
   noiseChannel: 0
   meshtaskWidth: 9.919744
-  maxChamfer: 5
+  maxChamfer: 15
   extrusionSize: 15
   minimalCornerRadius: -1000
   maximumCornerRadius: -30

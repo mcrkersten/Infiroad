@@ -256,12 +256,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  runoffMaterial: {fileID: 11400000, guid: 067fe766fe8fd2247904b77aa6814951, type: 2}
   meshtaskSettings: []
   guardRailMinimalCornerRadius: 0
   roadTypeTag: FOREST-BASIC
   assetPools:
-  - tag: 1
+  - tag: 0
     prefabs:
     - {fileID: 6583596778410102861, guid: 6305f2862102f394d8fef1073fa4cc58, type: 3}
     - {fileID: 6390541770965817990, guid: 247f93ccef389b1419bfebb563d98c1b, type: 3}

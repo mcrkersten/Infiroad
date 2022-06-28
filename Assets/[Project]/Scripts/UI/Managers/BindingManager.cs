@@ -22,8 +22,13 @@ public class BindingManager : MonoBehaviour
 
     private void Start()
     {
-        vehicleInputActions = new VehicleInputActions();
+        if(BindingManager.instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
         instance = this;
+        vehicleInputActions = new VehicleInputActions();
         DontDestroyOnLoad(this.transform);
     }
 

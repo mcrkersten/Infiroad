@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d78f2287300b104cae54ee3afbba403, type: 3}
   m_Name: Guardrail-RACETRACK
   m_EditorClassIdentifier: 
-  dataKey: 231032
+  dataKey: 118804
   calculatedUs: []
   uvLenght: 0
   UV_scale: 1
@@ -58,9 +58,9 @@ MonoBehaviour:
   meshResolution: 1
   meshtaskContinues: 1
   noiseChannel: 0
-  maxChamfer: 5
-  extrusionSize: 15
   meshtaskWidth: 8.477053
+  maxChamfer: 15
+  extrusionSize: 15
   minimalCornerRadius: 0
   maximumCornerRadius: 0
   minimalExtrusionSize: 0

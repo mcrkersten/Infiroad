@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class BindingMenuLogic : MonoBehaviour
 {
+    private GameModeManager gameModeManager;
     [SerializeField] private GameObject bindingButtonPrefab;
     [SerializeField] private RectTransform bindingButtonParent;
     [SerializeField] private List<BindingButton> bindingButtons = new List<BindingButton>();
@@ -31,6 +32,8 @@ public class BindingMenuLogic : MonoBehaviour
     }
     private void Start()
     {
+        bindingManager = BindingManager.Instance;
+        gameModeManager = GameModeManager.Instance;
         foreach (Ui_AnimationObject item in keyboardPanel)
             item.Init();
         foreach (Ui_AnimationObject item in gamepadPanel)
@@ -57,9 +60,9 @@ public class BindingMenuLogic : MonoBehaviour
     #region EnableCodeAssignedButtons
     private void Enable_InputTypeSetButtons()
     {
-        inputTypeSelectionButtons.buttons[0].onClick.AddListener(() => SetInputType(0));
-        inputTypeSelectionButtons.buttons[1].onClick.AddListener(() => SetInputType(1));
-        inputTypeSelectionButtons.buttons[2].onClick.AddListener(() => SetInputType(2));
+        inputTypeSelectionButtons.buttons[0].onClick.AddListener(() => StartGame(0));
+        inputTypeSelectionButtons.buttons[1].onClick.AddListener(() => StartGame(1));
+        inputTypeSelectionButtons.buttons[2].onClick.AddListener(() => StartGame(2));
     }
 
     private void Enable_StartRemapProcessButtons()
@@ -336,20 +339,20 @@ public class BindingMenuLogic : MonoBehaviour
         bindingManager.selectedInputType = type;
         bindingManager.currentSelectedInputActionMap = bindingManager.vehicleInputActions.asset.actionMaps[(int)type];
     }
-    private void SetInputType(int i)
+    private void StartGame(int i)
     {
         bindingManager.selectedInputType = (InputType)i;
         bindingManager.currentSelectedInputActionMap = bindingManager.vehicleInputActions.asset.actionMaps[i];
         if (bindingManager.LoadActionmap(bindingManager.vehicleInputActions))
         {
             Debug.Log("START GAME WITH CUSTOM BINDING");
-            SceneManager.LoadScene(1);
+            gameModeManager.LoadGameScene();
             return;
         }
         else if((InputType)i != InputType.Wheel)
         {
             Debug.Log("START GAME WITH DEFAULT BINDING");
-            SceneManager.LoadScene(1);
+            gameModeManager.LoadGameScene();
             return;
         }
         else
