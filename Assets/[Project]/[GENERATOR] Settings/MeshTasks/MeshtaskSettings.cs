@@ -23,9 +23,8 @@ public class MeshtaskSettings : ScriptableObject
 
     public float meshtaskWidth;
 
-	[Header("Track settings")]
-	public float maxChamfer;
-	public float extrusionSize;
+	[HideInInspector] public float maxChamfer;
+	[HideInInspector] public float extrusionSize;
 
 	[Header("Corner radius style")]
 	public float minimalCornerRadius;

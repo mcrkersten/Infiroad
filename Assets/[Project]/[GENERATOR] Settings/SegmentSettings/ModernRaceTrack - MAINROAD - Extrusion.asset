@@ -327,7 +327,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   extrusionSize: 15
   hasCornerChamfer: 1
-  maxChamfer: 45
+  maxCamber: 5
   calculatedUs:
   - {x: -7.5, y: 18}
   - {x: 7.5, y: 17.97}

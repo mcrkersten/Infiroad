@@ -186,10 +186,10 @@ public class RoadMeshExtruder {
 		//Gets bigger with larger radius
 		float extrusion = 0;
 		float cornerRadius = bezier.GetCornerRadius(t);
-		if(Mathf.Abs(cornerRadius) < 350f)
+		if(Mathf.Abs(cornerRadius) < 500f)
         {
-			float clampedRadius = Mathf.Clamp(cornerRadius, -350f, 350f);
-			extrusion = roadSettings.runoffAnimationCurve.Evaluate((clampedRadius / 350f));
+			float clampedRadius = Mathf.Clamp(cornerRadius, -500f, 500f);
+			extrusion = roadSettings.runoffAnimationCurve.Evaluate((clampedRadius / 500f));
 		}
 
 		if (ring != 0)
@@ -203,7 +203,7 @@ public class RoadMeshExtruder {
 	private Quaternion CalculateCornerChamfer(RoadSettings roadSettings)
     {
 		if (roadSettings.hasCornerChamfer)
-			return Quaternion.Euler(0, 0, (roadChainBuilder.roadFormVariables.conerCamber) * roadSettings.maxChamfer);
+			return Quaternion.Euler(0, 0, (roadChainBuilder.roadFormVariables.cornerCamber) * roadSettings.maxCamber);
 		return Quaternion.identity;
 	}
 
@@ -332,7 +332,7 @@ public class RoadMeshExtruder {
                     break;
                 case MeshTaskType.VideoBillboard:
                     break;
-                case MeshTaskType.Building:
+                case MeshTaskType.Object:
                     break;
             }
         }
@@ -454,7 +454,7 @@ public enum MeshTaskType
 	GrandStand,
 	TecproBarrier,
 	VideoBillboard,
-	Building
+	Object
 }
 
 public enum MeshtaskStyle
@@ -462,5 +462,5 @@ public enum MeshtaskStyle
 	CornerRadius = 0,
 	ExtrusionSize,
 	Continued,
-	Building
+	Object
 }

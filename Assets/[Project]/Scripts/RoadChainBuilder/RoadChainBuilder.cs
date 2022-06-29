@@ -389,7 +389,7 @@ public class RoadChainBuilder : MonoBehaviour
     {
         foreach (MeshTask task in meshtasks)
             if(settings == task.meshtaskSettings)
-                if(task.positionPoints.Count > 1)
+                if(task.positionPoints.Count > 2)
                     ExecuteMeshtask(settings, roadchain, task);
     }
 
@@ -826,7 +826,7 @@ public class RoadFormVariables
 {
     private float lerpSpeed;
     public float mainExtrusion { get { return MainExtrusion; } set { UpdateDelay(value); } }
-    public float conerCamber { get { return CornerCamber; } set { UpdateCornerCamber(value); } }
+    public float cornerCamber { get { return CornerCamber; } set { UpdateCornerCamber(value); } }
 
     private float MainExtrusion = 0;
     private float CornerCamber = 0;
@@ -842,7 +842,6 @@ public class RoadFormVariables
     private float righReductiontVelocity;
 
     public float cornerRadius;
-    public float cornerCamber;
 
     public RoadFormVariables(float lerpSpeed)
     {
@@ -851,7 +850,7 @@ public class RoadFormVariables
 
     public void UpdateDelay(float extrusion)
     {
-        extrusionVelocity = Mathf.Lerp(extrusionVelocity, extrusion, .1f);
+        extrusionVelocity = Mathf.Lerp(extrusionVelocity, extrusion, .025f);
         MainExtrusion = Mathf.Lerp(MainExtrusion, extrusionVelocity, lerpSpeed);
         //Left is always negative
         if (float.IsNegative(extrusionVelocity) && MainExtrusion <= leftExtrusion)
@@ -865,7 +864,7 @@ public class RoadFormVariables
         else if(maxLeftExtrusion == 0 || extrusion == 0)
         {
             leftExtrusion = Mathf.Lerp(leftExtrusion, 0f, leftReductionVelocity);
-            leftReductionVelocity += .00005f;
+            leftReductionVelocity += .0001f;
         }
 
         if (!float.IsNegative(extrusionVelocity) && MainExtrusion >= rightExtrusion)
@@ -879,14 +878,14 @@ public class RoadFormVariables
         else if (maxRightExtrusion == 0 || extrusion == 0)
         {
             rightExtrusion = Mathf.Lerp(rightExtrusion, 0f, righReductiontVelocity);
-            righReductiontVelocity += .00005f;
+            righReductiontVelocity += .0001f;
         }
     }
 
     private void UpdateCornerCamber(float extrusion)
     {
-        camberVelocity = Mathf.Lerp(extrusionVelocity, extrusion, .1f);
-        CornerCamber = (rightExtrusion + leftExtrusion) / 2f;
+        camberVelocity = Mathf.Lerp(camberVelocity, extrusion, .1f);
+        CornerCamber = ((rightExtrusion + leftExtrusion) / 2f) * Mathf.Abs(camberVelocity);
     }
 }
 
@@ -902,7 +901,7 @@ public struct ExtusionVariablesStruct
         mainExtrusion = source.mainExtrusion;
         leftExtrusion = source.leftExtrusion;
         rightExtrusion = source.rightExtrusion;
-        cornerCamber = source.conerCamber;
+        cornerCamber = source.cornerCamber;
     }
 }
 

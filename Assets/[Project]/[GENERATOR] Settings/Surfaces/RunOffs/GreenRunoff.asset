@@ -99,4 +99,4 @@ MonoBehaviour:
   SlipValue: 6
   UnSlipValue: 1.4
   material: {fileID: 2100000, guid: dd1e53c3477be4642a9058d874baab6e, type: 2}
-  UV_mirrored: 0
+  UV_mirrored: 1

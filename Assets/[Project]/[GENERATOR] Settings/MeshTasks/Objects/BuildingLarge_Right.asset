@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26303b605fac74a46a4e98a3145306a3, type: 3}
   m_Name: BuildingLarge_Right
   m_EditorClassIdentifier: 
-  dataKey: 56156
+  dataKey: 153369
   calculatedUs: []
   uvLenght: 0
   UV_scale: 1
@@ -24,12 +24,13 @@ MonoBehaviour:
   meshtaskContinues: 0
   noiseChannel: 0
   meshtaskWidth: 20
-  maxChamfer: 15
+  maxChamfer: 5
   extrusionSize: 15
   minimalCornerRadius: -1000
   maximumCornerRadius: -30
   minimalExtrusionSize: 0
   materials: []
+  variableMaterials: []
   meshIsClosed: 0
   meshtaskPoolingObjects:
   - meshtaskPoolType: 9
@@ -38,6 +39,6 @@ MonoBehaviour:
     position: {x: 0, y: 0}
     curveTime: 0
     noiseChannel: 0
-  minimalSizes:
-  - minimalMeshtaskPointSize: 10
-    buildingSize: 9
+  sizes:
+  - minimalMeshtaskPointSpawnSize: 5
+    objectType: 9

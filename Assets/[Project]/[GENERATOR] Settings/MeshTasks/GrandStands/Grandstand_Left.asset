@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be9b3f1063355f4586f3ac956708616, type: 3}
   m_Name: Grandstand_Left
   m_EditorClassIdentifier: 
-  dataKey: 685591
+  dataKey: 482996
   calculatedUs: []
   uvLenght: 42.899494
   UV_scale: 1
@@ -87,7 +87,7 @@ MonoBehaviour:
   meshtaskContinues: 0
   noiseChannel: 0
   meshtaskWidth: 15
-  maxChamfer: 15
+  maxChamfer: 5
   extrusionSize: 15
   minimalCornerRadius: -1000
   maximumCornerRadius: -30
@@ -101,7 +101,7 @@ MonoBehaviour:
   meshIsClosed: 0
   meshtaskPoolingObjects:
   - meshtaskPoolType: 2
-    unitsInPool: 20
+    unitsInPool: 25
     prefab: {fileID: 625580239874158063, guid: 15bb9f154858dfe4f8918c2aa5baf0c9, type: 3}
     position: {x: 0, y: 0}
     curveTime: 0

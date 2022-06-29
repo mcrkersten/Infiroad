@@ -29,7 +29,7 @@ public class RoadSettings : ScriptableObject
 	public AnimationCurve runoffAnimationCurve;
 	public float extrusionSize;
 	public bool hasCornerChamfer;
-	public float maxChamfer;
+	public float maxCamber;
 
 	//CalculatedValues
 	[HideInInspector] public List<Vector2> calculatedUs = new List<Vector2>();
@@ -47,6 +47,8 @@ public class RoadSettings : ScriptableObject
 			g.CalculateLine();
 			g.CalculateInverseLine();
 			g.ClaculateV();
+			g.maxChamfer = maxCamber;
+			g.extrusionSize = extrusionSize;
 		}
 	}
 

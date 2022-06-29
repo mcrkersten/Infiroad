@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu, System.Serializable]
-public class BuildingSettings : MeshtaskSettings
+public class MeshtaskObjectSettings : MeshtaskSettings
 {
-    [SerializeField] private List<BuildingSizeSettings> minimalSizes = new List<BuildingSizeSettings>();
+    [SerializeField] private List<SpawnSizeSettings> sizes = new List<SpawnSizeSettings>();
 
     public override void PopulateMeshtask(MeshTask meshtask, GameObject parent)
     {
         int size = meshtask.positionPoints.Count;
         parent.name = parent.name + " " + meshtask.positionPoints.Count;
-        foreach (BuildingSizeSettings building in minimalSizes)
+        foreach (SpawnSizeSettings meshtaskObject in sizes)
         {
-            if(size < building.minimalMeshtaskPointSize)
-                SpawnMeshtaskObject(meshtask, parent, meshtask.positionPoints.Count / 2, building.buildingSize);
+            if(size > meshtaskObject.minimalMeshtaskPointSpawnSize)
+                SpawnMeshtaskObject(meshtask, parent, meshtask.positionPoints.Count / 2, meshtaskObject.objectType);
         }
     }
 
@@ -33,9 +33,9 @@ public class BuildingSettings : MeshtaskSettings
     }
 
     [System.Serializable]
-    private class BuildingSizeSettings
+    private class SpawnSizeSettings
     {
-        public int minimalMeshtaskPointSize;
-        public MeshtaskPoolType buildingSize;
+        public int minimalMeshtaskPointSpawnSize;
+        public MeshtaskPoolType objectType;
     }
 }
