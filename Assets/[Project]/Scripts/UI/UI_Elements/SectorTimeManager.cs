@@ -84,6 +84,7 @@ public class SectorTimeManager : MonoBehaviour
         switch (gameMode)
         {
             case GameMode.Relaxed:
+                //UpdateSector(currentSector);
                 break;
             case GameMode.TimeTrial:
                 break;

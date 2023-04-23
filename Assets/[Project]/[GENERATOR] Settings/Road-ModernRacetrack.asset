@@ -17,6 +17,7 @@ MonoBehaviour:
   standardDecoration:
   - {fileID: 11400000, guid: 3ef3e34d2c63c1446b3ffb9f1bde50c5, type: 2}
   - {fileID: 11400000, guid: cd718877663d0ca44aef8c11f696e2d3, type: 2}
+  - {fileID: 11400000, guid: a668e5289501eb9408ff70a76ea20f40, type: 2}
   randomizedDecoration: []
   sceneryObjects: []
   skyDecoration: {fileID: 11400000, guid: b9fb149efbeafcb43b1a24d966d24f80, type: 2}

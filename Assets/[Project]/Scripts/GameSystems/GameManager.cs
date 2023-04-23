@@ -42,31 +42,19 @@ namespace GameSystems {
                 StartGameMode();
         }
 
+
         private void StartGameMode()
         {
             foreach (VegetationAssetScanner item in vehicleController.vegetationAssetScanners)
                 item.multiPool = true;
 
             roadChainBuilder.GenerateRoadForGamemode(gameModeManager);
+
             startCountdownClock.StartCountdown(3, 2);
             CountdownClock.timerFinished += GO_Timer;
 
-            switch (gameModeManager.gameMode)
-            {
-                case GameMode.Relaxed:
-                    break;
-                case GameMode.TimeTrial:
-                    bestRun = FileManager.LoadRaceData();
-                    currentRun = new RaceData(0, gameTime);
-                    CountdownClock.timerFinished += Game_Timer;
-                    break;
-                case GameMode.RandomSectors:
-                    break;
-                case GameMode.FixedSectors:
-                    break;
-            }
+            StartTimerForMode(gameModeManager.gameMode);
         }
-
 
         private void FixedUpdate()
         {
@@ -82,6 +70,24 @@ namespace GameSystems {
                 int dist = (int)vehicleController.distanceTraveled - distance;
                 distanceDifferenceClock.UpdateDistance(dist);
                 distanceTotalClock.UpdateDistance((int)vehicleController.distanceTraveled);
+            }
+        }
+
+        private void StartTimerForMode(GameMode gameMode)
+        {
+            switch (gameMode)
+            {
+                case GameMode.Relaxed:
+                    break;
+                case GameMode.TimeTrial:
+                    bestRun = FileManager.LoadRaceData();
+                    currentRun = new RaceData(0, gameTime);
+                    CountdownClock.timerFinished += Game_Timer;
+                    break;
+                case GameMode.RandomSectors:
+                    break;
+                case GameMode.FixedSectors:
+                    break;
             }
         }
 

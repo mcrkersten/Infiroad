@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 968972396982e854e9bbfb037c44c290, type: 3}
+  m_Name: SegmentTrigger
+  m_EditorClassIdentifier: 
+  wholeUnitsInPool: 1
+  segmentIndex: 0
+  mainCurveTime: 0.2
+  decor:
+  - meshtaskPoolType: 0
+    unitsInPool: 4
+    prefab: {fileID: 7696483532372454975, guid: 7ced060e4d915b9489db00a2e5be64e7, type: 3}
+    position: {x: 0, y: 0}
+    curveTime: 0
+    noiseChannel: 0
+  poolIndex: 4

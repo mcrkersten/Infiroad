@@ -151,8 +151,8 @@ public class VehicleController : MonoBehaviour
 
         vehicleInputActions.SteeringWheel.MinimapRescale.Enable();
         vehicleInputActions.SteeringWheel.MinimapRescale.started += minimapBehaviour.ScaleMinimap;
-        vehicleInputActions.SteeringWheel.StartEngine.Enable();
-        vehicleInputActions.SteeringWheel.StartEngine.started += pauseMenuBehaviour.OnStartMenu;
+        vehicleInputActions.SteeringWheel.PauseGame.Enable();
+        vehicleInputActions.SteeringWheel.PauseGame.started += pauseMenuBehaviour.OnStartMenu;
 
         vehicleInputActions.SteeringWheel.PauseRadio.Enable();
         vehicleInputActions.SteeringWheel.PauseRadio.started += radio.PauseSong;
@@ -173,9 +173,8 @@ public class VehicleController : MonoBehaviour
 
         vehicleInputActions.Keyboard.MinimapRescale.Enable();
         vehicleInputActions.Keyboard.MinimapRescale.started += minimapBehaviour.ScaleMinimap;
-        vehicleInputActions.Keyboard.StartEngine.Enable();
-        vehicleInputActions.Keyboard.StartEngine.started += pauseMenuBehaviour.OnStartMenu;
-
+        vehicleInputActions.Keyboard.PauseGame.Enable();
+        vehicleInputActions.Keyboard.PauseGame.started += pauseMenuBehaviour.OnStartMenu;
 
         vehicleInputActions.Keyboard.PauseRadio.Enable();
         vehicleInputActions.Keyboard.PauseRadio.started += radio.PauseSong;
@@ -196,8 +195,8 @@ public class VehicleController : MonoBehaviour
 
         vehicleInputActions.Gamepad.MinimapRescale.Enable();
         vehicleInputActions.Gamepad.MinimapRescale.started += minimapBehaviour.ScaleMinimap;
-        vehicleInputActions.Gamepad.StartEngine.Enable();
-        vehicleInputActions.Gamepad.StartEngine.started += pauseMenuBehaviour.OnStartMenu;
+        vehicleInputActions.Gamepad.PauseGame.Enable();
+        vehicleInputActions.Gamepad.PauseGame.started += pauseMenuBehaviour.OnStartMenu;
 
         vehicleInputActions.Gamepad.PauseRadio.Enable();
         vehicleInputActions.Gamepad.PauseRadio.started += radio.PauseSong;
@@ -451,10 +450,12 @@ public class VehicleController : MonoBehaviour
     {
         ResetScreen.resetVehicle -= ResetVehicle;
         EventTriggerManager.resetPoint -= NewResetPoint;
-        steering.Disable();
-        braking.Disable();
-        acceleration.Disable();
-        clutch.Disable();
+        steering?.Disable();
+        braking?.Disable();
+        acceleration?.Disable();
+        clutch?.Disable();
+
+        if (vehicleInputActions == null) return;
 
         switch (BindingManager.Instance.selectedInputType)
         {
@@ -466,8 +467,8 @@ public class VehicleController : MonoBehaviour
 
                 vehicleInputActions.SteeringWheel.MinimapRescale.Disable();
                 vehicleInputActions.SteeringWheel.MinimapRescale.started -= minimapBehaviour.ScaleMinimap;
-                vehicleInputActions.SteeringWheel.StartEngine.Disable();
-                vehicleInputActions.SteeringWheel.StartEngine.started -= pauseMenuBehaviour.OnStartMenu;
+                vehicleInputActions.SteeringWheel.PauseGame.Disable();
+                vehicleInputActions.SteeringWheel.PauseGame.started -= pauseMenuBehaviour.OnStartMenu;
 
                 vehicleInputActions.SteeringWheel.PauseRadio.Disable();
                 vehicleInputActions.SteeringWheel.PauseRadio.started -= radio.PauseSong;
@@ -482,8 +483,8 @@ public class VehicleController : MonoBehaviour
 
                 vehicleInputActions.Keyboard.MinimapRescale.Disable();
                 vehicleInputActions.Keyboard.MinimapRescale.started -= minimapBehaviour.ScaleMinimap;
-                vehicleInputActions.Keyboard.StartEngine.Disable();
-                vehicleInputActions.Keyboard.StartEngine.started -= pauseMenuBehaviour.OnStartMenu;
+                vehicleInputActions.Keyboard.PauseGame.Disable();
+                vehicleInputActions.Keyboard.PauseGame.started -= pauseMenuBehaviour.OnStartMenu;
 
                 vehicleInputActions.Keyboard.PauseRadio.Disable();
                 vehicleInputActions.Keyboard.PauseRadio.started -= radio.PauseSong;
@@ -498,8 +499,8 @@ public class VehicleController : MonoBehaviour
 
                 vehicleInputActions.Gamepad.MinimapRescale.Disable();
                 vehicleInputActions.Gamepad.MinimapRescale.started -= minimapBehaviour.ScaleMinimap;
-                vehicleInputActions.Gamepad.StartEngine.Disable();
-                vehicleInputActions.Gamepad.StartEngine.started -= pauseMenuBehaviour.OnStartMenu;
+                vehicleInputActions.Gamepad.PauseGame.Disable();
+                vehicleInputActions.Gamepad.PauseGame.started -= pauseMenuBehaviour.OnStartMenu;
 
                 vehicleInputActions.Gamepad.PauseRadio.Disable();
                 vehicleInputActions.Gamepad.PauseRadio.started -= radio.PauseSong;

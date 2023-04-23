@@ -167,8 +167,8 @@ public class BindingMenuLogic : MonoBehaviour
                     button.inputAction = keyboard.Clutch;
                     break;
                 case KeyboardBinding.Pause:
-                    button.bindingName.text = "Pause";
-                    button.inputAction = keyboard.StartEngine;
+                    button.bindingName.text = "Pause game";
+                    button.inputAction = keyboard.PauseGame;
                     break;
                 case KeyboardBinding.ToggleMinimap:
                     button.bindingName.text = "Minimap rescale";
@@ -178,7 +178,7 @@ public class BindingMenuLogic : MonoBehaviour
                     button.bindingName.text = "Next song";
                     button.inputAction = keyboard.NextRadioSong;
                     break;
-                case KeyboardBinding.PasueRadio:
+                case KeyboardBinding.PauseRadio:
                     button.bindingName.text = "Pause radio";
                     button.inputAction = keyboard.PauseRadio;
                     break;
@@ -235,8 +235,8 @@ public class BindingMenuLogic : MonoBehaviour
                     button.inputAction = gamepad.Clutch;
                     break;
                 case GamepadBinding.Pause:
-                    button.bindingName.text = "Pause";
-                    button.inputAction = gamepad.StartEngine;
+                    button.bindingName.text = "Pause game";
+                    button.inputAction = gamepad.PauseGame;
                     break;
                 case GamepadBinding.ToggleMinimap:
                     button.bindingName.text = "Minimap rescale";
@@ -246,7 +246,7 @@ public class BindingMenuLogic : MonoBehaviour
                     button.bindingName.text = "Next song";
                     button.inputAction = gamepad.NextRadioSong;
                     break;
-                case GamepadBinding.PasueRadio:
+                case GamepadBinding.PauseRadio:
                     button.bindingName.text = "Pause radio";
                     button.inputAction = gamepad.PauseRadio;
                     break;
@@ -270,14 +270,6 @@ public class BindingMenuLogic : MonoBehaviour
                     button.bindingName.text = "Steering";
                     button.inputAction = wheel.Steering;
                     break;
-                case WheelBinding.Shift_Up:
-                    button.bindingName.text = "Shift up";
-                    button.inputAction = wheel.ShiftUP;
-                    break;
-                case WheelBinding.Shift_Down:
-                    button.bindingName.text = "Shift down";
-                    button.inputAction = wheel.ShiftDOWN;
-                    break;
                 case WheelBinding.Brake:
                     button.bindingName.text = "Brake";
                     button.inputAction = wheel.Braking;
@@ -286,17 +278,25 @@ public class BindingMenuLogic : MonoBehaviour
                     button.bindingName.text = "Accelerate";
                     button.inputAction = wheel.Acceleration;
                     break;
-                case WheelBinding.Reset:
-                    button.bindingName.text = "Reset vehicle";
-                    button.inputAction = wheel.Reset;
-                    break;
                 case WheelBinding.Clutch:
                     button.bindingName.text = "Clutch";
                     button.inputAction = wheel.Clutch;
                     break;
+                case WheelBinding.Shift_Up:
+                    button.bindingName.text = "Shift up";
+                    button.inputAction = wheel.ShiftUP;
+                    break;
+                case WheelBinding.Shift_Down:
+                    button.bindingName.text = "Shift down";
+                    button.inputAction = wheel.ShiftDOWN;
+                    break;
+                case WheelBinding.Reset:
+                    button.bindingName.text = "Reset vehicle";
+                    button.inputAction = wheel.Reset;
+                    break;
                 case WheelBinding.Pause:
-                    button.bindingName.text = "Pause";
-                    button.inputAction = wheel.StartEngine;
+                    button.bindingName.text = "Pause game";
+                    button.inputAction = wheel.PauseGame;
                     break;
                 case WheelBinding.ToggleMinimap:
                     button.bindingName.text = "Minimap rescale";
@@ -306,9 +306,17 @@ public class BindingMenuLogic : MonoBehaviour
                     button.bindingName.text = "Next song";
                     button.inputAction = wheel.NextRadioSong;
                     break;
-                case WheelBinding.PasueRadio:
+                case WheelBinding.PauseRadio:
                     button.bindingName.text = "Pause radio";
                     button.inputAction = wheel.PauseRadio;
+                    break;
+                case WheelBinding.VR_RecenterCamera:
+                    button.bindingName.text = "Recenter VR camera";
+                    button.inputAction = wheel.VR_ResetCamera;
+                    break;
+                case WheelBinding.VR_Toggle:
+                    button.bindingName.text = "Toggle VR";
+                    button.inputAction = wheel.VR_Toggle;
                     break;
             }
             button.SetKeyText(button.inputAction.bindings[0]);
@@ -428,7 +436,9 @@ public enum WheelBinding
     Pause,
     ToggleMinimap,
     NextSong,
-    PasueRadio
+    PauseRadio,
+    VR_RecenterCamera,
+    VR_Toggle
 }
 
 public enum GamepadBinding
@@ -444,7 +454,7 @@ public enum GamepadBinding
     Pause,
     ToggleMinimap, 
     NextSong,
-    PasueRadio
+    PauseRadio
 }
 
 public enum KeyboardBinding
@@ -460,5 +470,5 @@ public enum KeyboardBinding
     Pause,
     ToggleMinimap,
     NextSong,
-    PasueRadio
+    PauseRadio,
 }

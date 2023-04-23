@@ -40,13 +40,7 @@ public class ObjectPooler
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="pools">Vegitation pools to spawn</param>
-    /// <param name="roadType">The corresponding road of the vegetation</param>
-    /// <param name="multiPool"></param>
-    public void InstantiateAssetPool(List<AssetPool> pools, string roadType, bool multiPool = false)
+    public void InstantiateAssetPool(List<AssetPool> pools, string roadType)
     {
         //Returns if pool for this road already has been made.
         if (assetQueueDictionaries.ContainsKey(roadType))
@@ -76,10 +70,10 @@ public class ObjectPooler
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
-            localDictionary.Add(multiPool ? poolIndex++.ToString() : pool.tag.ToString(), objectPool);
+            localDictionary.Add(poolIndex++.ToString(), objectPool);
         }
 
-        assetQueueDictionaries.Add(multiPool ? "Zero" : roadType, localDictionary);
+        assetQueueDictionaries.Add("Zero", localDictionary);
     }
     /// Instantiate all decorations in dedicated pools
     public void InstantiateRoadDecorationDecorationPool(RoadDecoration pool)

@@ -18,15 +18,15 @@ MonoBehaviour:
   decor:
   - meshtaskPoolType: 0
     unitsInPool: 0
-    prefab: {fileID: 8228064313868283553, guid: 168c397e2bea7304daa08af21981dac4, type: 3}
-    position: {x: 0, y: 0}
-    curveTime: 0
-    noiseChannel: 0
-  - meshtaskPoolType: 0
-    unitsInPool: 0
     prefab: {fileID: 4807873992971614875, guid: 48e0c365a77675e47af5e4279926cc85, type: 3}
     position: {x: 0, y: 0.3780157}
     curveTime: -0.05
+    noiseChannel: 0
+  - meshtaskPoolType: 0
+    unitsInPool: 0
+    prefab: {fileID: 8228064313868283553, guid: 168c397e2bea7304daa08af21981dac4, type: 3}
+    position: {x: 0, y: 0}
+    curveTime: 0
     noiseChannel: 0
   - meshtaskPoolType: 0
     unitsInPool: 0

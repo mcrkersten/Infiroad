@@ -27,12 +27,21 @@ public class BindingButton : MonoBehaviour
 
     public void OnSelection()
     {
+        buttonSelected?.Invoke(keyIndex);
+        SetButtonVisuals();
+        MoveMenu();
+    }
+
+    private void SetButtonVisuals()
+    {
         toolTip.gameObject.SetActive(true);
         toolTip.text = "Select to rebind";
         selectionOutline.color = Color.white;
+    }
 
+    private void MoveMenu()
+    {
         int childCount = transform.parent.childCount;
-        buttonSelected?.Invoke(keyIndex);
         if (keyIndex < 1)
             return;
 

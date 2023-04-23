@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26303b605fac74a46a4e98a3145306a3, type: 3}
   m_Name: BuildingLarge_Right
   m_EditorClassIdentifier: 
-  dataKey: 153369
+  dataKey: 921736
   calculatedUs: []
   uvLenght: 0
   UV_scale: 1
@@ -34,11 +34,11 @@ MonoBehaviour:
   meshIsClosed: 0
   meshtaskPoolingObjects:
   - meshtaskPoolType: 9
-    unitsInPool: 4
+    unitsInPool: 8
     prefab: {fileID: 1978859830394355450, guid: 2e29fddf611292046a57ae99a59998b2, type: 3}
     position: {x: 0, y: 0}
     curveTime: 0
     noiseChannel: 0
   sizes:
-  - minimalMeshtaskPointSpawnSize: 5
+  - minimalMeshtaskPointSpawnSize: 4
     objectType: 9

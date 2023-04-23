@@ -91,15 +91,6 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""StartEngine"",
-                    ""type"": ""Button"",
-                    ""id"": ""17f2383c-40db-40af-9e9c-0d5e70cd9243"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""MinimapRescale"",
                     ""type"": ""Button"",
                     ""id"": ""1eb7ee98-a88e-4f78-9f8d-337a5b32eb00"",
@@ -121,6 +112,15 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""name"": ""PauseRadio"",
                     ""type"": ""Button"",
                     ""id"": ""80fc5b20-739b-4a16-a31c-e5486cf0cb48"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""e4b49ea4-47f9-49a1-82f3-30a5dab2712c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -229,17 +229,6 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""0e5fa782-79a0-4d2f-b263-e58642a65c18"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""StartEngine"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""e31aa3e9-2ab7-462e-967c-4d8c7b9336f8"",
                     ""path"": ""<Keyboard>/t"",
                     ""interactions"": """",
@@ -268,6 +257,17 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""PauseRadio"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""87a0784e-7179-4cdf-abc6-b3c7a8960d00"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseGame"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -341,15 +341,6 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""StartEngine"",
-                    ""type"": ""Button"",
-                    ""id"": ""1c6ecb50-4e95-4829-998c-67ed0c0c7100"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""MinimapRescale"",
                     ""type"": ""Button"",
                     ""id"": ""f664c7e2-b1d8-4fb2-9383-9e48da108a25"",
@@ -371,6 +362,15 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""name"": ""PauseRadio"",
                     ""type"": ""Button"",
                     ""id"": ""a2b96021-661d-4c78-a93b-5fec8cab81b8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""76b218f7-930f-4553-bfb9-4b642e4ddd88"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -445,17 +445,6 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""a2f2be14-2750-46a1-a573-9354bbe190f1"",
-                    ""path"": ""<Gamepad>/start"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""StartEngine"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": ""1D Axis"",
                     ""id"": ""a092d08a-3c1f-4f87-94b5-6ea93a8d7f62"",
                     ""path"": ""1DAxis"",
@@ -520,6 +509,17 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""PauseRadio"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b0776114-dfb2-4dec-8c0a-4d062dfdc1a4"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -582,18 +582,18 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Reset"",
+                    ""name"": ""PauseGame"",
                     ""type"": ""Button"",
-                    ""id"": ""13bf80e8-7e00-4e7c-8595-752e04f5d5ce"",
+                    ""id"": ""aaf21cc5-e328-438e-a5ae-4824a240ac4a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""StartEngine"",
+                    ""name"": ""Reset"",
                     ""type"": ""Button"",
-                    ""id"": ""82cf9a1e-6f31-4058-86cc-0b815136baba"",
+                    ""id"": ""13bf80e8-7e00-4e7c-8595-752e04f5d5ce"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -621,6 +621,24 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""name"": ""PauseRadio"",
                     ""type"": ""Button"",
                     ""id"": ""74574e1a-bd84-4e9c-9832-291bece72e04"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""VR_ResetCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""33a95abe-6a62-402f-a66a-b063c29c8af5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""VR_Toggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""77a5ec61-8bc4-40e0-b200-83cd9a8d0175"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -707,17 +725,6 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""14151374-08dc-4395-bdc2-5d3372cb2c56"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""StartEngine"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""c160323b-acd0-4ec6-8cd0-e9e23d667969"",
                     ""path"": ""<Keyboard>/t"",
                     ""interactions"": """",
@@ -746,6 +753,39 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""PauseRadio"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a60c2d94-3b36-44b0-8f23-8aac15fd8794"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VR_ResetCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e98628c3-63cd-4cf4-b0f1-41305178bce9"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VR_Toggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""714461c8-ea01-4046-a33e-ce168745e1f9"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseGame"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -824,10 +864,10 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         m_Keyboard_ShiftUP = m_Keyboard.FindAction("ShiftUP", throwIfNotFound: true);
         m_Keyboard_ShiftDOWN = m_Keyboard.FindAction("ShiftDOWN", throwIfNotFound: true);
         m_Keyboard_Reset = m_Keyboard.FindAction("Reset", throwIfNotFound: true);
-        m_Keyboard_StartEngine = m_Keyboard.FindAction("StartEngine", throwIfNotFound: true);
         m_Keyboard_MinimapRescale = m_Keyboard.FindAction("MinimapRescale", throwIfNotFound: true);
         m_Keyboard_NextRadioSong = m_Keyboard.FindAction("NextRadioSong", throwIfNotFound: true);
         m_Keyboard_PauseRadio = m_Keyboard.FindAction("PauseRadio", throwIfNotFound: true);
+        m_Keyboard_PauseGame = m_Keyboard.FindAction("PauseGame", throwIfNotFound: true);
         // Gamepad
         m_Gamepad = asset.FindActionMap("Gamepad", throwIfNotFound: true);
         m_Gamepad_Steering = m_Gamepad.FindAction("Steering", throwIfNotFound: true);
@@ -837,10 +877,10 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         m_Gamepad_ShiftUP = m_Gamepad.FindAction("ShiftUP", throwIfNotFound: true);
         m_Gamepad_ShiftDOWN = m_Gamepad.FindAction("ShiftDOWN", throwIfNotFound: true);
         m_Gamepad_Reset = m_Gamepad.FindAction("Reset", throwIfNotFound: true);
-        m_Gamepad_StartEngine = m_Gamepad.FindAction("StartEngine", throwIfNotFound: true);
         m_Gamepad_MinimapRescale = m_Gamepad.FindAction("MinimapRescale", throwIfNotFound: true);
         m_Gamepad_NextRadioSong = m_Gamepad.FindAction("NextRadioSong", throwIfNotFound: true);
         m_Gamepad_PauseRadio = m_Gamepad.FindAction("PauseRadio", throwIfNotFound: true);
+        m_Gamepad_PauseGame = m_Gamepad.FindAction("PauseGame", throwIfNotFound: true);
         // SteeringWheel
         m_SteeringWheel = asset.FindActionMap("SteeringWheel", throwIfNotFound: true);
         m_SteeringWheel_Steering = m_SteeringWheel.FindAction("Steering", throwIfNotFound: true);
@@ -849,11 +889,13 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         m_SteeringWheel_Clutch = m_SteeringWheel.FindAction("Clutch", throwIfNotFound: true);
         m_SteeringWheel_ShiftUP = m_SteeringWheel.FindAction("ShiftUP", throwIfNotFound: true);
         m_SteeringWheel_ShiftDOWN = m_SteeringWheel.FindAction("ShiftDOWN", throwIfNotFound: true);
+        m_SteeringWheel_PauseGame = m_SteeringWheel.FindAction("PauseGame", throwIfNotFound: true);
         m_SteeringWheel_Reset = m_SteeringWheel.FindAction("Reset", throwIfNotFound: true);
-        m_SteeringWheel_StartEngine = m_SteeringWheel.FindAction("StartEngine", throwIfNotFound: true);
         m_SteeringWheel_MinimapRescale = m_SteeringWheel.FindAction("MinimapRescale", throwIfNotFound: true);
         m_SteeringWheel_NextRadioSong = m_SteeringWheel.FindAction("NextRadioSong", throwIfNotFound: true);
         m_SteeringWheel_PauseRadio = m_SteeringWheel.FindAction("PauseRadio", throwIfNotFound: true);
+        m_SteeringWheel_VR_ResetCamera = m_SteeringWheel.FindAction("VR_ResetCamera", throwIfNotFound: true);
+        m_SteeringWheel_VR_Toggle = m_SteeringWheel.FindAction("VR_Toggle", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -920,10 +962,10 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Keyboard_ShiftUP;
     private readonly InputAction m_Keyboard_ShiftDOWN;
     private readonly InputAction m_Keyboard_Reset;
-    private readonly InputAction m_Keyboard_StartEngine;
     private readonly InputAction m_Keyboard_MinimapRescale;
     private readonly InputAction m_Keyboard_NextRadioSong;
     private readonly InputAction m_Keyboard_PauseRadio;
+    private readonly InputAction m_Keyboard_PauseGame;
     public struct KeyboardActions
     {
         private @VehicleInputActions m_Wrapper;
@@ -935,10 +977,10 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         public InputAction @ShiftUP => m_Wrapper.m_Keyboard_ShiftUP;
         public InputAction @ShiftDOWN => m_Wrapper.m_Keyboard_ShiftDOWN;
         public InputAction @Reset => m_Wrapper.m_Keyboard_Reset;
-        public InputAction @StartEngine => m_Wrapper.m_Keyboard_StartEngine;
         public InputAction @MinimapRescale => m_Wrapper.m_Keyboard_MinimapRescale;
         public InputAction @NextRadioSong => m_Wrapper.m_Keyboard_NextRadioSong;
         public InputAction @PauseRadio => m_Wrapper.m_Keyboard_PauseRadio;
+        public InputAction @PauseGame => m_Wrapper.m_Keyboard_PauseGame;
         public InputActionMap Get() { return m_Wrapper.m_Keyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -969,9 +1011,6 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @Reset.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnReset;
                 @Reset.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnReset;
                 @Reset.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnReset;
-                @StartEngine.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnStartEngine;
-                @StartEngine.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnStartEngine;
-                @StartEngine.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnStartEngine;
                 @MinimapRescale.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMinimapRescale;
                 @MinimapRescale.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMinimapRescale;
                 @MinimapRescale.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMinimapRescale;
@@ -981,6 +1020,9 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @PauseRadio.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPauseRadio;
                 @PauseRadio.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPauseRadio;
                 @PauseRadio.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPauseRadio;
+                @PauseGame.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPauseGame;
+                @PauseGame.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPauseGame;
+                @PauseGame.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPauseGame;
             }
             m_Wrapper.m_KeyboardActionsCallbackInterface = instance;
             if (instance != null)
@@ -1006,9 +1048,6 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @Reset.started += instance.OnReset;
                 @Reset.performed += instance.OnReset;
                 @Reset.canceled += instance.OnReset;
-                @StartEngine.started += instance.OnStartEngine;
-                @StartEngine.performed += instance.OnStartEngine;
-                @StartEngine.canceled += instance.OnStartEngine;
                 @MinimapRescale.started += instance.OnMinimapRescale;
                 @MinimapRescale.performed += instance.OnMinimapRescale;
                 @MinimapRescale.canceled += instance.OnMinimapRescale;
@@ -1018,6 +1057,9 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @PauseRadio.started += instance.OnPauseRadio;
                 @PauseRadio.performed += instance.OnPauseRadio;
                 @PauseRadio.canceled += instance.OnPauseRadio;
+                @PauseGame.started += instance.OnPauseGame;
+                @PauseGame.performed += instance.OnPauseGame;
+                @PauseGame.canceled += instance.OnPauseGame;
             }
         }
     }
@@ -1033,10 +1075,10 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gamepad_ShiftUP;
     private readonly InputAction m_Gamepad_ShiftDOWN;
     private readonly InputAction m_Gamepad_Reset;
-    private readonly InputAction m_Gamepad_StartEngine;
     private readonly InputAction m_Gamepad_MinimapRescale;
     private readonly InputAction m_Gamepad_NextRadioSong;
     private readonly InputAction m_Gamepad_PauseRadio;
+    private readonly InputAction m_Gamepad_PauseGame;
     public struct GamepadActions
     {
         private @VehicleInputActions m_Wrapper;
@@ -1048,10 +1090,10 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         public InputAction @ShiftUP => m_Wrapper.m_Gamepad_ShiftUP;
         public InputAction @ShiftDOWN => m_Wrapper.m_Gamepad_ShiftDOWN;
         public InputAction @Reset => m_Wrapper.m_Gamepad_Reset;
-        public InputAction @StartEngine => m_Wrapper.m_Gamepad_StartEngine;
         public InputAction @MinimapRescale => m_Wrapper.m_Gamepad_MinimapRescale;
         public InputAction @NextRadioSong => m_Wrapper.m_Gamepad_NextRadioSong;
         public InputAction @PauseRadio => m_Wrapper.m_Gamepad_PauseRadio;
+        public InputAction @PauseGame => m_Wrapper.m_Gamepad_PauseGame;
         public InputActionMap Get() { return m_Wrapper.m_Gamepad; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1082,9 +1124,6 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @Reset.started -= m_Wrapper.m_GamepadActionsCallbackInterface.OnReset;
                 @Reset.performed -= m_Wrapper.m_GamepadActionsCallbackInterface.OnReset;
                 @Reset.canceled -= m_Wrapper.m_GamepadActionsCallbackInterface.OnReset;
-                @StartEngine.started -= m_Wrapper.m_GamepadActionsCallbackInterface.OnStartEngine;
-                @StartEngine.performed -= m_Wrapper.m_GamepadActionsCallbackInterface.OnStartEngine;
-                @StartEngine.canceled -= m_Wrapper.m_GamepadActionsCallbackInterface.OnStartEngine;
                 @MinimapRescale.started -= m_Wrapper.m_GamepadActionsCallbackInterface.OnMinimapRescale;
                 @MinimapRescale.performed -= m_Wrapper.m_GamepadActionsCallbackInterface.OnMinimapRescale;
                 @MinimapRescale.canceled -= m_Wrapper.m_GamepadActionsCallbackInterface.OnMinimapRescale;
@@ -1094,6 +1133,9 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @PauseRadio.started -= m_Wrapper.m_GamepadActionsCallbackInterface.OnPauseRadio;
                 @PauseRadio.performed -= m_Wrapper.m_GamepadActionsCallbackInterface.OnPauseRadio;
                 @PauseRadio.canceled -= m_Wrapper.m_GamepadActionsCallbackInterface.OnPauseRadio;
+                @PauseGame.started -= m_Wrapper.m_GamepadActionsCallbackInterface.OnPauseGame;
+                @PauseGame.performed -= m_Wrapper.m_GamepadActionsCallbackInterface.OnPauseGame;
+                @PauseGame.canceled -= m_Wrapper.m_GamepadActionsCallbackInterface.OnPauseGame;
             }
             m_Wrapper.m_GamepadActionsCallbackInterface = instance;
             if (instance != null)
@@ -1119,9 +1161,6 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @Reset.started += instance.OnReset;
                 @Reset.performed += instance.OnReset;
                 @Reset.canceled += instance.OnReset;
-                @StartEngine.started += instance.OnStartEngine;
-                @StartEngine.performed += instance.OnStartEngine;
-                @StartEngine.canceled += instance.OnStartEngine;
                 @MinimapRescale.started += instance.OnMinimapRescale;
                 @MinimapRescale.performed += instance.OnMinimapRescale;
                 @MinimapRescale.canceled += instance.OnMinimapRescale;
@@ -1131,6 +1170,9 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @PauseRadio.started += instance.OnPauseRadio;
                 @PauseRadio.performed += instance.OnPauseRadio;
                 @PauseRadio.canceled += instance.OnPauseRadio;
+                @PauseGame.started += instance.OnPauseGame;
+                @PauseGame.performed += instance.OnPauseGame;
+                @PauseGame.canceled += instance.OnPauseGame;
             }
         }
     }
@@ -1145,11 +1187,13 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_SteeringWheel_Clutch;
     private readonly InputAction m_SteeringWheel_ShiftUP;
     private readonly InputAction m_SteeringWheel_ShiftDOWN;
+    private readonly InputAction m_SteeringWheel_PauseGame;
     private readonly InputAction m_SteeringWheel_Reset;
-    private readonly InputAction m_SteeringWheel_StartEngine;
     private readonly InputAction m_SteeringWheel_MinimapRescale;
     private readonly InputAction m_SteeringWheel_NextRadioSong;
     private readonly InputAction m_SteeringWheel_PauseRadio;
+    private readonly InputAction m_SteeringWheel_VR_ResetCamera;
+    private readonly InputAction m_SteeringWheel_VR_Toggle;
     public struct SteeringWheelActions
     {
         private @VehicleInputActions m_Wrapper;
@@ -1160,11 +1204,13 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         public InputAction @Clutch => m_Wrapper.m_SteeringWheel_Clutch;
         public InputAction @ShiftUP => m_Wrapper.m_SteeringWheel_ShiftUP;
         public InputAction @ShiftDOWN => m_Wrapper.m_SteeringWheel_ShiftDOWN;
+        public InputAction @PauseGame => m_Wrapper.m_SteeringWheel_PauseGame;
         public InputAction @Reset => m_Wrapper.m_SteeringWheel_Reset;
-        public InputAction @StartEngine => m_Wrapper.m_SteeringWheel_StartEngine;
         public InputAction @MinimapRescale => m_Wrapper.m_SteeringWheel_MinimapRescale;
         public InputAction @NextRadioSong => m_Wrapper.m_SteeringWheel_NextRadioSong;
         public InputAction @PauseRadio => m_Wrapper.m_SteeringWheel_PauseRadio;
+        public InputAction @VR_ResetCamera => m_Wrapper.m_SteeringWheel_VR_ResetCamera;
+        public InputAction @VR_Toggle => m_Wrapper.m_SteeringWheel_VR_Toggle;
         public InputActionMap Get() { return m_Wrapper.m_SteeringWheel; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1192,12 +1238,12 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @ShiftDOWN.started -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnShiftDOWN;
                 @ShiftDOWN.performed -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnShiftDOWN;
                 @ShiftDOWN.canceled -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnShiftDOWN;
+                @PauseGame.started -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnPauseGame;
+                @PauseGame.performed -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnPauseGame;
+                @PauseGame.canceled -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnPauseGame;
                 @Reset.started -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnReset;
                 @Reset.performed -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnReset;
                 @Reset.canceled -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnReset;
-                @StartEngine.started -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnStartEngine;
-                @StartEngine.performed -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnStartEngine;
-                @StartEngine.canceled -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnStartEngine;
                 @MinimapRescale.started -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnMinimapRescale;
                 @MinimapRescale.performed -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnMinimapRescale;
                 @MinimapRescale.canceled -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnMinimapRescale;
@@ -1207,6 +1253,12 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @PauseRadio.started -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnPauseRadio;
                 @PauseRadio.performed -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnPauseRadio;
                 @PauseRadio.canceled -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnPauseRadio;
+                @VR_ResetCamera.started -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnVR_ResetCamera;
+                @VR_ResetCamera.performed -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnVR_ResetCamera;
+                @VR_ResetCamera.canceled -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnVR_ResetCamera;
+                @VR_Toggle.started -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnVR_Toggle;
+                @VR_Toggle.performed -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnVR_Toggle;
+                @VR_Toggle.canceled -= m_Wrapper.m_SteeringWheelActionsCallbackInterface.OnVR_Toggle;
             }
             m_Wrapper.m_SteeringWheelActionsCallbackInterface = instance;
             if (instance != null)
@@ -1229,12 +1281,12 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @ShiftDOWN.started += instance.OnShiftDOWN;
                 @ShiftDOWN.performed += instance.OnShiftDOWN;
                 @ShiftDOWN.canceled += instance.OnShiftDOWN;
+                @PauseGame.started += instance.OnPauseGame;
+                @PauseGame.performed += instance.OnPauseGame;
+                @PauseGame.canceled += instance.OnPauseGame;
                 @Reset.started += instance.OnReset;
                 @Reset.performed += instance.OnReset;
                 @Reset.canceled += instance.OnReset;
-                @StartEngine.started += instance.OnStartEngine;
-                @StartEngine.performed += instance.OnStartEngine;
-                @StartEngine.canceled += instance.OnStartEngine;
                 @MinimapRescale.started += instance.OnMinimapRescale;
                 @MinimapRescale.performed += instance.OnMinimapRescale;
                 @MinimapRescale.canceled += instance.OnMinimapRescale;
@@ -1244,6 +1296,12 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
                 @PauseRadio.started += instance.OnPauseRadio;
                 @PauseRadio.performed += instance.OnPauseRadio;
                 @PauseRadio.canceled += instance.OnPauseRadio;
+                @VR_ResetCamera.started += instance.OnVR_ResetCamera;
+                @VR_ResetCamera.performed += instance.OnVR_ResetCamera;
+                @VR_ResetCamera.canceled += instance.OnVR_ResetCamera;
+                @VR_Toggle.started += instance.OnVR_Toggle;
+                @VR_Toggle.performed += instance.OnVR_Toggle;
+                @VR_Toggle.canceled += instance.OnVR_Toggle;
             }
         }
     }
@@ -1302,10 +1360,10 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         void OnShiftUP(InputAction.CallbackContext context);
         void OnShiftDOWN(InputAction.CallbackContext context);
         void OnReset(InputAction.CallbackContext context);
-        void OnStartEngine(InputAction.CallbackContext context);
         void OnMinimapRescale(InputAction.CallbackContext context);
         void OnNextRadioSong(InputAction.CallbackContext context);
         void OnPauseRadio(InputAction.CallbackContext context);
+        void OnPauseGame(InputAction.CallbackContext context);
     }
     public interface IGamepadActions
     {
@@ -1316,10 +1374,10 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         void OnShiftUP(InputAction.CallbackContext context);
         void OnShiftDOWN(InputAction.CallbackContext context);
         void OnReset(InputAction.CallbackContext context);
-        void OnStartEngine(InputAction.CallbackContext context);
         void OnMinimapRescale(InputAction.CallbackContext context);
         void OnNextRadioSong(InputAction.CallbackContext context);
         void OnPauseRadio(InputAction.CallbackContext context);
+        void OnPauseGame(InputAction.CallbackContext context);
     }
     public interface ISteeringWheelActions
     {
@@ -1329,10 +1387,12 @@ public partial class @VehicleInputActions : IInputActionCollection2, IDisposable
         void OnClutch(InputAction.CallbackContext context);
         void OnShiftUP(InputAction.CallbackContext context);
         void OnShiftDOWN(InputAction.CallbackContext context);
+        void OnPauseGame(InputAction.CallbackContext context);
         void OnReset(InputAction.CallbackContext context);
-        void OnStartEngine(InputAction.CallbackContext context);
         void OnMinimapRescale(InputAction.CallbackContext context);
         void OnNextRadioSong(InputAction.CallbackContext context);
         void OnPauseRadio(InputAction.CallbackContext context);
+        void OnVR_ResetCamera(InputAction.CallbackContext context);
+        void OnVR_Toggle(InputAction.CallbackContext context);
     }
 }

@@ -329,7 +329,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   extrusionSize: 0
   hasCornerChamfer: 1
-  maxChamfer: 4
+  maxCamber: 0
   calculatedUs: []
   uSpan: 0
   hardEdges: 0

@@ -23,8 +23,9 @@ using System;
 
 // This is the parent container for all the road segments
 public class RoadChain : MonoBehaviour {
-	[HideInInspector] public int index = 0;
-	public bool loop = false; // Whether or not the last segment should connect to the first
+	[HideInInspector] public int ChainIndex = -1;
+    [HideInInspector] public int GeneratedIndex = 0;
+    public bool loop = false; // Whether or not the last segment should connect to the first
 	public List<RoadSegment> organizedSegments = new List<RoadSegment>();
 	public LineRenderer line;
 	public LayerMask trackLayer;
@@ -38,21 +39,21 @@ public class RoadChain : MonoBehaviour {
 	//For dev UI
 	[HideInInspector] public List<RoadSettings> devSettings = new List<RoadSettings>();
 
-	public void InitializeAllSegments(RoadSettings settings, List<RoadSegment> roadSegments)
-    {
-		devSettings.Add(settings);
-		meshSpawnPoints = new MeshSpawnPoints();
-		organizedSegments = roadSegments;
+	//public void InitializeAllSegments(RoadSettings settings, List<RoadSegment> roadSegments)
+ //   {
+	//	devSettings.Add(settings);
+	//	meshSpawnPoints = new MeshSpawnPoints();
+	//	organizedSegments = roadSegments;
 
-		foreach (RoadSegment rs in organizedSegments)
-			rs.transform.SetParent(this.transform);
+	//	foreach (RoadSegment rs in organizedSegments)
+	//		rs.transform.SetParent(this.transform);
 
-		foreach (RoadSegment seg in organizedSegments)
-        {
-			CreateMesh(settings, seg);
-			ActivateVegetationAssetTriggersOnAssetSpawnEdge(settings, seg);
-		}
-	}
+	//	foreach (RoadSegment seg in organizedSegments)
+ //       {
+	//		CreateMesh(settings, seg);
+	//		ActivateVegetationAssetTriggersOnAssetSpawnEdge(settings, seg);
+	//	}
+	//}
 
 	public void SetOrganizedSegments(List<RoadSegment> segments)
     {
@@ -70,7 +71,7 @@ public class RoadChain : MonoBehaviour {
 
 	public void CreateMesh(RoadSettings roadSettings, RoadSegment segment)
 	{
-		segment.CreateMesh(Vector2.zero, roadSettings, index); //Creates mesh
+		segment.CreateMesh(Vector2.zero, roadSettings, GeneratedIndex); //Creates mesh
 	}
 
 	public OrientedPoint GetOrientedPointOnRoad(float percentage, int segmentIndex, Ease ease)
@@ -78,13 +79,12 @@ public class RoadChain : MonoBehaviour {
 		return organizedSegments[segmentIndex].bezier.GetOrientedPoint(percentage, .01f, ease);
 	}
 
-	public void ActivateDecor(RoadSegment segment, RoadDecoration roadDecoration, int segmentIndex)
+	public void ActivateDecor(RoadSegment segment, RoadDecoration roadDecoration)
     {
 		RoadChainBuilder roadChainBuilder = RoadChainBuilder.instance;
 		RoadSettings roadSettings = segment.roadSetting;
 		List<GameObject> decorObjects = ObjectPooler.Instance.GetRoadDecorationFromPool(roadDecoration.poolIndex);
 		int segmendLoops = segment.edgeLoopCount;
-
 		int decorIndex = 0;
 		foreach (Decoration decorItem in roadDecoration.decor)
 		{
@@ -92,32 +92,31 @@ public class RoadChain : MonoBehaviour {
 			int edgeLoop = segmendLoops - currentEdgeloop;
 			Vector3 noise = Vector3.zero;
 			foreach (NoiseChannel nts in roadSettings.noiseChannels)
-				noise += nts.generatorInstance.getNoise(segment.startEndEdgeLoop.x + edgeLoop, nts);
+				noise += nts.generatorInstance.GetNoise(segment.startEndEdgeLoop.x + edgeLoop, nts);
 
 			Vector3 decorPosition = decorItem.position;
 
-			OrientedPoint nextPoint = GetOrientedPointOnRoad(Mathf.Clamp01(roadDecoration.mainCurveTime + decorItem.curveTime + .15f), segmentIndex, segment.roadSetting.rotationEasing);
+			OrientedPoint nextPoint = GetOrientedPointOnRoad(Mathf.Clamp01(roadDecoration.mainCurveTime + decorItem.curveTime + .15f), segment.index, segment.roadSetting.rotationEasing);
 			Vector3 next = segment.transform.TransformPoint(nextPoint.LocalToWorldPos(decorPosition + noise));
-			OrientedPoint prevPoint = GetOrientedPointOnRoad(Mathf.Clamp01(roadDecoration.mainCurveTime + decorItem.curveTime - .15f), segmentIndex, segment.roadSetting.rotationEasing);
+			OrientedPoint prevPoint = GetOrientedPointOnRoad(Mathf.Clamp01(roadDecoration.mainCurveTime + decorItem.curveTime - .15f), segment.index, segment.roadSetting.rotationEasing);
 			Vector3 prev = segment.transform.TransformPoint(prevPoint.LocalToWorldPos(decorPosition + noise));
 
-			OrientedPoint orientedPoint = GetOrientedPointOnRoad(Mathf.Clamp01(roadDecoration.mainCurveTime + decorItem.curveTime), segmentIndex, segment.roadSetting.rotationEasing);
+			OrientedPoint orientedPoint = GetOrientedPointOnRoad(Mathf.Clamp01(roadDecoration.mainCurveTime + decorItem.curveTime), segment.index, segment.roadSetting.rotationEasing);
 			Vector3 localPosition = orientedPoint.LocalToWorldPos(decorPosition + noise);
 			Vector3 worldPosition = segment.transform.TransformPoint(localPosition);
 
-			decorObjects[decorIndex].transform.position = worldPosition;
+			GameObject decorObject = decorObjects[decorIndex];
+
+            decorObject.transform.position = worldPosition;
 			Vector3 positionOut = new Vector3();
-			decorObjects[decorIndex].transform.rotation = GetUpVector(out positionOut, worldPosition) * Quaternion.LookRotation(next - prev);
-			decorObjects[decorIndex].transform.position = positionOut;
+            decorObject.transform.rotation = GetUpVector(out positionOut, worldPosition) * Quaternion.LookRotation(next - prev);
+			decorObject.transform.position = positionOut;
 
-			decorObjects[decorIndex].SetActive(true);
-			activatedPooledObjects.Add(decorObjects[decorIndex]);
+			decorObject.SetActive(true);
+			activatedPooledObjects.Add(decorObject);
 
-			if (decorObjects[decorIndex].CompareTag("StartPosition"))
-            {
-				roadChainBuilder.vehicleStartTransform = decorObjects[decorIndex].transform.GetChild(0);
-				Debug.Log("CHILD_SET");
-			}
+			if (decorObject.CompareTag("StartPosition"))
+				roadChainBuilder.vehicleStartTransform = decorObject.transform.GetChild(0);
 			decorIndex++;
 		}
 	}
@@ -161,14 +160,14 @@ public class RoadChain : MonoBehaviour {
 					Vector3 point = Vector3.Lerp(spawnEdge.leftPoint, spawnEdge.rightPoint, (float)i / item.spawnPointsBetweenAmount);
 					AssetTrigger x = ObjectPooler.Instance.ActivateAssetTrigger(point, item.assetPointType);
 					x.scannedBy = new List<VegetationScannerTypeTag>();
-					x.gameObject.name = index.ToString();
+					x.gameObject.name = ChainIndex.ToString();
 				}
             }
             else
             {
 				AssetTrigger x = ObjectPooler.Instance.ActivateAssetTrigger(spawnEdge.leftPoint, item.assetPointType);
 				x.scannedBy = new List<VegetationScannerTypeTag>();
-				x.gameObject.name = index.ToString();
+				x.gameObject.name = ChainIndex.ToString();
 			}
 		}
 	}

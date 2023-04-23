@@ -16,8 +16,8 @@ public class MeshtaskSettings : ScriptableObject
 
 	[Header("Mesh settings")]
 	public VertexPosition[] points;
-	[Range(1f,10f)]
-	public float meshResolution;
+	[Range(1,10)]
+	public int meshResolution;
     public bool meshtaskContinues;
     public int noiseChannel;
 
@@ -117,14 +117,14 @@ public class MeshtaskSettings : ScriptableObject
 
 	protected virtual void SpawnMeshtaskObject(MeshTask meshTask, GameObject parent, int meshtaskPoint, MeshtaskPoolType meshtaskPoolType)
 	{
-		MeshTask.Point p = meshTask.positionPoints[meshtaskPoint];
+		MeshTask.Point p = meshTask.positionVectors[meshtaskPoint];
 
 		Vector2 meshDirection = meshTask.meshPosition == MeshtaskPosition.Left ? (Vector2.left) : (Vector2.right);
 		float local_XOffset = meshTask.meshPosition == MeshtaskPosition.Left ? Mathf.Min(0f, p.extrusionVariables.leftExtrusion) : Mathf.Max(0f, p.extrusionVariables.rightExtrusion);
 		local_XOffset = local_XOffset * meshTask.meshtaskSettings.extrusionSize;
 
 		Vector3 noise = Vector3.zero;
-		noise += meshTask.noiseChannel.generatorInstance.getNoise(meshTask.startPointIndex + meshtaskPoint, meshTask.noiseChannel);
+		noise += meshTask.noiseChannel.generatorInstance.GetNoise(meshTask.startPointIndex + meshtaskPoint, meshTask.noiseChannel);
 
 		GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshTask.meshtaskSettings.meshTaskType, meshtaskPoolType);
 		PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), parent, instance);

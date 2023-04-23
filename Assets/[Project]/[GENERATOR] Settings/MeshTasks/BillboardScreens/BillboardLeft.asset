@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d506392ec772e1468e230060edab095, type: 3}
   m_Name: BillboardLeft
   m_EditorClassIdentifier: 
-  dataKey: 551915
+  dataKey: 915813
   calculatedUs: []
   uvLenght: 4.24
   UV_scale: 0.2
@@ -62,11 +62,11 @@ MonoBehaviour:
     inversedLine: {x: 5, y: 0}
     isHardEdge: 0
     materialIndex: 1
-  meshResolution: 10
+  meshResolution: 3
   meshtaskContinues: 0
   noiseChannel: 0
   meshtaskWidth: 9.919744
-  maxChamfer: 15
+  maxChamfer: 5
   extrusionSize: 15
   minimalCornerRadius: 30
   maximumCornerRadius: 1000
@@ -74,6 +74,7 @@ MonoBehaviour:
   materials:
   - {fileID: 2100000, guid: 1b35d20a22bb45245b4b32c8119f6a0c, type: 2}
   - {fileID: 2100000, guid: 7d1b2a78eeec2e049a4128e69dabbe73, type: 2}
+  variableMaterials: []
   meshIsClosed: 0
   meshtaskPoolingObjects:
   - meshtaskPoolType: 6

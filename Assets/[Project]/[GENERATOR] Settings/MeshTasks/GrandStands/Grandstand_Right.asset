@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be9b3f1063355f4586f3ac956708616, type: 3}
   m_Name: Grandstand_Right
   m_EditorClassIdentifier: 
-  dataKey: 837939
+  dataKey: 506954
   calculatedUs: []
   uvLenght: 42.899494
   UV_scale: 1
@@ -83,7 +83,7 @@ MonoBehaviour:
     inversedLine: {x: 17, y: 0}
     isHardEdge: 1
     materialIndex: 0
-  meshResolution: 10
+  meshResolution: 7
   meshtaskContinues: 0
   noiseChannel: 0
   meshtaskWidth: 15
@@ -93,7 +93,7 @@ MonoBehaviour:
   maximumCornerRadius: 1000
   minimalExtrusionSize: 0
   materials:
-  - {fileID: 2100000, guid: eb059cafb9d06ca489ffbc40095dcbea, type: 2}
+  - {fileID: 2100000, guid: 78058c775a0521f4399085e1e9bc65ee, type: 2}
   variableMaterials:
   - {fileID: 2100000, guid: 5d43259724dede643b66b5acd325f246, type: 2}
   - {fileID: 2100000, guid: 9ed8e9e1ed6d9354aa4fb9838e17df17, type: 2}

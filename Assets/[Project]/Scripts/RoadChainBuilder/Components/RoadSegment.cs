@@ -38,18 +38,23 @@ public class RoadSegment : UniqueMesh {
 	public RoadChain RoadChain => transform.parent == null ? null : transform.parent.GetComponent<RoadChain>();
 
 	[HideInInspector]public RoadSettings roadSetting;
+    [HideInInspector]public int index;
 
-	public Vector2Int startEndEdgeLoop;
+    public Vector2Int startEndEdgeLoop;
 
-	public int edgeLoopCount;
+	public int edgeLoopCount = 0;
 	// This will regenerate the mesh!
 	// uvzStartEnd is used for the (optional) normalized coordinates along the whole track,
 	// x = start coordinate, y = end coordinate
-	public void CreateMesh( Vector2 nrmCoordStartEnd, RoadSettings settings , int index = 0) {
-		surfaceSettings.AddRange(settings.GetAllSurfaceSettings(index));
+	public void CreateMesh( Vector2 nrmCoordStartEnd, RoadSettings settings , int segmentIndex , int chainIndex = 0)
+	{
+		surfaceSettings.AddRange(settings.GetAllSurfaceSettings(chainIndex));
 		roadSetting = settings;
+		index = segmentIndex;
+
 		// Only generate a mesh if we've got a next control point
-		if ( HasValidNextPoint ) {
+		if ( HasValidNextPoint ) 
+		{
 			this.bezier = GetBezierRepresentation(Space.Self);
 			meshExtruder.ExtrudeRoad(
 				segment: this,
@@ -60,9 +65,11 @@ public class RoadSegment : UniqueMesh {
 				nrmCoordStartEnd: nrmCoordStartEnd,
 				edgeLoopsPerMeter: settings.edgeLoopsPerMeter,
 				tilingAspectRatio: GetTextureAspectRatio(),
-				index
+				chainIndex
 			);
-		} else if( meshCached != null ) {
+		} 
+		else if( meshCached != null ) 
+		{
 			DestroyImmediate( meshCached );
 		}
 		this.GetComponent<MeshCollider>().sharedMesh = Mesh;

@@ -78,6 +78,14 @@ public class Suspension : MonoBehaviour
         return result;
     }
     bool slip;
+    public AnimationCurve slipCurve = new AnimationCurve(
+        new Keyframe(0, 0),
+        new Keyframe(0.2f, 0.1f),
+        new Keyframe(0.4f, 0.3f),
+        new Keyframe(0.6f, 0.5f),
+        new Keyframe(0.8f, 0.8f),
+        new Keyframe(1, 1)
+        );
     private Vector3 CalculateForces(float accelerationForce, float brakeForce, float downForce, out float wheelSpin)
     {
         Vector2 sideways = new Vector2(-wheel.wheelVelocityLocalSpace.x * downForce, 0f);
@@ -96,7 +104,9 @@ public class Suspension : MonoBehaviour
             slip = false;
 
         gripPercentage = slip ? wheel.currentSurface.unGripped.Evaluate(Mathf.Abs(time)) : wheel.currentSurface.gripped.Evaluate(Mathf.Abs(time));
-        float gripForce = downForce * gripPercentage;
+        gripPercentage = slipCurve.Evaluate(Mathf.Abs(time));
+
+    float gripForce = downForce * gripPercentage;
         Vector3 clampedGripForce = ClampForce(rawForce, gripForce);
 
         Vector2 slipForces = new Vector2(Mathf.Abs(brakeForce / downForce), Mathf.Abs(accelerationForce / downForce));

@@ -13,12 +13,18 @@ public class EventTriggerManager : MonoBehaviour
     public delegate void OnSectorTrigger();
     public static event OnSectorTrigger sectorTrigger;
 
+    public delegate void OnSegmentTrigger();
+    public static event OnSegmentTrigger segmentTrigger;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Trigger"))
         {
             TriggerObject to = other.GetComponent<TriggerObject>();
-            switch(to.triggerType)
+            Debug.Log(to, other);
+            to.gameObject.SetActive(false);
+
+            switch (to.triggerType)
             {
                 case TriggerType.ResetPoint:
                     resetPoint?.Invoke(to.triggerPosition);
@@ -29,10 +35,12 @@ public class EventTriggerManager : MonoBehaviour
                     roadChainTrigger?.Invoke();
                     sectorTrigger?.Invoke();
                     break;
+                case TriggerType.SegmentPoint:
+                    segmentTrigger?.Invoke();
+                    break;
                 default:
                     break;
             }
-            to.gameObject.SetActive(false);
         }
     }
 }
@@ -42,5 +50,6 @@ public enum TriggerType
     ResetPoint = 1,
     EventPoint,
     RoadChain,
+    SegmentPoint,
     Other = default,
 }

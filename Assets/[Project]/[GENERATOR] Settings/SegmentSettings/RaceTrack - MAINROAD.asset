@@ -349,11 +349,11 @@ MonoBehaviour:
   guardRailMinimalCornerRadius: 0
   roadTypeTag: FOREST-BASIC
   assetPools:
-  - scannerType: 0
+  - tag: 0
     prefabs:
     - {fileID: 7086041046455506901, guid: 31535cc121e46d24f90bb8e4982bbd92, type: 3}
     size: 7500
-  - scannerType: 0
+  - tag: 0
     prefabs:
     - {fileID: 5046497780763908051, guid: 23c87bfdfe4caa447a06dd5f21b3d51a, type: 3}
     - {fileID: 5011165349289255016, guid: 7b5259cb6412fc04fa9fa2a020b683d5, type: 3}
@@ -376,18 +376,27 @@ MonoBehaviour:
     noises:
     - noiseType: 0
       noiseDirection: 0
-      noiseLenght: 0
-      noisePower: 0
+      frequency: 0
+      scale: 0
+      amplytude: 0
+      octaves: 0
+      noiseMask: 0
   - channel: 1
     noises:
     - noiseType: 3
       noiseDirection: 1
-      noiseLenght: 0.999
-      noisePower: 20
+      frequency: 0
+      scale: 0
+      amplytude: 0
+      octaves: 0
+      noiseMask: 0
     - noiseType: 3
       noiseDirection: 2
-      noiseLenght: 0.993
-      noisePower: 1
+      frequency: 0
+      scale: 0
+      amplytude: 0
+      octaves: 0
+      noiseMask: 0
   runoffAnimationCurve:
     serializedVersion: 2
     m_Curve:
@@ -432,7 +441,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   extrusionSize: 10
   hasCornerChamfer: 1
-  maxChamfer: 16
+  maxCamber: 0
   calculatedUs: []
   uSpan: 0
   hardEdges: 0

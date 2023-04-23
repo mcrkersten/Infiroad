@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.Rendering.HableCurve;
 
 public class RoadChainBuilder : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class RoadChainBuilder : MonoBehaviour
 
     private EdgePoint lastEdgePoint;
     public GameObject startSegment;
+
+    private RoadChain currentRoadChain;
 
     //Mesh task variables
     [HideInInspector] public MeshtaskTypeHandler meshtaskTypeHandler;
@@ -54,7 +57,7 @@ public class RoadChainBuilder : MonoBehaviour
             meshtaskTypeHandler.SetDictionary(item, null);
         UpdateAllRoadSettings();
         roadFormVariables = new RoadFormVariables(.1f);
-        InstantiateAssetPools(false);
+        InstantiateAssetPools();
     }
 
     private void CreateMeshtaskDictionary()
@@ -89,18 +92,12 @@ public class RoadChainBuilder : MonoBehaviour
             SetVehicleStartPosition();
     }
 
-    public void CreateNextRoadChain()
-    {
-        CreateNextRandomRoadChain(lastEdgePoint);
-        if (createdRoadChains.Count == 4)
-            DeleteRoadChain(0);
-    }
-
     public void CreateNextFixedSector_Trigger()
     {
         RoadChain next = SelectAndPositionNextFixedRoadChain();
-        CreateSegmentMeshes(next.organizedSegments, next, RoadShape.straights);
-        SpawnAllDecoration(next.organizedSegments, next);
+        currentRoadChain = next;
+        CreateFullSector(next.organizedSegments, RoadShape.straights);
+        SpawnAllDecorationOnChain(next.organizedSegments);
     }
 
     public RoadShape GetRoadShape(EdgePoint entry, EdgePoint exit)
@@ -143,9 +140,34 @@ public class RoadChainBuilder : MonoBehaviour
     private void StartRandomRoadChain()
     {
         InitializeSinglePoolGenerator();
+
         CreateNextRandomRoadChain(new EdgePoint(EdgeLocation.none, 3, startSegment));
-        CreateNextRoadChain();
-        EventTriggerManager.roadChainTrigger += CreateNextRoadChain;
+        EventTriggerManager.roadChainTrigger += () => { 
+            CreateNextRandomRoadChain(lastEdgePoint);
+            if (createdRoadChains.Count == 4)
+                DeleteRoadChain(0);
+        };
+
+        CreateSegment();
+        CreateSegment();
+        SpawnStartDecoration(currentRoadChain);
+
+        EventTriggerManager.segmentTrigger += () => {
+            CreateSegment();
+        };
+    }
+
+    private void CreateSegment()
+    {
+        RoadSegment segment = currentRoadChain.organizedSegments[currentRoadChain.GeneratedIndex];
+        CreateSegmentMesh(segment);
+        SpawnRandomDecoration(currentRoadChain, segment);
+        SpawnSegmentTrigger(currentRoadChain, segment);
+
+        if(currentRoadChain.GeneratedIndex == 3)
+            SpawnRoadChainTrigger(currentRoadChain, segment);
+
+        currentRoadChain.GeneratedIndex++;
     }
 
     private void StartFixedRoadChain(List<Sector> sectors)
@@ -154,12 +176,12 @@ public class RoadChainBuilder : MonoBehaviour
         int i = 0;
         foreach (Sector s in sectors)
         {
-            s.roadChain.index = i++;
+            s.roadChain.GeneratedIndex = i++;
             fixedRoadChains.Enqueue(s.roadChain);
         }
-        InstantiateAssetPools(true);
+        InstantiateAssetPools();
         Debug.Log(fixedRoadChains.Count);
-        EventTriggerManager.roadChainTrigger += CreateNextFixedSector_Trigger;
+        //EventTriggerManager.roadChainTrigger += CreateNextFixedSector_Trigger;
 
         //Build first two sectors
         CreateNextFixedSector_Trigger();
@@ -182,12 +204,12 @@ public class RoadChainBuilder : MonoBehaviour
     }
 
     #region InstantiatePools
-    private void InstantiateAssetPools(bool multiPool)
+    private void InstantiateAssetPools()
     {
         objectPooler = new ObjectPooler();
         objectPooler.InstantiateAssetTriggersPool(road.assetSpawnPointPoolSize, road.assetSpawnPoint);
         objectPooler.InstantiateAirDecoration(road.skyDecoration);
-        InstantiateVegetationPool(multiPool);
+        InstantiateVegetationPool();
         InstantiateRoadDecorationPools();
         InstantiateMeshtaskPools();
     }
@@ -199,10 +221,10 @@ public class RoadChainBuilder : MonoBehaviour
                     objectPooler.InstantiateMeshtaskObjects(mts);
     }
 
-    private void InstantiateVegetationPool(bool multiPool = false)
+    private void InstantiateVegetationPool()
     {
         foreach (RoadSettings s in road.roadSettings)
-            objectPooler.InstantiateAssetPool(s.assetPools, s.roadTypeTag, multiPool);
+            objectPooler.InstantiateAssetPool(s.assetPools, s.roadTypeTag);
     }
 
     private void InstantiateRoadDecorationPools()
@@ -214,24 +236,26 @@ public class RoadChainBuilder : MonoBehaviour
     }
     #endregion
 
+    int Rindex = 0;
     private List<RoadSegment> CreateNextRandomRoadChain(EdgePoint lastExitPoint, bool decoration = true)
     {
         //Instantiate
         RoadChain roadChain = InstantiateRoadChain();
-        roadChain.index = createdRoadChains.Count;
+        currentRoadChain = roadChain;
+
+        if(Rindex > road.roadSettings[0].SurfaceSettingsCount - 1)
+            Rindex = 0;
+        roadChain.ChainIndex = Rindex;
+        Rindex++;
+
         Vector3 position = CalculateRoadChainObjectPosition(lastExitPoint);
         roadChain.transform.position = position;
         this.transform.position = position;
 
-        RoadShape roadShape;
-        List<RoadSegment> organized = CreateSegments(lastExitPoint, out roadShape);
-        roadChain.SetOrganizedSegments(organized);
-        if (decoration)
-        {
-            createdRoadChains.Add(roadChain);
-            CreateSegmentMeshes(organized, roadChain, roadShape);
-            SpawnAllDecoration(organized, roadChain);
-        }
+        List<RoadSegment> organized = CreateSegments(lastExitPoint, out RoadShape roadShape);
+        currentRoadChain.SetOrganizedSegments(organized);
+        createdRoadChains.Add(currentRoadChain);
+
         return organized;
     }
 
@@ -288,59 +312,79 @@ public class RoadChainBuilder : MonoBehaviour
         SetTangentLenght(segments);
     }
 
-    private void CreateSegmentMeshes(List<RoadSegment> segments, RoadChain roadChain, RoadShape roadShape)
+    private void CreateFullSector(List<RoadSegment> segments, RoadShape roadShape)
     {
-        roadChain.SetOrganizedSegments(segments);
+        currentRoadChain.SetOrganizedSegments(segments);
         foreach (RoadSegment segment in segments)
         {
             RoadSettings roadSettting = road.roadSettings[0];
-            roadChain.CreateSegmentMesh(roadSettting, segment);
+            currentRoadChain.CreateSegmentMesh(roadSettting, segment);
 
-            //Create Meshtasks
+            //Handle created Meshtasks
             foreach (MeshtaskSettings meshtaskSettings in roadSettting.meshtaskSettings)
-                HandleMeshTasks(meshtaskSettings, roadChain);
+                HandleMeshTasks(meshtaskSettings, currentRoadChain);
 
             meshtasks.Clear();
         }
     }
 
-    private void SpawnAllDecoration(List<RoadSegment> segments, RoadChain roadChain)
+    private void CreateSegmentMesh(RoadSegment segment)
     {
-        int index = Random.Range(1, segments.Count - 1);
-        SpawnRandomRoadDecoration(roadChain, segments[index], index);
-        SpawnStandardRoadDecoration(roadChain);
+        RoadSettings roadSettting = road.roadSettings[0];
+        currentRoadChain.CreateSegmentMesh(roadSettting, segment);
+
+        //Handle created Meshtasks
+        foreach (MeshtaskSettings meshtaskSettings in roadSettting.meshtaskSettings)
+            HandleMeshTasks(meshtaskSettings, currentRoadChain);
+
+        meshtasks.Clear();
+    }
+
+    private void SpawnAllDecorationOnChain(List<RoadSegment> segments)
+    {
+        //SpawnSegmentTrigger(segments[segment]);
+
+        int randomIndex = Random.Range(1, segments.Count - 1);
+        SpawnRandomDecoration(currentRoadChain, segments[randomIndex]);
+
         SpawnSkyDecoration();
     }
 
-    private void SpawnStandardRoadDecoration(RoadChain roadChain)
+    private void SpawnSegmentTrigger(RoadChain roadChain, RoadSegment segment)
     {
-        
-        if (roadChain.index == 0)
-        {
-            //Create on first segment a startline
-            RoadDecoration deco_0 = road.standardDecoration.First(t => t.poolIndex == 0);
-            roadChain.ActivateDecor(roadChain.organizedSegments[0], deco_0, 0);
-        }
-
-        //Create on last segment a checkpoint
-        RoadDecoration deco_1 = road.standardDecoration.First(t => t.poolIndex == 1);
-        int lastIndex = roadChain.organizedSegments.Count - 2; //Always mark last index as checkpoint
-        roadChain.ActivateDecor(roadChain.organizedSegments[lastIndex], deco_1, lastIndex);
+        //Create trigger on each segment
+        RoadDecoration deco_2 = road.standardDecoration[2];
+        roadChain.ActivateDecor(segment,  deco_2);
+        Debug.Log(segment.index, deco_2);
     }
 
-    private void SpawnRandomRoadDecoration(RoadChain roadChain, RoadSegment segment, int segmentIndex)
+    private void SpawnRandomDecoration(RoadChain roadChain, RoadSegment segment)
     {
         if(road.randomizedDecoration.Count != 0)
         {
             RoadDecoration deco = road.randomizedDecoration[Random.Range(0, road.randomizedDecoration.Count)];
-            roadChain.ActivateDecor(segment, deco, segmentIndex);
+            roadChain.ActivateDecor(segment, deco);
         }
+    }
+
+    private void SpawnStartDecoration(RoadChain roadChain)
+    {
+        //Create on first segment a startline
+        RoadDecoration deco_0 = road.standardDecoration.First(t => t.poolIndex == 0);
+        roadChain.ActivateDecor(roadChain.organizedSegments[0], deco_0);
+    }
+
+    private void SpawnRoadChainTrigger(RoadChain roadChain, RoadSegment segment)
+    {
+        //Create on last segment a checkpoint
+        RoadDecoration deco_1 = road.standardDecoration.First(t => t.poolIndex == 1);
+        roadChain.ActivateDecor(segment, deco_1);
     }
 
     private void SpawnRandomSceneryObjects(RoadChain roadChain, RoadSegment segment, int segmentIndex)
     {
         RoadDecoration deco = road.sceneryObjects[Random.Range(0, road.sceneryObjects.Count)];
-        roadChain.ActivateDecor(segment, deco, segmentIndex);
+        roadChain.ActivateDecor(segment, deco);
     }
 
     private void SpawnSkyDecoration()
@@ -389,8 +433,10 @@ public class RoadChainBuilder : MonoBehaviour
     {
         foreach (MeshTask task in meshtasks)
             if(settings == task.meshtaskSettings)
-                if(task.positionPoints.Count > 2)
+                if(task.positionVectors.Count > 2)
+                {
                     ExecuteMeshtask(settings, roadchain, task);
+                }
     }
 
     private void ExecuteMeshtask(MeshtaskSettings settings, RoadChain roadchain, MeshTask task)
@@ -406,6 +452,8 @@ public class RoadChainBuilder : MonoBehaviour
         {
             meshtaskExtruder.Extrude(task, roadchain, settings);
         }
+
+        Debug.Log("EXECUTE: " + task.meshtaskSettings.meshTaskType + " " + settings.PointCount);
     }
 
     private List<RoadSegment> OrganizeSegments(List<RoadSegment> createdSegments, EdgePoint entry, EdgePoint exit)
@@ -773,11 +821,6 @@ public class RoadChainBuilder : MonoBehaviour
         [Range(10, 50)]
         public int segmentDeletionProximity;
     }
-
-    private void OnDestroy()
-    {
-        EventTriggerManager.roadChainTrigger -= CreateNextRoadChain;
-    }
 }
 
 [System.Serializable]
@@ -917,14 +960,14 @@ public enum EdgeLocation
 public class MeshtaskTypeHandler
 {
     private Dictionary<string, MeshTask> activeMeshtasks = new Dictionary<string, MeshTask>();
-    private Dictionary<string, Vector3> lastMeshtaskPositions = new Dictionary<string, Vector3>();
+    private Dictionary<string, Vector3> MeshtaskVectors = new Dictionary<string, Vector3>();
 
     public void SetDictionary(MeshtaskSettings meshtaskSettings, MeshTask task)
     {
         int dataKey = Random.Range(0, 1000000);
         meshtaskSettings.dataKey = dataKey;
         activeMeshtasks.Add((meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey), task);
-        lastMeshtaskPositions.Add((meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey), Vector3.one * 1000f);
+        MeshtaskVectors.Add((meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey), Vector3.zero);
     }
 
     public void SetMeshtask(MeshTask newMeshtask, MeshtaskSettings meshtaskSettings)
@@ -932,9 +975,9 @@ public class MeshtaskTypeHandler
         activeMeshtasks[(meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey)] = newMeshtask;
     }
 
-    public void SetLastMeshtaskPosition(MeshtaskSettings meshtaskSettings, Vector3 position)
+    public void SetMeshtaskVector(MeshtaskSettings meshtaskSettings, Vector3 position)
     {
-        lastMeshtaskPositions[(meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey)] = position;
+        MeshtaskVectors[(meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey)] = position;
     }
 
     public MeshTask GetMeshtask(MeshtaskSettings meshtaskSettings)
@@ -942,8 +985,8 @@ public class MeshtaskTypeHandler
         return activeMeshtasks[(meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey)];
     }
 
-    public Vector3 GetLastMeshtaskPosition(MeshtaskSettings meshtaskSettings)
+    public Vector3 GetMeshtaskVector(MeshtaskSettings meshtaskSettings)
     {
-        return lastMeshtaskPositions[(meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey)];
+        return MeshtaskVectors[(meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey)];
     }
 }

@@ -63,6 +63,8 @@ public class Ui_AnimationObject
     [Header("Disable after ani")]
     public bool disableAfterToAnimation;
     public bool disableAfterFromAnimation;
+    public Button toggleButtonAfterAnimation;
+    public bool activatesButton;
     [Header("Position")]
     public Vector2 animateTo;
     public Vector3 animateRotateTo;
@@ -150,6 +152,14 @@ public class Ui_AnimationObject
 
     private void DisableAfterTo()
     {
+        if (toggleButtonAfterAnimation != null) {
+            if (activatesButton)
+                toggleButtonAfterAnimation.interactable = true;
+            else
+                toggleButtonAfterAnimation.interactable = false;
+        }
+
+
         if (disableAfterToAnimation)
             gameObject.SetActive(false);
 
@@ -159,6 +169,14 @@ public class Ui_AnimationObject
 
     private void DisableAfterFrom()
     {
+        if (toggleButtonAfterAnimation != null) {
+            if (activatesButton)
+                toggleButtonAfterAnimation.interactable = true;
+            else
+                toggleButtonAfterAnimation.interactable = false;
+        }
+
+
         if (disableAfterFromAnimation)
             gameObject.SetActive(false);
 

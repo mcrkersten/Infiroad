@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 [System.Serializable]
 public class Engine2
 {
-    private int currentSelectedGear;
+    private int currentSelectedGear = 0;
 
     public int maxRPM;
     public AnimationCurve engineTorqueProfile;
@@ -60,16 +60,27 @@ public class Engine2
         clutch = SemiAutomaticClutch(clutch);
         clutch *= AntiStall(brake);
 
+        // Calculate mechanical force
         float mechanicalForce = CalculateMechanicalFriction(currentForwardVelocity, throttle, clutch);
 
-        float effectiveGearRatio = gearRatios[currentSelectedGear] * finalDriveRatio;
+        // Calculate effective gear ratio and wheel RPM
+        float effectiveGearRatio = GetCurrentGearRatio();
         float wheelRPM = (currentForwardVelocity / (rollingCircumference / 60f)) * wheelSpin;
-        float enginewRPM = ((wheelRPM * effectiveGearRatio) - (physicsWobble * physicsImpact));
-        float velocity = (enginewRPM * clutch) + (Mathf.Lerp(3500f, maxRPM, throttle ) * (1f - clutch)) - lastRPM;
-        lastRPM = Mathf.Lerp(lastRPM + velocity, enginewRPM, clutch);
-        lastRPM = float.IsNaN(lastRPM) ? 0 : lastRPM;
-        lastRPM = float.IsInfinity(lastRPM) ? maxRPM : lastRPM;
-        float wheelTorque = (mechanicalForce + (CalculateEngineTorque(lastRPM) * throttle * effectiveGearRatio)) * clutch;
+
+        // Calculate engine RPM and velocity
+        float enginewRPM = (wheelRPM * effectiveGearRatio) - (physicsWobble * physicsImpact);
+        float deltaRPM = (enginewRPM * clutch) + (Mathf.Lerp(1000f, maxRPM, throttle) * (1f - clutch)) - lastRPM;
+        lastRPM = Mathf.Lerp(lastRPM + deltaRPM, enginewRPM, clutch);
+        lastRPM = Mathf.Clamp(lastRPM, 0, maxRPM);
+        float velocityRPM = lastRPM - enginewRPM;
+        lastRPM += velocityRPM;
+
+        if(float.IsNaN(velocityRPM)) { return 0f; }
+
+        // Calculate wheel torque and force to apply
+        float engineTorque = CalculateEngineTorque(lastRPM);
+        float throttleTorque = engineTorque * throttle * effectiveGearRatio;
+        float wheelTorque = (mechanicalForce + throttleTorque) * clutch;
         float forceToApply = wheelTorque / driveWheelRadiusInMeter;
 
         engineRPMAudio.SetGlobalValue(lastRPM);
@@ -79,10 +90,23 @@ public class Engine2
         dashboard.UpdateMeter(currentForwardVelocity * 3.6f, DashboardMeter.MeterType.Speedometer);
 
         feedbackComponent.UpdateHighFrequencyRumble( RPM_feedbackCurve.Evaluate(lastRPM / maxRPM));
-        feedbackComponent.UpdateLowFrequencyRumble(velocity/100f);
+        feedbackComponent.UpdateLowFrequencyRumble(velocityRPM/100f);
 
         throttleAudio.SetGlobalValue(throttle);
         return forceToApply;
+    }
+
+    private float GetCurrentGearRatio()
+    {
+        if (currentSelectedGear == -1)
+            return 0f; // neutral gear, output 0 gear ratio
+        else if (currentSelectedGear >= 0 && currentSelectedGear < gearRatios.Length)
+            return gearRatios[currentSelectedGear] * finalDriveRatio;
+        else
+        {
+            Debug.LogError("Invalid gear selected: " + currentSelectedGear);
+            return 0f;
+        }
     }
 
     private float AntiStall(float brake)
@@ -116,6 +140,9 @@ public class Engine2
 
     float CalculateMechanicalFriction(float currentForwardSpeed, float throttle, float clutch)
     {
+        if (currentSelectedGear == -1)
+            return 0f; // neutral gear, output 0 gear ratio
+
         float effectiveGearRatio = gearRatios[currentSelectedGear] * finalDriveRatio;
         float wheelRPM = currentForwardSpeed / (rollingCircumference / 60f);
         float currentEngineRPM = (wheelRPM * effectiveGearRatio);
@@ -147,7 +174,7 @@ public class Engine2
         {
             StartSemiAutomaticShift();
             currentSelectedGear++;
-            currentSelectedGear = (int)Mathf.Clamp(currentSelectedGear, 0f, gearRatios.Length - 1);
+            currentSelectedGear = Mathf.Clamp(currentSelectedGear, -1, gearRatios.Length - 1);
             dashboard.UpdateGear(currentSelectedGear + 1, DashboardMeter.MeterType.Tacheometer);
         }
     }
@@ -158,7 +185,7 @@ public class Engine2
         {
             StartSemiAutomaticShift();
             currentSelectedGear--;
-            currentSelectedGear = (int)Mathf.Clamp(currentSelectedGear, 0f, gearRatios.Length - 1);
+            currentSelectedGear = Mathf.Clamp(currentSelectedGear, -1, gearRatios.Length - 1);
             dashboard.UpdateGear(currentSelectedGear + 1, DashboardMeter.MeterType.Tacheometer);
         }
     }

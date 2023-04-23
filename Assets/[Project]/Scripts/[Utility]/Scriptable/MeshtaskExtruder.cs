@@ -21,7 +21,7 @@ public class MeshtaskExtruder
 		List<Material> materials = new List<Material>();
 		materials.AddRange(meshTasksettings.materials);
 		if (meshTasksettings.variableMaterials.Count != 0)
-			materials.Add(meshTasksettings.variableMaterials[currentRoadchain.index]);
+			materials.Add(meshTasksettings.variableMaterials[currentRoadchain.ChainIndex]);
 		materialCount = materials.Count;
 
 		Mesh mesh = CreateMeshFilters(meshTasksettings, meshTask.meshPosition);
@@ -87,9 +87,9 @@ public class MeshtaskExtruder
 		Vector2 meshDirection = meshTask.meshPosition == MeshtaskPosition.Left ? (Vector2.left) : (Vector2.right);
 
 		Vector3 noise = Vector3.zero;
-		noise += meshTask.noiseChannel.generatorInstance.getNoise(meshTask.startPointIndex + currentEdgeloop, meshTask.noiseChannel);
+		noise += meshTask.noiseChannel.generatorInstance.GetNoise(meshTask.startPointIndex + currentEdgeloop, meshTask.noiseChannel);
 
-		foreach (MeshTask.Point p in meshTask.positionPoints)
+		foreach (MeshTask.Point p in meshTask.positionVectors)
 		{
 			float local_XOffset = meshTask.meshPosition == MeshtaskPosition.Left ? Mathf.Min(0f, p.extrusionVariables.leftExtrusion) : Mathf.Max(0f, p.extrusionVariables.rightExtrusion);
 			local_XOffset = local_XOffset * meshtaskSettings.extrusionSize;
@@ -133,7 +133,7 @@ public class MeshtaskExtruder
 		switch (meshtaskSettings.meshTaskType)
 		{
 			case MeshTaskType.Guardrail:
-				if (currentEdgeloop - (objectCount * ((GuardrailSettings)meshtaskSettings).poleSpacing) == 0 || currentEdgeloop == meshTask.positionPoints.Count - 2)
+				if (currentEdgeloop - (objectCount * ((GuardrailSettings)meshtaskSettings).poleSpacing) == 0 || currentEdgeloop == meshTask.positionVectors.Count - 2)
 				{
 					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.GuardrailPoles);
 					meshtaskSettings.PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
@@ -141,7 +141,7 @@ public class MeshtaskExtruder
 				}
 				break;
 			case MeshTaskType.CatchFence:
-				if (currentEdgeloop - (objectCount * ((GuardrailSettings)meshtaskSettings).poleSpacing) == 0 || currentEdgeloop == meshTask.positionPoints.Count - 2)
+				if (currentEdgeloop - (objectCount * ((GuardrailSettings)meshtaskSettings).poleSpacing) == 0 || currentEdgeloop == meshTask.positionVectors.Count - 2)
 				{
 					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.CatchfencePoles);
 					meshtaskSettings.PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
@@ -155,7 +155,7 @@ public class MeshtaskExtruder
 					meshtaskSettings.PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
 					return 1;
 				}
-				else if (currentEdgeloop == meshTask.positionPoints.Count - 2)
+				else if (currentEdgeloop == meshTask.positionVectors.Count - 2)
 				{
 					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.GrandstandSides);
 					meshtaskSettings.PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
@@ -169,7 +169,7 @@ public class MeshtaskExtruder
 					meshtaskSettings.PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
 					return 1;
 				}
-				else if (currentEdgeloop == meshTask.positionPoints.Count - 2)
+				else if (currentEdgeloop == meshTask.positionVectors.Count - 2)
 				{
 					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.Tecpros);
 					meshtaskSettings.PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
@@ -183,7 +183,7 @@ public class MeshtaskExtruder
 					meshtaskSettings.PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
 					return 1;
 				}
-				else if (currentEdgeloop == meshTask.positionPoints.Count - 2)
+				else if (currentEdgeloop == meshTask.positionVectors.Count - 2)
 				{
 					GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshtaskSettings.meshTaskType, MeshtaskPoolType.VideoBillboardEdge);
 					meshtaskSettings.PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), currentMeshObject, instance);
@@ -203,7 +203,7 @@ public class MeshtaskExtruder
 			tries[i] = new List<int>();
 		// Generate Trianges
 		// Foreach edge loop (except the last, since this looks ahead one step)
-		for (int edgeLoop = 0; edgeLoop < meshTask.positionPoints.Count - 2; edgeLoop++)
+		for (int edgeLoop = 0; edgeLoop < meshTask.positionVectors.Count - 2; edgeLoop++)
 		{
 			//Debug.Log("New Edgeloop");
 

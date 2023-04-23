@@ -8,6 +8,7 @@ public class RoadSettings : ScriptableObject
 	[Header("Appearance")]
     public VertexPoint[] points;
 	[SerializeField] private List<SurfaceScriptableSector> surfaceSettings = new List<SurfaceScriptableSector>();
+	public int SurfaceSettingsCount => surfaceSettings.Count;
 	public int PointCount => points.Length;
 
 	[Header("Meshtasks")]
@@ -199,12 +200,17 @@ public class Noise
 	[SerializeField] private NoiseType noiseType;
 	public NoiseDirection noiseDirection;
 
-	[Range(0f, .9999f)]
-	public float noiseLenght;
-	[Range(0f, 20f)]
-	public float noisePower;
+	[Range(.001f, 10f)]
+	public float frequency;
+    [Range(.001f, 10f)]
+    public float scale;
+    [Range(.001f, 1f)]
+	public float amplytude;
+    [Range(1, 5)]
+    public int octaves;
+	public bool noiseMask;
 
-	private enum NoiseType
+    private enum NoiseType
 	{
 		None,
 		Short_Noise,
