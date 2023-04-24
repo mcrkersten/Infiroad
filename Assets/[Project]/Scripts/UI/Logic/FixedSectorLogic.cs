@@ -68,7 +68,7 @@ public class FixedSectorLogic : MonoBehaviour
         if (createdSector != null)
             Destroy(createdSector.roadChain.gameObject);
 
-        createdSector = roadChainBuilder.GenerateSector();
+        createdSector = roadChainBuilder.GenerateTimingSector();
         CreateSectorUI_Elements(createdSector);
 
         if(sectors.Count <= 2)

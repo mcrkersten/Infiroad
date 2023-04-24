@@ -352,6 +352,8 @@ public class RoadMeshExtruder {
     {
 		foreach (MeshtaskSettings meshtaskSettings in roadSettings.meshtaskSettings)
 		{
+			if(meshtaskSettings.meshtaskContinues) continue;
+
 			MeshTask lastTask = roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskSettings);
             if (lastTask == null) return;
 

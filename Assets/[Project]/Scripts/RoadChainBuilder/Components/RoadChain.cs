@@ -33,7 +33,7 @@ public class RoadChain : MonoBehaviour {
 
 	public MeshSpawnPoints meshSpawnPoints;
 
-	private List<GameObject> activatedPooledObjects = new List<GameObject>();
+	[HideInInspector] public List<GameObject> activatedPooledObjects = new List<GameObject>();
 	[HideInInspector] public Road road;
 
 	//For dev UI

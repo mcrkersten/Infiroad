@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 968972396982e854e9bbfb037c44c290, type: 3}
   m_Name: SegmentTrigger
   m_EditorClassIdentifier: 
-  wholeUnitsInPool: 1
+  wholeUnitsInPool: 6
   segmentIndex: 0
-  mainCurveTime: 0.2
+  mainCurveTime: 0
   decor:
   - meshtaskPoolType: 0
-    unitsInPool: 4
+    unitsInPool: 1
     prefab: {fileID: 7696483532372454975, guid: 7ced060e4d915b9489db00a2e5be64e7, type: 3}
     position: {x: 0, y: 0}
     curveTime: 0
     noiseChannel: 0
-  poolIndex: 4
+  poolIndex: 2

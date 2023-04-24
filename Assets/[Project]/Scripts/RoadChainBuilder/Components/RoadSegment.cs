@@ -24,6 +24,7 @@ using System.Collections.Generic;
 public class RoadSegment : UniqueMesh {
 
 	public bool usesSectorSurfaceScriptable;
+	[HideInInspector] public bool isExitSegment;
 	[HideInInspector] public OrientedCubicBezier3D bezier;
 	[HideInInspector] public List<AssetSpawnEdge> assetSpawnEdges = new List<AssetSpawnEdge>();
 	[HideInInspector] public List<SurfaceScriptable> surfaceSettings = new List<SurfaceScriptable>();
