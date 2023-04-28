@@ -273,18 +273,27 @@ MonoBehaviour:
     noises:
     - noiseType: 0
       noiseDirection: 0
-      noiseLenght: 0
-      noisePower: 0
+      frequency: 0
+      scale: 0
+      amplytude: 0
+      octaves: 0
+      noiseMask: 0
   - channel: 1
     noises:
     - noiseType: 3
       noiseDirection: 1
-      noiseLenght: 0.999
-      noisePower: 20
+      frequency: 0
+      scale: 0
+      amplytude: 0
+      octaves: 0
+      noiseMask: 0
     - noiseType: 3
       noiseDirection: 2
-      noiseLenght: 0.993
-      noisePower: 1
+      frequency: 0
+      scale: 0
+      amplytude: 0
+      octaves: 0
+      noiseMask: 0
   runoffAnimationCurve:
     serializedVersion: 2
     m_Curve:

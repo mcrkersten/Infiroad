@@ -57,6 +57,7 @@ public class NoiseGenerator
         Vector2 noiseResult = new Vector3();
         foreach (Noise noise in noiseChannelSettings.noises)
         {
+            if(noise.frequency == 0) return new Vector2(0, 0);
             float xCoordinate = coordinate.x / noise.frequency;
             float yCoordinate = coordinate.y / noise.frequency;
 
@@ -85,4 +86,60 @@ public class NoiseGenerator
 
         return noiseResult;
     }
+}
+
+[System.Serializable]
+public class NoiseChannel
+{
+	public int channel;
+	public List<Noise> noises = new List<Noise>();
+	public NoiseGenerator generatorInstance
+	{
+		get
+		{
+			if (GeneratorInstance == null) { return CreateNoiseGenerator(channel); }
+			else { return GeneratorInstance; }
+		}
+	}
+
+	private NoiseGenerator GeneratorInstance;
+
+	public NoiseGenerator CreateNoiseGenerator(int groupIndex)
+	{
+		if (GeneratorInstance == null)
+			GeneratorInstance = new NoiseGenerator(noises, groupIndex);
+		return GeneratorInstance;
+	}
+}
+
+[System.Serializable]
+public class Noise
+{
+	[SerializeField] private NoiseType noiseType;
+	public NoiseDirection noiseDirection;
+
+	[Range(0f, 10f)]
+	public float frequency;
+    [Range(.001f, 10f)]
+    public float scale;
+    [Range(.001f, 1f)]
+	public float amplytude;
+    [Range(1, 5)]
+    public int octaves;
+	public bool noiseMask;
+
+    private enum NoiseType
+	{
+		None,
+		Short_Noise,
+		Medium_Noise,
+		Long_Noise,
+	}
+}
+
+public enum NoiseDirection
+{
+	None,
+	Horizontal,
+	Vertical,
 }

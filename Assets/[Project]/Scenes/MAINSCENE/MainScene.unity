@@ -2122,6 +2122,10 @@ PrefabInstance:
       value: RoadChainBuilder
       objectReference: {fileID: 0}
     - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
+      propertyPath: road
+      value: 
+      objectReference: {fileID: 11400000, guid: a1d53fd9e94fb6b468ea8b7a83167c9a, type: 2}
+    - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: vehicle
       value: 
       objectReference: {fileID: 751016503}
@@ -5101,6 +5105,8 @@ MonoBehaviour:
     selectAfterFrom: 0
     disableAfterToAnimation: 0
     disableAfterFromAnimation: 0
+    toggleButtonAfterAnimation: {fileID: 0}
+    activatesButton: 0
     animateTo: {x: 0, y: 0}
     animateRotateTo: {x: 0, y: 0, z: 0}
     SizeIsScale: 0
@@ -6084,7 +6090,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1693877335096914509, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 14.54
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 1693877335096914509, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
       propertyPath: m_LocalRotation.w

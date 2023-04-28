@@ -165,7 +165,6 @@ public class RoadChainBuilder : MonoBehaviour
     private void InstigateSegment()
     {
         if(currentRoadChain.GeneratedIndex == 6) return;
-        Debug.Log(currentRoadChain.GeneratedIndex, currentRoadChain);
         if(currentRoadChain.GeneratedIndex == 4)
             SpawnRoadChainTrigger(currentRoadChain, currentRoadChain.organizedSegments[3]);
         PopulateSegment();
@@ -240,8 +239,8 @@ public class RoadChainBuilder : MonoBehaviour
     private void InstantiateMeshtaskPools()
     {
             foreach (RoadSettings v in road.roadSettings)
-                foreach (MeshtaskSettings mts in v.meshtaskSettings)
-                    objectPooler.InstantiateMeshtaskObjects(mts);
+                foreach (MeshtaskObject mto in v.meshtaskObjects)
+                    objectPooler.InstantiateMeshtaskObjects(mto.meshtaskSettings);
     }
 
     private void InstantiateVegetationPool()
@@ -344,8 +343,8 @@ public class RoadChainBuilder : MonoBehaviour
             currentRoadChain.CreateSegmentMesh(roadSettting, segment);
 
             //Handle created Meshtasks
-            foreach (MeshtaskSettings meshtaskSettings in roadSettting.meshtaskSettings)
-                HandleMeshTasks(meshtaskSettings, currentRoadChain);
+            foreach (MeshtaskObject meshtaskObject in roadSettting.meshtaskObjects)
+                HandleMeshTasks(meshtaskObject.meshtaskSettings, currentRoadChain);
 
             meshtasks.Clear();
         }
@@ -357,8 +356,8 @@ public class RoadChainBuilder : MonoBehaviour
         currentRoadChain.CreateSegmentMesh(roadSettting, segment);
 
         //Handle created Meshtasks
-        foreach (MeshtaskSettings meshtaskSettings in roadSettting.meshtaskSettings)
-            HandleMeshTasks(meshtaskSettings, currentRoadChain);
+        foreach (MeshtaskObject meshtaskObject in roadSettting.meshtaskObjects)
+            HandleMeshTasks(meshtaskObject.meshtaskSettings, currentRoadChain);
 
         meshtasks.Clear();
     }
@@ -458,26 +457,14 @@ public class RoadChainBuilder : MonoBehaviour
     private void HandleMeshTasks(MeshtaskSettings settings, RoadChain roadchain)
     {
         foreach (MeshTask task in meshtasks)
-            if(settings == task.meshtaskSettings)
+            if(settings == task.meshtaskObject.meshtaskSettings)
                 if(task.positionVectors.Count > 2)
-                {
-                    ExecuteMeshtask(settings, roadchain, task);
-                }
+                    ExecuteMeshtask(task,roadchain);
     }
 
-    private void ExecuteMeshtask(MeshtaskSettings settings, RoadChain roadchain, MeshTask task)
+    private void ExecuteMeshtask(MeshTask task, RoadChain roadchain)
     {
-        if (settings.meshtaskPosition == MeshtaskPosition.Both)
-        {
-            task.meshPosition = MeshtaskPosition.Right;
-            meshtaskExtruder.Extrude(task, roadchain, settings);
-            task.meshPosition = MeshtaskPosition.Left;
-            meshtaskExtruder.Extrude(task, roadchain, settings);
-        }
-        else
-        {
-            meshtaskExtruder.Extrude(task, roadchain, settings);
-        }
+            meshtaskExtruder.Extrude(task, roadchain);
     }
 
     private List<RoadSegment> OrganizeSegments(List<RoadSegment> createdSegments, EdgePoint entry, EdgePoint exit)

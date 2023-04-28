@@ -177,8 +177,8 @@ public class ObjectPooler
         GameObject objectToSpawn = assetQueueDictionaries[roadTag][assetType].Dequeue();
 
         //Activate and set position
-        objectToSpawn.SetActive(true);
         SetGameObjectPosition(objectToSpawn, position, rotation);
+        objectToSpawn.SetActive(true);
 
         //Put object back in to dictionary
         assetQueueDictionaries[roadTag][assetType].Enqueue(objectToSpawn);
@@ -220,13 +220,13 @@ public class ObjectPooler
         }
     }
 
-    private void SetGameObjectPosition(GameObject go,Vector3 position, Quaternion rotation)
+    private void SetGameObjectPosition(GameObject gameObject, Vector3 position, Quaternion rotation)
     {
-        Vector3 currentScale = go.transform.localScale;
-        go.transform.localScale = Vector3.zero;
-        go.transform.position = position;
-        go.transform.rotation = rotation;
-        go.transform.DOScale(currentScale, 1f).SetEase(DG.Tweening.Ease.InBack);
+        Vector3 currentScale = gameObject.transform.localScale;
+        gameObject.transform.localScale = Vector3.zero;
+        gameObject.transform.position = position;
+        gameObject.transform.rotation = rotation;
+        gameObject.transform.DOScale(currentScale, 1f).SetEase(DG.Tweening.Ease.InBack);
     }
 }
 

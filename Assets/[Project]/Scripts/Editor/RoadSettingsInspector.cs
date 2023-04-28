@@ -10,13 +10,31 @@ public class RoadSettingsInspector : Editor
 {
 	void OnEnable()
 	{
-		SceneView.onSceneGUIDelegate += OnSceneGUI;
+		SceneView.duringSceneGui += OnSceneGUI;
 	}
 
 	void OnDisable()
 	{
-		SceneView.onSceneGUIDelegate -= OnSceneGUI;
+		SceneView.duringSceneGui -= OnSceneGUI;
 	}
+
+	bool drawMesh3DShape;
+	bool drawMeshHandles;
+	bool drawAddButtons;
+	bool drawMeshtasks;
+	bool drawMeshtaskHandles;
+	public override void OnInspectorGUI()
+	{
+		base.OnInspectorGUI();
+
+		drawMesh3DShape = EditorGUILayout.Toggle("Draw Mesh 3D Shape", drawMesh3DShape);
+		drawMeshHandles = EditorGUILayout.Toggle("Draw Mesh handles", drawMeshHandles);
+		drawAddButtons = EditorGUILayout.Toggle("Draw Add Buttons", drawAddButtons);
+
+		drawMeshtasks = EditorGUILayout.Toggle("Draw Meshtasks", drawMeshtasks);
+		drawMeshtaskHandles = EditorGUILayout.Toggle("Draw Mesh handles", drawMeshtaskHandles);
+	}
+
 
 	void OnSceneGUI(SceneView sceneView)
 	{
@@ -25,20 +43,29 @@ public class RoadSettingsInspector : Editor
 		RoadSettings t = target as RoadSettings;
 
 		Undo.RecordObject(t, "RoadSettings");
-
-		Draw3DShape(t);
-		DrawHandles(t);
-        foreach (MeshtaskSettings g in t.meshtaskSettings)
-        {
-			Undo.RecordObject(g, "GuardrailSettings" + g.ToString());
-			DrawRightGuardrail(g);
-			DrawLeftGuardrail(g);
-			DrawGuardrailHandle(g);
-		}
-		DrawAddButtons(t);
+		if(drawMesh3DShape)
+			Draw3DShape(t);
+		if(drawMeshHandles)
+			DrawMeshHandles(t);
+		if(drawAddButtons)
+            DrawAddButtons(t);
+		if(drawMeshtasks)
+			DrawMeshtask(t);
 	}
 
-	private void DrawHandles(RoadSettings t)
+    private void DrawMeshtask(RoadSettings t)
+    {
+        foreach (MeshtaskObject g in t.meshtaskObjects)
+        {
+			Undo.RecordObject(g.meshtaskSettings, "GuardrailSettings" + g.ToString());
+			DrawMeshtaskObject(g);
+
+			if(drawMeshtaskHandles)
+				DrawMeshtaskHandle(g);
+		}
+    }
+
+    private void DrawMeshHandles(RoadSettings t)
 	{
 		for (int i = 0; i < t.PointCount; i++)
 		{
@@ -55,11 +82,6 @@ public class RoadSettingsInspector : Editor
     {
 		for (int i = 0; i < t.PointCount; i++)
 		{
-			//Draw handles
-			Vector3 position = t.points[i].vertex_1.point;
-			Vector3 offset = (Vector3.right * position.x) + (Vector3.up * position.y) + (Vector3.forward * position.z);
-			position = Handles.PositionHandle(offset, Quaternion.identity);
-
 			//Draw 2D Shapes
 			for (int row = 0; row < 10; row++)
 			{
@@ -142,62 +164,45 @@ public class RoadSettingsInspector : Editor
 		}
 	}
 
-	private void DrawRightGuardrail(MeshtaskSettings gr)
-	{
-		Handles.color = Color.white;
-		for (int i = 0; i < gr.PointCount; i++)
-        {
-			float offset = gr.meshtaskWidth;
-            for (int row = 0; row < 9; row++)
-            {
-				if (i < gr.PointCount - 1)
-				{
-					Vector3 point_0 = new Vector3(-gr.points[i].vertex.point.x + offset, gr.points[i].vertex.point.y, row * 3);
-					Vector3 point_1 = new Vector3(-gr.points[i + 1].vertex.point.x + offset, gr.points[i + 1].vertex.point.y, row * 3);
-					Handles.DrawLine(point_0, point_1);
-				}
-			}
-
-			for (int row = 0; row < 9; row++)
-			{
-				Vector3 point_0 = new Vector3(-gr.points[i].vertex.point.x + offset, gr.points[i].vertex.point.y, row * 3);
-				Vector3 point_1 = new Vector3(-gr.points[i].vertex.point.x + offset, gr.points[i].vertex.point.y, ((row + 1) * 3));
-				Handles.DrawLine(point_0, point_1, 1f);
-			}
-		}
-	}
-
-	private void DrawLeftGuardrail(MeshtaskSettings gr)
+	private void DrawMeshtaskObject(MeshtaskObject mto)
     {
+		MeshtaskSettings mts = mto.meshtaskSettings;
+		Vector2 mto_position = new Vector2(mto.position.x, mto.position.y);
+
 		Handles.color = Color.white;
-		for (int i = 0; i < gr.PointCount; i++)
+		for (int i = 0; i < mts.PointCount; i++)
 		{
-			float offset = gr.meshtaskWidth;
-			for (int row = 0; row < 9; row++)
+			for (int row = 0; row < 10; row++)
 			{
-				if (i < gr.PointCount - 1)
+				if (i < mts.PointCount - 1)
 				{
-					Vector3 point_0 = new Vector3(gr.points[i].vertex.point.x - offset, gr.points[i].vertex.point.y, row * 3);
-					Vector3 point_1 = new Vector3(gr.points[i + 1].vertex.point.x - offset, gr.points[i + 1].vertex.point.y, row * 3);
+					Vector2 p0 = new Vector2(mts.points[i].vertex.point.x, mts.points[i].vertex.point.y);
+					Vector3 point_0 = new Vector3(p0.x + mto_position.x, p0.y + mto_position.y, row * 3);
+
+					Vector2 p1 = new Vector2(mts.points[i + 1].vertex.point.x, mts.points[i + 1].vertex.point.y);
+					Vector3 point_1 = new Vector3(p1.x + mto_position.x, p1.y + mto_position.y, row * 3);
+
 					Handles.DrawLine(point_0, point_1);
 				}
 			}
 
 			for (int row = 0; row < 9; row++)
 			{
-				Vector3 point_0 = new Vector3(gr.points[i].vertex.point.x - offset, gr.points[i].vertex.point.y, row * 3);
-				Vector3 point_1 = new Vector3(gr.points[i].vertex.point.x - offset, gr.points[i].vertex.point.y, ((row + 1) * 3));
+				Vector2 p = new Vector2(mts.points[i].vertex.point.x, mts.points[i].vertex.point.y);
+				Vector3 point_0 = new Vector3(p.x + mto_position.x, p.y + mto_position.y, row * 3);
+				Vector3 point_1 = new Vector3(p.x + mto_position.x, p.y + mto_position.y, ((row + 1) * 3));
+
 				Handles.DrawLine(point_0, point_1, 1f);
 			}
 		}
 	}
 
-	private void DrawGuardrailHandle(MeshtaskSettings gr)
+	private void DrawMeshtaskHandle(MeshtaskObject mto)
     {
-		Vector3 position = new Vector3(gr.meshtaskWidth, 0, 13.5f);
+		Vector3 position = mto.position;
 		Vector3 endResult = Handles.PositionHandle(position, Quaternion.identity);
-		Handles.Label(position + new Vector3(.2f, .5f, 0), gr.meshTaskType.ToString());
-		gr.meshtaskWidth = endResult.x;
+		Handles.Label(position + new Vector3(.2f, .5f, 0), mto.meshtaskSettings.meshTaskType.ToString());
+		mto.position = endResult;
 
 	}
 

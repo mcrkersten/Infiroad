@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d506392ec772e1468e230060edab095, type: 3}
+  m_Name: Wall_Right_RACETRACK
+  m_EditorClassIdentifier: 
+  EDITOR_offSetPosition: {x: -1.3107615, y: 0, z: -3.0022857}
+  dataKey: 675
+  calculatedUs: []
+  uvLenght: 2.5414212
+  UV_scale: 1
+  meshTaskType: 5
+  meshtaskPosition: 1
+  meshtaskStyle: 2
+  points:
+  - vertex:
+      point: {x: -0.29999995, y: 0}
+      horizontal_UV: 0
+    line: {x: 1, y: 2}
+    inversedLine: {x: 11, y: 0}
+    isHardEdge: 1
+    materialIndex: 0
+  - vertex:
+      point: {x: -0.29999995, y: 0.95}
+      horizontal_UV: 0.95
+    line: {x: 3, y: 4}
+    inversedLine: {x: 9, y: 10}
+    isHardEdge: 1
+    materialIndex: 0
+  - vertex:
+      point: {x: -0.25, y: 1}
+      horizontal_UV: 1.0207106
+    line: {x: 5, y: 6}
+    inversedLine: {x: 7, y: 8}
+    isHardEdge: 1
+    materialIndex: 0
+  - vertex:
+      point: {x: 0.25, y: 1}
+      horizontal_UV: 1.5207106
+    line: {x: 7, y: 8}
+    inversedLine: {x: 5, y: 6}
+    isHardEdge: 1
+    materialIndex: 0
+  - vertex:
+      point: {x: 0.29999995, y: 0.95}
+      horizontal_UV: 1.5914212
+    line: {x: 9, y: 10}
+    inversedLine: {x: 3, y: 4}
+    isHardEdge: 1
+    materialIndex: 0
+  - vertex:
+      point: {x: 0.29999995, y: 0}
+      horizontal_UV: 2.5414212
+    line: {x: 11, y: 0}
+    inversedLine: {x: 1, y: 2}
+    isHardEdge: 1
+    materialIndex: 0
+  meshResolution: 6
+  meshtaskContinues: 1
+  noiseChannel: 0
+  maxChamfer: 5
+  extrusionSize: 15
+  minimalCornerRadius: 0
+  maximumCornerRadius: 0
+  minimalExtrusionSize: 0
+  materials:
+  - {fileID: 2100000, guid: c2117b301237a2e439571f3fe1fc6cc8, type: 2}
+  variableMaterials: []
+  meshIsClosed: 0
+  meshtaskPoolingObjects: []

@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d506392ec772e1468e230060edab095, type: 3}
+  m_Name: TecproBarrier_Left_RACETRACK
+  m_EditorClassIdentifier: 
+  EDITOR_offSetPosition: {x: 0, y: 0, z: -4.1137085}
+  dataKey: 977153
+  calculatedUs: []
+  uvLenght: 2.3447418
+  UV_scale: 1
+  meshTaskType: 3
+  meshtaskPosition: 0
+  meshtaskStyle: 1
+  points:
+  - vertex:
+      point: {x: -0.3, y: 0}
+      horizontal_UV: 0
+    line: {x: 5, y: 0}
+    inversedLine: {x: 4, y: 5}
+    isHardEdge: 0
+    materialIndex: 0
+  - vertex:
+      point: {x: -0.3, y: 0.85}
+      horizontal_UV: 0.85
+    line: {x: 0, y: 1}
+    inversedLine: {x: 3, y: 4}
+    isHardEdge: 0
+    materialIndex: 0
+  - vertex:
+      point: {x: -0.25, y: 0.9}
+      horizontal_UV: 0.9207107
+    line: {x: 1, y: 2}
+    inversedLine: {x: 2, y: 3}
+    isHardEdge: 0
+    materialIndex: 0
+  - vertex:
+      point: {x: 0.25, y: 0.9}
+      horizontal_UV: 1.4207107
+    line: {x: 2, y: 3}
+    inversedLine: {x: 1, y: 2}
+    isHardEdge: 0
+    materialIndex: 0
+  - vertex:
+      point: {x: 0.3, y: 0.86}
+      horizontal_UV: 1.4847419
+    line: {x: 3, y: 4}
+    inversedLine: {x: 0, y: 1}
+    isHardEdge: 0
+    materialIndex: 0
+  - vertex:
+      point: {x: 0.3, y: 0}
+      horizontal_UV: 2.3447418
+    line: {x: 4, y: 5}
+    inversedLine: {x: 5, y: 0}
+    isHardEdge: 0
+    materialIndex: 0
+  meshResolution: 3
+  meshtaskContinues: 0
+  noiseChannel: 0
+  maxChamfer: 5
+  extrusionSize: 15
+  minimalCornerRadius: 0
+  maximumCornerRadius: 0
+  minimalExtrusionSize: 0.25
+  materials:
+  - {fileID: 2100000, guid: 82aff1b8fa3f2544ea19b0dd65f97d40, type: 2}
+  variableMaterials: []
+  meshIsClosed: 0
+  meshtaskPoolingObjects:
+  - meshtaskPoolType: 5
+    unitsInPool: 10
+    prefab: {fileID: 8694726751200514241, guid: f0a143e38566c6b47a5dc2335839980a, type: 3}
+    position: {x: 0, y: 0}
+    curveTime: 0
+    noiseChannel: 0

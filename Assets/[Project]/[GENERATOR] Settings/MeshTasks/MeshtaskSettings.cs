@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu, System.Serializable]
 public class MeshtaskSettings : ScriptableObject
 {
+	public  Vector3 EDITOR_offSetPosition = Vector2.zero;
+
 	[HideInInspector] public int dataKey;
 	[HideInInspector] public List<Vector2> calculatedUs = new List<Vector2>();
 	[HideInInspector] public float uvLenght;
@@ -20,8 +22,6 @@ public class MeshtaskSettings : ScriptableObject
 	public int meshResolution;
     public bool meshtaskContinues;
     public int noiseChannel;
-
-    public float meshtaskWidth;
 
 	[HideInInspector] public float maxChamfer;
 	[HideInInspector] public float extrusionSize;
@@ -77,14 +77,12 @@ public class MeshtaskSettings : ScriptableObject
 		int count2 = 0;
 		for (int i = 0; i < points.Length; i++)
 		{
-			if (i == 0)
-				points[i].line = new Vector2Int(points.Length - 1 + count1, i);
-			else
-				points[i].line = new Vector2Int(i - 1 + count2, i + count2);
-
 			if (points[i].isHardEdge)
 				count2++;
-
+			if (i == PointCount - 1)
+				points[i].line = new Vector2Int(points.Length - 1 + count1, 0);
+			else
+				points[i].line = new Vector2Int(i + count2, i + 1 + count2);
 		}
 	}
 
@@ -98,15 +96,15 @@ public class MeshtaskSettings : ScriptableObject
 		}
 	}
 
-	public virtual void PlaceModelOnMesh(Vector2 direction, MeshTask.Point p, Vector3 noise, float localX_offset, GameObject parent, GameObject model)
+	public virtual void PlaceModelOnMesh(Vector2 direction, MeshTask.Point p, Vector3 meshtaskObjectPosition, Vector3 noise, float localX_offset, GameObject parent, GameObject model)
 	{
-		Vector3 offset = new Vector3(direction.x * (this.meshtaskWidth + localX_offset), 0f, 0f) + noise;
+		Vector3 offset = new Vector3(direction.x * localX_offset, 0f, 0f) + noise + meshtaskObjectPosition;
 		offset = Quaternion.Euler(0, 0, (p.extrusionVariables.cornerCamber) * this.maxChamfer) * offset;
 
 		Vector3 relativePosition = p.rotation * offset;
-		Vector3 position = relativePosition + (p.position);
+		Vector3 calculatedPosition = relativePosition + p.position;
 
-		model.transform.localPosition = position + parent.transform.position;
+		model.transform.localPosition = calculatedPosition + parent.transform.position;
 		model.transform.rotation = p.rotation;
 		model.SetActive(true);
 
@@ -115,27 +113,22 @@ public class MeshtaskSettings : ScriptableObject
 
 	}
 
-	protected virtual void SpawnMeshtaskObject(MeshTask meshTask, GameObject parent, int meshtaskPoint, MeshtaskPoolType meshtaskPoolType)
+	protected virtual void SpawnMeshtaskObject(MeshTask meshTask, GameObject parent, int meshtaskPoint, MeshtaskPoolType meshtaskPoolType, Vector2 mto_position)
 	{
-		MeshTask.Point p = meshTask.positionVectors[meshtaskPoint];
 
-		Vector2 meshDirection = meshTask.meshPosition == MeshtaskPosition.Left ? (Vector2.left) : (Vector2.right);
-		float local_XOffset = meshTask.meshPosition == MeshtaskPosition.Left ? Mathf.Min(0f, p.extrusionVariables.leftExtrusion) : Mathf.Max(0f, p.extrusionVariables.rightExtrusion);
-		local_XOffset = local_XOffset * meshTask.meshtaskSettings.extrusionSize;
-
-		Vector3 noise = Vector3.zero;
-		noise += meshTask.noiseChannel.generatorInstance.GetNoise(meshTask.startPointIndex + meshtaskPoint, meshTask.noiseChannel);
-
-		GameObject instance = ObjectPooler.Instance.GetMeshtaskObject(meshTask.meshtaskSettings.meshTaskType, meshtaskPoolType);
-		PlaceModelOnMesh(meshDirection, p, noise, Mathf.Abs(local_XOffset), parent, instance);
 	}
 
-	public virtual void PopulateMeshtask(MeshTask meshTask, GameObject currentMeshObject)
+	public virtual void PopulateMeshtask(MeshTask meshTask, GameObject currentMeshObject, bool relfect = false)
     {
 
     }
 }
-
+[System.Serializable]
+public class MeshtaskObject
+{
+	public MeshtaskSettings meshtaskSettings;
+	public Vector3 position;
+}
 
 [System.Serializable]
 public class VertexPosition
@@ -145,13 +138,6 @@ public class VertexPosition
 	public Vector2Int inversedLine;
 	public bool isHardEdge;
 	public int materialIndex;
-}
-
-public enum MeshtaskPosition
-{
-	Left = 0,
-	Right,
-	Both
 }
 
 public enum MeshtaskPoolType
@@ -166,4 +152,10 @@ public enum MeshtaskPoolType
 	Building_Small,
 	Building_Medium,
 	Building_Large
+}
+
+public enum MeshtaskPosition
+{
+	Left,
+	Right
 }
