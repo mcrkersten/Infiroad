@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
-
+using System;
 [CreateAssetMenu, System.Serializable]
 public class MeshtaskSettings : ScriptableObject
 {
@@ -17,6 +19,9 @@ public class MeshtaskSettings : ScriptableObject
 	public MeshtaskStyle meshtaskStyle;
 
 	[Header("Mesh settings")]
+	public TextAsset PointsFile;
+	public Vector2 fileOffset;
+	public bool fileReverse;
 	public VertexPosition[] points;
 	[Range(1,10)]
 	public int meshResolution;
@@ -84,6 +89,45 @@ public class MeshtaskSettings : ScriptableObject
 			else
 				points[i].line = new Vector2Int(i + count2, i + 1 + count2);
 		}
+	}
+
+	public void SetListOfPoints(List<Vector2> points)
+	{
+		VertexPosition[] vPositions = new VertexPosition[points.Count];
+		vPositions.Count();
+
+		if (!fileReverse)
+		{
+			int x = 0;
+			for (int i = 0; i < vPositions.Length; i++)
+			{
+				vPositions[i] = new VertexPosition();
+				if(i == 0 || i == vPositions.Length - 1)
+					vPositions[i].isHardEdge = false;
+				else
+					vPositions[i].isHardEdge = true;
+
+				vPositions[i].vertex = new Vertex();
+				vPositions[i].vertex.point = points[x++] + fileOffset;
+			}
+		}
+		else
+		{
+			int x = 0;
+			for (int i = vPositions.Length - 1; i >= 0; i--)
+			{
+				vPositions[i] = new VertexPosition();
+				if(i == 0 || i == vPositions.Length - 1)
+					vPositions[i].isHardEdge = false;
+				else
+					vPositions[i].isHardEdge = true;
+
+				vPositions[i].vertex = new Vertex();
+				vPositions[i].vertex.point = points[x++] + fileOffset;
+			}
+		}
+			
+		this.points = vPositions;
 	}
 
 	public virtual void CalculateInverseLine()

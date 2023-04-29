@@ -1,0 +1,32 @@
+{
+  "name": "illustrator-point-exporter",
+  "description": "Export anchor point coordinates as JSON from Adobe Illustrator.",
+  "author": "Darin Reid <darin@elcontraption.com>",
+  "license": "MIT",
+  "version": "0.5.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elcontraption/illustrator-point-exporter"
+  },
+  "scripts": {
+    "build": "webpack --progress --hide-modules"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "devDependencies": {
+    "JSON2": "^0.1.0",
+    "babel-core": "^6.3.26",
+    "babel-loader": "^6.2.1",
+    "babel-preset-es2015": "^6.3.13",
+    "eslint": "^1.10.3",
+    "eslint-loader": "^1.2.0",
+    "ps-scripting-es5shim": "0.0.2",
+    "webpack": "^1.12.9"
+  },
+  "dependencies": {
+    "d3-polygon": "1.0.3"
+  }
+}

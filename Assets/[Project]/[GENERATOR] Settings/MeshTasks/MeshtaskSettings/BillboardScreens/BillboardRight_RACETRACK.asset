@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: BillboardRight_RACETRACK
   m_EditorClassIdentifier: 
   EDITOR_offSetPosition: {x: 0, y: 0, z: 0}
-  dataKey: 403991
+  dataKey: 607835
   calculatedUs: []
   uvLenght: 4.24
   UV_scale: 0.2
   meshTaskType: 4
   meshtaskPosition: 1
   meshtaskStyle: 0
+  PointsFile: {fileID: 0}
+  fileOffset: {x: 0, y: 0}
   points:
   - vertex:
       point: {x: 0, y: 1}
@@ -66,7 +68,6 @@ MonoBehaviour:
   meshResolution: 3
   meshtaskContinues: 0
   noiseChannel: 0
-  meshtaskWidth: 9.919744
   maxChamfer: 5
   extrusionSize: 15
   minimalCornerRadius: -1000

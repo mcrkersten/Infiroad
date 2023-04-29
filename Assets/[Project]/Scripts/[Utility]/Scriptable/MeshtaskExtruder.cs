@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI.Table;
 
 public class MeshtaskExtruder
 {
@@ -10,7 +9,7 @@ public class MeshtaskExtruder
 	List<Vector3> verts = new List<Vector3>();
 	List<Vector3> normals = new List<Vector3>();
 	List<Vector2> uvs0 = new List<Vector2>();
-	List<int>[] triIndices;
+	List<List<int>> triIndices = new List<List<int>>();
 	int materialCount;
 
 	RoadChain currentRoadchain;
@@ -39,7 +38,7 @@ public class MeshtaskExtruder
 		triIndices = CreateTriangles(meshTask, meshTaskSettings, vertexJumpCount);
 
 		int materialIndex = 0;
-		mesh.subMeshCount = triIndices.Length;
+		mesh.subMeshCount = triIndices.Count;
 		foreach (List<int> tries in triIndices)
 			mesh.SetTriangles(tries, materialIndex++);
 
@@ -212,11 +211,12 @@ public class MeshtaskExtruder
 		return 0;
 	}
 
-	private List<int>[] CreateTriangles(MeshTask meshtask, MeshtaskSettings meshtaskSettings, int vertexJumpedCount)
+	private List<List<int>> CreateTriangles(MeshTask meshtask, MeshtaskSettings meshtaskSettings, int vertexJumpedCount)
     {
-		List<int>[] tries = new List<int>[materialCount];
-        for (int i = 0; i < materialCount; i++)
-			tries[i] = new List<int>();
+		List<List<int>> tries = new List<List<int>>();
+		for (int i = 0; i < materialCount; i++)
+			tries.Add(new List<int>());
+
 		// Generate Trianges
 		// Foreach edge loop (except the last, since this looks ahead one step)
 		for (int edgeLoop = 0; edgeLoop < meshtask.positionVectors.Count - 2; edgeLoop++)
@@ -244,14 +244,14 @@ public class MeshtaskExtruder
 				next[0] = vertex1 + rootIndexNext;
 				next[1] = vertex2 + rootIndexNext;
 
-				int material = meshtaskSettings.points[point].materialIndex;
-				tries[material].Add(current.x);
-				tries[material].Add(next.x);
-				tries[material].Add(next.y);
+				int index = meshtaskSettings.points[point].materialIndex;
+				tries[index].Add(current.x);
+				tries[index].Add(next.x);
+				tries[index].Add(next.y);
 
-				tries[material].Add(current.x);
-				tries[material].Add(next.y);
-				tries[material].Add(current.y);
+				tries[index].Add(current.x);
+				tries[index].Add(next.y);
+				tries[index].Add(current.y);
 			}
 		}
 		return tries;

@@ -9,6 +9,17 @@ using UnityEngine.UIElements;
 [CustomEditor(typeof(MeshtaskSettings))]
 public class MeshtaskSettingsInspector : Editor
 {
+	public override void OnInspectorGUI()
+    {
+		DrawDefaultInspector();
+		if(GUILayout.Button("Build From PointFile"))
+		{
+            MeshtaskSettings t = target as MeshtaskSettings;
+			List<Vector2> points = JsonVector2Reader.GetVector2ListFromJson(t.PointsFile.text);
+            t.SetListOfPoints(points);
+        }
+	}
+
 	void OnEnable()
 	{
 		SceneView.onSceneGUIDelegate += OnSceneGUI;
@@ -25,7 +36,6 @@ public class MeshtaskSettingsInspector : Editor
 		MeshtaskSettings t = target as MeshtaskSettings;
 
 		Undo.RecordObject(t, "MeshSettings");
-
 		Draw3DShape(t);
 		DrawHandles(t);
 		t.EDITOR_offSetPosition = DrawOffsetHandle(t);

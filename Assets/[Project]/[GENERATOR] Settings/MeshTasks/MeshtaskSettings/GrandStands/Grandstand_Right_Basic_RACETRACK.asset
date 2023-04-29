@@ -10,75 +10,78 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7be9b3f1063355f4586f3ac956708616, type: 3}
-  m_Name: Grandstand_Left_RACETRACK
+  m_Name: Grandstand_Right_Basic_RACETRACK
   m_EditorClassIdentifier: 
-  EDITOR_offSetPosition: {x: 0, y: 3.45, z: 0}
-  dataKey: 713663
+  EDITOR_offSetPosition: {x: 0, y: 0, z: 0}
+  dataKey: 663454
   calculatedUs: []
   uvLenght: 42.899494
   UV_scale: 1
   meshTaskType: 2
-  meshtaskPosition: 0
+  meshtaskPosition: 1
   meshtaskStyle: 0
+  PointsFile: {fileID: 0}
+  fileOffset: {x: 0, y: 0}
+  fileReverse: 0
   points:
   - vertex:
-      point: {x: -10, y: -1}
+      point: {x: 0, y: -1}
       horizontal_UV: 0
     line: {x: 1, y: 2}
     inversedLine: {x: 17, y: 0}
     isHardEdge: 1
     materialIndex: 0
   - vertex:
-      point: {x: -10, y: 7.5}
-      horizontal_UV: 8.5
+      point: {x: 0, y: 1}
+      horizontal_UV: 2
     line: {x: 3, y: 4}
     inversedLine: {x: 15, y: 16}
     isHardEdge: 1
     materialIndex: 0
   - vertex:
-      point: {x: 0, y: 7.5}
-      horizontal_UV: 18.5
+      point: {x: 2, y: 1}
+      horizontal_UV: 4
     line: {x: 5, y: 6}
     inversedLine: {x: 13, y: 14}
     isHardEdge: 1
     materialIndex: 0
   - vertex:
-      point: {x: 0, y: 7}
-      horizontal_UV: 19
+      point: {x: 2, y: 0}
+      horizontal_UV: 5
     line: {x: 7, y: 8}
     inversedLine: {x: 11, y: 12}
     isHardEdge: 1
-    materialIndex: 0
+    materialIndex: 1
   - vertex:
-      point: {x: -9, y: 7}
-      horizontal_UV: 28
+      point: {x: 9, y: 7}
+      horizontal_UV: 14.899495
     line: {x: 9, y: 10}
     inversedLine: {x: 9, y: 10}
     isHardEdge: 1
-    materialIndex: 1
+    materialIndex: 0
   - vertex:
-      point: {x: -2, y: 0}
-      horizontal_UV: 37.899494
+      point: {x: 0, y: 7}
+      horizontal_UV: 23.899494
     line: {x: 11, y: 12}
     inversedLine: {x: 7, y: 8}
     isHardEdge: 1
     materialIndex: 0
   - vertex:
-      point: {x: -2, y: 1.0000007}
-      horizontal_UV: 38.899494
+      point: {x: 0, y: 7.5}
+      horizontal_UV: 24.399494
     line: {x: 13, y: 14}
     inversedLine: {x: 5, y: 6}
     isHardEdge: 1
     materialIndex: 0
   - vertex:
-      point: {x: 0, y: 1.0000007}
-      horizontal_UV: 40.899494
+      point: {x: 10, y: 7.5}
+      horizontal_UV: 34.399494
     line: {x: 15, y: 16}
     inversedLine: {x: 3, y: 4}
     isHardEdge: 1
     materialIndex: 0
   - vertex:
-      point: {x: 0, y: -1}
+      point: {x: 10, y: -1}
       horizontal_UV: 42.899494
     line: {x: 17, y: 0}
     inversedLine: {x: 1, y: 2}
@@ -89,8 +92,8 @@ MonoBehaviour:
   noiseChannel: 0
   maxChamfer: 5
   extrusionSize: 15
-  minimalCornerRadius: -1000
-  maximumCornerRadius: -30
+  minimalCornerRadius: 30
+  maximumCornerRadius: 1000
   minimalExtrusionSize: 0
   materials:
   - {fileID: 2100000, guid: 78058c775a0521f4399085e1e9bc65ee, type: 2}
@@ -113,7 +116,7 @@ MonoBehaviour:
     curveTime: 0
     noiseChannel: 0
   - meshtaskPoolType: 4
-    unitsInPool: 3
+    unitsInPool: 35
     prefab: {fileID: 3335014108244948374, guid: 174fc96841ac59c44bacf905a4b6d17d, type: 3}
     position: {x: 0, y: 0}
     curveTime: 0

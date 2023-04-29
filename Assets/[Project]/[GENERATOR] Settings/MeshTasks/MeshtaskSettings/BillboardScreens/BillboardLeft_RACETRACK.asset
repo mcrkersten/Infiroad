@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: BillboardLeft_RACETRACK
   m_EditorClassIdentifier: 
   EDITOR_offSetPosition: {x: 0, y: 0, z: 0}
-  dataKey: 446653
+  dataKey: 724529
   calculatedUs: []
   uvLenght: 4.24
   UV_scale: 0.2
   meshTaskType: 4
   meshtaskPosition: 0
   meshtaskStyle: 0
+  PointsFile: {fileID: 0}
+  fileOffset: {x: 0, y: 0}
   points:
   - vertex:
       point: {x: 0, y: 1}

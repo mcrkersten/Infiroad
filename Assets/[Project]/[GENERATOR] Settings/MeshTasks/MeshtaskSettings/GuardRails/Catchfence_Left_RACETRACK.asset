@@ -13,13 +13,16 @@ MonoBehaviour:
   m_Name: Catchfence_Left_RACETRACK
   m_EditorClassIdentifier: 
   EDITOR_offSetPosition: {x: 0, y: 0, z: 0}
-  dataKey: 53823
+  dataKey: 537799
   calculatedUs: []
   uvLenght: 3.9798255
   UV_scale: 1
   meshTaskType: 1
   meshtaskPosition: 0
   meshtaskStyle: 2
+  PointsFile: {fileID: 0}
+  fileOffset: {x: 0, y: 0}
+  fileReverse: 0
   points:
   - vertex:
       point: {x: 0, y: 0}

@@ -20,6 +20,9 @@ MonoBehaviour:
   meshTaskType: 5
   meshtaskPosition: 1
   meshtaskStyle: 2
+  PointsFile: {fileID: 0}
+  fileOffset: {x: 0, y: 0}
+  fileReverse: 0
   points:
   - vertex:
       point: {x: -0.29999995, y: 0}
