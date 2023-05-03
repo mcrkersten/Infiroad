@@ -18,10 +18,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.Rendering.HableCurve;
 
 // This class contains the heart of the spline extrusion code!
 // You provide data and a mesh, and this will write to that mesh for you!
@@ -44,7 +41,7 @@ public class RoadMeshExtruder {
 		Vector2 nrmCoordStartEnd, 
 		float edgeLoopsPerMeter, 
 		float tilingAspectRatio, 
-		int surfaceIndex = 0) 
+		int surfaceIndex) 
 	{
 
 		ClearMesh(mesh);
@@ -69,7 +66,7 @@ public class RoadMeshExtruder {
 			Quaternion chamferAngle = CalculateCornerChamfer(roadSettings);
 
 
-			CreateMeshTasksOnEdgeloop(roadSettings, ring, segment, op, edgeLoopCount);
+			CreateMeshTasksOnEdgeloop(roadSettings, ring, segment, op);
 
 
 			// Foreach vertex in the 2D shape
@@ -116,8 +113,8 @@ public class RoadMeshExtruder {
 				bool isMirrored = sf[roadSettings.points[i].materialIndex].UV_mirrored;
 
 				{//Place vertices
-					float uY = roadSettings.points[i].vertex_1.point.y;
-					float uvPoint = isMirrored ? Mathf.Abs(localUVPoint.x + uY) : localUVPoint.x - uY;
+					float vpY = roadSettings.points[i].vertex_1.point.y;
+					float uvPoint = isMirrored ? Mathf.Abs(localUVPoint.x + vpY) : localUVPoint.x - vpY;
 					//closing edge of UV extrusion
 					if (i != 0 && roadSettings.points[i - 1].extrudePoint)
 					{
@@ -126,11 +123,11 @@ public class RoadMeshExtruder {
 						verts.Add(globalPoint);
 					}
 					//If different material
-					else if (i != 0 && roadSettings.points[i].materialIndex != roadSettings.points[i - 1].materialIndex)
+					else if (i != 0 && roadSettings.points[i].materialIndex != roadSettings.points[i - 1].materialIndex && !roadSettings.points[i].extrudePoint)
 					{
 						Vector2 prev_currentUV_MinMax = roadSettings.calculatedUs[roadSettings.points[i - 1].materialIndex];
 						bool prev_isMirrored = sf[roadSettings.points[i - 1].materialIndex].UV_mirrored;
-						float prev_uvPoint = prev_isMirrored ? Mathf.Abs(localUVPoint.x + uY) : localUVPoint.x + uY;
+						float prev_uvPoint = prev_isMirrored ? Mathf.Abs(localUVPoint.x + vpY) : localUVPoint.x + vpY;
 						x_UV = Mathf.InverseLerp(prev_currentUV_MinMax.x, prev_currentUV_MinMax.y, prev_uvPoint);
 						uvs.Add(new Vector2(x_UV, y_UV));
 						verts.Add(globalPoint);
@@ -181,6 +178,7 @@ public class RoadMeshExtruder {
 		mesh.RecalculateTangents();
 		List<SurfaceScriptable> m = new List<SurfaceScriptable>();
 		m.AddRange(roadSettings.GetAllSurfaceSettings(surfaceIndex));
+		Debug.Log(surfaceIndex);
 
 		List<Material> mat = new List<Material>();
         foreach (SurfaceScriptable item in m)
@@ -241,7 +239,7 @@ public class RoadMeshExtruder {
     }
     #endregion
 
-    private void CreateMeshTasksOnEdgeloop(RoadSettings roadSettings, int ring, RoadSegment segment, OrientedPoint op, int edgeLoopCount)
+    private void CreateMeshTasksOnEdgeloop(RoadSettings roadSettings, int ring, RoadSegment segment, OrientedPoint op)
     {
         foreach (MeshtaskObject meshtaskObjects in roadSettings.meshtaskObjects)
         {
@@ -254,7 +252,7 @@ public class RoadMeshExtruder {
 					CreateBasedOnExtrusionSize(meshtaskObjects, roadSettings, segment, op);
 					break;
                 case MeshtaskStyle.Continued:
-					CreateContinuedMeshtask(meshtaskObjects, roadSettings, ring, segment, op, edgeLoopCount);
+					CreateContinuedMeshtask(meshtaskObjects, roadSettings, ring, segment, op);
 					break;
             }
 		}
@@ -276,56 +274,45 @@ public class RoadMeshExtruder {
 		CreateMeshtaskPoint(meshtaskObject, roadSettings, segment, op, inRange);
 	}
 
-	private void CreateContinuedMeshtask(MeshtaskObject meshtaskObject, RoadSettings roadSettings, int ring, RoadSegment segment, OrientedPoint op, int edgeLoopCount)
+	private void CreateContinuedMeshtask(MeshtaskObject meshtaskObject, RoadSettings roadSettings, int ring, RoadSegment segment, OrientedPoint op)
     {
-		MeshtaskSettings meshtaskSettings = meshtaskObject.meshtaskSettings;
-		Vector3 currentMeshPosition = segment.transform.TransformPoint(op.pos);
-
 		if (ring == 0)
 			CreateNewMeshtask(meshtaskObject, roadSettings, segment);
 
-        MeshTask task = roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskSettings);
+        MeshTask task = roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskObject.meshtaskSettings);
         if (task != null)
-		{
-			AddMeshTaskPoint(roadChainBuilder, meshtaskSettings, op, segment);
-
-            task.AddPoint(currentMeshPosition,
-				segment.transform.rotation * op.rot,
-				roadChainBuilder.roadFormVariables);
-
-            if (ring == edgeLoopCount - 1)
-                roadChainBuilder.meshtasks.Add(task);
-        }
+			AddMeshTaskPoint(roadChainBuilder, meshtaskObject.meshtaskSettings, op, segment, meshtaskObject.meshtaskSettings.meshResolution);
 	}
 
-	RoadSegment lastSegment = null;
     private void CreateMeshtaskPoint(MeshtaskObject meshtaskObject, RoadSettings roadSettings, RoadSegment segment, OrientedPoint op, bool addPoint = true)
     {
-		CreateNewMeshTaskIfNecessary(roadChainBuilder, meshtaskObject, roadSettings, segment, op);
+		CreateNewMeshTaskIfNecessary(roadChainBuilder, meshtaskObject, roadSettings, segment, op, out float UVdistance);
 
         if (!addPoint) return;
-		AddMeshTaskPoint(roadChainBuilder, meshtaskObject.meshtaskSettings, op, segment);
+		AddMeshTaskPoint(roadChainBuilder, meshtaskObject.meshtaskSettings, op, segment, UVdistance);
     }
 
-    private void CreateNewMeshTaskIfNecessary(RoadChainBuilder roadChainBuilder, MeshtaskObject meshtaskObject, RoadSettings roadSettings, RoadSegment segment, OrientedPoint op)
+    private void CreateNewMeshTaskIfNecessary(RoadChainBuilder roadChainBuilder, MeshtaskObject meshtaskObject, RoadSettings roadSettings, RoadSegment segment, OrientedPoint op, out float distance)
     {
 		MeshtaskSettings meshtaskSettings = meshtaskObject.meshtaskSettings;
         Vector3 currentMeshTaskVector = segment.transform.TransformPoint(op.pos);
         Vector3 lastMeshTaskVector = roadChainBuilder.meshtaskTypeHandler.GetMeshtaskVector(meshtaskSettings);
-        float distanceToLastMeshtask = Vector3.Distance(lastMeshTaskVector, currentMeshTaskVector);
+        float currentDistanceToLastMeshtaskVector = Vector3.Distance(lastMeshTaskVector, currentMeshTaskVector);
 
-        if (ShouldCreateNewMeshtask(distanceToLastMeshtask, meshtaskSettings) || lastMeshTaskVector == Vector3.zero)
+        if (ShouldCreateNewMeshtask(currentDistanceToLastMeshtaskVector, meshtaskSettings) || lastMeshTaskVector == Vector3.zero)
         {
 			MeshTask lastMeshtask = roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskSettings);
             if (lastMeshtask != null)
                 roadChainBuilder.meshtasks.Add(lastMeshtask);
             CreateNewMeshtask(meshtaskObject, roadSettings, segment);
         }
+
+		distance = currentDistanceToLastMeshtaskVector;
     }
 
     private bool ShouldCreateNewMeshtask(float distanceToLastMeshtask, MeshtaskSettings meshtaskSettings)
     {
-		if (distanceToLastMeshtask > (meshtaskSettings.meshResolution + 1)) 
+		if (distanceToLastMeshtask > (meshtaskSettings.meshResolution * 2)) 
 			return true; 
 		else return false;
     }
@@ -343,7 +330,7 @@ public class RoadMeshExtruder {
         roadChainBuilder.meshtaskTypeHandler.SetMeshtask(newMeshtask, meshtaskSettings);
     }
 
-    private void AddMeshTaskPoint(RoadChainBuilder roadChainBuilder, MeshtaskSettings meshtaskSettings, OrientedPoint op, RoadSegment segment, bool forceAdd = false)
+    private void AddMeshTaskPoint(RoadChainBuilder roadChainBuilder, MeshtaskSettings meshtaskSettings, OrientedPoint op, RoadSegment segment, float UVdistance, bool forceAdd = false)
     {
         MeshTask currentMeshtask = roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskSettings);
         if (currentMeshtask.resolutionIndex == 0 || forceAdd)
@@ -351,8 +338,9 @@ public class RoadMeshExtruder {
 			Vector3 currentMeshTaskVector = segment.transform.TransformPoint(op.pos);
 			if(!meshtaskSettings.meshtaskContinues)
 				roadChainBuilder.meshtaskTypeHandler.SetMeshtaskVector(currentMeshtask.meshtaskObject.meshtaskSettings, currentMeshTaskVector);
-            currentMeshtask.AddPoint(currentMeshTaskVector, segment.transform.rotation * op.rot, roadChainBuilder.roadFormVariables);
+            currentMeshtask.AddPoint(currentMeshTaskVector, segment.transform.rotation * op.rot, roadChainBuilder.roadFormVariables, UVdistance);
             currentMeshtask.resolutionIndex = meshtaskSettings.meshResolution;
+			return;
         }
         currentMeshtask.resolutionIndex--;
     }
@@ -362,17 +350,22 @@ public class RoadMeshExtruder {
     {
 		foreach (MeshtaskObject meshtaskObject in roadSettings.meshtaskObjects)
 		{
-			if(meshtaskObject.meshtaskSettings.meshtaskContinues) continue;
-
 			MeshTask lastTask = roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskObject.meshtaskSettings);
             if (lastTask == null) return;
 
+			if(meshtaskObject.meshtaskSettings.meshtaskContinues) {
+
+				AddMeshTaskPoint(roadChainBuilder, meshtaskObject.meshtaskSettings, op, segment, meshtaskObject.meshtaskSettings.meshResolution, true);
+				roadChainBuilder.meshtasks.Add(lastTask);
+				continue;
+			}
+
 			Vector3 currentMeshTaskVector = segment.transform.TransformPoint(op.pos);
 			Vector3 lastMeshTaskVector = roadChainBuilder.meshtaskTypeHandler.GetMeshtaskVector(meshtaskObject.meshtaskSettings);
-			float distanceToLastMeshtask = Vector3.Distance(lastMeshTaskVector, currentMeshTaskVector);
+			float distanceToLastMeshtaskPoint = Vector3.Distance(lastMeshTaskVector, currentMeshTaskVector);
 
-			if(!ShouldCreateNewMeshtask(distanceToLastMeshtask, meshtaskObject.meshtaskSettings))
-				AddMeshTaskPoint(roadChainBuilder, meshtaskObject.meshtaskSettings, op, segment, true);
+			if(!ShouldCreateNewMeshtask(distanceToLastMeshtaskPoint, meshtaskObject.meshtaskSettings))
+				AddMeshTaskPoint(roadChainBuilder, meshtaskObject.meshtaskSettings, op, segment, distanceToLastMeshtaskPoint, true);
 
 			roadChainBuilder.meshtasks.Add(lastTask);
 			CreateNewMeshtask(meshtaskObject, roadSettings, segment);
@@ -432,7 +425,7 @@ public class RoadMeshExtruder {
 
 				int index = roadSettings.points[i].materialIndex;
 				if (roadSettings.points[i].extrudePoint)
-					index = tries.Count - 1;
+					index = 0;
 
 				tries[index].Add(current.x);
 				tries[index].Add(next.x);
@@ -470,9 +463,9 @@ public class MeshTask
 		this.position = position;
 	}
 
-	public void AddPoint(Vector3 position, Quaternion rotation, RoadFormVariables extrusionVariables)
+	public void AddPoint(Vector3 position, Quaternion rotation, RoadFormVariables extrusionVariables, float UVdistance)
     {
-		positionVectors.Add(new Point(position, rotation, extrusionVariables));
+		positionVectors.Add(new Point(position, rotation, extrusionVariables, UVdistance));
     }
 
 	[System.Serializable]
@@ -481,11 +474,13 @@ public class MeshTask
 		public ExtusionVariablesStruct extrusionVariables;
 		public Vector3 position;
 		public Quaternion rotation;
-		public Point(Vector3 position, Quaternion rotation, RoadFormVariables extrusionVariables)
+		public float UVdistance;
+		public Point(Vector3 position, Quaternion rotation, RoadFormVariables extrusionVariables, float UVdistance)
         {
 			this.position = position;
 			this.rotation = rotation;
 			this.extrusionVariables = new ExtusionVariablesStruct(extrusionVariables);
+			this.UVdistance = UVdistance;
 		}
     }
 }

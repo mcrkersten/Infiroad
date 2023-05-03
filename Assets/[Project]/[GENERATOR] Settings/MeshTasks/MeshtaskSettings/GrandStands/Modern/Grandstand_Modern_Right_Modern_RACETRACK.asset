@@ -1,0 +1,325 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7be9b3f1063355f4586f3ac956708616, type: 3}
+  m_Name: Grandstand_Modern_Right_Modern_RACETRACK
+  m_EditorClassIdentifier: 
+  EDITOR_offSetPosition: {x: 0, y: 0, z: 0}
+  dataKey: 28611
+  UV_scale: 1
+  meshTaskType: 2
+  meshtaskPosition: 1
+  meshtaskStyle: 0
+  PointsFile: {fileID: 4900000, guid: ac31757790eed9248bd111b49ff972e5, type: 3}
+  fileOffset: {x: -15, y: 0}
+  fileReverse: 1
+  points:
+  - vertex:
+      point: {x: -12.000004, y: 0.00000046120113}
+      uvX: 0
+    line: {x: 0, y: 1}
+    uvDistance: 0
+    uvLastDistance: 0
+    isHardEdge: 0
+    materialIndex: 0
+  - vertex:
+      point: {x: -14.000004, y: 2.0000005}
+      uvX: 0
+    line: {x: 2, y: 3}
+    uvDistance: 0.2828427
+    uvLastDistance: 0
+    isHardEdge: 1
+    materialIndex: 0
+  - vertex:
+      point: {x: -14.000004, y: 5.0000005}
+      uvX: 0
+    line: {x: 4, y: 5}
+    uvDistance: 0.5828427
+    uvLastDistance: 0
+    isHardEdge: 1
+    materialIndex: 0
+  - vertex:
+      point: {x: -14.999996, y: 6.0000005}
+      uvX: 0
+    line: {x: 6, y: 7}
+    uvDistance: 0.72426355
+    uvLastDistance: 0
+    isHardEdge: 1
+    materialIndex: 0
+  - vertex:
+      point: {x: -14.999996, y: 7.5000005}
+      uvX: 0
+    line: {x: 8, y: 9}
+    uvDistance: 0.8742635
+    uvLastDistance: 1.0242631
+    isHardEdge: 1
+    materialIndex: 0
+  - vertex:
+      point: {x: -13.5, y: 7.5000005}
+      uvX: 0
+    line: {x: 10, y: 11}
+    uvDistance: 0
+    uvLastDistance: 0
+    isHardEdge: 1
+    materialIndex: 2
+  - vertex:
+      point: {x: -12.000004, y: 7.5000005}
+      uvX: 0
+    line: {x: 12, y: 13}
+    uvDistance: 0.14999962
+    uvLastDistance: 1.3242627
+    isHardEdge: 1
+    materialIndex: 2
+  - vertex:
+      point: {x: -12.000004, y: 6.0000005}
+      uvX: 0
+    line: {x: 14, y: 15}
+    uvDistance: 0.29999962
+    uvLastDistance: 0
+    isHardEdge: 1
+    materialIndex: 2
+  - vertex:
+      point: {x: -7.500004, y: 9.642831}
+      uvX: 0
+    line: {x: 15, y: 16}
+    uvDistance: 0.8789661
+    uvLastDistance: 0
+    isHardEdge: 0
+    materialIndex: 2
+  - vertex:
+      point: {x: -5.6035843, y: 10.701178}
+      uvX: 0
+    line: {x: 16, y: 17}
+    uvDistance: 1.0961412
+    uvLastDistance: 0
+    isHardEdge: 0
+    materialIndex: 2
+  - vertex:
+      point: {x: -3.6275215, y: 11.335608}
+      uvX: 0
+    line: {x: 17, y: 18}
+    uvDistance: 1.3036822
+    uvLastDistance: 1.5281482
+    isHardEdge: 0
+    materialIndex: 2
+  - vertex:
+      point: {x: -1.407404, y: 11.666626}
+      uvX: 0
+    line: {x: 19, y: 20}
+    uvDistance: 0.8742635
+    uvLastDistance: 0
+    isHardEdge: 1
+    materialIndex: 0
+  - vertex:
+      point: {x: -0.17974281, y: 11.666626}
+      uvX: 0
+    line: {x: 21, y: 22}
+    uvDistance: 0.99702966
+    uvLastDistance: 1.0643544
+    isHardEdge: 1
+    materialIndex: 0
+  - vertex:
+      point: {x: -0.17974281, y: 12.339873}
+      uvX: 0
+    line: {x: 23, y: 24}
+    uvDistance: 0
+    uvLastDistance: 0
+    isHardEdge: 1
+    materialIndex: 1
+  - vertex:
+      point: {x: -1.601965, y: 13.599408}
+      uvX: 0
+    line: {x: 24, y: 25}
+    uvDistance: 0.18997747
+    uvLastDistance: 0
+    isHardEdge: 0
+    materialIndex: 1
+  - vertex:
+      point: {x: -4.5457544, y: 14.497726}
+      uvX: 0
+    line: {x: 25, y: 26}
+    uvDistance: 0.4977578
+    uvLastDistance: 0
+    isHardEdge: 0
+    materialIndex: 1
+  - vertex:
+      point: {x: -8.723835, y: 14.499008}
+      uvX: 0
+    line: {x: 26, y: 27}
+    uvDistance: 0.91556585
+    uvLastDistance: 0
+    isHardEdge: 0
+    materialIndex: 1
+  - vertex:
+      point: {x: -12.942369, y: 13.592195}
+      uvX: 0
+    line: {x: 28, y: 29}
+    uvDistance: 1.3470557
+    uvLastDistance: 1.3536677
+    isHardEdge: 1
+    materialIndex: 1
+  - vertex:
+      point: {x: -12.995003, y: 13.6322155}
+      uvX: 0
+    line: {x: 30, y: 31}
+    uvDistance: 0.99702966
+    uvLastDistance: 0
+    isHardEdge: 0
+    materialIndex: 0
+  - vertex:
+      point: {x: -13.012504, y: 13.701205}
+      uvX: 0
+    line: {x: 31, y: 32}
+    uvDistance: 1.0041472
+    uvLastDistance: 1.0126975
+    isHardEdge: 0
+    materialIndex: 0
+  - vertex:
+      point: {x: -12.972942, y: 13.777005}
+      uvX: 0
+    line: {x: 33, y: 34}
+    uvDistance: 1.3470557
+    uvLastDistance: 0
+    isHardEdge: 0
+    materialIndex: 1
+  - vertex:
+      point: {x: -11.039873, y: 14.392437}
+      uvX: 0
+    line: {x: 34, y: 35}
+    uvDistance: 1.549923
+    uvLastDistance: 0
+    isHardEdge: 0
+    materialIndex: 1
+  - vertex:
+      point: {x: -8.76392, y: 14.668163}
+      uvX: 0
+    line: {x: 35, y: 36}
+    uvDistance: 1.7791823
+    uvLastDistance: 0
+    isHardEdge: 0
+    materialIndex: 1
+  - vertex:
+      point: {x: -6.6686316, y: 14.807251}
+      uvX: 0
+    line: {x: 36, y: 37}
+    uvDistance: 1.9891722
+    uvLastDistance: 0
+    isHardEdge: 0
+    materialIndex: 1
+  - vertex:
+      point: {x: -4.527775, y: 14.666966}
+      uvX: 0
+    line: {x: 37, y: 38}
+    uvDistance: 2.203717
+    uvLastDistance: 0
+    isHardEdge: 0
+    materialIndex: 1
+  - vertex:
+      point: {x: -2.7575197, y: 14.371522}
+      uvX: 0
+    line: {x: 38, y: 39}
+    uvDistance: 2.3831909
+    uvLastDistance: 0
+    isHardEdge: 0
+    materialIndex: 1
+  - vertex:
+      point: {x: -1.5000038, y: 13.771288}
+      uvX: 0
+    line: {x: 39, y: 40}
+    uvDistance: 2.5225332
+    uvLastDistance: 2.7230594
+    isHardEdge: 0
+    materialIndex: 1
+  - vertex:
+      point: {x: -0.0000038146973, y: 12.44047}
+      uvX: 0
+    line: {x: 41, y: 42}
+    uvDistance: 1.0041472
+    uvLastDistance: 0
+    isHardEdge: 1
+    materialIndex: 0
+  - vertex:
+      point: {x: -0.0000038146973, y: 9.166626}
+      uvX: 0
+    line: {x: 43, y: 44}
+    uvDistance: 1.3315315
+    uvLastDistance: 0
+    isHardEdge: 1
+    materialIndex: 0
+  - vertex:
+      point: {x: -1.2777748, y: 7.8887944}
+      uvX: 0
+    line: {x: 45, y: 46}
+    uvDistance: 1.5122399
+    uvLastDistance: 0
+    isHardEdge: 1
+    materialIndex: 0
+  - vertex:
+      point: {x: -5.38892, y: 7.8887944}
+      uvX: 0
+    line: {x: 47, y: 48}
+    uvDistance: 1.9233544
+    uvLastDistance: 0
+    isHardEdge: 1
+    materialIndex: 0
+  - vertex:
+      point: {x: -9.000004, y: 4.971802}
+      uvX: 0
+    line: {x: 49, y: 50}
+    uvDistance: 2.3875608
+    uvLastDistance: 0
+    isHardEdge: 1
+    materialIndex: 0
+  - vertex:
+      point: {x: -9.011173, y: 2.0000005}
+      uvX: 0
+    line: {x: 51, y: 52}
+    uvDistance: 2.6847432
+    uvLastDistance: 0
+    isHardEdge: 1
+    materialIndex: 0
+  - vertex:
+      point: {x: -7.000004, y: 0.00000046120203}
+      uvX: 0
+    line: {x: 52, y: 0}
+    uvDistance: 2.9683769
+    uvLastDistance: 0
+    isHardEdge: 0
+    materialIndex: 0
+  meshResolution: 7
+  meshtaskContinues: 0
+  noiseChannel: 0
+  maxChamfer: 5
+  extrusionSize: 10
+  minimalCornerRadius: 30
+  maximumCornerRadius: 1000
+  minimalExtrusionSize: 0
+  materials:
+  - {fileID: 2100000, guid: 78058c775a0521f4399085e1e9bc65ee, type: 2}
+  - {fileID: 2100000, guid: 230a5fcede4c6a441b7fee40e1e8a21b, type: 2}
+  variableMaterials:
+  - {fileID: 2100000, guid: 5d43259724dede643b66b5acd325f246, type: 2}
+  - {fileID: 2100000, guid: 9ed8e9e1ed6d9354aa4fb9838e17df17, type: 2}
+  - {fileID: 2100000, guid: 7e34396a90028d5409b6829ec5282c95, type: 2}
+  meshIsClosed: 0
+  meshtaskPoolingObjects:
+  - meshtaskPoolType: 2
+    unitsInPool: 30
+    prefab: {fileID: 919132149155446097, guid: 97791bbf3d64463469ba58dc67260864, type: 3}
+    position: {x: 0, y: 0}
+    curveTime: 0
+    noiseChannel: 0
+  - meshtaskPoolType: 3
+    unitsInPool: 3
+    prefab: {fileID: 2217057380066885025, guid: 39ede4268e72fc1488a9efde020fbe0c, type: 3}
+    position: {x: 0, y: 0}
+    curveTime: 0
+    noiseChannel: 0

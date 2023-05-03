@@ -15,7 +15,7 @@ MonoBehaviour:
   points:
   - vertex_1:
       point: {x: -17, y: 1.005305}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 0, y: 1}
     ishardEdge: 0
     noiseChannel: 0
@@ -25,7 +25,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -17, y: 0}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 2, y: 3}
     ishardEdge: 1
     noiseChannel: 0
@@ -39,7 +39,7 @@ MonoBehaviour:
       spawnPointsBetweenAmount: 3
   - vertex_1:
       point: {x: -11, y: 0}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 3, y: 4}
     ishardEdge: 0
     noiseChannel: 1
@@ -52,8 +52,8 @@ MonoBehaviour:
       spawnBetweenPoints: 1
       spawnPointsBetweenAmount: 3
   - vertex_1:
-      point: {x: -5.5, y: 0}
-      horizontal_UV: 0
+      point: {x: -5.341725, y: 0}
+      uvX: 0
     line: {x: 5, y: 6}
     ishardEdge: 0
     noiseChannel: 1
@@ -62,8 +62,8 @@ MonoBehaviour:
     extrudePoint: 1
     assetSpawnPoint: []
   - vertex_1:
-      point: {x: -5.5, y: 0}
-      horizontal_UV: 0
+      point: {x: -5.3418655, y: 0}
+      uvX: 0
     line: {x: 7, y: 8}
     ishardEdge: 0
     noiseChannel: 1
@@ -73,7 +73,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -4.7922363, y: 0}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 9, y: 10}
     ishardEdge: 0
     noiseChannel: 1
@@ -83,7 +83,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -4.7438965, y: 0.04948044}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 10, y: 11}
     ishardEdge: 0
     noiseChannel: 1
@@ -93,7 +93,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -4.666748, y: 0.06966591}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 11, y: 12}
     ishardEdge: 0
     noiseChannel: 1
@@ -103,7 +103,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 4.666748, y: 0.06966591}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 12, y: 13}
     ishardEdge: 0
     noiseChannel: 1
@@ -113,7 +113,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 4.7438965, y: 0.04948044}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 13, y: 14}
     ishardEdge: 0
     noiseChannel: 1
@@ -123,7 +123,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 4.7922363, y: 0}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 15, y: 16}
     ishardEdge: 0
     noiseChannel: 1
@@ -133,7 +133,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 5.5, y: 0.00002670288}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 17, y: 18}
     ishardEdge: 0
     noiseChannel: 1
@@ -143,7 +143,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 5.5, y: 0.00005340576}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 19, y: 20}
     ishardEdge: 0
     noiseChannel: 1
@@ -157,7 +157,7 @@ MonoBehaviour:
       spawnPointsBetweenAmount: 3
   - vertex_1:
       point: {x: 11, y: 0.00010681152}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 20, y: 21}
     ishardEdge: 0
     noiseChannel: 1
@@ -171,7 +171,7 @@ MonoBehaviour:
       spawnPointsBetweenAmount: 3
   - vertex_1:
       point: {x: 17, y: 0.00010681152}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 21, y: 22}
     ishardEdge: 0
     noiseChannel: 0
@@ -181,7 +181,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 17, y: 0.00010681152}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 23, y: 24}
     ishardEdge: 0
     noiseChannel: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 17, y: 0.99854004}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 25, y: 26}
     ishardEdge: 1
     noiseChannel: 0
@@ -201,7 +201,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 18, y: 0.9997131}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 27, y: 28}
     ishardEdge: 1
     noiseChannel: 0
@@ -211,7 +211,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 18, y: 0}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 28, y: 29}
     ishardEdge: 0
     noiseChannel: 0
@@ -221,7 +221,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 18, y: -1}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 29, y: 30}
     ishardEdge: 0
     noiseChannel: 0
@@ -231,7 +231,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 15.674856, y: -4.3211284}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 30, y: 31}
     ishardEdge: 0
     noiseChannel: 0
@@ -241,7 +241,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 12.500929, y: -7.3896527}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 31, y: 32}
     ishardEdge: 0
     noiseChannel: 0
@@ -251,7 +251,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 7.990366, y: -9.422283}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 32, y: 33}
     ishardEdge: 0
     noiseChannel: 0
@@ -261,7 +261,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: 0, y: -10.069645}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 33, y: 34}
     ishardEdge: 0
     noiseChannel: 0
@@ -271,7 +271,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -7.3179407, y: -9.401269}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 34, y: 35}
     ishardEdge: 0
     noiseChannel: 0
@@ -281,7 +281,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -9.915564, y: -8.494927}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 36, y: 37}
     ishardEdge: 0
     noiseChannel: 0
@@ -291,7 +291,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -12.513186, y: -7.5885863}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 38, y: 39}
     ishardEdge: 0
     noiseChannel: 0
@@ -301,7 +301,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -15.937387, y: -4.3390183}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 39, y: 40}
     ishardEdge: 0
     noiseChannel: 0
@@ -311,7 +311,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -18, y: -0.9884167}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 40, y: 41}
     ishardEdge: 0
     noiseChannel: 0
@@ -321,7 +321,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -18, y: -0.00031439494}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 41, y: 42}
     ishardEdge: 0
     noiseChannel: 0
@@ -331,7 +331,7 @@ MonoBehaviour:
     assetSpawnPoint: []
   - vertex_1:
       point: {x: -18, y: 1.0018697}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 43, y: 0}
     ishardEdge: 1
     noiseChannel: 0
@@ -343,9 +343,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  meshtaskSettings:
-  - {fileID: 11400000, guid: 0d430583a073a984caf4ad0fb0e144fa, type: 2}
-  - {fileID: 11400000, guid: b725fa6678e620548b413d7deddcc79e, type: 2}
+  meshtaskObjects: []
   guardRailMinimalCornerRadius: 0
   roadTypeTag: FOREST-BASIC
   assetPools:

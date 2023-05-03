@@ -14,8 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layers:
   - {fileID: 11400000, guid: 703cef44cc738ef479f351d37d7afea5, type: 2}
-  - {fileID: 11400000, guid: d8a879d7ca112bc44a4e9113e252a7f2, type: 2}
-  - {fileID: 11400000, guid: a3c8fe4f5402f094e851d9d39abaffa9, type: 2}
-  - {fileID: 11400000, guid: acf9619f996b36345b8d57426d926ec9, type: 2}
+  - {fileID: 11400000, guid: 6eacfa60d5cb2d441899a4f7894638dd, type: 2}
   - {fileID: 11400000, guid: a1990b02ff0e4ab47a8bb34d41533b25, type: 2}
   runoffMaterial: {fileID: 11400000, guid: fe9b6908b303e2643ae5f6b848fa8a3f, type: 2}

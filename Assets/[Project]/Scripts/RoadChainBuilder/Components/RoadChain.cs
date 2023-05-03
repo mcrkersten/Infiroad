@@ -24,7 +24,7 @@ using System;
 // This is the parent container for all the road segments
 public class RoadChain : MonoBehaviour {
 	[HideInInspector] public int ChainIndex = -1;
-    [HideInInspector] public int GeneratedIndex = 0;
+    [HideInInspector] public int SegmentIndex = 0;
     public bool loop = false; // Whether or not the last segment should connect to the first
 	public List<RoadSegment> organizedSegments = new List<RoadSegment>();
 	public LineRenderer line;
@@ -71,7 +71,7 @@ public class RoadChain : MonoBehaviour {
 
 	public void CreateMesh(RoadSettings roadSettings, RoadSegment segment)
 	{
-		segment.CreateMesh(Vector2.zero, roadSettings, GeneratedIndex); //Creates mesh
+		segment.CreateMesh(Vector2.zero, roadSettings, SegmentIndex, ChainIndex); //Creates mesh
 	}
 
 	public OrientedPoint GetOrientedPointOnRoad(float percentage, int segmentIndex, Ease ease)

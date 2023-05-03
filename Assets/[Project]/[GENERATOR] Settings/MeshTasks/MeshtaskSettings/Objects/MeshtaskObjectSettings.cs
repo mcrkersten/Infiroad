@@ -6,21 +6,6 @@ public class MeshtaskObjectSettings : MeshtaskSettings
 {
     [SerializeField] private List<SpawnSizeSettings> sizes = new List<SpawnSizeSettings>();
 
-    public override void PopulateMeshtask(MeshTask meshtask, GameObject parent, bool reflect = false)
-    {
-        
-		Vector2 mto_position = new Vector2(meshtask.meshtaskObject.position.x, meshtask.meshtaskObject.position.y);
-		if(reflect)
-			mto_position =  new Vector2(-meshtask.meshtaskObject.position.x, meshtask.meshtaskObject.position.y);
-
-        int size = meshtask.positionVectors.Count;
-        parent.name = parent.name + " " + meshtask.positionVectors.Count;
-        foreach (SpawnSizeSettings meshtaskObject in sizes)
-        {
-            if(size > meshtaskObject.minimalMeshtaskPointSpawnSize)
-                SpawnMeshtaskObject(meshtask, parent, meshtask.positionVectors.Count / 2, meshtaskObject.objectType, mto_position);
-        }
-    }
 
     protected override void SpawnMeshtaskObject(MeshTask meshTask, GameObject parent, int meshtaskPoint, MeshtaskPoolType meshtaskPoolType, Vector2 mto_position)
     {

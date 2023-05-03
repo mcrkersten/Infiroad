@@ -14,65 +14,75 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EDITOR_offSetPosition: {x: -1.3107615, y: 0, z: -3.0022857}
   dataKey: 675
-  calculatedUs: []
-  uvLenght: 2.5414212
   UV_scale: 1
   meshTaskType: 5
   meshtaskPosition: 0
   meshtaskStyle: 2
+  PointsFile: {fileID: 0}
+  fileOffset: {x: 0, y: 0}
+  fileReverse: 0
   points:
   - vertex:
       point: {x: -0.29999995, y: 0}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 1, y: 2}
-    inversedLine: {x: 11, y: 0}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
-    materialIndex: 0
+    materialIndex: 1
   - vertex:
       point: {x: -0.29999995, y: 0.95}
-      horizontal_UV: 0.95
+      uvX: 0
     line: {x: 3, y: 4}
-    inversedLine: {x: 9, y: 10}
+    uvDistance: 0.095
+    uvLastDistance: 0
     isHardEdge: 1
-    materialIndex: 0
+    materialIndex: 1
   - vertex:
       point: {x: -0.25, y: 1}
-      horizontal_UV: 1.0207106
+      uvX: 0
     line: {x: 5, y: 6}
-    inversedLine: {x: 7, y: 8}
+    uvDistance: 0.10207106
+    uvLastDistance: 0
     isHardEdge: 1
-    materialIndex: 0
+    materialIndex: 1
   - vertex:
       point: {x: 0.25, y: 1}
-      horizontal_UV: 1.5207106
+      uvX: 0
     line: {x: 7, y: 8}
-    inversedLine: {x: 5, y: 6}
+    uvDistance: 0.15207106
+    uvLastDistance: 0
     isHardEdge: 1
-    materialIndex: 0
+    materialIndex: 1
   - vertex:
       point: {x: 0.29999995, y: 0.95}
-      horizontal_UV: 1.5914212
+      uvX: 0
     line: {x: 9, y: 10}
-    inversedLine: {x: 3, y: 4}
+    uvDistance: 0.15914212
+    uvLastDistance: 0
     isHardEdge: 1
-    materialIndex: 0
+    materialIndex: 1
   - vertex:
       point: {x: 0.29999995, y: 0}
-      horizontal_UV: 2.5414212
+      uvX: 0
     line: {x: 11, y: 0}
-    inversedLine: {x: 1, y: 2}
+    uvDistance: 0.2541421
+    uvLastDistance: 0
     isHardEdge: 1
-    materialIndex: 0
-  meshResolution: 6
+    materialIndex: 1
+  meshResolution: 4
   meshtaskContinues: 1
   noiseChannel: 0
   maxChamfer: 5
-  extrusionSize: 15
+  extrusionSize: 10
   minimalCornerRadius: 0
   maximumCornerRadius: 0
   minimalExtrusionSize: 0
   materials:
   - {fileID: 2100000, guid: c2117b301237a2e439571f3fe1fc6cc8, type: 2}
-  variableMaterials: []
+  variableMaterials:
+  - {fileID: 2100000, guid: c2117b301237a2e439571f3fe1fc6cc8, type: 2}
+  - {fileID: 2100000, guid: 218b4a25336dd3c45b9856ce0adebce3, type: 2}
+  - {fileID: 2100000, guid: 8096f097ee1cdd0498d91d9b4b9a30cc, type: 2}
   meshIsClosed: 0
   meshtaskPoolingObjects: []

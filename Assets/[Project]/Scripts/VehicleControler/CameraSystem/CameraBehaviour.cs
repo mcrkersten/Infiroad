@@ -9,20 +9,17 @@ public class CameraBehaviour : MonoBehaviour
     public Vector3 maxAngle;
 
     private Vector3 startRotation;
-    private Vector3 startPosition;
     private Vector3 cameraStartPosition;
 
     public Transform lookAtTransform;
     public Transform cameraTransform;
 
-    private Vector3 velocity_LastFrame = Vector3.zero;
 
     public float wobbleSize;
 
     private void Start()
     {
         cameraStartPosition = cameraTransform.localPosition;
-        startPosition = lookAtTransform.localPosition;
         startRotation = this.transform.localEulerAngles;
         rb = this.transform.root.GetComponent<Rigidbody>();
     }
@@ -31,9 +28,7 @@ public class CameraBehaviour : MonoBehaviour
         Vector3 velocity = cameraTransform.InverseTransformDirection(rb.velocity);
         velocity[2] = 0f;
         velocity[0] = 0f;
-        float generalChangeOfSpeed = Vector3.Distance(velocity_LastFrame, velocity);
         cameraTransform.localPosition = Vector3.Lerp(cameraStartPosition, cameraStartPosition + velocity, .01f);
-        velocity_LastFrame = velocity;
     }
 
     private Vector3 CameraShake()

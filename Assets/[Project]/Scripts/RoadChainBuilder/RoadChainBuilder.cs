@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEngine.Rendering.HableCurve;
 
 public class RoadChainBuilder : MonoBehaviour
 {
@@ -57,7 +56,7 @@ public class RoadChainBuilder : MonoBehaviour
         foreach (MeshtaskSettings item in meshtaskSettings)
             meshtaskTypeHandler.SetDictionary(item, null);
         UpdateAllRoadSettings();
-        roadFormVariables = new RoadFormVariables(.1f);
+        roadFormVariables = new RoadFormVariables(.05f);
         InstantiateAssetPools();
     }
 
@@ -67,7 +66,7 @@ public class RoadChainBuilder : MonoBehaviour
         foreach (MeshtaskSettings item in meshtaskSettings)
             meshtaskTypeHandler.SetDictionary(item, null);
         UpdateAllRoadSettings();
-        roadFormVariables = new RoadFormVariables(.1f);
+        roadFormVariables = new RoadFormVariables(.05f);
     }
 
     public void GenerateRoadForGamemode(GameModeManager gameModeManager)
@@ -164,8 +163,8 @@ public class RoadChainBuilder : MonoBehaviour
 
     private void InstigateSegment()
     {
-        if(currentRoadChain.GeneratedIndex == 6) return;
-        if(currentRoadChain.GeneratedIndex == 4)
+        if(currentRoadChain.SegmentIndex == 6) return;
+        if(currentRoadChain.SegmentIndex == 4)
             SpawnRoadChainTrigger(currentRoadChain, currentRoadChain.organizedSegments[3]);
         PopulateSegment();
         DestroySegementFromQueue();
@@ -173,13 +172,13 @@ public class RoadChainBuilder : MonoBehaviour
 
     private void PopulateSegment()
     {
-        RoadSegment segment = currentRoadChain.organizedSegments[currentRoadChain.GeneratedIndex];
+        RoadSegment segment = currentRoadChain.organizedSegments[currentRoadChain.SegmentIndex];
         populatedSegments.Enqueue(segment);
 
         CreateSegmentMesh(segment);
         SpawnRandomDecoration(currentRoadChain, segment);
         SpawnSegmentTrigger(currentRoadChain, segment);
-        currentRoadChain.GeneratedIndex++;
+        currentRoadChain.SegmentIndex++;
     }
 
     private void DestroySegementFromQueue()
@@ -198,7 +197,7 @@ public class RoadChainBuilder : MonoBehaviour
         int i = 0;
         foreach (Sector s in sectors)
         {
-            s.roadChain.GeneratedIndex = i++;
+            s.roadChain.SegmentIndex = i++;
             fixedRoadChains.Enqueue(s.roadChain);
         }
         InstantiateAssetPools();
@@ -344,7 +343,7 @@ public class RoadChainBuilder : MonoBehaviour
 
             //Handle created Meshtasks
             foreach (MeshtaskObject meshtaskObject in roadSettting.meshtaskObjects)
-                HandleMeshTasks(meshtaskObject.meshtaskSettings, currentRoadChain);
+                ExecuteMeshtasks(meshtaskObject.meshtaskSettings, currentRoadChain);
 
             meshtasks.Clear();
         }
@@ -357,7 +356,7 @@ public class RoadChainBuilder : MonoBehaviour
 
         //Handle created Meshtasks
         foreach (MeshtaskObject meshtaskObject in roadSettting.meshtaskObjects)
-            HandleMeshTasks(meshtaskObject.meshtaskSettings, currentRoadChain);
+            ExecuteMeshtasks(meshtaskObject.meshtaskSettings, currentRoadChain);
 
         meshtasks.Clear();
     }
@@ -454,17 +453,12 @@ public class RoadChainBuilder : MonoBehaviour
         return organized;
     }
 
-    private void HandleMeshTasks(MeshtaskSettings settings, RoadChain roadchain)
+    private void ExecuteMeshtasks(MeshtaskSettings settings, RoadChain roadchain)
     {
         foreach (MeshTask task in meshtasks)
             if(settings == task.meshtaskObject.meshtaskSettings)
                 if(task.positionVectors.Count > 2)
-                    ExecuteMeshtask(task,roadchain);
-    }
-
-    private void ExecuteMeshtask(MeshTask task, RoadChain roadchain)
-    {
-            meshtaskExtruder.Extrude(task, roadchain);
+                    meshtaskExtruder.Extrude(task, roadchain);
     }
 
     private List<RoadSegment> OrganizeSegments(List<RoadSegment> createdSegments, EdgePoint entry, EdgePoint exit)
@@ -903,39 +897,55 @@ public class RoadFormVariables
         this.lerpSpeed = lerpSpeed;
     }
 
-    public void UpdateDelay(float extrusion)
-    {
-        extrusionVelocity = Mathf.Lerp(extrusionVelocity, extrusion, .025f);
-        MainExtrusion = Mathf.Lerp(MainExtrusion, extrusionVelocity, lerpSpeed);
-        //Left is always negative
-        if (float.IsNegative(extrusionVelocity) && MainExtrusion <= leftExtrusion)
-        {
-            leftExtrusion = MainExtrusion;
-            maxLeftExtrusion = MainExtrusion;
-            leftReductionVelocity = 0f;
-            if(Mathf.Abs(leftExtrusion) > .05f)
-                maxRightExtrusion = 0;
-        }
-        else if(maxLeftExtrusion == 0 || extrusion == 0)
-        {
-            leftExtrusion = Mathf.Lerp(leftExtrusion, 0f, leftReductionVelocity);
-            leftReductionVelocity += .0001f;
-        }
+public void UpdateDelay(float extrusion)
+{
+    // Smoothly adjust the extrusion velocity using linear interpolation (Lerp)
+    extrusionVelocity = Mathf.Lerp(extrusionVelocity, extrusion, lerpSpeed);
+    MainExtrusion = Mathf.Lerp(MainExtrusion, extrusionVelocity, lerpSpeed);
 
-        if (!float.IsNegative(extrusionVelocity) && MainExtrusion >= rightExtrusion)
+    // Update the left and right extrusions based on the new MainExtrusion value
+    if (extrusionVelocity < 0f && MainExtrusion <= leftExtrusion)
+    {
+        // If the extrusion velocity is negative and MainExtrusion is less than or equal to the left extrusion,
+        // set the left extrusion to MainExtrusion and reset the left reduction velocity to zero. 
+        leftExtrusion = MainExtrusion;
+        leftReductionVelocity = 0f;
+
+        // If the absolute value of leftExtrusion is greater than 0.05f, set maxRightExtrusion to zero
+        if (Mathf.Abs(leftExtrusion) > 0.05f)
         {
-            rightExtrusion = MainExtrusion;
-            maxRightExtrusion = MainExtrusion;
-            righReductiontVelocity = 0f;
-            if (Mathf.Abs(rightExtrusion) > .05f)
-                maxLeftExtrusion = 0;
-        }
-        else if (maxRightExtrusion == 0 || extrusion == 0)
-        {
-            rightExtrusion = Mathf.Lerp(rightExtrusion, 0f, righReductiontVelocity);
-            righReductiontVelocity += .0001f;
+            maxRightExtrusion = 0f;
         }
     }
+    else if ((maxLeftExtrusion == 0f || extrusion == 0f) && leftExtrusion != 0f)
+    {
+        // If maxLeftExtrusion is zero or extrusion is zero and leftExtrusion is not already zero,
+        // smoothly reduce leftExtrusion towards zero using leftReductionVelocity and increment leftReductionVelocity by 0.0001f.
+        leftExtrusion = Mathf.Lerp(leftExtrusion, 0f, leftReductionVelocity);
+        leftReductionVelocity += 0.001f;
+    }
+
+    if (extrusionVelocity > 0f && MainExtrusion >= rightExtrusion)
+    {
+        // If the extrusion velocity is positive and MainExtrusion is greater than or equal to the right extrusion,
+        // set the right extrusion to MainExtrusion and reset the right reduction velocity to zero. 
+        rightExtrusion = MainExtrusion;
+        righReductiontVelocity = 0f;
+
+        // If the absolute value of rightExtrusion is greater than 0.05f, set maxLeftExtrusion to zero
+        if (Mathf.Abs(rightExtrusion) > 0.05f)
+        {
+            maxLeftExtrusion = 0f;
+        }
+    }
+    else if ((maxRightExtrusion == 0f || extrusion == 0f) && rightExtrusion != 0f)
+    {
+        // If maxRightExtrusion is zero or extrusion is zero and rightExtrusion is not already zero,
+        // smoothly reduce rightExtrusion towards zero using righReductiontVelocity and increment righReductiontVelocity by 0.0001f.
+        rightExtrusion = Mathf.Lerp(rightExtrusion, 0f, righReductiontVelocity);
+        righReductiontVelocity += 0.001f;
+    }
+}
 
     private void UpdateCornerCamber(float extrusion)
     {
@@ -979,6 +989,7 @@ public class MeshtaskTypeHandler
         int dataKey = Random.Range(0, 1000000);
         meshtaskSettings.dataKey = dataKey;
         activeMeshtasks.Add((meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey), task);
+        if(meshtaskSettings.meshtaskContinues) return;
         MeshtaskVectors.Add((meshtaskSettings.meshTaskType + " " + meshtaskSettings.meshtaskPosition + " " + meshtaskSettings.dataKey), Vector3.zero);
     }
 

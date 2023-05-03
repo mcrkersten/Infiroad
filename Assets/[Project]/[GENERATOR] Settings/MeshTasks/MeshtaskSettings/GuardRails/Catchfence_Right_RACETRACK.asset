@@ -14,53 +14,59 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EDITOR_offSetPosition: {x: 0, y: 0, z: 0}
   dataKey: 861763
-  calculatedUs: []
-  uvLenght: 3.9798255
   UV_scale: 1
   meshTaskType: 1
   meshtaskPosition: 1
   meshtaskStyle: 2
+  PointsFile: {fileID: 0}
+  fileOffset: {x: 0, y: 0}
+  fileReverse: 0
   points:
   - vertex:
       point: {x: 0, y: 0}
-      horizontal_UV: 0
-    line: {x: 4, y: 0}
-    inversedLine: {x: 3, y: 4}
+      uvX: 0
+    line: {x: 0, y: 1}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
   - vertex:
       point: {x: 0, y: 2.8}
-      horizontal_UV: 2.8
-    line: {x: 0, y: 1}
-    inversedLine: {x: 2, y: 3}
+      uvX: 0
+    line: {x: 1, y: 2}
+    uvDistance: 0.28
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
   - vertex:
       point: {x: -0.11, y: 3.2}
-      horizontal_UV: 3.2148495
-    line: {x: 1, y: 2}
-    inversedLine: {x: 1, y: 2}
+      uvX: 0
+    line: {x: 2, y: 3}
+    uvDistance: 0.32148495
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
   - vertex:
       point: {x: -0.35, y: 3.5}
-      horizontal_UV: 3.599037
-    line: {x: 2, y: 3}
-    inversedLine: {x: 0, y: 1}
+      uvX: 0
+    line: {x: 3, y: 4}
+    uvDistance: 0.3599037
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
   - vertex:
       point: {x: -0.7, y: 3.65}
-      horizontal_UV: 3.9798255
-    line: {x: 3, y: 4}
-    inversedLine: {x: 4, y: 0}
+      uvX: 0
+    line: {x: 4, y: 0}
+    uvDistance: 0.39798257
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
-  meshResolution: 5
+  meshResolution: 7
   meshtaskContinues: 1
   noiseChannel: 0
   maxChamfer: 5
-  extrusionSize: 15
+  extrusionSize: 10
   minimalCornerRadius: 0
   maximumCornerRadius: 0
   minimalExtrusionSize: 0
@@ -75,4 +81,4 @@ MonoBehaviour:
     position: {x: 0, y: 0}
     curveTime: 0
     noiseChannel: 0
-  poleSpacing: 8
+  poleSpacing: 1

@@ -23,6 +23,7 @@ public class RoadSettings : ScriptableObject
 	public Ease rotationEasing = Ease.InOut;
 	public float edgeLoopsPerMeter;
 
+	[Range(-10f,10f)]
 	public float debugRoadCurveStrenght;
 
 	[Header("Noise settings")]
@@ -47,8 +48,8 @@ public class RoadSettings : ScriptableObject
 		foreach (MeshtaskObject mo in meshtaskObjects)
 		{
 			mo.meshtaskSettings.CalculateLine();
-			mo.meshtaskSettings.CalculateInverseLine();
-			mo.meshtaskSettings.ClaculateV();
+			mo.meshtaskSettings.CalculateUV_Distance();
+
 			mo.meshtaskSettings.maxChamfer = maxCamber;
 			mo.meshtaskSettings.extrusionSize = extrusionSize;
 		}
@@ -57,8 +58,8 @@ public class RoadSettings : ScriptableObject
 	public List<SurfaceScriptable> GetAllSurfaceSettings(int index)
     {
 		List<SurfaceScriptable> fc = new List<SurfaceScriptable>();
+        fc.Add(surfaceSettings[index].runoffMaterial);
 		fc.AddRange(surfaceSettings[index].layers);
-		fc.Add(surfaceSettings[index].runoffMaterial);
 		return fc;
 	}
 
