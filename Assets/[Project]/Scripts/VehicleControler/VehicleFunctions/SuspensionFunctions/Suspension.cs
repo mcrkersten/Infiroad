@@ -46,9 +46,7 @@ public class Suspension : MonoBehaviour
         Vector3 result = Vector3.zero;
         wheelSpin = 0f;
         engineWobble = 0f;
-        if (wheel.broken)
-            return result;
-
+ 
         if (wheel.Raycast(springLenght + wheel.wheelRadius, layerMask, out RaycastHit hit))
         {
             //Debug.DrawLine(this.transform.position, this.transform.position + rb.GetPointVelocity(hit.point).normalized);

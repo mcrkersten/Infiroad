@@ -27,6 +27,9 @@ MonoBehaviour:
   m_SupportsHDR: 0
   m_MSAA: 4
   m_RenderScale: 1
+  m_UpscalingFilter: 0
+  m_FsrOverrideSharpness: 0
+  m_FsrSharpness: 0.92
   m_MainLightRenderingMode: 1
   m_MainLightShadowsSupported: 1
   m_MainLightShadowmapResolution: 4096
@@ -43,10 +46,11 @@ MonoBehaviour:
   m_ShadowCascadeCount: 4
   m_Cascade2Split: 0.25
   m_Cascade3Split: {x: 0.026522039, y: 0.3489574}
-  m_Cascade4Split: {x: 0.0012668148, y: 0.24718836, z: 0.59229034}
-  m_CascadeBorder: 0.16639294
+  m_Cascade4Split: {x: 0.004, y: 0.24718836, z: 0.59229153}
+  m_CascadeBorder: 0.1344094
   m_ShadowDepthBias: 0.3
   m_ShadowNormalBias: 0.01
+  m_AnyShadowsSupported: 1
   m_SoftShadowsSupported: 1
   m_ConservativeEnclosingSphere: 0
   m_NumIterationsEnclosingSphere: 64

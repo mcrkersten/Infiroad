@@ -6,11 +6,9 @@ using System.Linq;
 
 public class Wheel_Raycast : MonoBehaviour
 {
-    public bool broken;
     [SerializeField] private GameObject wheelModel;
     [SerializeField] private Transform suspension;
     public Collider wheelCollider;
-    [SerializeField] private List<SuspensionPointer> suspensionPointers = new List<SuspensionPointer>();
 
     [Header("General Slip")]
     public SurfaceScriptable currentSurface;
@@ -57,20 +55,10 @@ public class Wheel_Raycast : MonoBehaviour
     private void Update()
     {
         transform.localEulerAngles = new Vector3(0, steerAngle + startEulerAngle.y, startEulerAngle.z);
-
-        foreach (SuspensionPointer s in suspensionPointers)
-        {
-            if(!broken)
-                s.UpdatePointer();
-        }
     }
 
     public bool Raycast(float maxLenght, LayerMask layerMask, out RaycastHit hit)
     {
-        if (broken) {
-            hit = new RaycastHit();
-            return false;
-        }
         if (Physics.SphereCast(transform.position, wheelRadius, -transform.up, out RaycastHit hitPoint, maxLenght, layerMask))
         {
             wheelModel.transform.localPosition = wheelModelLocalStartPosition + (-Vector3.up * (hitPoint.distance));

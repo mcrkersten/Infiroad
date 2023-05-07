@@ -6152,61 +6152,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3390189072223474917, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: orthographic
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3390189072223474917, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: orthographic size
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 4492079891649817002, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: triggerList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5468935609631827219, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: triggerList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5859103045432505117, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
       propertyPath: m_Name
       value: Lotus1970_2
       objectReference: {fileID: 0}
-    - target: {fileID: 5859103045432505117, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7064282277434133130, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: triggerList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7379323342098823433, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
+    - target: {fileID: 7452415522373170927, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 243.1
+      value: -0.096
       objectReference: {fileID: 0}
-    - target: {fileID: 7379323342098823433, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.66982555
-      objectReference: {fileID: 0}
-    - target: {fileID: 7379323342098823433, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.66982555
-      objectReference: {fileID: 0}
-    - target: {fileID: 7379323342098823433, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.22656955
-      objectReference: {fileID: 0}
-    - target: {fileID: 7379323342098823433, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.22656955
-      objectReference: {fileID: 0}
-    - target: {fileID: 7379323342098823433, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 7379323342098823433, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 37.376
+    - target: {fileID: 7452415522373170927, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.161
       objectReference: {fileID: 0}
     - target: {fileID: 8462864637646562068, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
       propertyPath: resetScreen
@@ -6216,8 +6172,7 @@ PrefabInstance:
       propertyPath: pauseMenuBehaviour
       value: 
       objectReference: {fileID: 1421776988}
-    m_RemovedComponents:
-    - {fileID: 1663432284872127397, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dce2b3aa9792b6a449629a9f63d66dd9, type: 3}
 --- !u!114 &1674912333 stripped
 MonoBehaviour:

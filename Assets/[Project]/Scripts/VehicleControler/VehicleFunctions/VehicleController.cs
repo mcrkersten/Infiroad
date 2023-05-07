@@ -407,11 +407,6 @@ public class VehicleController : MonoBehaviour
         List<Vector3> physics = new List<Vector3>();
         foreach (Suspension s in suspensions)
         {
-            if (s.wheel.broken)
-            {
-                physics.Add(Vector3.zero);
-                continue;
-            }
             switch (driveType)
             {
                 case DriveType.rearWheelDrive:
