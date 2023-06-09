@@ -31,6 +31,10 @@ public class VehicleController : MonoBehaviour
     public Engine2 engine;
     private float engineForce;
 
+    [Header("Vehicle physics")]
+    [Range (0f,1f)] public float dragReduction;
+    public float donwforceincreasement;
+
     [Space]
     public DriveType driveType;
     public Transform centerOfMass;
@@ -220,14 +224,13 @@ public class VehicleController : MonoBehaviour
         foreach (DownForceWing wing in downforceWing)
         {
             float downforce = wing.CalculateLiftforce(29.92f);
-            Vector3 downForceVector = downforce * -wing.transform.up;
-            Vector3 dragForceVector = downforce * -wing.transform.forward;
+            Vector3 downForceVector = (downforce + donwforceincreasement) * -wing.transform.up;
+            Vector3 dragForceVector = (downforce * dragReduction) * -wing.transform.forward;
             rb.AddForceAtPosition(downForceVector, wing.transform.position);
             rb.AddForceAtPosition(dragForceVector, wing.transform.position);
             Debug.DrawLine(wing.transform.position, wing.transform.position + downForceVector, Color.green);
         }
-        Vector3 airResistance = CalculateAirResistance();
-        rb.AddForce(airResistance);
+        rb.AddForce(CalculateAirResistance());
 
         float accelerationInput = ReadAccelerationInput(userInputType);
         accelerationInput = SmoothInput(accelerationInput, .25f);
@@ -344,14 +347,14 @@ public class VehicleController : MonoBehaviour
     private float gamePadSteering = 0f;
     private float CalculateSteeringInputForce(float steerInput, InputType inputType, float power)
     {
-        steerWeight = CalculateSteerWeight();
+        steerWeight = CalculateSteerWeight() / steeringStrenght;
         switch (inputType)
         {
             case InputType.Keyboard:
-                gamePadSteering = Mathf.Lerp(gamePadSteering, steerInput - (steerWeight / 3), Time.fixedDeltaTime);
+                gamePadSteering = Mathf.Lerp(gamePadSteering, steerInput - (steerWeight), Time.fixedDeltaTime);
                 return gamePadSteering;
             case InputType.Gamepad:
-                gamePadSteering = Mathf.Lerp(gamePadSteering, steerInput - (steerWeight/3), Time.fixedDeltaTime);
+                gamePadSteering = Mathf.Lerp(gamePadSteering, steerInput - (steerWeight), Time.fixedDeltaTime);
                 return gamePadSteering;
             case InputType.Wheel:
                 //Steering wheel input
@@ -394,9 +397,9 @@ public class VehicleController : MonoBehaviour
         foreach (Suspension w in suspensions)
         {
             if (w.suspensionPosition == SuspensionPosition.FrontLeft)
-                w.wheel.steerAngle = ackermannAngleLeft;
+                w.wheel.SetSteerAngle(ackermannAngleLeft);
             if (w.suspensionPosition == SuspensionPosition.FrontRight)
-                w.wheel.steerAngle = ackermannAngleRight;
+                w.wheel.SetSteerAngle(ackermannAngleRight);
         }
     }
 
@@ -405,39 +408,46 @@ public class VehicleController : MonoBehaviour
         float physicsWobble = 0f;
         wheelSlip = 0f;
         List<Vector3> physics = new List<Vector3>();
+        List<RaycastHit?> hits = new List<RaycastHit?>();
         foreach (Suspension s in suspensions)
         {
+            RaycastHit? hit = null;
             switch (driveType)
             {
                 case DriveType.rearWheelDrive:
                     if (s.suspensionPosition == SuspensionPosition.RearLeft || s.suspensionPosition == SuspensionPosition.RearRight)
-                        physics.Add(s.SimulatePhysics(brakeInput, engineForce/2f, out wheelSlip, out physicsWobble));
+                        physics.Add(s.SimulatePhysics(brakeInput, engineForce/2f, out wheelSlip, out physicsWobble, out hit));
                     else
                     {
                         float d;
-                        physics.Add(s.SimulatePhysics(brakeInput, 0, out d, out physicsWobble));
+                        physics.Add(s.SimulatePhysics(brakeInput, 0, out d, out physicsWobble, out hit));
                     }
                     break;
                 case DriveType.frontWheelDrive:
                     if (s.suspensionPosition == SuspensionPosition.FrontLeft || s.suspensionPosition == SuspensionPosition.FrontRight)
-                        physics.Add(s.SimulatePhysics(brakeInput, engineForce/2f, out wheelSlip, out physicsWobble));
+                        physics.Add(s.SimulatePhysics(brakeInput, engineForce/2f, out wheelSlip, out physicsWobble, out hit));
                     else
                     {
                         float d;
-                        physics.Add(s.SimulatePhysics(brakeInput, 0, out d, out physicsWobble));
+                        physics.Add(s.SimulatePhysics(brakeInput, 0, out d, out physicsWobble, out hit));
                     }
                     break;
                 case DriveType.allWheelDrive:
-                    physics.Add(s.SimulatePhysics(brakeInput, engineForce/4f, out wheelSlip, out physicsWobble));
+                    physics.Add(s.SimulatePhysics(brakeInput, engineForce/4f, out wheelSlip, out physicsWobble, out hit));
                     break;
                 default:
                     break;
             }
+            hits.Add(hit);
         }
 
         int i = 0;
         foreach (Suspension s in suspensions)
-            rb.AddForceAtPosition(physics[i++], s.transform.position);
+        {
+            if(hits[i] != null)
+                rb.AddForceAtPosition(physics[i], Vector3.Lerp(s.transform.position, hits[i].Value.point, 1f));
+            i++;
+        }
         return physicsWobble / suspensions.Count;
     }
 

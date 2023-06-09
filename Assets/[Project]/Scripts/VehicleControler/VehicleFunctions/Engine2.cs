@@ -15,7 +15,7 @@ public class Engine2
     public AnimationCurve AntiStallProfile;
 
     public Dashboard dashboard;
-    private float lastRPM = 0f;
+    public float lastRPM = 0f;
 
     public float[] gearRatios;
     public float finalDriveRatio = 6.49f;
@@ -62,7 +62,7 @@ public class Engine2
 
         // Calculate mechanical force
         float mechanicalForce = CalculateMechanicalFriction(currentForwardVelocity, throttle, clutch);
-
+        mechanicalForce = 0;
         // Calculate effective gear ratio and wheel RPM
         float effectiveGearRatio = GetCurrentGearRatio();
         float wheelRPM = (currentForwardVelocity / (rollingCircumference / 60f)) * wheelSpin;
@@ -75,7 +75,11 @@ public class Engine2
         float velocityRPM = lastRPM - enginewRPM;
         lastRPM += velocityRPM;
 
-        if(float.IsNaN(velocityRPM)) { return 0f; }
+        if(float.IsNaN(velocityRPM))
+        { 
+            lastRPM = 1f;
+            return 0f; 
+        }
 
         // Calculate wheel torque and force to apply
         float engineTorque = CalculateEngineTorque(lastRPM);
@@ -111,7 +115,7 @@ public class Engine2
 
     private float AntiStall(float brake)
     {
-        return 1f - AntiStallProfile.Evaluate(brake);
+        return 1f;// - AntiStallProfile.Evaluate(brake);
     }
 
     private float SemiAutomaticClutch(float clutch)
@@ -150,7 +154,7 @@ public class Engine2
         float idealEngineRPM = (3500f) * (1f - throttle);
         if(currentEngineRPM < idealEngineRPM)
             return idealEngineRPM == 0f ? 0f : CalculateEngineTorque(idealEngineRPM);
-        return CalculateEngineBrakeTorque(idealEngineRPM, currentEngineRPM) * clutch;
+        return CalculateEngineBrakeForce(idealEngineRPM, throttle) * clutch;
     }
 
     private float CalculateEngineTorque(float rpm)
@@ -159,12 +163,15 @@ public class Engine2
         return engineTorqueProfile.Evaluate(time);
     }
 
-    private float CalculateEngineBrakeTorque(float rpm, float overshootRMP)
+    private float CalculateEngineBrakeForce(float currentRPM, float throttle)
     {
-        float time = rpm / maxRPM;
-        float overshoot = overshootRMP / rpm;
-        overshoot = Mathf.Clamp(overshoot, 0f, 10f);
-        return -engineTorqueProfile.Evaluate(time) * engineBrakeProfile.Evaluate(overshoot);
+        float normalizedRPM = currentRPM / maxRPM; // Normalize the current RPM
+        float brakeForce = -engineBrakeProfile.Evaluate(normalizedRPM); // Evaluate the engine brake curve
+    
+        // Apply throttle modulation
+        brakeForce *= Mathf.Lerp(1f, 0f, throttle);
+    
+        return brakeForce;
     }
 
 

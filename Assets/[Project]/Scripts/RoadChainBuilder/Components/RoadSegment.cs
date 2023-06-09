@@ -35,8 +35,8 @@ public class RoadSegment : UniqueMesh {
 	RoadMeshExtruder meshExtruder = new RoadMeshExtruder();
 	// Properties
 	public bool HasValidNextPoint => TryGetNextSegment() != null;
-	bool IsInValidChain => transform.parent.Ref()?.GetComponent<RoadChain>() != null;
-	public RoadChain RoadChain => transform.parent == null ? null : transform.parent.GetComponent<RoadChain>();
+	bool IsInValidChain => transform.parent.Ref()?.GetComponent<SegmentChain>() != null;
+	public SegmentChain SegmentChain => transform.parent == null ? null : transform.parent.GetComponent<SegmentChain>();
 
 	[HideInInspector]public RoadSettings roadSetting;
     [HideInInspector]public int index;
@@ -54,15 +54,14 @@ public class RoadSegment : UniqueMesh {
 		index = segmentIndex;
 
 		// Only generate a mesh if we've got a next control point
-		if ( HasValidNextPoint ) 
-		{
-			this.bezier = GetBezierRepresentation(Space.Self);
+		if ( HasValidNextPoint ) {
+			CreateBezier();
 			meshExtruder.ExtrudeRoad(
 				segment: this,
 				mesh: Mesh,
 				roadSettings: settings,
 				bezier: this.bezier,
-				uvMode: RoadChain.uvMode,
+				uvMode: SegmentChain.uvMode,
 				nrmCoordStartEnd: nrmCoordStartEnd,
 				edgeLoopsPerMeter: settings.edgeLoopsPerMeter,
 				tilingAspectRatio: GetTextureAspectRatio(),
@@ -70,10 +69,14 @@ public class RoadSegment : UniqueMesh {
 			);
 		} 
 		else if( meshCached != null ) 
-		{
 			DestroyImmediate( meshCached );
-		}
 		this.GetComponent<MeshCollider>().sharedMesh = Mesh;
+	}
+
+	public void CreateBezier()
+	{	
+		if ( HasValidNextPoint )
+			this.bezier = GetBezierRepresentation(Space.Self);
 	}
 
 	float GetTextureAspectRatio() {
@@ -83,21 +86,21 @@ public class RoadSegment : UniqueMesh {
 
 	// Gets one of the 4 bezier control point locations
 	// This is a bit convoluted to avoid double-transforming between spaces
-	public Vector3 GetControlPoint( int i, Space space ) {
-		Vector3 FromLocal( Vector3 localPos ) => space == Space.Self ? localPos : transform.TransformPoint( localPos );
+	public Vector3 GetControlPoint( int index, Space space ) {
+		Vector3 FromSelf( Vector3 selfPos ) => space == Space.Self ? selfPos : transform.TransformPoint( selfPos );
 		Vector3 FromWorld( Vector3 worldPos ) => space == Space.World ? worldPos : transform.InverseTransformPoint( worldPos );
-		if( i < 2 ) {
-			if( i == 0 )
-				return FromLocal( Vector3.zero );
-			if( i == 1 )
-				return FromLocal( Vector3.forward * tangentLength );
+		if( index < 2 ) {
+			if( index == 0 )
+				return FromSelf( Vector3.zero );
+			if( index == 1 )
+				return FromSelf( Vector3.forward * tangentLength );
 		} else {
 			RoadSegment next = TryGetNextSegment();
-			Transform nextTf = next.transform;
-			if( i == 2 )
-				return FromWorld( nextTf.TransformPoint( Vector3.back * next.tangentLength ) );
-			if( i == 3 )
-				return FromWorld( nextTf.position );
+			Transform nextPoint = next.transform;
+			if( index == 2 )
+				return FromWorld( nextPoint.TransformPoint( Vector3.back * next.tangentLength ) );
+			if( index == 3 )
+				return FromWorld( nextPoint.position );
 		}
         return default;
 	}
@@ -110,7 +113,7 @@ public class RoadSegment : UniqueMesh {
 		int thisIndex = transform.GetSiblingIndex();
 		bool isLast = thisIndex == transform.parent.childCount-1;
 		RoadSegment GetSiblingSegment( int i ) => transform.parent.GetChild( i ).GetComponent<RoadSegment>();
-		if( isLast && RoadChain.loop )
+		if( isLast && SegmentChain.loop )
 			return GetSiblingSegment( 0 ); // First segment
 		else if( !isLast )
 			return GetSiblingSegment( thisIndex + 1 ); // Next segment

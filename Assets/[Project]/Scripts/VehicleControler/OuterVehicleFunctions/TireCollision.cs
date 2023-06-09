@@ -17,7 +17,7 @@ public class TireCollision : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Collider col = collision.GetContact(0).thisCollider;
-        Wheel_Raycast raycast = wheelRaycasts.FirstOrDefault(c => c.wheelCollider == col);
+        Wheel_Raycast raycast = wheelRaycasts.FirstOrDefault(c => c.tireCollider == col);
         if (raycast == null)
             return;
 

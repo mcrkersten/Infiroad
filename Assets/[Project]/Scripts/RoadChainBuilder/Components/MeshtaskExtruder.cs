@@ -11,9 +11,9 @@ public class MeshtaskExtruder
 	List<List<int>> triIndices = new List<List<int>>();
 	int materialCount;
 
-	RoadChain currentRoadchain;
+	SegmentChain currentRoadchain;
 	GameObject activeMeshGameObject;
-	public void Extrude(MeshTask meshTask, RoadChain parent)
+	public void Extrude(MeshTask meshTask, SegmentChain parent)
     {
 		currentRoadchain = parent;
 		MeshtaskObject meshTaskObject = meshTask.meshtaskObject;

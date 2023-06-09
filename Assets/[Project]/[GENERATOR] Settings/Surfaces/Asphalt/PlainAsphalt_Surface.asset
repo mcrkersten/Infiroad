@@ -16,17 +16,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.0009765625
-      value: 0.0018920898
-      inSlope: 0.7253079
-      outSlope: 0.7253079
+      time: 0.0009719953
+      value: -0.0026753028
+      inSlope: 0.30478474
+      outSlope: 0.30478474
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.28558958
+      outWeight: 0.041636154
     - serializedVersion: 3
-      time: 3.4009643
-      value: 1
+      time: 10.058201
+      value: 1.0010071
       inSlope: 0.00025632774
       outSlope: 0.00025632774
       tangentMode: 0
@@ -34,26 +34,18 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 5.9835844
-      value: 0.9
+      time: 34.978485
+      value: 0.49766183
       inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.7989667
       outWeight: 0.062429193
-    - serializedVersion: 3
-      time: 25
-      value: 0.9
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 1
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  useSlip: 0
   unGripped:
     serializedVersion: 2
     m_Curve:
@@ -67,8 +59,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.11198387
     - serializedVersion: 3
-      time: 3.2590408
-      value: 0.8983188
+      time: 3.2225266
+      value: 0.9506565
       inSlope: 0.002334617
       outSlope: 0.002334617
       tangentMode: 0
@@ -76,8 +68,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 6
-      value: 0.90043557
+      time: 5.9817505
+      value: 0.9562675
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -87,16 +79,16 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 25
       value: 0.9
-      inSlope: 0
+      inSlope: -0.020086106
       outSlope: 0
       tangentMode: 1
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.04224755
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  SlipValue: 6
-  UnSlipValue: 1.4
+  SlipValue: 7.5
+  UnSlipValue: 0.5
   material: {fileID: 2100000, guid: 8d88879f40d29764ca72e05919467fca, type: 2}
   UV_mirrored: 0

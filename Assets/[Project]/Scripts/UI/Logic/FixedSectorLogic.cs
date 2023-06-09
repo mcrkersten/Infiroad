@@ -11,7 +11,7 @@ public class FixedSectorLogic : MonoBehaviour
 
     [Header("Track generator")]
     [SerializeField] private Camera trackRenderCamera;
-    [SerializeField] private RoadChainBuilder roadChainBuilder;
+    [SerializeField] private SegmentChainBuilder roadChainBuilder;
     [SerializeField] private int segmtentAmount;
     [SerializeField] private int resolution;
     private List<Sector> sectors = new List<Sector>();

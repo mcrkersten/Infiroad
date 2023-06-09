@@ -6,9 +6,12 @@ using System.Linq;
 
 public class Wheel_Raycast : MonoBehaviour
 {
-    [SerializeField] private GameObject wheelModel;
-    [SerializeField] private Transform suspension;
-    public Collider wheelCollider;
+    public bool debug;
+    public Transform TireWheelAssembly => tireWheelAssembly;
+    [SerializeField] private Transform tireWheelAssembly;
+    [SerializeField] private Transform tire;
+    [SerializeField] private Transform suspensionTransform;
+    public Collider tireCollider;
 
     [Header("General Slip")]
     public SurfaceScriptable currentSurface;
@@ -17,8 +20,7 @@ public class Wheel_Raycast : MonoBehaviour
     [SerializeField] private AnimationCurve brakeLock;
     [SerializeField] private AnimationCurve wheelSpin;
 
-    private Vector3 wheelModelLocalStartPosition;
-    private Vector3 suspensionLocalStartPosition;
+
     private Vector3 lastHitPosition = Vector3.zero;
 
     [HideInInspector] public Vector3 wheelVelocityLocalSpace;
@@ -28,52 +30,59 @@ public class Wheel_Raycast : MonoBehaviour
     [Header("Wheel")]
     public float wheelRadius;
     private float tireCircumference;
-    public float steerAngle;
+
 
     public GameObject smokeParticleSystemPrefab;
     [SerializeField] private ParticleSystem slipSmokeParticleSystem;
 
     [HideInInspector] public Vector3 forceDirectionDebug = Vector3.zero;
-    public float grip_UI = 0.01f;
+    [HideInInspector] public float grip_UI = 0.01f;
+    public float gripTime_UI = 0.01f;
     private Rigidbody rb;
 
-    private Vector3 startEulerAngle;
+    //Start vectors
+    private Vector3 startLocalEulerAngle;
+    private Vector3 TWAstartLocalEulerAngle;
+    private Vector3 suspensionLocalStartPosition;
 
     private void Awake()
     {
         rb = this.transform.root.GetComponent<Rigidbody>();
-        startEulerAngle = this.transform.localEulerAngles;
+
+        startLocalEulerAngle = this.transform.localEulerAngles;
+        TWAstartLocalEulerAngle = tireWheelAssembly.localEulerAngles;
     }
 
     private void Start()
     {
         tireCircumference = (Mathf.PI * 2f) * wheelRadius;
-        wheelModelLocalStartPosition = new Vector3(wheelModel.transform.localPosition.x, 0, wheelModel.transform.localPosition.z);
-        suspensionLocalStartPosition = new Vector3(suspension.transform.localPosition.x, 0, suspension.transform.localPosition.z);
+        suspensionTransform.localPosition = suspensionTransform.parent.InverseTransformPoint(this.transform.position);
+        suspensionLocalStartPosition = suspensionTransform.localPosition;
     }
 
-    private void Update()
+    public void SetSteerAngle(float angle)
     {
-        transform.localEulerAngles = new Vector3(0, steerAngle + startEulerAngle.y, startEulerAngle.z);
+        this.transform.localEulerAngles = new Vector3(startLocalEulerAngle.x, angle + startLocalEulerAngle.y, startLocalEulerAngle.z);
+        tireWheelAssembly.localEulerAngles = new Vector3(TWAstartLocalEulerAngle.x, angle + TWAstartLocalEulerAngle.y, TWAstartLocalEulerAngle.z);
     }
 
     public bool Raycast(float maxLenght, LayerMask layerMask, out RaycastHit hit)
     {
-        if (Physics.SphereCast(transform.position, wheelRadius, -transform.up, out RaycastHit hitPoint, maxLenght, layerMask))
+        if (Physics.SphereCast(this.transform.position, wheelRadius, -this.transform.up, out RaycastHit hitPoint, maxLenght, layerMask))
         {
-            wheelModel.transform.localPosition = wheelModelLocalStartPosition + (-Vector3.up * (hitPoint.distance));
-            suspension.transform.localPosition = suspensionLocalStartPosition + (-Vector3.up * (hitPoint.distance));
+            suspensionTransform.localPosition = suspensionLocalStartPosition + (-Vector3.up * (hitPoint.distance));
             lastHitPosition = hitPoint.point;
             hit = hitPoint;
+
             //Material m = GetMaterialFromRaycastHit(hit, hit.transform.GetComponent<Mesh>());
             //currentSurface = hit.transform.GetComponent<RoadSegment>()?.surfaceSettings.First(s => s.material == m);
+
             if(slipSmokeParticleSystem != null)
                 slipSmokeParticleSystem.transform.position = hit.point;
             return true;
         }
         slipSmokeParticleSystem.transform.position = this.transform.position;
-        wheelModel.transform.localPosition = wheelModelLocalStartPosition + (-Vector3.up * maxLenght);
-        suspension.transform.localPosition = suspensionLocalStartPosition + (-Vector3.up * maxLenght);
+        //suspensionTransform.transform.localPosition = suspensionLocalStartPosition + (-this.transform.up * maxLenght);
         hit = new RaycastHit();
         return false;
     }
@@ -110,19 +119,36 @@ public class Wheel_Raycast : MonoBehaviour
         return null;
     }
 
-    public Vector2 RotateWheelModel(Vector2 force, SuspensionPosition suspensionPosition)
+    float lastRotation;
+    public Vector2 RotateWheelModel(Vector2 slipForce)
     {
-        float wheelLockPercentage = brakeLock.Evaluate(Mathf.Abs(force.x));
-        float wheelSpinPercentage = wheelSpin.Evaluate(Mathf.Abs(force.y));
+        float wheelLockPercentage = brakeLock.Evaluate(Mathf.Abs(slipForce.x));
+        float wheelSpinPercentage = wheelSpin.Evaluate(Mathf.Abs(slipForce.y));
         float combinedPercentage = wheelLockPercentage + wheelSpinPercentage;
-
         float rotationSpeed = (wheelVelocityLocalSpace.z * 3.6f) / tireCircumference;
-        wheelModel.transform.Rotate(Vector3.right, rotationSpeed * combinedPercentage);
+        float rotation = rotationSpeed * Mathf.Clamp(combinedPercentage, 0f , 1f);
+
+        if(debug)
+            Debug.Log(combinedPercentage);
+
+        if (float.IsNaN(rotation))
+        {
+             rotation = lastRotation;
+             lastRotation = lastRotation * .9f;
+        }
+        else
+            lastRotation = rotation;
+
+        if(tire != null)
+            tire.Rotate(Vector3.right, rotation, Space.Self);
+        else
+            tireWheelAssembly.Rotate(Vector3.right, rotation, Space.Self);
 
         float meterPerSecond = wheelVelocityLocalSpace.z;
         RPM = meterPerSecond / wheelRadius;
 
         TyreLockSmoke(wheelLockPercentage, lastHitPosition);
+
         return new Vector2(wheelLockPercentage, wheelSpinPercentage);
     }
 
@@ -148,7 +174,7 @@ public class Wheel_Raycast : MonoBehaviour
 
     private void ReleaseSmoke(Vector3 position)
     {
-        GameObject s = Instantiate(smokeParticleSystemPrefab, position, Quaternion.identity, wheelModel.transform);
+        GameObject s = Instantiate(smokeParticleSystemPrefab, position, Quaternion.identity, tireWheelAssembly);
         s.GetComponent<SmokeParticleSystem>().rb = rb;
         ParticleSystem ps = s.GetComponent<ParticleSystem>();
 

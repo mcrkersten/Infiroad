@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f9a7db0114f5489b9f793be567796e9, type: 3}
+  m_Name: TreeTheme_2
+  m_EditorClassIdentifier: 
+  wallPrefab: {fileID: 2297009154302016302, guid: 494a2f96003eb4da39c89375a7de0a6b,
+    type: 3}
+  keepInsideWalls: 1
+  windowPrefabs:
+  - {fileID: 555001713503201163, guid: 90a2e3ecbd7a54017ab0123a7674372e, type: 3}
+  - {fileID: 5127991997544696645, guid: 8a62d954c250c44dc9b07f836b59e6e4, type: 3}
+  - {fileID: 4406715063460533732, guid: 868598b166c124c37aab4c1c99febcee, type: 3}
+  - {fileID: 2006442003863845221, guid: 0288f627adfd748c0a606cc9b5213877, type: 3}
+  - {fileID: 205234480811198406, guid: 912e06292c249457891c4b601509292f, type: 3}
+  - {fileID: 6519412851046827219, guid: b4a6707d3f5b941d39c7d3ef47b7e634, type: 3}
+  randomizeWindowSelection: 1
+  windowPercentChance: 0.36
+  roofPrefabs:
+  - {fileID: 6169951626708762408, guid: 84af565b574a748ae997eecd15cc115f, type: 3}
+  - {fileID: 1134955728100379877, guid: c072afb3141754486a655e32f606ad44, type: 3}
+  - {fileID: 9198717357363338733, guid: 509f00a892e59467da6664796709af68, type: 3}
+  - {fileID: 5492424045720951397, guid: a595fd1e3433c4b23b84901c9f2befda, type: 3}
+  - {fileID: 8398389967596632079, guid: dde592250f4f74dad8a019a1a56076c0, type: 3}
+  - {fileID: 1094734527016225988, guid: a5f6d2c138ba84727827893aa2b2b3bc, type: 3}
+  - {fileID: 9187533887836962833, guid: bb3d198d3efc347a39bd20d53aa4aa13, type: 3}
+  randomizeRoofSelection: 1
+  includeRoof: 1
+  cornerPrefab: {fileID: 3459940652932322917, guid: b5e4eb4f4640f41b584ff95dc564b817,
+    type: 3}
+  allowCornerWalls: 1
+  doorPrefab: {fileID: 2944382230485079064, guid: 23475b55ef414402ea54ad52980a274c,
+    type: 3}
+  doorPercentChance: 0.109
+  rows: 5
+  columns: 1
+  randomizeRows: 0
+  randomizeColumns: 1
+  cellUnitSize: 1
+  numberOfFloors: 18

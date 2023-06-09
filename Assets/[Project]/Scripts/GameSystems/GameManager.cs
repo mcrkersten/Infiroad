@@ -12,7 +12,7 @@ namespace GameSystems {
         public static event StartGame onStartGame;
 
         [SerializeField] private VehicleController vehicleController;
-        [SerializeField] private RoadChainBuilder roadChainBuilder;
+        [SerializeField] private SegmentChainBuilder roadChainBuilder;
 
         [Header("Game and UI systems")]
         [SerializeField] private CountdownClock startCountdownClock;
@@ -37,7 +37,7 @@ namespace GameSystems {
         private void Start()
         {
             gameModeManager = GameModeManager.Instance;
-            roadChainBuilder = RoadChainBuilder.instance;
+            roadChainBuilder = SegmentChainBuilder.instance;
             if(GameManager.instance != null)
                 StartGameMode();
         }

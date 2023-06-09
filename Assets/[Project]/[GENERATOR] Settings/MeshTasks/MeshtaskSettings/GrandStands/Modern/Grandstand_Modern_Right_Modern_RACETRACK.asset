@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Grandstand_Modern_Right_Modern_RACETRACK
   m_EditorClassIdentifier: 
   EDITOR_offSetPosition: {x: 0, y: 0, z: 0}
-  dataKey: 28611
+  dataKey: 572932
   UV_scale: 1
   meshTaskType: 2
   meshtaskPosition: 1

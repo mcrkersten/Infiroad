@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f9a7db0114f5489b9f793be567796e9, type: 3}
+  m_Name: DarkTheme
+  m_EditorClassIdentifier: 
+  wallPrefab: {fileID: 2297009154302016302, guid: 494a2f96003eb4da39c89375a7de0a6b,
+    type: 3}
+  keepInsideWalls: 1
+  windowPrefabs:
+  - {fileID: 7468460664939623896, guid: 377013674207146a8b114875ca42bef3, type: 3}
+  - {fileID: 555001713503201163, guid: 90a2e3ecbd7a54017ab0123a7674372e, type: 3}
+  randomizeWindowSelection: 0
+  windowPercentChance: 0.64
+  roofPrefabs:
+  - {fileID: 1134955728100379877, guid: c072afb3141754486a655e32f606ad44, type: 3}
+  - {fileID: 9187533887836962833, guid: bb3d198d3efc347a39bd20d53aa4aa13, type: 3}
+  - {fileID: 5492424045720951397, guid: a595fd1e3433c4b23b84901c9f2befda, type: 3}
+  - {fileID: 1094734527016225988, guid: a5f6d2c138ba84727827893aa2b2b3bc, type: 3}
+  randomizeRoofSelection: 1
+  includeRoof: 1
+  doorPrefab: {fileID: 7165127039772983386, guid: b9db251dab23c40138b1c335c0ebd413,
+    type: 3}
+  doorPercentChance: 0.88
+  rows: 3
+  columns: 9
+  randomizeRows: 0
+  randomizeColumns: 0
+  cellUnitSize: 1
+  numberOfFloors: 12

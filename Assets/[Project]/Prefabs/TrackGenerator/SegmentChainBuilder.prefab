@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7288201750910135064
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7288201750910135066}
+  - component: {fileID: 7288201750910135065}
+  - component: {fileID: 563098868}
+  m_Layer: 0
+  m_Name: SegmentChainBuilder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7288201750910135066
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7288201750910135064}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7288201750910135065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7288201750910135064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09809f9d950d3064bb3da4943ba09578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vehicle: {fileID: 0}
+  startSegment: {fileID: 0}
+  minimap: {fileID: 0}
+  worldBuilder: {fileID: 563098868}
+  road: {fileID: 11400000, guid: a1d53fd9e94fb6b468ea8b7a83167c9a, type: 2}
+  vehicleStartTransform: {fileID: 0}
+  segmentChainSettings:
+  - sidePointAmount: 15
+    gridSize: 600
+    straight_NpointsBetween: 4
+    corner_NpointsBetween: 4
+    segmentXaxisVariation: 0
+    segmentHeightRange: 5
+    isFixedBetweenRange: 1
+    segmentDeletionProximity: 30
+  - sidePointAmount: 4
+    gridSize: 200
+    straight_NpointsBetween: 4
+    corner_NpointsBetween: 4
+    segmentXaxisVariation: 0
+    segmentHeightRange: 2
+    isFixedBetweenRange: 1
+    segmentDeletionProximity: 30
+  segmentPrefab: {fileID: 2490539787425671966, guid: 581f21a299defcb4d9142c7dd4a17603, type: 3}
+  segmentChainPrefab: {fileID: 6707775167756143377, guid: 8864714a39c351f45bc03981a7c61c00, type: 3}
+  lastMeshPosition: {x: Infinity, y: Infinity, z: Infinity}
+  meshtasks: []
+  generatedRoadEdgeloops: 0
+  meshtaskSettings:
+  - {fileID: 11400000, guid: 0d430583a073a984caf4ad0fb0e144fa, type: 2}
+  - {fileID: 11400000, guid: b725fa6678e620548b413d7deddcc79e, type: 2}
+  - {fileID: 11400000, guid: 5750af715875c8d4e80fa4c7ef1f7013, type: 2}
+  - {fileID: 11400000, guid: 5aeae0f2b2ff68b4da6c98720ecc1cb8, type: 2}
+  - {fileID: 11400000, guid: e721c6281b2523048ae97f65c8dea4df, type: 2}
+  - {fileID: 11400000, guid: c3ceba2d4ae154f4e93c12c9dba21faf, type: 2}
+  - {fileID: 11400000, guid: edbe6bcf1a897924d8edf99fca4d7726, type: 2}
+  - {fileID: 11400000, guid: 489345ceb11fbd6468614704c7170c98, type: 2}
+  - {fileID: 11400000, guid: e51f9bdd50d73ba4f8623ec6cea5d600, type: 2}
+  - {fileID: 11400000, guid: 52e8cfdeb08219846b97462cb2539de7, type: 2}
+  - {fileID: 11400000, guid: a1a7c41af9be7f44a8a0b4ac03212ab8, type: 2}
+--- !u!114 &563098868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7288201750910135064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb61a4fb4f771364eb5d7b094b2c9bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubePrefab: {fileID: 534632115157742972, guid: d00394aa56dc7a1419d74a4d55d092f5, type: 3}
+  linePrefab: {fileID: 7773957187459384072, guid: 68a23dbde9b14224b84983e49cbbf53b, type: 3}
+  roadLinerenderResolution: 15
+  generateCubes: 1

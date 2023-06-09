@@ -39,7 +39,6 @@ public class Road : ScriptableObject {
 [System.Serializable]
 public class VariationSettings
 {
-	public RoadShape shape;
 	public List<Variation> roadSettings;
 
 	[System.Serializable]
@@ -97,10 +96,4 @@ public class Vertex
 {
 	public Vector2 point;
 	[HideInInspector]public float uvX;
-}
-
-public enum RoadShape
-{
-	straights,
-	corners,
 }

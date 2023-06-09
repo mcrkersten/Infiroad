@@ -30,7 +30,7 @@ public class RoadMeshExtruder {
 	List<Vector2> uvs = new List<Vector2>();
 	List<List<int>> triIndices = new List<List<int>>();
 
-	RoadChainBuilder roadChainBuilder;
+	SegmentChainBuilder roadChainBuilder;
 
 	public void ExtrudeRoad(
 		RoadSegment segment, 
@@ -45,7 +45,7 @@ public class RoadMeshExtruder {
 	{
 
 		ClearMesh(mesh);
-		roadChainBuilder = RoadChainBuilder.instance;
+		roadChainBuilder = SegmentChainBuilder.instance;
 
 		// UVs/Texture fitting
 		LengthTable table = uvMode == UVMode.TiledDeltaCompensated ? new LengthTable(bezier, 12) : null;
@@ -192,7 +192,7 @@ public class RoadMeshExtruder {
 		int targetCount = Mathf.RoundToInt(curveArcLength * edgeLoopsPerMeter);
 		int edgeLoopCount = Mathf.Max(2, targetCount); // Make sure it's at least 2
 		segment.edgeLoopCount = edgeLoopCount;
-		segment.startEndEdgeLoop = new Vector2Int(RoadChainBuilder.instance.generatedRoadEdgeloops, edgeLoopCount);
+		segment.startEndEdgeLoop = new Vector2Int(SegmentChainBuilder.instance.generatedRoadEdgeloops, edgeLoopCount);
 		return edgeLoopCount;
 	}
 
@@ -292,7 +292,7 @@ public class RoadMeshExtruder {
 		AddMeshTaskPoint(roadChainBuilder, meshtaskObject.meshtaskSettings, op, segment, UVdistance);
     }
 
-    private void CreateNewMeshTaskIfNecessary(RoadChainBuilder roadChainBuilder, MeshtaskObject meshtaskObject, RoadSettings roadSettings, RoadSegment segment, OrientedPoint op, out float distance)
+    private void CreateNewMeshTaskIfNecessary(SegmentChainBuilder roadChainBuilder, MeshtaskObject meshtaskObject, RoadSettings roadSettings, RoadSegment segment, OrientedPoint op, out float distance)
     {
 		MeshtaskSettings meshtaskSettings = meshtaskObject.meshtaskSettings;
         Vector3 currentMeshTaskVector = segment.transform.TransformPoint(op.pos);
@@ -330,7 +330,7 @@ public class RoadMeshExtruder {
         roadChainBuilder.meshtaskTypeHandler.SetMeshtask(newMeshtask, meshtaskSettings);
     }
 
-    private void AddMeshTaskPoint(RoadChainBuilder roadChainBuilder, MeshtaskSettings meshtaskSettings, OrientedPoint op, RoadSegment segment, float UVdistance, bool forceAdd = false)
+    private void AddMeshTaskPoint(SegmentChainBuilder roadChainBuilder, MeshtaskSettings meshtaskSettings, OrientedPoint op, RoadSegment segment, float UVdistance, bool forceAdd = false)
     {
         MeshTask currentMeshtask = roadChainBuilder.meshtaskTypeHandler.GetMeshtask(meshtaskSettings);
         if (currentMeshtask.resolutionIndex == 0 || forceAdd)

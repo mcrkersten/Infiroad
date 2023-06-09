@@ -6,6 +6,7 @@ using UnityEngine;
 public class SurfaceScriptable : ScriptableObject
 {
     public AnimationCurve gripped;
+    public bool useSlip;
     public AnimationCurve unGripped;
     public float SlipValue;
     public float UnSlipValue;

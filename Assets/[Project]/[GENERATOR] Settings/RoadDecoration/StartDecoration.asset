@@ -19,7 +19,7 @@ MonoBehaviour:
   - meshtaskPoolType: 0
     unitsInPool: 0
     prefab: {fileID: 4807873992971614875, guid: 48e0c365a77675e47af5e4279926cc85, type: 3}
-    position: {x: 0, y: 0.3780157}
+    position: {x: 0, y: 0.39}
     curveTime: -0.05
     noiseChannel: 0
   - meshtaskPoolType: 0
@@ -33,54 +33,6 @@ MonoBehaviour:
     prefab: {fileID: 2639451264253111639, guid: 36c08b2a9adabb944a9ae990baafcc81, type: 3}
     position: {x: 0, y: 0.3780157}
     curveTime: -0.05
-    noiseChannel: 0
-  - meshtaskPoolType: 0
-    unitsInPool: 0
-    prefab: {fileID: 8937104343192257952, guid: 925b5ab7d1573cf4a8fe2be566598541, type: 3}
-    position: {x: 8.028277, y: 0}
-    curveTime: -0.032
-    noiseChannel: 0
-  - meshtaskPoolType: 0
-    unitsInPool: 0
-    prefab: {fileID: 8937104343192257952, guid: 214fb351b3ae30c4cbc6c19f19f940a1, type: 3}
-    position: {x: -8.005958, y: 0}
-    curveTime: -0.032
-    noiseChannel: 0
-  - meshtaskPoolType: 0
-    unitsInPool: 0
-    prefab: {fileID: 8937104343192257952, guid: 214fb351b3ae30c4cbc6c19f19f940a1, type: 3}
-    position: {x: -7.983639, y: 0}
-    curveTime: 0.032
-    noiseChannel: 0
-  - meshtaskPoolType: 0
-    unitsInPool: 0
-    prefab: {fileID: 8937104343192257952, guid: 925b5ab7d1573cf4a8fe2be566598541, type: 3}
-    position: {x: 7.9836383, y: 0}
-    curveTime: 0.032
-    noiseChannel: 0
-  - meshtaskPoolType: 0
-    unitsInPool: 0
-    prefab: {fileID: 8937104343192257952, guid: 214fb351b3ae30c4cbc6c19f19f940a1, type: 3}
-    position: {x: -8.005958, y: 0}
-    curveTime: 0.08
-    noiseChannel: 0
-  - meshtaskPoolType: 0
-    unitsInPool: 0
-    prefab: {fileID: 8937104343192257952, guid: 214fb351b3ae30c4cbc6c19f19f940a1, type: 3}
-    position: {x: -8.028276, y: 0}
-    curveTime: -0.08
-    noiseChannel: 0
-  - meshtaskPoolType: 0
-    unitsInPool: 0
-    prefab: {fileID: 8937104343192257952, guid: 925b5ab7d1573cf4a8fe2be566598541, type: 3}
-    position: {x: 8.028276, y: 0}
-    curveTime: -0.08
-    noiseChannel: 0
-  - meshtaskPoolType: 0
-    unitsInPool: 0
-    prefab: {fileID: 8937104343192257952, guid: 925b5ab7d1573cf4a8fe2be566598541, type: 3}
-    position: {x: 8.005959, y: 0}
-    curveTime: 0.08
     noiseChannel: 0
   - meshtaskPoolType: 0
     unitsInPool: 0

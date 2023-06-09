@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class Suspension : MonoBehaviour
 {
+    [SerializeField] private Rollbar rollbar;
+    [SerializeField] private AntiDive antiDive;
     public Wheel_Raycast wheel;
 
-    public float collisionStrenght;
     public SuspensionPosition suspensionPosition;
     public LayerMask layerMask;
     private Rigidbody rb;
@@ -16,13 +17,13 @@ public class Suspension : MonoBehaviour
     [Header("Suspension")]
     [Tooltip("Position of spring under standard vehicle load")]
     public float springLenght;
+    public float maxSpringStretch;
 
     public float springConstant;
     public float damperStiffness;
     public AnimationCurve suspensionPower;
 
     private float lastSpringCompression;
-    [SerializeField] private Rollbar rollbar;
 
     //For audio;
     [HideInInspector] public float stressSuspensionAudio;
@@ -41,12 +42,12 @@ public class Suspension : MonoBehaviour
         FeedbackSystem.instance.RegisterFeedbackComponent(feedbackComponent);
     }
 
-    public Vector3 SimulatePhysics(float brakeInput, float engineForce, out float wheelSpin, out float engineWobble)
+    public Vector3 SimulatePhysics(float brakeInput, float engineForce, out float wheelSpin, out float engineWobble, out RaycastHit? hitCast)
     {
+        hitCast = null;
         Vector3 result = Vector3.zero;
         wheelSpin = 0f;
         engineWobble = 0f;
- 
         if (wheel.Raycast(springLenght + wheel.wheelRadius, layerMask, out RaycastHit hit))
         {
             //Debug.DrawLine(this.transform.position, this.transform.position + rb.GetPointVelocity(hit.point).normalized);
@@ -72,6 +73,7 @@ public class Suspension : MonoBehaviour
             Debug.DrawRay(wheel.transform.position, -wheel.transform.up * hit.distance, Color.red);
 
             stressSuspensionAudio = Mathf.Lerp(stressSuspensionAudio, engineWobble, Time.deltaTime/2f);
+            hitCast = hit;
         }
         return result;
     }
@@ -108,10 +110,11 @@ public class Suspension : MonoBehaviour
         Vector3 clampedGripForce = ClampForce(rawForce, gripForce);
 
         Vector2 slipForces = new Vector2(Mathf.Abs(brakeForce / downForce), Mathf.Abs(accelerationForce / downForce));
-        Vector2 spinLockForce = wheel.RotateWheelModel(slipForces, suspensionPosition);
+        Vector2 spinLockForce = wheel.RotateWheelModel(slipForces);
         wheelSpin = spinLockForce.y;
 
         wheel.grip_UI = Mathf.Max(.01f, gripPercentage);
+        wheel.gripTime_UI = time;
         float horizontalForce = clampedGripForce.x / downForce;
         horizontalForce = float.IsNaN(horizontalForce) ? 0f : horizontalForce;
         wheel.steeringWheelForce = horizontalForce;
@@ -126,9 +129,12 @@ public class Suspension : MonoBehaviour
     private Vector3 CalculateSuspensionForce(RaycastHit hit, out float suspensionCompresssion)
     {
         //Rollbar calculation
-        float rollTravel = hit.distance / (springLenght + (wheel.wheelRadius));
-        rollbar.UpdateSpringValue(rollTravel, suspensionPosition);
+        float compression = hit.distance / (springLenght + (wheel.wheelRadius));
+        rollbar.UpdateSpringValue(compression, suspensionPosition);
+        antiDive.UpdateSpringValue(compression, suspensionPosition);
+
         float rollbarForce = rollbar.CalculateRollForce(suspensionPosition);
+        float antiDiveForce = antiDive.CalculateAntiDiveForce(suspensionPosition);
 
         //Spring compression calculation
         float springCompression = Mathf.Clamp(1f - (hit.distance / (springLenght + wheel.wheelRadius)),0f,1f);
@@ -144,7 +150,7 @@ public class Suspension : MonoBehaviour
 
         Debug.DrawLine(wheel.transform.position, wheel.transform.position + (-this.transform.up * (hit.distance + wheel.wheelRadius)), Color.green);
 
-        return wheel.transform.up * Mathf.Max(0f,(springForce + damperForce + rollbarForce));
+        return wheel.transform.up * Mathf.Max(0f,(springForce + damperForce + rollbarForce + antiDiveForce));
     }
 
     private float CalculateBrakingForce(float brakeInput)
