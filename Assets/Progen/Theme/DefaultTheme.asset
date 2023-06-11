@@ -18,11 +18,16 @@ MonoBehaviour:
   windowPrefabs:
   - {fileID: 919132149155446097, guid: 7e3c7b3329614e04db166eb09fc35797, type: 3}
   - {fileID: 919132149155446097, guid: 7e3c7b3329614e04db166eb09fc35797, type: 3}
+  - {fileID: 919132149155446097, guid: 7e3c7b3329614e04db166eb09fc35797, type: 3}
   - {fileID: 919132149155446097, guid: 65a630e156037c048ad4b92ad4c090f2, type: 3}
   - {fileID: 919132149155446097, guid: a1d433e863694d7498192e6ffddca98d, type: 3}
+  - {fileID: 919132149155446097, guid: a1d433e863694d7498192e6ffddca98d, type: 3}
   - {fileID: 919132149155446097, guid: 7e3c7b3329614e04db166eb09fc35797, type: 3}
+  - {fileID: 919132149155446097, guid: 7e3c7b3329614e04db166eb09fc35797, type: 3}
+  - {fileID: 919132149155446097, guid: 9f91a7caeef1881449cb9420722fe869, type: 3}
+  - {fileID: 919132149155446097, guid: ec88ae015362a544f857e819056d5fec, type: 3}
   randomizeWindowSelection: 1
-  windowPercentChance: 0.73
+  windowPercentChance: 1
   roofPrefabs:
   - {fileID: 919132149155446097, guid: 5635121c3066a0a48969bf3905c3e8da, type: 3}
   - {fileID: 919132149155446097, guid: 6d552be5f259f444a91a4d094eabf619, type: 3}
@@ -35,9 +40,9 @@ MonoBehaviour:
   allowCornerWalls: 1
   doorPrefab: {fileID: 919132149155446097, guid: 4d409227a0051c545a3df271d70e021e, type: 3}
   doorPercentChance: 1
-  rows: 7
-  columns: 7
+  rows: 4
+  columns: 4
   randomizeRows: 0
   randomizeColumns: 0
   cellUnitSize: 1
-  numberOfFloors: 15
+  numberOfFloors: 40
