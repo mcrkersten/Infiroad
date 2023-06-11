@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f9a7db0114f5489b9f793be567796e9, type: 3}
   m_Name: RandomFloorTheme
   m_EditorClassIdentifier: 
-  wallPrefab: {fileID: 2297009154302016302, guid: 89a3e7bf2d8a841ec972566e19f5eefa,
-    type: 3}
+  wallPrefab: {fileID: 2297009154302016302, guid: 89a3e7bf2d8a841ec972566e19f5eefa, type: 3}
   keepInsideWalls: 1
   windowPrefabs:
   - {fileID: 555001713503201163, guid: 90a2e3ecbd7a54017ab0123a7674372e, type: 3}
@@ -36,15 +35,13 @@ MonoBehaviour:
   - {fileID: 9187533887836962833, guid: bb3d198d3efc347a39bd20d53aa4aa13, type: 3}
   randomizeRoofSelection: 1
   includeRoof: 1
-  cornerPrefab: {fileID: 3459940652932322917, guid: b5e4eb4f4640f41b584ff95dc564b817,
-    type: 3}
+  cornerPrefab: {fileID: 3459940652932322917, guid: b5e4eb4f4640f41b584ff95dc564b817, type: 3}
   allowCornerWalls: 1
-  doorPrefab: {fileID: 1853155842430066844, guid: 9b2a056b65e244661919389725671d7c,
-    type: 3}
+  doorPrefab: {fileID: 1853155842430066844, guid: 9b2a056b65e244661919389725671d7c, type: 3}
   doorPercentChance: 0.499
-  rows: 7
-  columns: 14
+  rows: 4
+  columns: 4
   randomizeRows: 0
   randomizeColumns: 0
   cellUnitSize: 1
-  numberOfFloors: 10
+  numberOfFloors: 15

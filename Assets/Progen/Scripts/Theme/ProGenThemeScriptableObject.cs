@@ -5,6 +5,7 @@ public class ProGenThemeScriptableObject : ScriptableObject
 {
     [Header("Wall Options")]    
     public GameObject wallPrefab;
+    public GameObject wallTopPrefab;
 
     public bool keepInsideWalls = true;
 
@@ -26,6 +27,9 @@ public class ProGenThemeScriptableObject : ScriptableObject
     [Header("Wall Corner Options 2x2 Min")]
     [Space(1.0f)]
     public GameObject cornerPrefab;
+    public GameObject topCornerPrefab;
+    public GameObject bottomCornerPrefab;
+    public GameObject cornerRoofPrefab;
     
     public bool allowCornerWalls = false;
 
@@ -49,6 +53,6 @@ public class ProGenThemeScriptableObject : ScriptableObject
     [Range(0.0f,20.0f)]
     public float cellUnitSize = 1;
 
-    [Range(1,20)]
+    [Range(1,50)]
     public int numberOfFloors = 1;
 }

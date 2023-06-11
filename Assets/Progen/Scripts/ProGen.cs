@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ProGen : MonoBehaviour
 {   
@@ -53,8 +54,72 @@ public class ProGen : MonoBehaviour
 
         // Removes inside walls
         if(!theme.keepInsideWalls)
-        {
             RemoveInsideWalls();
+
+        RemoveColliders();
+
+        RemoveEmptyRooms();
+
+        UnparentMeshesFromRoomsAndDestroyRooms();
+
+        RemoveAllChildren();
+    }
+
+    private void RemoveAllChildren()
+    {
+        Queue<GameObject> childToDestroy = new Queue<GameObject>();
+        for (int i = 0; i < this.transform.childCount; i++)
+        {
+            if(this.transform.GetChild(i).childCount != 0)
+                for (int j = 0; j < this.transform.GetChild(i).childCount; j++)
+                    childToDestroy.Enqueue(this.transform.GetChild(i).GetChild(j).gameObject);
+        }
+
+        while (childToDestroy.Count > 0)
+        {
+            GameObject go = childToDestroy.Dequeue();
+            DestroyImmediate(go);
+        }
+    }
+
+    private void UnparentMeshesFromRoomsAndDestroyRooms()
+    {
+        Queue<GameObject> toDestroy = new Queue<GameObject>();
+        Queue<GameObject> toUnparent = new Queue<GameObject>();
+        for (int i = 0; i < this.transform.childCount; i++)
+        {
+            toDestroy.Enqueue(this.transform.GetChild(i).gameObject);
+            for (int j = 0; j < this.transform.GetChild(i).childCount; j++)
+                toUnparent.Enqueue(this.transform.GetChild(i).GetChild(j).gameObject);
+        }
+
+        while (toUnparent.Count > 0)
+        {
+            GameObject go = toUnparent.Dequeue();
+            go.transform.parent = this.transform;
+        }
+
+        while (toDestroy.Count > 0)
+        {
+            GameObject go = toDestroy.Dequeue();
+            DestroyImmediate(go);
+        }
+    }
+
+    private void RemoveEmptyRooms()
+    {
+        Queue<GameObject> toDestroy = new Queue<GameObject>();
+        for (int i = 0; i < this.transform.childCount; i++)
+        {
+            if(this.transform.GetChild(i).childCount == 0)
+                toDestroy.Enqueue(this.transform.GetChild(i).gameObject);
+        }
+
+        //loop while queue is not empty
+        while (toDestroy.Count > 0)
+        {
+            GameObject go = toDestroy.Dequeue();
+            DestroyImmediate(go);
         }
     }
 
@@ -136,13 +201,15 @@ public class ProGen : MonoBehaviour
                     // corner logic takes presedence
                     if(room.HasRoundedCorner)
                     {
-                        RoomPlacementWithRoundedCorners(room, roomGo);
+                        RoomPlacementWithRoundedCorners(room, roomGo, floor);
                     }
                     else
                     {
                         if(floor.FloorNumber == 0)
                             RoomPlacement(UnityEngine.Random.Range(0.0f, 1.0f) <= theme.doorPercentChance ? theme.doorPrefab : theme.wallPrefab, room, roomGo);
-                        else
+                        else if(floor.FloorNumber == floors.Length - 1)
+                            RoomPlacement(theme.wallTopPrefab, room, roomGo);
+                        else if(floor.FloorNumber > 2)
                         {
                             // Rule: if window coverage percent is within threshold add a window
                             // otherwise add a basic wall
@@ -165,29 +232,73 @@ public class ProGen : MonoBehaviour
         }
     }
 
-    private void RoomPlacementWithRoundedCorners(Room room, GameObject roomGo)
+    private void RoomPlacementWithRoundedCorners(Room room, GameObject roomGo, Floor floor)
     {
         if(room.Walls.Any(w => w.WallCornerTypeSelected == Wall.WallCornerType.LeftBottom))
         {
-            SpawnPrefab(theme.cornerPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[0].Rotation);
+            if (room.HasRoof)
+            {
+               SpawnPrefab(theme.topCornerPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[0].Rotation);
+               SpawnPrefab(theme.cornerRoofPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[0].Rotation, false);
+            }
+            else if(floor.FloorNumber < 3)
+               SpawnPrefab(theme.bottomCornerPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[0].Rotation);
+            else
+               SpawnPrefab(theme.cornerPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[0].Rotation);
+
+            //Makes sure that neighbour walls get destroyed
             SpawnPrefab(theme.wallPrefab, roomGo.transform, room.Walls[2].Position, room.Walls[2].Rotation);
             SpawnPrefab(theme.wallPrefab, roomGo.transform, room.Walls[3].Position, room.Walls[3].Rotation);
         }
         else if(room.Walls.Any(w => w.WallCornerTypeSelected == Wall.WallCornerType.LeftUpper))
         {
-            SpawnPrefab(theme.cornerPrefab, roomGo.transform, room.Walls[1].Position, room.Walls[1].Rotation);
+            if (room.HasRoof)
+            {
+                SpawnPrefab(theme.topCornerPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[1].Rotation);
+                SpawnPrefab(theme.cornerRoofPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[1].Rotation, false);
+            }
+            else if(floor.FloorNumber < 3)
+               SpawnPrefab(theme.bottomCornerPrefab, roomGo.transform, room.Walls[1].Position, room.Walls[1].Rotation);
+            else            
+                SpawnPrefab(theme.cornerPrefab, roomGo.transform, room.Walls[1].Position, room.Walls[1].Rotation);
+
+            //Makes sure that neighbour walls get destroyed
             SpawnPrefab(theme.wallPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[0].Rotation);
             SpawnPrefab(theme.wallPrefab, roomGo.transform, room.Walls[3].Position, room.Walls[3].Rotation);
         }
         else if(room.Walls.Any(w => w.WallCornerTypeSelected == Wall.WallCornerType.RightUpper))
         {
-            SpawnPrefab(theme.cornerPrefab, roomGo.transform, room.Walls[2].Position, room.Walls[2].Rotation);
+
+            if (room.HasRoof)
+            {
+                SpawnPrefab(theme.topCornerPrefab, roomGo.transform, room.Walls[2].Position, room.Walls[2].Rotation);
+                SpawnPrefab(theme.cornerRoofPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[2].Rotation, false);
+            }
+            else if(floor.FloorNumber < 3)
+               SpawnPrefab(theme.bottomCornerPrefab, roomGo.transform, room.Walls[2].Position, room.Walls[2].Rotation);
+            else
+                SpawnPrefab(theme.cornerPrefab, roomGo.transform, room.Walls[2].Position, room.Walls[2].Rotation); 
+
+            
+            //Makes sure that neighbour walls get destroyed
             SpawnPrefab(theme.wallPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[0].Rotation);
             SpawnPrefab(theme.wallPrefab, roomGo.transform, room.Walls[1].Position, room.Walls[1].Rotation);
         }
         else if(room.Walls.Any(w => w.WallCornerTypeSelected == Wall.WallCornerType.RightBottom))
         {
-            SpawnPrefab(theme.cornerPrefab, roomGo.transform, room.Walls[3].Position, room.Walls[3].Rotation);
+
+            if (room.HasRoof)
+            {
+                SpawnPrefab(theme.topCornerPrefab, roomGo.transform, room.Walls[3].Position, room.Walls[3].Rotation);
+                SpawnPrefab(theme.cornerRoofPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[3].Rotation, false);
+            }
+            else if(floor.FloorNumber < 3)
+               SpawnPrefab(theme.bottomCornerPrefab, roomGo.transform, room.Walls[3].Position, room.Walls[3].Rotation);
+            else
+                SpawnPrefab(theme.cornerPrefab, roomGo.transform, room.Walls[3].Position, room.Walls[3].Rotation);  
+
+            
+            //Makes sure that neighbour walls get destroyed
             SpawnPrefab(theme.wallPrefab, roomGo.transform, room.Walls[2].Position, room.Walls[2].Rotation);
             SpawnPrefab(theme.wallPrefab, roomGo.transform, room.Walls[1].Position, room.Walls[1].Rotation);
         }
@@ -211,39 +322,75 @@ public class ProGen : MonoBehaviour
             if (theme.randomizeRoofSelection && room.FloorNumber == floors.Count() - 1)
             {
                 int roofIndex = UnityEngine.Random.Range(0, theme.roofPrefabs.Length);
-                SpawnPrefab(theme.roofPrefabs[roofIndex], roomGo.transform, room.Walls[0].Position, room.Walls[0].Rotation);
+                SpawnPrefab(theme.roofPrefabs[roofIndex], roomGo.transform, room.Walls[0].Position, room.Walls[0].Rotation, false);
             }
             else
-                SpawnPrefab(theme.roofPrefabs[0], roomGo.transform, room.Walls[0].Position, room.Walls[0].Rotation);
+                SpawnPrefab(theme.roofPrefabs[0], roomGo.transform, room.Walls[0].Position, room.Walls[0].Rotation, false);
         }
     }
 
-    private void SpawnPrefab(GameObject prefab, Transform parent, Vector3 position, Quaternion rotation)
+    private void SpawnPrefab(GameObject prefab, Transform parent, Vector3 position, Quaternion rotation, bool addWallComponent = true)
     {
         var gameObject = Instantiate(prefab, transform.position + position, rotation);
         gameObject.transform.parent = parent;
-        gameObject.AddComponent<WallComponent>();
+        if(addWallComponent)
+            gameObject.AddComponent<WallComponent>();
         gameObject.name = $"{gameObject.name}_{prefabCounter}";
         prefabCounter++;
     }
 
+    [ContextMenu("Remove Inside Walls")]
     void RemoveInsideWalls()
     {
         var wallComponents = GameObject.FindObjectsOfType<WallComponent>();
-        var childs = wallComponents.Select(c => c.transform.GetChild(0).position.ToString()).ToList();
+        var childs = wallComponents.Select(c => GetCenterOfObject(c.transform).ToString()).ToList();
 
         var dupPositions = childs.GroupBy(c => c)
             .Where(c => c.Count() > 1)
             .Select(grp => grp.Key)
             .ToList();  
 
+        //Delete duplicates
         foreach(WallComponent w in wallComponents)
         {
             var childTransform = w.transform.GetChild(0);
-            if(dupPositions.Contains(childTransform.position.ToString())){
-                    DestroyImmediate(childTransform.gameObject);
+            if(dupPositions.Contains(childTransform.position.ToString()))
+                if(childTransform.name == "null")
+                    DestroyImmediate(w.gameObject);
+        }
+
+        //Delete all nulls and donts
+        wallComponents = GameObject.FindObjectsOfType<WallComponent>();
+        foreach(WallComponent w in wallComponents)
+        {
+            for (int i = 0; i < w.transform.parent.childCount; i++)
+            {
+                var parent = w.transform.parent.GetChild(i);
+                for (int x = 0; x < parent.childCount; x++)
+                {
+                    var childTransform = parent.GetChild(x);
+                    if(childTransform.name == "null" || childTransform.name == "dont")
+                        DestroyImmediate(childTransform.gameObject);
+                }
             }
         }
+
+        //Delete all wall components
+        for (int i = 0; i < wallComponents.Length; i++)
+            DestroyImmediate(wallComponents[i]);
+    }
+
+    public void RemoveColliders()
+    {
+        foreach (var item in GetComponentsInChildren<Collider>())
+        {
+            DestroyImmediate(item);
+        }
+    }
+
+    private Vector3 GetCenterOfObject(Transform component)
+    {
+        return component.GetChild(0).transform.position; 
     }
 
     void Clear()
