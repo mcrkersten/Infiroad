@@ -7,12 +7,12 @@ using static UnityEngine.Rendering.HableCurve;
 public class WorldBuilder : MonoBehaviour
 {
     [SerializeField] private float seaLevel;
-    [SerializeField] private GameObject cubePrefab;
     [SerializeField] private Vector3 cubeSize;
     [SerializeField] private GameObject linePrefab;
     [SerializeField] private int roadLinerenderResolution;
     private Camera bakeCamera;
     public bool generateCubes;
+    [SerializeField] private List<GameObject> buildings = new List<GameObject>();
 
     public void GenerateWorldGrid(SegmentChainSettings settings, SegmentChain chain)
     {
@@ -23,12 +23,12 @@ public class WorldBuilder : MonoBehaviour
         {
             for (int y = 0; y < size; y++)
             {
-                GameObject cube = Instantiate(cubePrefab, chain.transform);
-
+                GameObject cube = Instantiate(buildings[Random.Range(0, buildings.Count)], chain.transform);
+                cube.SetActive(true);
                 float offset = (float)settings.gridSize / size;
                 float normalize = -((settings.gridSize - offset) / 2f);
                 float pointPosition = normalize;
-
+                cube.transform.eulerAngles = new Vector3(0,Random.Range(0,180),0); 
                 cube.transform.position = chain.organizedSegments[0].transform.TransformPoint( new Vector3(pointPosition + offset * x, seaLevel, offset * y));
                 cube.transform.localScale = cubeSize;
             }

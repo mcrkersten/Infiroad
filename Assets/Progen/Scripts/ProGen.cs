@@ -207,9 +207,9 @@ public class ProGen : MonoBehaviour
                     {
                         if(floor.FloorNumber == 0)
                             RoomPlacement(UnityEngine.Random.Range(0.0f, 1.0f) <= theme.doorPercentChance ? theme.doorPrefab : theme.wallPrefab, room, roomGo);
-                        else if(floor.FloorNumber == floors.Length - 1)
+                        else if(floor.FloorNumber >= floors.Length - theme.topHeight)
                             RoomPlacement(theme.wallTopPrefab, room, roomGo);
-                        else if(floor.FloorNumber > 2)
+                        else if(floor.FloorNumber > theme.doorHeight)
                         {
                             // Rule: if window coverage percent is within threshold add a window
                             // otherwise add a basic wall
@@ -238,10 +238,13 @@ public class ProGen : MonoBehaviour
         {
             if (room.HasRoof)
             {
-               SpawnPrefab(theme.topCornerPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[0].Rotation);
                SpawnPrefab(theme.cornerRoofPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[0].Rotation, false);
+               SpawnPrefab(theme.topCornerPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[0].Rotation);
             }
-            else if(floor.FloorNumber < 3)
+
+            else if(floor.FloorNumber >= floors.Length - theme.topHeight && theme.subTopCornerPrefab != null)
+               SpawnPrefab(theme.subTopCornerPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[0].Rotation);
+            else if(floor.FloorNumber <= theme.doorHeight)
                SpawnPrefab(theme.bottomCornerPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[0].Rotation);
             else
                SpawnPrefab(theme.cornerPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[0].Rotation);
@@ -254,11 +257,14 @@ public class ProGen : MonoBehaviour
         {
             if (room.HasRoof)
             {
-                SpawnPrefab(theme.topCornerPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[1].Rotation);
                 SpawnPrefab(theme.cornerRoofPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[1].Rotation, false);
+                SpawnPrefab(theme.topCornerPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[1].Rotation);
             }
-            else if(floor.FloorNumber < 3)
-               SpawnPrefab(theme.bottomCornerPrefab, roomGo.transform, room.Walls[1].Position, room.Walls[1].Rotation);
+
+            else if(floor.FloorNumber >= floors.Length - theme.topHeight && theme.subTopCornerPrefab != null)
+                SpawnPrefab(theme.subTopCornerPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[1].Rotation);
+            else if(floor.FloorNumber <= theme.doorHeight)
+                SpawnPrefab(theme.bottomCornerPrefab, roomGo.transform, room.Walls[1].Position, room.Walls[1].Rotation);
             else            
                 SpawnPrefab(theme.cornerPrefab, roomGo.transform, room.Walls[1].Position, room.Walls[1].Rotation);
 
@@ -271,11 +277,14 @@ public class ProGen : MonoBehaviour
 
             if (room.HasRoof)
             {
-                SpawnPrefab(theme.topCornerPrefab, roomGo.transform, room.Walls[2].Position, room.Walls[2].Rotation);
                 SpawnPrefab(theme.cornerRoofPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[2].Rotation, false);
+                SpawnPrefab(theme.topCornerPrefab, roomGo.transform, room.Walls[2].Position, room.Walls[2].Rotation);
             }
-            else if(floor.FloorNumber < 3)
-               SpawnPrefab(theme.bottomCornerPrefab, roomGo.transform, room.Walls[2].Position, room.Walls[2].Rotation);
+
+            else if(floor.FloorNumber >= floors.Length - theme.topHeight && theme.subTopCornerPrefab != null)
+                SpawnPrefab(theme.subTopCornerPrefab, roomGo.transform, room.Walls[2].Position, room.Walls[2].Rotation);
+            else if(floor.FloorNumber <= theme.doorHeight)
+                SpawnPrefab(theme.bottomCornerPrefab, roomGo.transform, room.Walls[2].Position, room.Walls[2].Rotation);
             else
                 SpawnPrefab(theme.cornerPrefab, roomGo.transform, room.Walls[2].Position, room.Walls[2].Rotation); 
 
@@ -289,11 +298,14 @@ public class ProGen : MonoBehaviour
 
             if (room.HasRoof)
             {
-                SpawnPrefab(theme.topCornerPrefab, roomGo.transform, room.Walls[3].Position, room.Walls[3].Rotation);
                 SpawnPrefab(theme.cornerRoofPrefab, roomGo.transform, room.Walls[0].Position, room.Walls[3].Rotation, false);
+                SpawnPrefab(theme.topCornerPrefab, roomGo.transform, room.Walls[3].Position, room.Walls[3].Rotation);
             }
-            else if(floor.FloorNumber < 3)
-               SpawnPrefab(theme.bottomCornerPrefab, roomGo.transform, room.Walls[3].Position, room.Walls[3].Rotation);
+
+            else if(floor.FloorNumber >= floors.Length - theme.topHeight && theme.subTopCornerPrefab != null)
+                SpawnPrefab(theme.subTopCornerPrefab, roomGo.transform, room.Walls[3].Position, room.Walls[3].Rotation);
+            else if(floor.FloorNumber <= theme.doorHeight)
+                SpawnPrefab(theme.bottomCornerPrefab, roomGo.transform, room.Walls[3].Position, room.Walls[3].Rotation);
             else
                 SpawnPrefab(theme.cornerPrefab, roomGo.transform, room.Walls[3].Position, room.Walls[3].Rotation);  
 

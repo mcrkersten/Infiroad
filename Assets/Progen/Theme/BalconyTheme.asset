@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: BalconyTheme
   m_EditorClassIdentifier: 
   wallPrefab: {fileID: 2297009154302016302, guid: 89a3e7bf2d8a841ec972566e19f5eefa, type: 3}
+  wallTopPrefab: {fileID: 0}
+  topHeight: 1
   keepInsideWalls: 1
   windowPrefabs:
   - {fileID: 1422209603526548866, guid: a9068d999cde9401fab324a64990fa17, type: 3}
@@ -29,8 +31,14 @@ MonoBehaviour:
   randomizeRoofSelection: 1
   includeRoof: 1
   cornerPrefab: {fileID: 0}
-  allowCornerWalls: 0
+  cornerRoofPrefab: {fileID: 0}
+  topCornerPrefab: {fileID: 0}
+  subTopCornerPrefab: {fileID: 0}
+  bottomCornerPrefab: {fileID: 0}
+  subBottomCornerPrefab: {fileID: 0}
+  allowCornerWalls: 1
   doorPrefab: {fileID: 1853155842430066844, guid: 9b2a056b65e244661919389725671d7c, type: 3}
+  doorHeight: 0
   doorPercentChance: 0.302
   rows: 5
   columns: 5

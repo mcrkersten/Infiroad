@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 [CreateAssetMenu(fileName = "ProGenTheme", menuName = "ProGen/CreateProGenTheme", order = 1)]
 public class ProGenThemeScriptableObject : ScriptableObject
 {
     [Header("Wall Options")]    
     public GameObject wallPrefab;
+
     public GameObject wallTopPrefab;
+    public int topHeight;
 
     public bool keepInsideWalls = true;
 
@@ -27,14 +30,19 @@ public class ProGenThemeScriptableObject : ScriptableObject
     [Header("Wall Corner Options 2x2 Min")]
     [Space(1.0f)]
     public GameObject cornerPrefab;
-    public GameObject topCornerPrefab;
-    public GameObject bottomCornerPrefab;
     public GameObject cornerRoofPrefab;
+
+    public GameObject topCornerPrefab;
+    public GameObject subTopCornerPrefab;
+
+    public GameObject bottomCornerPrefab;
+    public GameObject subBottomCornerPrefab;
     
     public bool allowCornerWalls = false;
 
     [Header("Door Options")]
     public GameObject doorPrefab;
+    public int doorHeight;
 
     [Range(0.0f,1.0f)]
     public float doorPercentChance = 0.2f;

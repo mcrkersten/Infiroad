@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ac0740b602e9f8445a11a4bc9ec2ad9e
+guid: 72ddb235a8f1084498a609c7e0a81cec
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -7,13 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Metal
-    second: {fileID: 2100000, guid: 7dd851b140343424292cec2fc1afb30b, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Roof1
-    second: {fileID: 2100000, guid: aa1d24158a97a8040aedbd0000e6706f, type: 2}
+      name: WIndow
+    second: {fileID: 2100000, guid: 1af92eb792911d24f9926f53cec8cf6b, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

@@ -54,6 +54,7 @@ public class MinimapBehaviour : MonoBehaviour
         {
             if (x == 0)
             {
+                if(segment.bezier.Equals(0)) { Debug.Log("LOL"); }
                 Vector3 pos0 = segment.bezier.GetOrientedPoint(.0001f, Ease.Linear).pos;
                 line.SetPosition(0, segment.transform.TransformPoint(pos0));
                 continue;

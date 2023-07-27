@@ -70,6 +70,7 @@ public class MeshCombiner : MonoBehaviour
 
             // Combine the meshes into a single mesh
             combinedMeshFilter.sharedMesh = new Mesh();
+            combinedMeshFilter.sharedMesh.indexFormat = IndexFormat.UInt32;
             combinedMeshFilter.sharedMesh.CombineMeshes(combineInstances, true);
 
             // Set the material for the combined mesh
