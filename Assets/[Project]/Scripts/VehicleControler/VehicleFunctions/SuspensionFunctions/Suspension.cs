@@ -106,7 +106,7 @@ public class Suspension : MonoBehaviour
         gripPercentage = slip ? wheel.currentSurface.unGripped.Evaluate(Mathf.Abs(time)) : wheel.currentSurface.gripped.Evaluate(Mathf.Abs(time));
         gripPercentage = slipCurve.Evaluate(Mathf.Abs(time));
 
-    float gripForce = downForce * gripPercentage;
+        float gripForce = downForce * gripPercentage;
         Vector3 clampedGripForce = ClampForce(rawForce, gripForce);
 
         Vector2 slipForces = new Vector2(Mathf.Abs(brakeForce / downForce), Mathf.Abs(accelerationForce / downForce));

@@ -237,7 +237,9 @@ public class VehicleController : MonoBehaviour
         float clutchInput = ReadClutchInput(userInputType);
         float brakeInput = ReadBrakeInput(userInputType);
         float steerInput = ReadSteeringInput(userInputType);
-        steerInput = steerInput * gamepadInputWeakener.Evaluate(Mathf.Abs(steerInput));
+
+        if(BindingManager.Instance.selectedInputType != InputType.Wheel)
+            steerInput = steerInput * gamepadInputWeakener.Evaluate(Mathf.Abs(steerInput));
 
         float wheelSlip  = 0f;
         float physicsWobble = ApplyForceToWheels(brakeInput, out wheelSlip);
@@ -306,6 +308,8 @@ public class VehicleController : MonoBehaviour
         {
             case InputType.Wheel:
                 return Mathf.Lerp(-1f, 1f, steering.ReadValue<float>());
+            case InputType.Gamepad:
+                return steering.ReadValue<Vector2>().x;
             default:
                 return steering.ReadValue<float>();
         }
@@ -416,7 +420,7 @@ public class VehicleController : MonoBehaviour
             {
                 case DriveType.rearWheelDrive:
                     if (s.suspensionPosition == SuspensionPosition.RearLeft || s.suspensionPosition == SuspensionPosition.RearRight)
-                        physics.Add(s.SimulatePhysics(brakeInput, engineForce/2f, out wheelSlip, out physicsWobble, out hit));
+                        physics.Add(s.SimulatePhysics(brakeInput, ApplyTorqueWithLimitedSlip(s, engineForce), out wheelSlip, out physicsWobble, out hit));
                     else
                     {
                         float d;
@@ -425,7 +429,7 @@ public class VehicleController : MonoBehaviour
                     break;
                 case DriveType.frontWheelDrive:
                     if (s.suspensionPosition == SuspensionPosition.FrontLeft || s.suspensionPosition == SuspensionPosition.FrontRight)
-                        physics.Add(s.SimulatePhysics(brakeInput, engineForce/2f, out wheelSlip, out physicsWobble, out hit));
+                        physics.Add(s.SimulatePhysics(brakeInput, ApplyTorqueWithLimitedSlip(s, engineForce), out wheelSlip, out physicsWobble, out hit));
                     else
                     {
                         float d;
@@ -433,13 +437,14 @@ public class VehicleController : MonoBehaviour
                     }
                     break;
                 case DriveType.allWheelDrive:
-                    physics.Add(s.SimulatePhysics(brakeInput, engineForce/4f, out wheelSlip, out physicsWobble, out hit));
+                    physics.Add(s.SimulatePhysics(brakeInput, ApplyTorqueWithLimitedSlip(s, engineForce), out wheelSlip, out physicsWobble, out hit));
                     break;
                 default:
                     break;
             }
             hits.Add(hit);
         }
+
 
         int i = 0;
         foreach (Suspension s in suspensions)
@@ -449,6 +454,21 @@ public class VehicleController : MonoBehaviour
             i++;
         }
         return physicsWobble / suspensions.Count;
+    }
+
+    private float maxSpeedDifference = 50f; // Max speed difference for limited-slip effect
+    private float limitedSlipCoefficient = 0.8f; // Coefficient for limited-slip effect
+    private float ApplyTorqueWithLimitedSlip(Suspension suspension, float torque)
+    {
+        // Calculate slip ratio
+        float slipRatio = suspension.wheel.RPM * 2 * Mathf.PI * suspension.wheel.wheelRadius / suspension.wheel.wheelVelocityLocalSpace.magnitude;
+
+        // Apply limited-slip effect
+        float limitedSlipEffect = 1f - Mathf.Clamp01(Mathf.Abs(slipRatio) / maxSpeedDifference);
+        float limitedSlipTorque = limitedSlipCoefficient * limitedSlipEffect * torque;
+
+        // Apply torque to the wheel
+        return torque - limitedSlipTorque;
     }
 
     private void OnDisable()

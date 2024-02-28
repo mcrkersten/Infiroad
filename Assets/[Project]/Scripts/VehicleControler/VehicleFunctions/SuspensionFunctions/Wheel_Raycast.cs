@@ -128,9 +128,6 @@ public class Wheel_Raycast : MonoBehaviour
         float rotationSpeed = (wheelVelocityLocalSpace.z * 3.6f) / tireCircumference;
         float rotation = rotationSpeed * Mathf.Clamp(combinedPercentage, 0f , 1f);
 
-        if(debug)
-            Debug.Log(combinedPercentage);
-
         if (float.IsNaN(rotation))
         {
              rotation = lastRotation;

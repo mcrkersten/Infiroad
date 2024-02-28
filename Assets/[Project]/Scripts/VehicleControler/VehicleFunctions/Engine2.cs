@@ -87,7 +87,7 @@ public class Engine2
         float wheelTorque = (mechanicalForce + throttleTorque) * clutch;
         float forceToApply = wheelTorque / driveWheelRadiusInMeter;
 
-        engineRPMAudio.SetGlobalValue(lastRPM);
+        engineRPMAudio.SetGlobalValue((lastRPM / maxRPM) * 10000);
         windAudio.SetGlobalValue(currentForwardVelocity);
 
         dashboard.UpdateMeter(lastRPM / maxRPM, DashboardMeter.MeterType.Tacheometer);

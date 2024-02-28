@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraBehaviour : MonoBehaviour
 {
-    [SerializeField] private Rigidbody rb;
+    private Rigidbody rb;
     private float speed;
     public Vector3 maxAngle;
 
@@ -28,7 +28,7 @@ public class CameraBehaviour : MonoBehaviour
         Vector3 velocity = cameraTransform.InverseTransformDirection(rb.velocity);
         velocity[2] = 0f;
         velocity[0] = 0f;
-        cameraTransform.localPosition = Vector3.Lerp(cameraStartPosition, cameraStartPosition + velocity, .01f);
+        //cameraTransform.localPosition = Vector3.Lerp(cameraStartPosition, cameraStartPosition + velocity, .01f);
     }
 
     private Vector3 CameraShake()

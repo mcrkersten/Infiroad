@@ -259,7 +259,7 @@
                     "name": "Steering",
                     "type": "Value",
                     "id": "12bf9210-637f-438a-9029-a567cc364ab3",
-                    "expectedControlType": "",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -423,39 +423,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "1D Axis",
-                    "id": "a092d08a-3c1f-4f87-94b5-6ea93a8d7f62",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Steering",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "0d09693c-d495-48c4-93f8-c3e8800dbcef",
-                    "path": "<Gamepad>/leftStick/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Steering",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "7e68af28-8228-41dd-bce0-71f041467643",
-                    "path": "<Gamepad>/leftStick/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Steering",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "7e024d82-ddab-4efd-a077-40c0129d2fc6",
                     "path": "<Gamepad>/buttonNorth",
@@ -496,6 +463,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "PauseGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "542b4128-d904-4094-ac37-675d1e51bd21",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Steering",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

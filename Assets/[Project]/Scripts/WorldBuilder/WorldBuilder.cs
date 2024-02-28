@@ -11,12 +11,12 @@ public class WorldBuilder : MonoBehaviour
     [SerializeField] private GameObject linePrefab;
     [SerializeField] private int roadLinerenderResolution;
     private Camera bakeCamera;
-    public bool generateCubes;
+    public bool generateWorld;
     [SerializeField] private List<GameObject> buildings = new List<GameObject>();
 
     public void GenerateWorldGrid(SegmentChainSettings settings, SegmentChain chain)
     {
-        if(!generateCubes)return;
+        if(!generateWorld)return;
 
         int size = settings.sidePointAmount * 3;
         for (int x = 0; x < size; x++)

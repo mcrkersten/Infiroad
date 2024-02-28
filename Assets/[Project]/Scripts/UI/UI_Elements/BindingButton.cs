@@ -11,7 +11,7 @@ public class BindingButton : MonoBehaviour
     public Button button;
     [HideInInspector] public int keyIndex;
     [HideInInspector] public InputAction inputAction;
-    [HideInInspector] public int isPositive = -1;
+    [HideInInspector] public int isPositiveOnAxis = -1;
 
     [SerializeField] private Image selectionOutline;
     public TextMeshProUGUI bindingName;

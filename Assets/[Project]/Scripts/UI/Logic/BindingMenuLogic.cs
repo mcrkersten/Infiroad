@@ -78,7 +78,7 @@ public class BindingMenuLogic : MonoBehaviour
 
     private void RemapBinding(BindingButton button)
     {
-        switch (button.isPositive)
+        switch (button.isPositiveOnAxis)
         {
             case -1:
                 bindingManager.RemapButton(button);
@@ -135,12 +135,12 @@ public class BindingMenuLogic : MonoBehaviour
                 case KeyboardBinding.SteerLeft:
                     button.bindingName.text = "Steer left";
                     button.inputAction = keyboard.Steering;
-                    button.isPositive = 0;
+                    button.isPositiveOnAxis = 0;
                     break;
                 case KeyboardBinding.SteerRight:
                     button.bindingName.text = "Steer right";
                     button.inputAction = keyboard.Steering;
-                    button.isPositive = 1;
+                    button.isPositiveOnAxis = 1;
                     break;
                 case KeyboardBinding.Shift_Up:
                     button.bindingName.text = "Shift up";
@@ -183,7 +183,7 @@ public class BindingMenuLogic : MonoBehaviour
                     button.inputAction = keyboard.PauseRadio;
                     break;
             }
-            button.SetKeyText(button.inputAction.bindings[button.isPositive + 1]);
+            button.SetKeyText(button.inputAction.bindings[button.isPositiveOnAxis + 1]);
         }
     }
 
@@ -200,15 +200,9 @@ public class BindingMenuLogic : MonoBehaviour
 
             switch ((GamepadBinding)i)
             {
-                case GamepadBinding.SteerLeft:
-                    button.bindingName.text = "Steer left";
+                case GamepadBinding.Steering:
+                    button.bindingName.text = "Steering";
                     button.inputAction = gamepad.Steering;
-                    button.isPositive = 0;
-                    break;
-                case GamepadBinding.SteerRight:
-                    button.bindingName.text = "Steer right";
-                    button.inputAction = gamepad.Steering;
-                    button.isPositive = 1;
                     break;
                 case GamepadBinding.Shift_Up:
                     button.bindingName.text = "Shift up";
@@ -251,7 +245,7 @@ public class BindingMenuLogic : MonoBehaviour
                     button.inputAction = gamepad.PauseRadio;
                     break;
             }
-            button.SetKeyText(button.inputAction.bindings[button.isPositive + 1]);
+            button.SetKeyText(button.inputAction.bindings[0]);
         }
     }
 
@@ -443,8 +437,7 @@ public enum WheelBinding
 
 public enum GamepadBinding
 {
-    SteerLeft = 0,
-    SteerRight,
+    Steering = 0,
     Brake,
     Accelerate,
     Clutch,
