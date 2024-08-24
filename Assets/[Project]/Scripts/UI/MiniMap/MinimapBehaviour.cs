@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using DG.Tweening;
-using static UnityEditor.Progress;
 
 public class MinimapBehaviour : MonoBehaviour
 {

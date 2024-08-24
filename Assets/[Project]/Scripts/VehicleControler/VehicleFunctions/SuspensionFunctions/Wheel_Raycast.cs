@@ -47,7 +47,7 @@ public class Wheel_Raycast : MonoBehaviour
 
     private void Awake()
     {
-        rb = this.transform.root.GetComponent<Rigidbody>();
+        rb = this.transform.root.GetComponentInChildren<Rigidbody>();
 
         startLocalEulerAngle = this.transform.localEulerAngles;
         TWAstartLocalEulerAngle = tireWheelAssembly.localEulerAngles;

@@ -10,6 +10,6 @@ public class Debug_HorizontalForceIndicator : MonoBehaviour
 
     public void Update()
     {
-        slider.value = vehicle.steerWeight;
+        slider.value = vehicle.steerPull;
     }
 }

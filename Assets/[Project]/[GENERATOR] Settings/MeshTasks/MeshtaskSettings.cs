@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using System;
-using static UnityEditor.Progress;
 
 [CreateAssetMenu, System.Serializable]
 public class MeshtaskSettings : ScriptableObject

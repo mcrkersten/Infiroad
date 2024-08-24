@@ -21,7 +21,6 @@ public class Suspension : MonoBehaviour
 
     public float springConstant;
     public float damperStiffness;
-    public AnimationCurve suspensionPower;
 
     private float lastSpringCompression;
 
@@ -33,7 +32,7 @@ public class Suspension : MonoBehaviour
 
     private void Awake()
     {
-        rb = transform.root.GetComponent<Rigidbody>();
+        rb = transform.root.GetComponentInChildren<Rigidbody>();
     }
 
     private void Start()

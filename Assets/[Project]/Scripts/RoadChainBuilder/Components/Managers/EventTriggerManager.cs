@@ -10,8 +10,8 @@ public class EventTriggerManager : MonoBehaviour
     public delegate void OnRoadChainTrigger(GameObject trigger);
     public static event OnRoadChainTrigger roadChainTrigger;
 
-    public delegate void OnSectorTrigger();
-    public static event OnSectorTrigger sectorTrigger;
+    public delegate void OnSectorTrigger(GameObject trigger);
+    public static event OnSectorTrigger timerTrigger;
 
     public delegate void OnSegmentTrigger(GameObject trigger);
     public static event OnSegmentTrigger segmentTrigger;
@@ -31,11 +31,13 @@ public class EventTriggerManager : MonoBehaviour
                 case TriggerType.EventPoint:
                     break;
                 case TriggerType.RoadChain:
-                    //sectorTrigger?.Invoke();
                     roadChainTrigger?.Invoke(to.gameObject);
                     break;
                 case TriggerType.SegmentPoint:
                     segmentTrigger?.Invoke(to.gameObject);
+                    break;
+                case TriggerType.TimerPoint:
+                    timerTrigger?.Invoke(to.gameObject);
                     break;
                 default:
                     break;
@@ -50,5 +52,6 @@ public enum TriggerType
     EventPoint,
     RoadChain,
     SegmentPoint,
+    TimerPoint,
     Other = default,
 }

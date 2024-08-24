@@ -74,7 +74,7 @@ public class SegmentChain : MonoBehaviour {
 
 	public void CreateMesh(RoadSettings roadSettings, RoadSegment segment)
 	{
-		segment.CreateMesh(Vector2.zero, roadSettings, SegmentIndex, ChainIndex); //Creates mesh
+		segment.CreateMesh(Vector2.zero, roadSettings, organizedSegments.IndexOf(segment), ChainIndex); //Creates mesh
 	}
 
 	public OrientedPoint GetOrientedPointOnRoad(float percentage, int segmentIndex, Ease ease)
@@ -120,6 +120,10 @@ public class SegmentChain : MonoBehaviour {
 
 			if (decorObject.CompareTag("StartPosition"))
 				roadChainBuilder.vehicleStartTransform = decorObject.transform.GetChild(0);
+
+			//if (decorObject.CompareTag("Trigger") && decorObject.GetComponent<TriggerObject>().triggerType == TriggerType.SegmentPoint)
+			//	Debug.Log(decorObject, decorObject);
+
 			decorIndex++;
 		}
 	}

@@ -7,7 +7,7 @@ public class SteeringWheelInput
     LogitechGSDK.DIJOYSTATE2ENGINES rec;
     public void Init()
     {
-        Debug.Log("SteeringInit: " + LogitechGSDK.LogiSteeringInitialize(false));
+        Debug.Log("Steering Init: " + LogitechGSDK.LogiSteeringInitialize(false));
     }
     // Update is called once per frame
     public void Update()

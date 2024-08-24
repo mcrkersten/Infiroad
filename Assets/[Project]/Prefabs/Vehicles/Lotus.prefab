@@ -206,11 +206,11 @@ MonoBehaviour:
         maxValue: 270
     lastRPM: 0
     gearRatios:
-    - 3.25
-    - 2.75
-    - 2
+    - 0
+    - 2.1
+    - 1.7
     - 1.2
-    - 1
+    - 0.8
     finalDriveRatio: 3
     driveWheels:
     - {fileID: 5339892618374997439}
@@ -239,20 +239,20 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0.59542847
         value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
+        inSlope: 5.2679243
+        outSlope: 5.2679243
+        tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 0.12929137
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 7.731939
-        outSlope: 7.731939
+        inSlope: 0.081142224
+        outSlope: 0.081142224
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.051045112
+        inWeight: 0.11833474
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -261,7 +261,8 @@ MonoBehaviour:
   donwforceincreasement: 3
   driveType: 0
   centerOfMass: {fileID: 5339892618115039794}
-  steerWeight: 0
+  rb: {fileID: 120919826993408238}
+  steerPull: 0
   suspensions:
   - {fileID: 5339892617277633763}
   - {fileID: 5339892618822923911}
@@ -3358,34 +3359,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   brakeBias: 0
-  springLenght: 0.2
+  springLenght: 0.16
   maxSpringStretch: 0.18
   springConstant: 12000
   damperStiffness: 900
-  suspensionPower:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: -0
-      outSlope: -0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.07085464
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: -0
-      outSlope: -0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.07596785
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   stressSuspensionAudio: 0
   Slip_feedbackCurve:
     serializedVersion: 2
@@ -4537,30 +4514,6 @@ MonoBehaviour:
   maxSpringStretch: 0.18
   springConstant: 9500
   damperStiffness: 800
-  suspensionPower:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.0007286072
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.07085464
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.07596785
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   stressSuspensionAudio: 0
   Slip_feedbackCurve:
     serializedVersion: 2
@@ -6930,34 +6883,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   brakeBias: 0
-  springLenght: 0.2
+  springLenght: 0.16
   maxSpringStretch: 0.18
   springConstant: 12000
   damperStiffness: 900
-  suspensionPower:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: -0
-      outSlope: -0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.07085464
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: -0
-      outSlope: -0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.07596785
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   stressSuspensionAudio: 0
   Slip_feedbackCurve:
     serializedVersion: 2
@@ -7943,30 +7872,6 @@ MonoBehaviour:
   maxSpringStretch: 0.18
   springConstant: 9500
   damperStiffness: 800
-  suspensionPower:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.07085464
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.07596785
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   stressSuspensionAudio: 0
   Slip_feedbackCurve:
     serializedVersion: 2
@@ -10653,6 +10558,10 @@ PrefabInstance:
     - target: {fileID: 3956179933839717013, guid: 7e50d65ce659e96489529cbaffe93330, type: 3}
       propertyPath: m_Radius
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3956179933839717013, guid: 7e50d65ce659e96489529cbaffe93330, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4188253307398240971, guid: 7e50d65ce659e96489529cbaffe93330, type: 3}
       propertyPath: m_IsActive

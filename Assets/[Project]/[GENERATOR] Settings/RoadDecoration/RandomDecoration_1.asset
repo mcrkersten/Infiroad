@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: RandomDecoration_1
   m_EditorClassIdentifier: 
   wholeUnitsInPool: 5
-  segmentIndex: 0
   mainCurveTime: 0.5
   decor:
   - meshtaskPoolType: 0

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static EventTriggerManager;
+using static UnityEngine.Rendering.HableCurve;
 
 public class SegmentChainBuilder : MonoBehaviour
 {
@@ -18,6 +20,9 @@ public class SegmentChainBuilder : MonoBehaviour
     private Func< bool ,SegmentChainSettings> GetChainSettings;
     private int chainIndex = 0;
 
+    //Needs to be atleast 1
+    [SerializeField] private int segmentsToGenerateOnStart = 1;
+
     [Header("")]
     public GameObject segmentPrefab;
     public GameObject segmentChainPrefab;
@@ -26,16 +31,17 @@ public class SegmentChainBuilder : MonoBehaviour
     public Queue<SegmentChain> createdSegmentChains = new Queue<SegmentChain>();
     public Queue<RoadSegment> populatedSegments = new Queue<RoadSegment>();
 
-    public Queue<SegmentChain> fixedRoadChains = new Queue<SegmentChain>();
+    public Queue<SegmentChain> fixedSegmentChains = new Queue<SegmentChain>();
     private SegmentChain lastFixedRoadChain;
 
     private EdgePoint lastEdgePoint;
 
     private SegmentChain currentSegmentChain;
 
+    private bool generatedFirstSector = false;
+
     //Mesh task variables
     [HideInInspector] public MeshtaskTypeHandler meshtaskTypeHandler;
-
 
     [HideInInspector] public RoadFormVariables roadFormVariables;
     [HideInInspector] public Vector3 lastMeshPosition = Vector3.positiveInfinity;
@@ -134,9 +140,8 @@ public class SegmentChainBuilder : MonoBehaviour
     public void CreateNextFixedSector_Trigger()
     {
         SegmentChain next = SelectAndPositionNextFixedRoadChain();
+        next.SetOrganizedSegments(next.organizedSegments);
         currentSegmentChain = next;
-        CreateFullSector(next.organizedSegments);
-        SpawnAllDecorationOnChain(next.organizedSegments);
     }
 
     public Sector GenerateTimingSector()
@@ -173,20 +178,28 @@ public class SegmentChainBuilder : MonoBehaviour
         
         EventTriggerManager.segmentTrigger += (GameObject trigger) => {
             currentSegmentChain.activatedPooledObjects.Remove(trigger);
-            InstigateSegment();
+            InstigateRandomizedSegment();
         };
 
-        InstigateSegment();
-        InstigateSegment();
-        InstigateSegment();
+        for (int i = 0; i < segmentsToGenerateOnStart; i++)
+            InstigateRandomizedSegment();
+
         SpawnStartDecoration(currentSegmentChain);
     }
 
-    private void InstigateSegment()
+    private void InstigateRandomizedSegment()
     {
+        //last segment is empty
         if(currentSegmentChain.SegmentIndex == 6) return;
+
+        //Spawn trigger for next segment chain
         if(currentSegmentChain.SegmentIndex == 4)
             SpawnSegmentChainTrigger(currentSegmentChain, currentSegmentChain.organizedSegments[3]);
+
+        if(currentSegmentChain.SegmentIndex == 5)
+            SpawnSegmentChainTrigger(currentSegmentChain, currentSegmentChain.organizedSegments[4]);
+
+        //Create segment
         PopulateSegment();
         DestroySegementFromQueue();
     }
@@ -216,19 +229,26 @@ public class SegmentChainBuilder : MonoBehaviour
     private void StartFixedRoadChain(List<Sector> sectors)
     {
         CreateMeshtaskDictionary();
-        int i = 0;
-        foreach (Sector s in sectors)
-        {
-            s.roadChain.SegmentIndex = i++;
-            fixedRoadChains.Enqueue(s.roadChain);
-        }
-        InstantiateAssetPools();
-        Debug.Log(fixedRoadChains.Count);
-        //EventTriggerManager.roadChainTrigger += CreateNextFixedSector_Trigger;
 
-        //Build first two sectors
+        foreach (Sector s in sectors)
+            fixedSegmentChains.Enqueue(s.roadChain);
+        InstantiateAssetPools();
+
+        EventTriggerManager.roadChainTrigger += (GameObject trigger) => {
+            currentSegmentChain.activatedPooledObjects.Remove(trigger);
+            currentSegmentChain.SegmentIndex = 0;
+            CreateNextFixedSector_Trigger();
+        };
         CreateNextFixedSector_Trigger();
-        CreateNextFixedSector_Trigger();
+
+        EventTriggerManager.segmentTrigger += (GameObject trigger) => {
+            InstigateSegment(currentSegmentChain.SegmentIndex++);
+        };
+        for (int i = 0; i < segmentsToGenerateOnStart; i++)
+            InstigateSegment(currentSegmentChain.SegmentIndex++);
+        //Build first sector
+
+
     }
 
     /// <summary>
@@ -249,8 +269,10 @@ public class SegmentChainBuilder : MonoBehaviour
     #region InstantiatePools
     private void InstantiateAssetPools()
     {
+        if(objectPooler != null)
+            objectPooler.OnDestroy();
         objectPooler = new ObjectPooler();
-        objectPooler.InstantiateAssetTriggersPool(road.assetSpawnPointPoolSize, road.assetSpawnPoint);
+        objectPooler.InstantiateAssetTriggersPool(road.assetSpawnPointPoolSize, road.assetSpawnPoint, true);
         objectPooler.InstantiateAirDecoration(road.skyDecoration);
         InstantiateVegetationPool();
         InstantiateRoadDecorationPools();
@@ -267,7 +289,7 @@ public class SegmentChainBuilder : MonoBehaviour
     private void InstantiateVegetationPool()
     {
         foreach (RoadSettings s in road.roadSettings)
-            objectPooler.InstantiateAssetPool(s.assetPools, s.roadTypeTag);
+            objectPooler.InstantiateAssetPool(s.assetPools, s.roadTypeTag, true);
     }
 
     private void InstantiateRoadDecorationPools()
@@ -303,47 +325,58 @@ public class SegmentChainBuilder : MonoBehaviour
         return organized;
     }
 
+
     private SegmentChain SelectAndPositionNextFixedRoadChain()
     {
         if (lastFixedRoadChain == null)
-            return CreateFirstFixedRoadChain();
+            return CreateFirstFixedSegmentChain();
 
-        SegmentChain next = fixedRoadChains.Dequeue();
-        next.gameObject.SetActive(true);
-        Transform lastSegment = lastFixedRoadChain.organizedSegments[lastFixedRoadChain.organizedSegments.Count - 1].transform;
+        SegmentChain nextChain = fixedSegmentChains.Dequeue();
+        nextChain.gameObject.SetActive(true);
+        Transform lastSegmentTransform = lastFixedRoadChain.organizedSegments[lastFixedRoadChain.organizedSegments.Count - 1].transform;
 
+        //Clean up the last segment chain
         List<Transform> toDestroy = new List<Transform>();
-        foreach (Transform child in next.transform)
-            if (!child.CompareTag("Segment"))
-                toDestroy.Add(child);
-
+        foreach (Transform segment in nextChain.transform)
+            if (segment.CompareTag("Segment"))
+            {
+                segment.GetComponent<MeshFilter>().mesh = null;
+                foreach (Transform child in segment.transform)
+                    toDestroy.Add(child);
+            }
         int count = toDestroy.Count;
         for (int i = 0; i < count; i++)
             Destroy(toDestroy[i].gameObject);
 
 
+        // Create a temporary GameObject to assist with positioning
         GameObject temp = new GameObject("Temp");
-        next.transform.rotation = lastSegment.rotation;
-        temp.transform.position = next.organizedSegments[0].transform.position;
-        next.transform.parent = temp.transform;
-        temp.transform.position = lastSegment.position;
-        next.transform.parent = null;
+        // Align the rotation of 'nextChain' with the 'lastSegmentTransform'
+        nextChain.transform.rotation = lastSegmentTransform.rotation;
+        // Set the temporary GameObject's position to the first segment in 'nextChain'
+        temp.transform.position = nextChain.organizedSegments[0].transform.position;
+        // Temporarily parent 'nextChain' to the temporary GameObject
+        nextChain.transform.parent = temp.transform;
+        // Move the temporary GameObject to the 'lastSegmentTransform' position
+        temp.transform.position = lastSegmentTransform.position;
+        // Unparent 'nextChain', leaving it in the new position
+        nextChain.transform.parent = null;
+        // Destroy the temporary GameObject as it's no longer needed
         Destroy(temp);
 
-        fixedRoadChains.Enqueue(lastFixedRoadChain);
-        lastFixedRoadChain = next;
-        return next;
+
+        fixedSegmentChains.Enqueue(lastFixedRoadChain);
+        lastFixedRoadChain = nextChain;
+        return nextChain;
     }
 
-    private SegmentChain CreateFirstFixedRoadChain()
+    private SegmentChain CreateFirstFixedSegmentChain()
     {
-        SegmentChain next = fixedRoadChains.Dequeue();
+        SegmentChain next = fixedSegmentChains.Dequeue();
         next.gameObject.SetActive(true);
         next.transform.rotation = Quaternion.identity;
         next.transform.position = Vector3.zero;
         lastFixedRoadChain = next;
-
-
         return next;
     }
 
@@ -356,20 +389,31 @@ public class SegmentChainBuilder : MonoBehaviour
         SetTangentLenght(segments);
     }
 
-    private void CreateFullSector(List<RoadSegment> segments)
+    private void InstigateSegment(int segmentIndex)
     {
-        currentSegmentChain.SetOrganizedSegments(segments);
-        foreach (RoadSegment segment in segments)
-        {
-            RoadSettings roadSettting = road.roadSettings[0];
-            currentSegmentChain.CreateSegmentMesh(roadSettting, segment);
+        Debug.Log(segmentIndex);
+        RoadSegment currentSegment = currentSegmentChain.organizedSegments[segmentIndex];
 
-            //Handle created Meshtasks
-            foreach (MeshtaskObject meshtaskObject in roadSettting.meshtaskObjects)
-                ExecuteMeshtasks(meshtaskObject.meshtaskSettings, currentSegmentChain);
+        if(currentSegment == null) return;
 
-            meshtasks.Clear();
-        }
+        //Debug.Log(currentSegment.name + " = " + segmentIndex, currentSegment);
+        if(segmentIndex > currentSegmentChain.organizedSegments.Count - 1) return;
+
+        CreateSegmentMesh(currentSegment);
+
+        //We need to spawn the next segment trigger before we spawn the decoration
+        SpawnSegmentTrigger(currentSegmentChain, currentSegment);
+
+        //If we are last segment, spawn chain trigger.
+        if(segmentIndex == currentSegmentChain.organizedSegments.Count - (segmentsToGenerateOnStart + 1))
+            SpawnSegmentChainTrigger(currentSegmentChain, currentSegment);
+
+        if(segmentIndex == currentSegmentChain.organizedSegments.Count - 2)
+            SpawnTimerTrigger(currentSegmentChain, currentSegment);
+
+        //If we are first segment in this chain, spawn start decoration
+        if (segmentIndex == 0)
+            SpawnStartDecoration(currentSegmentChain);
     }
 
     private void CreateSegmentMesh(RoadSegment segment)
@@ -386,11 +430,10 @@ public class SegmentChainBuilder : MonoBehaviour
 
     private void SpawnAllDecorationOnChain(List<RoadSegment> segments)
     {
-        //SpawnSegmentTrigger(segments[segment]);
+        SpawnSegmentTrigger(currentSegmentChain, segments[3]);
 
-        int randomIndex = UnityEngine.Random.Range(1, segments.Count - 1);
-        SpawnRandomDecoration(currentSegmentChain, segments[randomIndex]);
-
+        SpawnStartDecoration(currentSegmentChain);
+        SpawnRandomDecoration(currentSegmentChain, segments[UnityEngine.Random.Range(1, segments.Count - 1)]);
         SpawnSkyDecoration();
     }
 
@@ -415,6 +458,11 @@ public class SegmentChainBuilder : MonoBehaviour
     {
         //Create on last segment a checkpoint
         RoadDecoration deco = road.standardDecoration.First(t => t.poolIndex == 1);
+        roadChain.ActivateDecor(segment, deco);
+    }
+    private void SpawnTimerTrigger(SegmentChain roadChain, RoadSegment segment)
+    {
+        RoadDecoration deco = road.standardDecoration.First(t => t.poolIndex == 3);
         roadChain.ActivateDecor(segment, deco);
     }
 
@@ -899,10 +947,12 @@ public class RoadFormVariables
     private float extrusionVelocity;
     private float camberVelocity;
 
+    //Left extrusion
     public float leftExtrusion = 0;
     private float maxLeftExtrusion;
     private float leftReductionVelocity;
 
+    //Right extrusion
     public float rightExtrusion = 0;
     private float maxRightExtrusion;
     private float righReductiontVelocity;

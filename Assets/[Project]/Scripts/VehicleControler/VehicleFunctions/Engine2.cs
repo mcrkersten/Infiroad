@@ -68,11 +68,11 @@ public class Engine2
         float wheelRPM = (currentForwardVelocity / (rollingCircumference / 60f)) * wheelSpin;
 
         // Calculate engine RPM and velocity
-        float enginewRPM = (wheelRPM * effectiveGearRatio) - (physicsWobble * physicsImpact);
-        float deltaRPM = (enginewRPM * clutch) + (Mathf.Lerp(1000f, maxRPM, throttle) * (1f - clutch)) - lastRPM;
-        lastRPM = Mathf.Lerp(lastRPM + deltaRPM, enginewRPM, clutch);
+        float engineRPM = (wheelRPM * effectiveGearRatio) - (physicsWobble * physicsImpact);
+        float deltaRPM = (engineRPM * clutch) + (Mathf.Lerp(1000f, maxRPM, throttle) * (1f - clutch)) - lastRPM;
+        lastRPM = Mathf.Lerp(lastRPM + deltaRPM, engineRPM, clutch);
         lastRPM = Mathf.Clamp(lastRPM, 0, maxRPM);
-        float velocityRPM = lastRPM - enginewRPM;
+        float velocityRPM = lastRPM - engineRPM;
         lastRPM += velocityRPM;
 
         if(float.IsNaN(velocityRPM))
@@ -182,7 +182,7 @@ public class Engine2
             StartSemiAutomaticShift();
             currentSelectedGear++;
             currentSelectedGear = Mathf.Clamp(currentSelectedGear, -1, gearRatios.Length - 1);
-            dashboard.UpdateGear(currentSelectedGear + 1, DashboardMeter.MeterType.Tacheometer);
+            dashboard.UpdateGear(currentSelectedGear, DashboardMeter.MeterType.Tacheometer);
         }
     }
 
@@ -193,7 +193,7 @@ public class Engine2
             StartSemiAutomaticShift();
             currentSelectedGear--;
             currentSelectedGear = Mathf.Clamp(currentSelectedGear, -1, gearRatios.Length - 1);
-            dashboard.UpdateGear(currentSelectedGear + 1, DashboardMeter.MeterType.Tacheometer);
+            dashboard.UpdateGear(currentSelectedGear, DashboardMeter.MeterType.Tacheometer);
         }
     }
 

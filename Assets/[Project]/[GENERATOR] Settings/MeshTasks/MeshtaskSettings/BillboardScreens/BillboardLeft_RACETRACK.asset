@@ -13,63 +13,68 @@ MonoBehaviour:
   m_Name: BillboardLeft_RACETRACK
   m_EditorClassIdentifier: 
   EDITOR_offSetPosition: {x: 0, y: 0, z: 0}
-  dataKey: 724529
-  calculatedUs: []
-  uvLenght: 4.24
+  dataKey: 499777
   UV_scale: 0.2
   meshTaskType: 4
   meshtaskPosition: 0
   meshtaskStyle: 0
   PointsFile: {fileID: 0}
   fileOffset: {x: 0, y: 0}
+  fileReverse: 0
   points:
   - vertex:
       point: {x: 0, y: 1}
-      horizontal_UV: 0
-    line: {x: 5, y: 0}
-    inversedLine: {x: 4, y: 5}
+      uvX: 0
+    line: {x: 0, y: 1}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
   - vertex:
       point: {x: 0, y: 3}
-      horizontal_UV: 2
-    line: {x: 0, y: 1}
-    inversedLine: {x: 3, y: 4}
+      uvX: 0
+    line: {x: 1, y: 2}
+    uvDistance: 0.2
+    uvLastDistance: 0.201
     isHardEdge: 0
     materialIndex: 0
   - vertex:
       point: {x: 0.01, y: 3}
-      horizontal_UV: 2.01
-    line: {x: 1, y: 2}
-    inversedLine: {x: 2, y: 3}
+      uvX: 0
+    line: {x: 3, y: 4}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 1
   - vertex:
       point: {x: 0.01, y: 3.1}
-      horizontal_UV: 2.11
-    line: {x: 2, y: 3}
-    inversedLine: {x: 1, y: 2}
+      uvX: 0
+    line: {x: 4, y: 5}
+    uvDistance: 0.00999999
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 1
   - vertex:
       point: {x: -0.02, y: 3.1}
-      horizontal_UV: 2.1399999
-    line: {x: 3, y: 4}
-    inversedLine: {x: 0, y: 1}
+      uvX: 0
+    line: {x: 5, y: 6}
+    uvDistance: 0.012999991
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 1
   - vertex:
       point: {x: -0.02, y: 1}
-      horizontal_UV: 4.24
-    line: {x: 4, y: 5}
-    inversedLine: {x: 5, y: 0}
+      uvX: 0
+    line: {x: 6, y: 0}
+    uvDistance: 0.22299999
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 1
   meshResolution: 3
   meshtaskContinues: 0
   noiseChannel: 0
-  maxChamfer: 5
-  extrusionSize: 15
+  maxChamfer: 10
+  extrusionSize: 10
   minimalCornerRadius: 30
   maximumCornerRadius: 1000
   minimalExtrusionSize: 0

@@ -178,7 +178,7 @@ public class RoadMeshExtruder {
 		mesh.RecalculateTangents();
 		List<SurfaceScriptable> m = new List<SurfaceScriptable>();
 		m.AddRange(roadSettings.GetAllSurfaceSettings(surfaceIndex));
-		Debug.Log(surfaceIndex);
+		//Debug.Log(surfaceIndex);
 
 		List<Material> mat = new List<Material>();
         foreach (SurfaceScriptable item in m)

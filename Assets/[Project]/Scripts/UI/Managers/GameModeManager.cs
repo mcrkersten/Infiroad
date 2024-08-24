@@ -34,6 +34,7 @@ public class GameModeManager : MonoBehaviour
             Destroy(sector.roadChain.gameObject);
         fixedSectors.Clear();
         SceneManager.LoadScene(0);
+        SceneManager.UnloadSceneAsync(1);
     }
 }
 

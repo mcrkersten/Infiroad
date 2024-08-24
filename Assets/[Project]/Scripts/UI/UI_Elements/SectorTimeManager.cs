@@ -35,7 +35,7 @@ public class SectorTimeManager : MonoBehaviour
     {
         SectorTiming.sectorTimingUpdate += OnScreenTiming;
         gameMode = GameModeManager.Instance.gameMode;
-        EventTriggerManager.sectorTrigger += UpdateCurrentSector;
+        EventTriggerManager.timerTrigger += UpdateTimer;
         GameManager.onStartGame += StartTimer;
 
         switch (gameMode)
@@ -77,7 +77,7 @@ public class SectorTimeManager : MonoBehaviour
         }
     }
 
-    private void UpdateCurrentSector()
+    private void UpdateTimer(GameObject timerObject)
     {
         currentSector.UnselectSector();
 
@@ -151,7 +151,7 @@ public class SectorTimeManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventTriggerManager.sectorTrigger -= UpdateCurrentSector;
+        EventTriggerManager.timerTrigger -= UpdateTimer;
     }
 
     private void OnScreenTiming(float sectorInterval, float lap, SectorTiming.LapType laptype)

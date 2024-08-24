@@ -62,7 +62,7 @@ public class DashboardMeter
 
     public void UpdateGear(int gear)
     {
-        if(gear == -1)
+        if(gear == 0)
             meterText[0].text = "N";
         else
             meterText[0].text = gear.ToString();

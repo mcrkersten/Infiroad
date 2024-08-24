@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-
 public class ObjectPooler
 {
     private Dictionary<int, Queue<GameObject>> skyDecorations = new Dictionary<int, Queue<GameObject>>();
@@ -22,6 +21,11 @@ public class ObjectPooler
     }
     #endregion
 
+    public void AddObjectDespawner(GameObject obj)
+    {
+        obj.AddComponent<ObjectDespawn>();
+    }
+
     //Instantiate, deactivate and queue into correct pool
     #region Instantiate pools
     /// <summary>
@@ -29,18 +33,19 @@ public class ObjectPooler
     /// </summary>
     /// <param name="assetPointAmount">Amount of points to instantiate</param>
     /// <param name="assetPointPrefab"></param>
-    public void InstantiateAssetTriggersPool(int assetPointAmount, GameObject assetPointPrefab)
+    public void InstantiateAssetTriggersPool(int assetPointAmount, GameObject assetPointPrefab, bool timer)
     {
         for (int i = 0; i < assetPointAmount; i++)
         {
             GameObject obj = GameObject.Instantiate(assetPointPrefab);
-            obj.transform.parent = parent.transform;
             obj.SetActive(false);
+            obj.transform.parent = parent.transform;
+            if(timer) obj.AddComponent<ObjectDespawn>();
             assetTriggerQueue.Enqueue(obj.GetComponent<AssetTrigger>());
         }
     }
 
-    public void InstantiateAssetPool(List<AssetPool> pools, string roadType)
+    public void InstantiateAssetPool(List<AssetPool> pools, string roadType, bool timer)
     {
         //Returns if pool for this road already has been made.
         if (assetQueueDictionaries.ContainsKey(roadType))
@@ -66,14 +71,26 @@ public class ObjectPooler
 
                 //Spawn random selected prefab
                 GameObject obj = GameObject.Instantiate(pool.prefabs[spawnIndex]);
-                obj.transform.parent = parent.transform;
                 obj.SetActive(false);
+                obj.transform.parent = parent.transform;
+                if(timer) obj.AddComponent<ObjectDespawn>();
                 objectPool.Enqueue(obj);
             }
             localDictionary.Add(poolIndex++.ToString(), objectPool);
         }
 
         assetQueueDictionaries.Add("Zero", localDictionary);
+    }
+    public void OnDestroy()
+    {
+        assetQueueDictionaries = null;
+        skyDecorations = null;
+        assetTriggerQueue = null;
+        roadDecorationQueueDictionary = null;
+        meshtaskObjectQueueDictionary = null;
+
+        GameObject.Destroy(parent);
+        parent = null;
     }
     /// Instantiate all decorations in dedicated pools
     public void InstantiateRoadDecorationDecorationPool(RoadDecoration pool)
@@ -176,11 +193,12 @@ public class ObjectPooler
         //Get object from Dictionary
         GameObject objectToSpawn = assetQueueDictionaries[roadTag][assetType].Dequeue();
 
+        if(objectToSpawn == null)
+            Debug.LogError("POOL PANIC: non excisting object was dequeued, roatTag:"+ roadTag + " assetType:" + assetType);
+
         //Activate and set position
         SetGameObjectPosition(objectToSpawn, position, rotation);
         objectToSpawn.SetActive(true);
-
-        //Put object back in to dictionary
         assetQueueDictionaries[roadTag][assetType].Enqueue(objectToSpawn);
     }
 

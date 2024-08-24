@@ -309,7 +309,7 @@ MonoBehaviour:
     - noiseType: 1
       noiseDirection: 2
       frequency: 0
-      scale: 1
+      scale: 0.02
       amplytude: 1
       octaves: 1
       noiseMask: 0
@@ -317,14 +317,14 @@ MonoBehaviour:
     noises:
     - noiseType: 3
       noiseDirection: 1
-      frequency: 0
+      frequency: 0.05
       scale: 1
       amplytude: 1
       octaves: 1
       noiseMask: 0
     - noiseType: 3
       noiseDirection: 2
-      frequency: 0
+      frequency: 0.58
       scale: 1
       amplytude: 1
       octaves: 1
@@ -373,7 +373,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   extrusionSize: 10
   hasCornerChamfer: 1
-  maxCamber: 5
+  maxCamber: 10
   calculatedUs:
   - {x: Infinity, y: -Infinity}
   - {x: -13, y: 13}

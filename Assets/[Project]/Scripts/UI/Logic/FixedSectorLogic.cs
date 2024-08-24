@@ -115,7 +115,7 @@ public class FixedSectorLogic : MonoBehaviour
                     line.SetPosition((i * resolution) + resolution - 1, sector.beziers[i].GetOrientedPoint(.9999f, Ease.Linear).pos);
                     continue;
                 }
-                Debug.Log(sector.beziers[i].GetPoint(x / (float)x / (float)resolution));
+                //Debug.Log(sector.beziers[i].GetPoint(x / (float)x / (float)resolution));
                 line.SetPosition((i * resolution) + x, sector.beziers[i].GetOrientedPoint((float)x / (float)resolution, Ease.Linear).pos);
             }
         }
@@ -235,6 +235,7 @@ public class FixedSectorLogic : MonoBehaviour
     {
         for (int i = 0; i < sectors.Count; i++)
         {
+            if(sectors[i].roadChain == null) continue;
             Transform root = sectors[i].roadChain.transform;
             root.rotation = Quaternion.identity;
             root.position = Vector3.zero;
@@ -242,5 +243,17 @@ public class FixedSectorLogic : MonoBehaviour
         }
         connectedViewActive = false;
 
+    }
+
+    private void OnDestroy()
+    {
+        SectorButton.sectorDeleted -= DeleteSector;
+        SectorButton.sectorSelected -= OnSectorSelection;
+        SectorButton.sectorDeselected -= OnSectorDeselected;
+
+        buttons.buttons[0].onClick.RemoveAllListeners();
+        buttons.buttons[1].onClick.RemoveAllListeners();
+        buttons.buttons[2].onClick.RemoveAllListeners();
+        buttons.buttons[3].onClick.RemoveAllListeners();
     }
 }
