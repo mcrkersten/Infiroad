@@ -16,8 +16,8 @@ public class SegmentChainBuilder : MonoBehaviour
     public static SegmentChainBuilder instance;
     [HideInInspector] public Transform vehicleStartTransform;
 
-    [SerializeField] private List<SegmentChainSettings> segmentChainSettings;
-    private Func< bool ,SegmentChainSettings> GetChainSettings;
+    [SerializeField] private List<RoadSettings> segmentChainSettings;
+    private Func< bool ,RoadSettings> GetChainSettings;
     private int chainIndex = 0;
 
     //Needs to be atleast 1
@@ -154,7 +154,7 @@ public class SegmentChainBuilder : MonoBehaviour
 
     private void PositionStartSegment()
     {
-        startSegment.transform.position = new Vector3(0, 0, -GetChainSettings(false).gridSize / 2f);
+        startSegment.transform.position = new Vector3(0, 0, -GetChainSettings(false).segmentChainSettings.gridSize / 2f);
     }
 
     private void StartSegmentChain()
@@ -163,12 +163,12 @@ public class SegmentChainBuilder : MonoBehaviour
 
         CreateNextRandomSegmentChain(new EdgePoint(EdgeLocation.none, 3, startSegment));
 
-        worldBuilder.PopulateWorld(GetChainSettings(false), currentSegmentChain);
+        worldBuilder.PopulateWorld(GetChainSettings(false).segmentChainSettings, currentSegmentChain);
 
         EventTriggerManager.roadChainTrigger += (GameObject trigger) => { 
             currentSegmentChain.activatedPooledObjects.Remove(trigger);
             CreateNextRandomSegmentChain(lastEdgePoint);
-            worldBuilder.PopulateWorld(GetChainSettings(false), currentSegmentChain);
+            worldBuilder.PopulateWorld(GetChainSettings(false).segmentChainSettings, currentSegmentChain);
 
             //worldBuilder.CreateLineCollider(currentSegmentChain);
             if (createdSegmentChains.Count == 5)
@@ -382,9 +382,9 @@ public class SegmentChainBuilder : MonoBehaviour
 
     private void PositionSegments(List<RoadSegment> segments)
     {
-        SetRandomHeightToSegments(segments, GetChainSettings(false).isFixedBetweenRange, GetChainSettings(false).segmentHeightRange);
+        SetRandomHeightToSegments(segments, GetChainSettings(false).segmentChainSettings.isFixedBetweenRange, GetChainSettings(false).segmentChainSettings.segmentHeightRange);
         OrientSegments(segments);
-        SetRandomXaxisToSegments(segments, GetChainSettings(false).segmentXaxisVariation);
+        SetRandomXaxisToSegments(segments, GetChainSettings(false).segmentChainSettings.segmentXaxisVariation);
         OrientSegments(segments); //Orient again to make nice
         SetTangentLenght(segments);
     }
@@ -628,24 +628,24 @@ public class SegmentChainBuilder : MonoBehaviour
         switch (entry.edgeLocation)
         {
             case EdgeLocation.Left:
-                if (exit.edgeLocation == EdgeLocation.Right) { nOfPoints = GetChainSettings(false).straight_NpointsBetween; }
-                else { nOfPoints = nOfPoints = GetChainSettings(false).corner_NpointsBetween; }
+                if (exit.edgeLocation == EdgeLocation.Right) { nOfPoints = GetChainSettings(false).segmentChainSettings.straight_NpointsBetween; }
+                else { nOfPoints = nOfPoints = GetChainSettings(false).segmentChainSettings.corner_NpointsBetween; }
                 break;
             case EdgeLocation.Right:
-                if (exit.edgeLocation == EdgeLocation.Left) { nOfPoints = GetChainSettings(false).straight_NpointsBetween; }
-                else { nOfPoints = nOfPoints = GetChainSettings(false).corner_NpointsBetween; }
+                if (exit.edgeLocation == EdgeLocation.Left) { nOfPoints = GetChainSettings(false).segmentChainSettings.straight_NpointsBetween; }
+                else { nOfPoints = nOfPoints = GetChainSettings(false).segmentChainSettings.corner_NpointsBetween; }
                 break;
             case EdgeLocation.Top:
-                if (exit.edgeLocation == EdgeLocation.Bottom) { nOfPoints = GetChainSettings(false).straight_NpointsBetween; }
-                else { nOfPoints = nOfPoints = GetChainSettings(false).corner_NpointsBetween; }
+                if (exit.edgeLocation == EdgeLocation.Bottom) { nOfPoints = GetChainSettings(false).segmentChainSettings.straight_NpointsBetween; }
+                else { nOfPoints = nOfPoints = GetChainSettings(false).segmentChainSettings.corner_NpointsBetween; }
                 break;
             case EdgeLocation.Bottom:
-                if (exit.edgeLocation == EdgeLocation.Top) { nOfPoints = GetChainSettings(false).straight_NpointsBetween; }
-                else { nOfPoints = nOfPoints = GetChainSettings(false).corner_NpointsBetween; }
+                if (exit.edgeLocation == EdgeLocation.Top) { nOfPoints = GetChainSettings(false).segmentChainSettings.straight_NpointsBetween; }
+                else { nOfPoints = nOfPoints = GetChainSettings(false).segmentChainSettings.corner_NpointsBetween; }
                 break;
             case EdgeLocation.none:
-                if (exit.edgeLocation == EdgeLocation.Top) { nOfPoints = GetChainSettings(false).straight_NpointsBetween; }
-                else { nOfPoints = nOfPoints = GetChainSettings(false).corner_NpointsBetween; }
+                if (exit.edgeLocation == EdgeLocation.Top) { nOfPoints = GetChainSettings(false).segmentChainSettings.straight_NpointsBetween; }
+                else { nOfPoints = nOfPoints = GetChainSettings(false).segmentChainSettings.corner_NpointsBetween; }
                 break;
         }
         return nOfPoints;
@@ -653,7 +653,7 @@ public class SegmentChainBuilder : MonoBehaviour
 
     private Vector3 GetEdgePointLocalPosition(EdgePoint exitPoint)
     {
-        SegmentChainSettings settings = GetChainSettings(false);
+        SegmentChainSettings settings = GetChainSettings(false).segmentChainSettings;
         float side = ((settings.gridSize) / 2f);
 
         float offset = (float)settings.gridSize / settings.sidePointAmount;
@@ -687,16 +687,16 @@ public class SegmentChainBuilder : MonoBehaviour
         switch (exitPoint.edgeLocation)
         {
             case EdgeLocation.Left:
-                p[0] -= GetChainSettings(false).gridSize;
+                p[0] -= GetChainSettings(false).segmentChainSettings.gridSize;
                 break;
             case EdgeLocation.Right:
-                p[0] += GetChainSettings(false).gridSize;
+                p[0] += GetChainSettings(false).segmentChainSettings.gridSize;
                 break;
             case EdgeLocation.Top:
-                p[2] += GetChainSettings(false).gridSize;
+                p[2] += GetChainSettings(false).segmentChainSettings.gridSize;
                 break;
             case EdgeLocation.Bottom:
-                p[2] -= GetChainSettings(false).gridSize;
+                p[2] -= GetChainSettings(false).segmentChainSettings.gridSize;
                 break;
             case EdgeLocation.none:
                 break;
@@ -706,7 +706,7 @@ public class SegmentChainBuilder : MonoBehaviour
 
     private int GetRandomExitPointIndex(EdgeLocation entry, EdgeLocation exit)
     {
-        int max = GetChainSettings(false).sidePointAmount;
+        int max = GetChainSettings(false).segmentChainSettings.sidePointAmount;
         int min = 0;
 
         switch (entry)
@@ -765,7 +765,7 @@ public class SegmentChainBuilder : MonoBehaviour
     {
         foreach (RoadSegment item in segments)
         {
-            bool violation = Vector3.Distance(item.transform.position, proximity) < GetChainSettings(false).segmentDeletionProximity;
+            bool violation = Vector3.Distance(item.transform.position, proximity) < GetChainSettings(false).segmentChainSettings.segmentDeletionProximity;
             if (violation)
             {
                 Debug.Log("Proximity violation");
@@ -868,29 +868,6 @@ public class SegmentChainBuilder : MonoBehaviour
     {
         SegmentChain rc = createdSegmentChains.Dequeue();
         Destroy(rc.gameObject);
-    }
-
-    [System.Serializable]
-    public class SegmentChainSettings
-    {
-        [Space]
-        [Tooltip("Amount of points on the side of a RoadchainBlock")]
-        public int sidePointAmount;
-        public int gridSize;//Unity UnitSize
-
-        public int straight_NpointsBetween;
-        public int corner_NpointsBetween;
-
-        [Header("New segment settings")]
-        [Range(0f, 75f)]
-        public float segmentXaxisVariation;
-
-        [Range(0f, 25f)]
-        public float segmentHeightRange;
-        public bool isFixedBetweenRange;
-
-        [Range(10, 50)]
-        public int segmentDeletionProximity;
     }
 }
 

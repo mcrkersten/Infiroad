@@ -39,6 +39,8 @@ public class RoadSettings : ScriptableObject
 	[HideInInspector] public float uSpan;
 	[HideInInspector] public int hardEdges;
 
+	public SegmentChainSettings segmentChainSettings;
+
 	public void InitializeRoadSettings()
     {
 		CalculateUs();
@@ -171,4 +173,27 @@ public class RoadSettings : ScriptableObject
 		}
 		return new Vector2(min_Xuv, max_Xuv);
 	}
+}
+
+[System.Serializable]
+public class SegmentChainSettings
+{
+    [Space]
+    [Tooltip("Amount of points on the side of a RoadchainBlock")]
+    public int sidePointAmount;
+    public int gridSize;//Unity UnitSize
+
+    public int straight_NpointsBetween;
+    public int corner_NpointsBetween;
+
+    [Header("New segment settings")]
+    [Range(0f, 75f)]
+    public float segmentXaxisVariation;
+
+    [Range(0f, 25f)]
+    public float segmentHeightRange;
+    public bool isFixedBetweenRange;
+
+    [Range(10, 50)]
+    public int segmentDeletionProximity;
 }

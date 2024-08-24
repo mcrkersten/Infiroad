@@ -11,7 +11,6 @@ public class MeshtaskSettings : ScriptableObject
 	public  Vector3 EDITOR_offSetPosition = Vector2.zero;
 
 	[HideInInspector] public int dataKey;
-	public float UV_scale = 1f;
 
 	public MeshTaskType meshTaskType;
 	public MeshtaskPosition meshtaskPosition;

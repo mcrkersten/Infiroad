@@ -244,7 +244,7 @@ public class ObjectPooler
         gameObject.transform.localScale = Vector3.zero;
         gameObject.transform.position = position;
         gameObject.transform.rotation = rotation;
-        gameObject.transform.DOScale(currentScale, 1f).SetEase(DG.Tweening.Ease.InBack);
+        gameObject.transform.DOScale(currentScale, 1f).SetEase(DG.Tweening.Ease.InOutQuart);
     }
 }
 

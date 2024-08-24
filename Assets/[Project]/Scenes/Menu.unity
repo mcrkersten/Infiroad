@@ -7956,6 +7956,14 @@ PrefabInstance:
       propertyPath: settings.straight_NpointsBetween
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
+      propertyPath: segmentChainSettings.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 192b25401e7301e4db299b23ec82ad01, type: 2}
+    - target: {fileID: 7288201750910135065, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
+      propertyPath: segmentChainSettings.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 192b25401e7301e4db299b23ec82ad01, type: 2}
     - target: {fileID: 7288201750910135066, guid: 3af6553d4e2a50843a07a778ee69a2b2, type: 3}
       propertyPath: m_RootOrder
       value: 2

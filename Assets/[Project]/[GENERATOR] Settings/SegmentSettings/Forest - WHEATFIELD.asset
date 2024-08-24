@@ -325,3 +325,12 @@ MonoBehaviour:
   calculatedUs: []
   uSpan: 0
   hardEdges: 0
+  segmentChainSettings:
+    sidePointAmount: 0
+    gridSize: 0
+    straight_NpointsBetween: 0
+    corner_NpointsBetween: 0
+    segmentXaxisVariation: 0
+    segmentHeightRange: 0
+    isFixedBetweenRange: 0
+    segmentDeletionProximity: 0

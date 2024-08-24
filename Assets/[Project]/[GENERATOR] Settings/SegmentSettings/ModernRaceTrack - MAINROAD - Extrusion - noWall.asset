@@ -381,3 +381,12 @@ MonoBehaviour:
   - {x: -12, y: 12}
   uSpan: 55.15396
   hardEdges: 17
+  segmentChainSettings:
+    sidePointAmount: 10
+    gridSize: 500
+    straight_NpointsBetween: 4
+    corner_NpointsBetween: 4
+    segmentXaxisVariation: 0
+    segmentHeightRange: 3
+    isFixedBetweenRange: 0
+    segmentDeletionProximity: 30
