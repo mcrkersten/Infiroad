@@ -49,7 +49,7 @@ public class RoadSegment : UniqueMesh {
 	// x = start coordinate, y = end coordinate
 	public void CreateMesh( Vector2 nrmCoordStartEnd, RoadSettings settings , int segmentIndex , int chainIndex = 0)
 	{
-		surfaceSettings.AddRange(settings.GetAllSurfaceSettings(chainIndex));
+		surfaceSettings.AddRange(settings.GetAllSurfaceSettings());
 		roadSetting = settings;
 		index = segmentIndex;
 

@@ -309,7 +309,7 @@ public class SegmentChainBuilder : MonoBehaviour
         GetChainSettings(true);
         currentSegmentChain = newSegmentChain;
 
-        if(Rindex > road.roadSettings[0].SurfaceSettingsCount - 1)
+        if(Rindex > road.roadSettings.Count)
             Rindex = 0;
         newSegmentChain.ChainIndex = Rindex;
         Rindex++;

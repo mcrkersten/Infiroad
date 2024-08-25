@@ -7,8 +7,7 @@ public class RoadSettings : ScriptableObject
 {
 	[Header("Appearance")]
     public VertexPoint[] points;
-	[SerializeField] private List<SurfaceScriptableSector> surfaceSettings = new List<SurfaceScriptableSector>();
-	public int SurfaceSettingsCount => surfaceSettings.Count;
+	[SerializeField] private SurfaceScriptableSector surfaceSettings;
 	public int PointCount => points.Length;
 
 	[Header("Meshtasks")]
@@ -57,11 +56,11 @@ public class RoadSettings : ScriptableObject
 		}
 	}
 
-	public List<SurfaceScriptable> GetAllSurfaceSettings(int index)
+	public List<SurfaceScriptable> GetAllSurfaceSettings()
     {
 		List<SurfaceScriptable> fc = new List<SurfaceScriptable>();
-        fc.Add(surfaceSettings[index].runoffMaterial);
-		fc.AddRange(surfaceSettings[index].layers);
+        fc.Add(surfaceSettings.runoffMaterial);
+		fc.AddRange(surfaceSettings.layers);
 		return fc;
 	}
 
@@ -111,7 +110,7 @@ public class RoadSettings : ScriptableObject
 		int current = 0;
 		List<Vector2> uvs = new List<Vector2>();
 		List<SurfaceScriptable> sfsc = new List<SurfaceScriptable>();
-		sfsc.AddRange(GetAllSurfaceSettings(0));
+		sfsc.AddRange(GetAllSurfaceSettings());
 
 		foreach (SurfaceScriptable m in sfsc)
 		{

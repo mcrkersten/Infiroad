@@ -109,7 +109,7 @@ public class RoadMeshExtruder {
 				float tUv = uvMode == UVMode.TiledDeltaCompensated ? table.TToPercentage(time) : time;
 				float y_UV = tUv * tiling;
 				float x_UV = 0;
-				List<SurfaceScriptable> sf = roadSettings.GetAllSurfaceSettings(0);
+				List<SurfaceScriptable> sf = roadSettings.GetAllSurfaceSettings();
 				bool isMirrored = sf[roadSettings.points[i].materialIndex].UV_mirrored;
 
 				{//Place vertices
@@ -177,7 +177,7 @@ public class RoadMeshExtruder {
 		mesh.RecalculateNormals();
 		mesh.RecalculateTangents();
 		List<SurfaceScriptable> m = new List<SurfaceScriptable>();
-		m.AddRange(roadSettings.GetAllSurfaceSettings(surfaceIndex));
+		m.AddRange(roadSettings.GetAllSurfaceSettings());
 		//Debug.Log(surfaceIndex);
 
 		List<Material> mat = new List<Material>();
@@ -399,7 +399,7 @@ public class RoadMeshExtruder {
 	private List<List<int>> CreateTriangles(int vertexJumpedCount, int edgeLoopCount, RoadSettings roadSettings)
     {
 		List<List<int>> tries = new List<List<int>>();
-		foreach (SurfaceScriptable surface in roadSettings.GetAllSurfaceSettings(0))
+		foreach (SurfaceScriptable surface in roadSettings.GetAllSurfaceSettings())
 			tries.Add(new List<int>());
 
 		// Generate Trianges
