@@ -16,7 +16,6 @@ public class SegmentChainBuilder : MonoBehaviour
     public static SegmentChainBuilder instance;
     [HideInInspector] public Transform vehicleStartTransform;
 
-    [SerializeField] private List<RoadSettings> segmentChainSettings;
     private Func< bool ,RoadSettings> GetChainSettings;
     private int chainIndex = 0;
 
@@ -37,8 +36,6 @@ public class SegmentChainBuilder : MonoBehaviour
     private EdgePoint lastEdgePoint;
 
     private SegmentChain currentSegmentChain;
-
-    private bool generatedFirstSector = false;
 
     //Mesh task variables
     [HideInInspector] public MeshtaskTypeHandler meshtaskTypeHandler;
@@ -66,13 +63,13 @@ public class SegmentChainBuilder : MonoBehaviour
 
     private void CreateLambda()
     {
-        GetChainSettings = (x) =>
+        GetChainSettings = (randomize) =>
         {
-            if (chainIndex >= 0 && chainIndex < segmentChainSettings.Count)
+            if (chainIndex >= 0 && chainIndex < road.roadSettings.Count)
             {
-                if(x)
+                if(randomize)
                     CalculateNextChain();
-                return segmentChainSettings[chainIndex];
+                return road.roadSettings[chainIndex];
             }
             else
             {
@@ -84,15 +81,7 @@ public class SegmentChainBuilder : MonoBehaviour
 
     private void CalculateNextChain()
     {
-        if (chainIndex >= segmentChainSettings.Count)
-        {
-            if(segmentChainSettings.Count == 1)
-                chainIndex = 0;
-            else
-                chainIndex = UnityEngine.Random.Range(0, segmentChainSettings.Count);
-        }
-        else
-            chainIndex = 0;
+        chainIndex = UnityEngine.Random.Range(0, road.roadSettings.Count);
     }
 
     private void InitializeSinglePoolGenerator()
@@ -120,13 +109,13 @@ public class SegmentChainBuilder : MonoBehaviour
         switch (gameModeManager.gameMode)
         {
             case GameMode.Relaxed:
-                StartSegmentChain();
+                StartRandomChain();
                 break;
             case GameMode.TimeTrial:
-                StartSegmentChain();
+                StartRandomChain();
                 break;
             case GameMode.RandomSectors:
-                StartSegmentChain();
+                StartRandomChain();
                 break;
             case GameMode.FixedSectors:
                 StartFixedRoadChain(gameModeManager.fixedSectors);
@@ -144,9 +133,10 @@ public class SegmentChainBuilder : MonoBehaviour
         currentSegmentChain = next;
     }
 
+    //Menu interaction
     public Sector GenerateTimingSector()
     {
-        List<RoadSegment> segments_0 = CreateNextRandomSegmentChain(new EdgePoint(EdgeLocation.none, 3, startSegment), false);
+        List<RoadSegment> segments_0 = CreateNextRandomSegmentChain(new EdgePoint(EdgeLocation.none, 3, startSegment));
         SegmentChain chain = segments_0[0].transform.root.GetComponent<SegmentChain>();
         chain.organizedSegments = segments_0;
         return new Sector(chain);
@@ -157,7 +147,7 @@ public class SegmentChainBuilder : MonoBehaviour
         startSegment.transform.position = new Vector3(0, 0, -GetChainSettings(false).segmentChainSettings.gridSize / 2f);
     }
 
-    private void StartSegmentChain()
+    private void StartRandomChain()
     {
         InitializeSinglePoolGenerator();
 
@@ -231,7 +221,7 @@ public class SegmentChainBuilder : MonoBehaviour
         CreateMeshtaskDictionary();
 
         foreach (Sector s in sectors)
-            fixedSegmentChains.Enqueue(s.roadChain);
+            fixedSegmentChains.Enqueue(s.segmentChain);
         InstantiateAssetPools();
 
         EventTriggerManager.roadChainTrigger += (GameObject trigger) => {
@@ -269,8 +259,10 @@ public class SegmentChainBuilder : MonoBehaviour
     #region InstantiatePools
     private void InstantiateAssetPools()
     {
+        Debug.Log("Uhh");
         if(objectPooler != null)
             objectPooler.OnDestroy();
+
         objectPooler = new ObjectPooler();
         objectPooler.InstantiateAssetTriggersPool(road.assetSpawnPointPoolSize, road.assetSpawnPoint, true);
         objectPooler.InstantiateAirDecoration(road.skyDecoration);
@@ -281,9 +273,9 @@ public class SegmentChainBuilder : MonoBehaviour
 
     private void InstantiateMeshtaskPools()
     {
-            foreach (RoadSettings v in road.roadSettings)
-                foreach (MeshtaskObject mto in v.meshtaskObjects)
-                    objectPooler.InstantiateMeshtaskObjects(mto.meshtaskSettings);
+        foreach (RoadSettings v in road.roadSettings)
+            foreach (MeshtaskObject mto in v.meshtaskObjects)
+                objectPooler.InstantiateMeshtaskObjects(mto.meshtaskSettings);
     }
 
     private void InstantiateVegetationPool()
@@ -302,14 +294,14 @@ public class SegmentChainBuilder : MonoBehaviour
     #endregion
 
     int Rindex = 0;
-    private List<RoadSegment> CreateNextRandomSegmentChain(EdgePoint lastExitPoint, bool decoration = true)
+    private List<RoadSegment> CreateNextRandomSegmentChain(EdgePoint lastExitPoint)
     {
         //Instantiate
         SegmentChain newSegmentChain = InstantiateSegmentChain();
         GetChainSettings(true);
         currentSegmentChain = newSegmentChain;
 
-        if(Rindex > road.roadSettings.Count)
+        if(Rindex >= road.roadSettings.Count)
             Rindex = 0;
         newSegmentChain.ChainIndex = Rindex;
         Rindex++;
@@ -330,8 +322,9 @@ public class SegmentChainBuilder : MonoBehaviour
     {
         if (lastFixedRoadChain == null)
             return CreateFirstFixedSegmentChain();
-
+     
         SegmentChain nextChain = fixedSegmentChains.Dequeue();
+        chainIndex = nextChain.ChainIndex;
         nextChain.gameObject.SetActive(true);
         Transform lastSegmentTransform = lastFixedRoadChain.organizedSegments[lastFixedRoadChain.organizedSegments.Count - 1].transform;
 
@@ -373,6 +366,7 @@ public class SegmentChainBuilder : MonoBehaviour
     private SegmentChain CreateFirstFixedSegmentChain()
     {
         SegmentChain next = fixedSegmentChains.Dequeue();
+        chainIndex = next.ChainIndex;
         next.gameObject.SetActive(true);
         next.transform.rotation = Quaternion.identity;
         next.transform.position = Vector3.zero;
@@ -391,7 +385,6 @@ public class SegmentChainBuilder : MonoBehaviour
 
     private void InstigateSegment(int segmentIndex)
     {
-        Debug.Log(segmentIndex);
         RoadSegment currentSegment = currentSegmentChain.organizedSegments[segmentIndex];
 
         if(currentSegment == null) return;
@@ -418,7 +411,8 @@ public class SegmentChainBuilder : MonoBehaviour
 
     private void CreateSegmentMesh(RoadSegment segment)
     {
-        RoadSettings roadSettting = road.roadSettings[0];
+        Debug.Log(chainIndex);
+        RoadSettings roadSettting = road.roadSettings[chainIndex];
         currentSegmentChain.CreateSegmentMesh(roadSettting, segment);
 
         //Handle created Meshtasks
@@ -426,15 +420,6 @@ public class SegmentChainBuilder : MonoBehaviour
             ExecuteMeshtasks(meshtaskObject.meshtaskSettings, currentSegmentChain);
 
         meshtasks.Clear();
-    }
-
-    private void SpawnAllDecorationOnChain(List<RoadSegment> segments)
-    {
-        SpawnSegmentTrigger(currentSegmentChain, segments[3]);
-
-        SpawnStartDecoration(currentSegmentChain);
-        SpawnRandomDecoration(currentSegmentChain, segments[UnityEngine.Random.Range(1, segments.Count - 1)]);
-        SpawnSkyDecoration();
     }
 
     #region SPAWN DECORATION
@@ -475,13 +460,6 @@ public class SegmentChainBuilder : MonoBehaviour
             roadChain.ActivateDecor(segment,  deco);
         }
     }
-
-    private void SpawnRandomSceneryObjects(SegmentChain roadChain, RoadSegment segment, int segmentIndex)
-    {
-        RoadDecoration deco = road.sceneryObjects[UnityEngine.Random.Range(0, road.sceneryObjects.Count)];
-        roadChain.ActivateDecor(segment, deco);
-    }
-
     private void SpawnSkyDecoration()
     {
         SkyDecoration skyDecoration = road.skyDecoration;

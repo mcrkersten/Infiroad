@@ -20,10 +20,11 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Unity.Collections;
 
 // This is the parent container for all the road segments
 public class SegmentChain : MonoBehaviour {
-	[HideInInspector] public int ChainIndex = -1;
+	[ReadOnly] public int ChainIndex = 0;
     [HideInInspector] public int SegmentIndex = 0;
     public bool loop = false; // Whether or not the last segment should connect to the first
 	public List<RoadSegment> organizedSegments = new List<RoadSegment>();
@@ -166,15 +167,13 @@ public class SegmentChain : MonoBehaviour {
 				{
 					Vector3 point = Vector3.Lerp(spawnEdge.leftPoint, spawnEdge.rightPoint, (float)i / item.spawnPointsBetweenAmount);
 					AssetTrigger x = ObjectPooler.Instance.ActivateAssetTrigger(point, item.assetPointType);
-					x.scannedBy = new List<VegetationScannerTypeTag>();
-					x.gameObject.name = ChainIndex.ToString();
+					x.gameObject.name = road.roadTypeTag;
 				}
             }
             else
             {
 				AssetTrigger x = ObjectPooler.Instance.ActivateAssetTrigger(spawnEdge.leftPoint, item.assetPointType);
-				x.scannedBy = new List<VegetationScannerTypeTag>();
-				x.gameObject.name = ChainIndex.ToString();
+				x.gameObject.name = road.roadTypeTag;
 			}
 		}
 	}

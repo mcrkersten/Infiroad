@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EDITOR_offSetPosition: {x: -1.3107615, y: 0, z: -3.0022857}
   dataKey: 675
-  UV_scale: 1
   meshTaskType: 5
   meshtaskPosition: 0
   meshtaskStyle: 2
@@ -73,7 +72,7 @@ MonoBehaviour:
   meshResolution: 4
   meshtaskContinues: 1
   noiseChannel: 0
-  maxChamfer: 5
+  maxChamfer: 10
   extrusionSize: 10
   minimalCornerRadius: 0
   maximumCornerRadius: 0
@@ -81,8 +80,9 @@ MonoBehaviour:
   materials:
   - {fileID: 2100000, guid: c2117b301237a2e439571f3fe1fc6cc8, type: 2}
   variableMaterials:
-  - {fileID: 2100000, guid: c2117b301237a2e439571f3fe1fc6cc8, type: 2}
   - {fileID: 2100000, guid: 218b4a25336dd3c45b9856ce0adebce3, type: 2}
+  - {fileID: 2100000, guid: c2117b301237a2e439571f3fe1fc6cc8, type: 2}
   - {fileID: 2100000, guid: 8096f097ee1cdd0498d91d9b4b9a30cc, type: 2}
+  - {fileID: 2100000, guid: eba11ad13ff27f148965cfdc5f0e7351, type: 2}
   meshIsClosed: 0
   meshtaskPoolingObjects: []

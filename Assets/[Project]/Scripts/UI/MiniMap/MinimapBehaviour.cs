@@ -32,10 +32,10 @@ public class MinimapBehaviour : MonoBehaviour
         if(GameModeManager.Instance.fixedSectors.Count != 0) {
             foreach (Sector item in GameModeManager.Instance.fixedSectors)
             {
-                Destroy(item.roadChain.organizedSegments[0].transform.GetChild(0).gameObject);
-                Destroy(item.roadChain.organizedSegments[item.roadChain.organizedSegments.Count - 1].transform.GetChild(0).gameObject);
-                item.roadChain.line.material = material;
-                item.roadChain.line.widthCurve.keys[0].value = 5;
+                Destroy(item.segmentChain.organizedSegments[0].transform.GetChild(0).gameObject);
+                Destroy(item.segmentChain.organizedSegments[item.segmentChain.organizedSegments.Count - 1].transform.GetChild(0).gameObject);
+                item.segmentChain.line.material = material;
+                item.segmentChain.line.widthCurve.keys[0].value = 5;
             }
         }
     }

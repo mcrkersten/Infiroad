@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEditor;
+
 public class ObjectPooler
 {
     private Dictionary<int, Queue<GameObject>> skyDecorations = new Dictionary<int, Queue<GameObject>>();
@@ -18,7 +20,22 @@ public class ObjectPooler
     {
         Instance = this;
         CreateParentTransform();
+
+        #if UNITY_EDITOR
+        EditorApplication.playModeStateChanged += HandlePlayModeStateChanged;
+        #endif
     }
+
+    #if UNITY_EDITOR
+    private void HandlePlayModeStateChanged(PlayModeStateChange state)
+    {
+        if (state == PlayModeStateChange.ExitingPlayMode)
+        {
+            // Unity is exiting play mode, clean up instance and pools
+            OnDestroy();
+        }
+    }
+    #endif
     #endregion
 
     public void AddObjectDespawner(GameObject obj)
@@ -45,14 +62,13 @@ public class ObjectPooler
         }
     }
 
-    public void InstantiateAssetPool(List<AssetPool> pools, string roadType, bool timer)
+    public void InstantiateAssetPool(List<AssetPool> pools, string segmentTag, bool timer)
     {
         //Returns if pool for this road already has been made.
-        if (assetQueueDictionaries.ContainsKey(roadType))
+        if (assetQueueDictionaries.ContainsKey(segmentTag))
             return;
 
         //Generate local dictionary to put in dictionary of pool dictionaries
-        int poolIndex = 0;
         Dictionary<string, Queue<GameObject>> localDictionary = new Dictionary<string, Queue<GameObject>>();
         foreach (AssetPool pool in pools)
         {
@@ -76,10 +92,9 @@ public class ObjectPooler
                 if(timer) obj.AddComponent<ObjectDespawn>();
                 objectPool.Enqueue(obj);
             }
-            localDictionary.Add(poolIndex++.ToString(), objectPool);
+            localDictionary.Add(pool.tag.ToString(), objectPool);
         }
-
-        assetQueueDictionaries.Add("Zero", localDictionary);
+        assetQueueDictionaries.Add(segmentTag, localDictionary);
     }
     public void OnDestroy()
     {
@@ -178,28 +193,33 @@ public class ObjectPooler
     }
 
     /// <summary>
-    /// Get a asse t from the vegetation pool
+    /// Get aasset from the vegetation pool
     /// </summary>
-    /// <param name="assetType">tag of assetPool</param>
-    /// <param name="roadTag">tag of road</param>
+    /// <param name="assetTag">tag of assetPool</param>
+    /// <param name="segmentTag">tag of road</param>
     /// <param name="position">Position to activate at</param>
     /// <param name="rotation">Rotation to activate at</param>
     /// <returns></returns>
-    public void ActivateAssetFromAssetQueue(string assetType, string roadTag, Vector3 position, Quaternion rotation)
+    public void ActivateAssetFromAssetQueue(string assetTag, string segmentTag, Vector3 position, Quaternion rotation)
     {
-        if (!assetQueueDictionaries.ContainsKey(roadTag)) { return; }
-        if (!assetQueueDictionaries[roadTag].ContainsKey(assetType)) { return; }
+        if (!assetQueueDictionaries.ContainsKey(segmentTag)) {
+            Debug.LogError("POOL PANIC: +" + assetQueueDictionaries +  " !missing!");
+            return; }
+        if (!assetQueueDictionaries[segmentTag].ContainsKey(assetTag)) { 
+            Debug.LogError("POOL PANIC: " + assetTag +  " in " + segmentTag + " dictionary !missing!");
+            return; }
 
         //Get object from Dictionary
-        GameObject objectToSpawn = assetQueueDictionaries[roadTag][assetType].Dequeue();
+        GameObject objectToSpawn = assetQueueDictionaries[segmentTag][assetTag].Dequeue();
 
         if(objectToSpawn == null)
-            Debug.LogError("POOL PANIC: non excisting object was dequeued, roatTag:"+ roadTag + " assetType:" + assetType);
+            Debug.LogError("POOL PANIC: non excisting object was dequeued, roatTag:"+ segmentTag + " assetType:" + assetTag);
 
         //Activate and set position
         SetGameObjectPosition(objectToSpawn, position, rotation);
-        objectToSpawn.SetActive(true);
-        assetQueueDictionaries[roadTag][assetType].Enqueue(objectToSpawn);
+
+        //Reque object back into pool
+        assetQueueDictionaries[segmentTag][assetTag].Enqueue(objectToSpawn);
     }
 
     public void ActivateSkyDecoration(SkyDecor skyDecor, Vector3 position)
@@ -228,7 +248,6 @@ public class ObjectPooler
     }
     #endregion
 
-
     private void CreateParentTransform()
     {
         if (parent == null)
@@ -244,6 +263,7 @@ public class ObjectPooler
         gameObject.transform.localScale = Vector3.zero;
         gameObject.transform.position = position;
         gameObject.transform.rotation = rotation;
+        gameObject.SetActive(true);
         gameObject.transform.DOScale(currentScale, 1f).SetEase(DG.Tweening.Ease.InOutQuart);
     }
 }

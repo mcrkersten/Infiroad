@@ -66,7 +66,7 @@ public class FixedSectorLogic : MonoBehaviour
         if (connectedViewActive)
             ResetFromConnectedView();
         if (createdSector != null)
-            Destroy(createdSector.roadChain.gameObject);
+            Destroy(createdSector.segmentChain.gameObject);
 
         createdSector = roadChainBuilder.GenerateTimingSector();
         CreateSectorUI_Elements(createdSector);
@@ -79,7 +79,7 @@ public class FixedSectorLogic : MonoBehaviour
     {
         GameModeManager.Instance.fixedSectors = sectors;
         foreach (Sector sector in sectors)
-            DontDestroyOnLoad(sector.roadChain.gameObject);
+            DontDestroyOnLoad(sector.segmentChain.gameObject);
         MainMenuLogic.Instance.ActivateMenu(MenuType.InputSelection); 
     }
 
@@ -95,8 +95,8 @@ public class FixedSectorLogic : MonoBehaviour
     {
         //Create line renderer
         LineRenderer line = Instantiate(roadLinerenderPrefab).GetComponent<LineRenderer>();
-        sector.roadChain.line = line;
-        line.transform.parent = sector.roadChain.transform;
+        sector.segmentChain.line = line;
+        line.transform.parent = sector.segmentChain.transform;
         line.transform.localPosition = Vector3.zero;
         line.positionCount = resolution * sector.beziers.Count;
 
@@ -124,19 +124,19 @@ public class FixedSectorLogic : MonoBehaviour
     private void CreateEntryAndExitSprite(Sector sector)
     {
         //Create entry and exit sprites
-        GameObject entry = Instantiate(entryExitSpritePrefab, sector.roadChain.organizedSegments[0].transform);
+        GameObject entry = Instantiate(entryExitSpritePrefab, sector.segmentChain.organizedSegments[0].transform);
         entry.transform.localPosition = Vector3.zero;
         entry.transform.localRotation = Quaternion.identity;
 
-        GameObject exit = Instantiate(entryExitSpritePrefab, sector.roadChain.organizedSegments[sector.roadChain.organizedSegments.Count - 1].transform);
+        GameObject exit = Instantiate(entryExitSpritePrefab, sector.segmentChain.organizedSegments[sector.segmentChain.organizedSegments.Count - 1].transform);
         exit.transform.localPosition = Vector3.zero;
         exit.transform.localRotation = Quaternion.identity;
     }
 
     private void PositionCameraOnSector(Sector sector)
     {
-        Vector3 first = sector.roadChain.organizedSegments[0].transform.position;
-        Vector3 last = sector.roadChain.organizedSegments[sector.roadChain.organizedSegments.Count - 1].transform.position;
+        Vector3 first = sector.segmentChain.organizedSegments[0].transform.position;
+        Vector3 last = sector.segmentChain.organizedSegments[sector.segmentChain.organizedSegments.Count - 1].transform.position;
         Vector3 position = Vector3.zero;
         position = Vector3.Lerp(first, last, .5f);
         trackRenderCamera.transform.position = position + (Vector3.up * 50f);
@@ -148,12 +148,12 @@ public class FixedSectorLogic : MonoBehaviour
     {
         Vector3 average = Vector3.zero;
         for (int i = 0; i < sectors.Count; i++)
-            average += sectors[i].roadChain.organizedSegments[sectors[i].roadChain.organizedSegments.Count / 2].transform.position;
+            average += sectors[i].segmentChain.organizedSegments[sectors[i].segmentChain.organizedSegments.Count / 2].transform.position;
 
         average = average / sectors.Count;
 
-        Vector3 first = sectors[0].roadChain.organizedSegments[0].transform.position;
-        Vector3 last = sectors[sectors.Count - 1].roadChain.organizedSegments[sectors[sectors.Count - 1].roadChain.organizedSegments.Count - 1].transform.position;
+        Vector3 first = sectors[0].segmentChain.organizedSegments[0].transform.position;
+        Vector3 last = sectors[sectors.Count - 1].segmentChain.organizedSegments[sectors[sectors.Count - 1].segmentChain.organizedSegments.Count - 1].transform.position;
         trackRenderCamera.transform.position = average + (Vector3.up * 50f);
 
         trackRenderCamera.transform.rotation = Quaternion.LookRotation(first - last) * Quaternion.Euler(new Vector3(90, 0, 90));
@@ -167,16 +167,16 @@ public class FixedSectorLogic : MonoBehaviour
 
         UpdateUI_Elements((int)sector.sectorLenght);
         PositionCameraOnSector(sector);
-        sector.roadChain.gameObject.SetActive(true);
+        sector.segmentChain.gameObject.SetActive(true);
         if (createdSector != null)
-            createdSector.roadChain.gameObject.SetActive(false);
+            createdSector.segmentChain.gameObject.SetActive(false);
     }
 
     private void OnSectorDeselected()
     {
         if (createdSector != null)
         {
-            createdSector.roadChain.gameObject.SetActive(false);
+            createdSector.segmentChain.gameObject.SetActive(false);
             UpdateUI_Elements((int)createdSector.sectorLenght);
             PositionCameraOnSector(createdSector);
         }
@@ -189,7 +189,7 @@ public class FixedSectorLogic : MonoBehaviour
 
     private void DeleteSector(Sector sector)
     {
-        Destroy(sector.roadChain.gameObject);
+        Destroy(sector.segmentChain.gameObject);
         Destroy(sector.sectorUI_Element);
         sectors.Remove(sector);
 
@@ -206,23 +206,23 @@ public class FixedSectorLogic : MonoBehaviour
     private void ConnectView()
     {
         if (createdSector != null)
-            createdSector.roadChain.gameObject.SetActive(false);
+            createdSector.segmentChain.gameObject.SetActive(false);
 
         float totalLenght = 0;
         for (int i = 0; i < sectors.Count; i++)
         {
             totalLenght += sectors[i].sectorLenght;
-            Transform root = sectors[i].roadChain.organizedSegments[0].transform.root;
+            Transform root = sectors[i].segmentChain.organizedSegments[0].transform.root;
             root.gameObject.SetActive(true);
             if (i == 0)
                 continue;
 
-            root.rotation = sectors[i - 1].roadChain.organizedSegments[sectors[i - 1].roadChain.organizedSegments.Count - 1].transform.rotation;
+            root.rotation = sectors[i - 1].segmentChain.organizedSegments[sectors[i - 1].segmentChain.organizedSegments.Count - 1].transform.rotation;
 
             GameObject temp = new GameObject("Temp");
-            temp.transform.position = sectors[i].roadChain.organizedSegments[0].transform.position;
+            temp.transform.position = sectors[i].segmentChain.organizedSegments[0].transform.position;
             root.transform.parent = temp.transform;
-            temp.transform.position = sectors[i - 1].roadChain.organizedSegments[sectors[i - 1].roadChain.organizedSegments.Count - 1].transform.position;
+            temp.transform.position = sectors[i - 1].segmentChain.organizedSegments[sectors[i - 1].segmentChain.organizedSegments.Count - 1].transform.position;
             root.transform.parent = null;
             Destroy(temp);
         }
@@ -235,8 +235,8 @@ public class FixedSectorLogic : MonoBehaviour
     {
         for (int i = 0; i < sectors.Count; i++)
         {
-            if(sectors[i].roadChain == null) continue;
-            Transform root = sectors[i].roadChain.transform;
+            if(sectors[i].segmentChain == null) continue;
+            Transform root = sectors[i].segmentChain.transform;
             root.rotation = Quaternion.identity;
             root.position = Vector3.zero;
             root.gameObject.SetActive(false);

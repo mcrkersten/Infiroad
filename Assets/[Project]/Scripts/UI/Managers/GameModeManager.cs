@@ -31,7 +31,7 @@ public class GameModeManager : MonoBehaviour
     public void LoadMainMenuScene()
     {
         foreach (Sector sector in fixedSectors)
-            Destroy(sector.roadChain.gameObject);
+            Destroy(sector.segmentChain.gameObject);
         fixedSectors.Clear();
         SceneManager.LoadScene(0);
         SceneManager.UnloadSceneAsync(1);

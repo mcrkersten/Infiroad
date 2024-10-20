@@ -280,23 +280,13 @@ MonoBehaviour:
   - meshtaskSettings: {fileID: 11400000, guid: 5aeae0f2b2ff68b4da6c98720ecc1cb8, type: 2}
     position: {x: 27.40662, y: -4.818567, z: 0}
   guardRailMinimalCornerRadius: 0
-  roadTypeTag: FOREST-BASIC
+  roadTypeTag: BLUE
   assetPools:
-  - tag: 1
-    prefabs:
-    - {fileID: 6390541770965817990, guid: 247f93ccef389b1419bfebb563d98c1b, type: 3}
-    - {fileID: 6583596778410102861, guid: 6305f2862102f394d8fef1073fa4cc58, type: 3}
-    size: 100
   - tag: 1
     prefabs:
     - {fileID: 6390541770965817990, guid: a82150203579ab1498744dd5dd02e9ef, type: 3}
     - {fileID: 6583596778410102861, guid: 889984fe34cecc241a1115ef7b5aedfd, type: 3}
-    size: 100
-  - tag: 1
-    prefabs:
-    - {fileID: 6390541770965817990, guid: 08f10b65580269f4ca9cb43d1c4e518d, type: 3}
-    - {fileID: 6583596778410102861, guid: e4a1bf45e86e4204d936740234632e52, type: 3}
-    size: 100
+    size: 200
   rotationEasing: 3
   edgeLoopsPerMeter: 1
   debugRoadCurveStrenght: 0
@@ -383,7 +373,7 @@ MonoBehaviour:
     gridSize: 500
     straight_NpointsBetween: 4
     corner_NpointsBetween: 4
-    segmentXaxisVariation: 0
-    segmentHeightRange: 3
+    segmentXaxisVariation: 2
+    segmentHeightRange: 6
     isFixedBetweenRange: 0
     segmentDeletionProximity: 30

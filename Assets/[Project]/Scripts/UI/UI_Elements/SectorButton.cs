@@ -40,13 +40,13 @@ public class SectorButton : MonoBehaviour
 
     public void OnSelection()
     {
-        sector.roadChain.gameObject.SetActive(true);
+        sector.segmentChain.gameObject.SetActive(true);
         sectorSelected?.Invoke(sector);
     }
 
     public void OnDeselection()
     {
-        sector.roadChain.gameObject.SetActive(false);
+        sector.segmentChain.gameObject.SetActive(false);
         sectorDeselected?.Invoke();
     }
 

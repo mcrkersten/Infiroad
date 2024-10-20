@@ -261,10 +261,7 @@ MonoBehaviour:
     scalesWithCorner: 0
     extrudePoint: 0
     assetSpawnPoint: []
-  surfaceSettings:
-  - {fileID: 11400000, guid: e0e142aa438c6ab459f8e42e56c0a2d4, type: 2}
-  - {fileID: 11400000, guid: 1c0e656d9d11c2745a76ac8d9da21217, type: 2}
-  - {fileID: 11400000, guid: 6ebcd39843cd15440b5846a745d1f279, type: 2}
+  surfaceSettings: {fileID: 11400000, guid: 1c0e656d9d11c2745a76ac8d9da21217, type: 2}
   meshtaskObjects:
   - meshtaskSettings: {fileID: 11400000, guid: c6ac27b7a992e3447b438a99c9b17772, type: 2}
     position: {x: -6.786511, y: -0.03, z: 0}

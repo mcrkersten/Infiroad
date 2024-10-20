@@ -4,21 +4,31 @@ using UnityEngine;
 
 public class ObjectDespawn : MonoBehaviour
 {
-    private IEnumerator coroutine;
+    private Coroutine coroutine; // Store the running coroutine
 
     private void OnEnable()
     {
-        if(coroutine == null)
-            coroutine = DisableAfterTime(20f);
-        else
+        // Stop the coroutine if it's already running
+        if (coroutine != null)
             StopCoroutine(coroutine);
 
-        StartCoroutine(coroutine);
+        // Start a new coroutine
+        coroutine = StartCoroutine(DisableAfterTime(20f));
     }
 
     public IEnumerator DisableAfterTime(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
         this.gameObject.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        // Clean up the coroutine reference on disable
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
     }
 }

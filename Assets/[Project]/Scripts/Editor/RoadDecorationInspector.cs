@@ -9,12 +9,12 @@ public class RoadDecorationInspector : Editor
 {
 	void OnEnable()
 	{
-		SceneView.onSceneGUIDelegate += OnSceneGUI;
+		SceneView.duringSceneGui += OnSceneGUI;
 	}
 
 	void OnDisable()
 	{
-		SceneView.onSceneGUIDelegate -= OnSceneGUI;
+		SceneView.duringSceneGui -= OnSceneGUI;
 	}
 
 	void OnSceneGUI(SceneView sceneView)

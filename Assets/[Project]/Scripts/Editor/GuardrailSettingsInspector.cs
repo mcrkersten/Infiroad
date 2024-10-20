@@ -8,11 +8,11 @@ public class GuardrailSettingsInspector : MeshtaskSettingsInspector
 {
     void OnEnable()
     {
-        SceneView.onSceneGUIDelegate += OnSceneGUI;
+        SceneView.duringSceneGui += OnSceneGUI;
     }
     void OnDisable()
     {
-        SceneView.onSceneGUIDelegate -= OnSceneGUI;
+        SceneView.duringSceneGui -= OnSceneGUI;
     }
     void OnSceneGUI(SceneView sceneView)
     {
@@ -30,11 +30,11 @@ public class GrandstandSettingsInspector : MeshtaskSettingsInspector
 {
     void OnEnable()
     {
-        SceneView.onSceneGUIDelegate += OnSceneGUI;
+        SceneView.duringSceneGui += OnSceneGUI;
     }
     void OnDisable()
     {
-        SceneView.onSceneGUIDelegate -= OnSceneGUI;
+        SceneView.duringSceneGui -= OnSceneGUI;
     }
     void OnSceneGUI(SceneView sceneView)
     {

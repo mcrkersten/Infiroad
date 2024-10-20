@@ -2,20 +2,24 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Birch Leaves 1
   m_Shader: {fileID: -6465566751694194690, guid: 08da21b08dc17564597c64f86a94628a, type: 3}
-  m_ShaderKeywords: _ALPHATEST_ON
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -73,7 +77,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - Vector1_51ef1dbe13b94b4c8bb818ad56bef7c8: 0
     - Vector1_605C986C: 1
+    - Vector1_8eea2bc1961f4efda3882f6af1e45b4b: 0
     - Vector1_92EA648E: 0.35
     - Vector1_C4FCB9D7: 2
     - Vector1_D2D1F95B: 0.35
@@ -88,6 +94,8 @@ Material:
     - _Mode: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _ShakeBending: 0.04
     - _ShakeTime: 0.431
     - _ShakeWindspeed: 0.192
@@ -98,6 +106,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Color_3E4BE667: {r: 0.712381, g: 0.7830188, b: 0.21791556, a: 0}
+    - Color_70a4092b4e10430bb7d1f32d6c5d06c3: {r: 0, g: 0, b: 0, a: 0}
     - Color_99FDAD86: {r: 0.37735847, g: 0.32215726, b: 0.12281946, a: 0}
     - Vector2_37718045: {r: 1, g: 1, b: 0, a: 0}
     - Vector2_F3B9FE66: {r: 0.35, g: 0, b: 0, a: 0}
@@ -117,4 +126,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 5
+  version: 7

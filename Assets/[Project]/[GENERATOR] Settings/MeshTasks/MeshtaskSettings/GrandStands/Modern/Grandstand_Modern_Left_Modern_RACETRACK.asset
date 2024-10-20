@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Grandstand_Modern_Left_Modern_RACETRACK
   m_EditorClassIdentifier: 
   EDITOR_offSetPosition: {x: 0, y: 0, z: 0}
-  dataKey: 790791
-  UV_scale: 1
+  dataKey: 389783
   meshTaskType: 2
   meshtaskPosition: 0
   meshtaskStyle: 0
@@ -297,7 +296,7 @@ MonoBehaviour:
   meshResolution: 7
   meshtaskContinues: 0
   noiseChannel: 0
-  maxChamfer: 5
+  maxChamfer: 10
   extrusionSize: 10
   minimalCornerRadius: -1000
   maximumCornerRadius: -30
@@ -306,13 +305,14 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 78058c775a0521f4399085e1e9bc65ee, type: 2}
   - {fileID: 2100000, guid: 230a5fcede4c6a441b7fee40e1e8a21b, type: 2}
   variableMaterials:
-  - {fileID: 2100000, guid: 5d43259724dede643b66b5acd325f246, type: 2}
   - {fileID: 2100000, guid: 9ed8e9e1ed6d9354aa4fb9838e17df17, type: 2}
+  - {fileID: 2100000, guid: 5d43259724dede643b66b5acd325f246, type: 2}
   - {fileID: 2100000, guid: 7e34396a90028d5409b6829ec5282c95, type: 2}
+  - {fileID: 2100000, guid: f8f7091fa06b5474da76a63946b29531, type: 2}
   meshIsClosed: 0
   meshtaskPoolingObjects:
   - meshtaskPoolType: 2
-    unitsInPool: 30
+    unitsInPool: 45
     prefab: {fileID: 9143526215136622930, guid: 385568f399ec25a4a8388de14d664f34, type: 3}
     position: {x: 0, y: 0}
     curveTime: 0

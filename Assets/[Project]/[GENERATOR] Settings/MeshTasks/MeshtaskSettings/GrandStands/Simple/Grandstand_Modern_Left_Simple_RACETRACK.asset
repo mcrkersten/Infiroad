@@ -14,9 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EDITOR_offSetPosition: {x: 0, y: 0, z: 0}
   dataKey: 504696
-  calculatedUs: []
-  uvLenght: 72.42643
-  UV_scale: 1
   meshTaskType: 2
   meshtaskPosition: 0
   meshtaskStyle: 0
@@ -26,170 +23,194 @@ MonoBehaviour:
   points:
   - vertex:
       point: {x: 7, y: 2.1827873e-11}
-      horizontal_UV: 0
+      uvX: 0
     line: {x: 0, y: 1}
-    inversedLine: {x: 41, y: 0}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
   - vertex:
       point: {x: 9.011169, y: 2}
-      horizontal_UV: 2.8363361
+      uvX: 0
     line: {x: 2, y: 3}
-    inversedLine: {x: 40, y: 41}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 0
   - vertex:
       point: {x: 9, y: 4.971895}
-      horizontal_UV: 5.8082523
+      uvX: 0
     line: {x: 4, y: 5}
-    inversedLine: {x: 38, y: 39}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 0
   - vertex:
       point: {x: 5.388889, y: 7.888889}
-      horizontal_UV: 10.45034
+      uvX: 0
     line: {x: 6, y: 7}
-    inversedLine: {x: 36, y: 37}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 0
   - vertex:
       point: {x: 1.2777778, y: 7.888889}
-      horizontal_UV: 14.561451
+      uvX: 0
     line: {x: 8, y: 9}
-    inversedLine: {x: 34, y: 35}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 0
   - vertex:
       point: {x: 7.730705e-11, y: 9.166667}
-      horizontal_UV: 16.368502
+      uvX: 0
     line: {x: 10, y: 11}
-    inversedLine: {x: 32, y: 33}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 0
   - vertex:
       point: {x: 2.391971e-10, y: 12.7638855}
-      horizontal_UV: 19.965721
+      uvX: 0
     line: {x: 12, y: 13}
-    inversedLine: {x: 30, y: 31}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 0
   - vertex:
       point: {x: 1.5, y: 14.166667}
-      horizontal_UV: 22.01945
+      uvX: 0
     line: {x: 14, y: 15}
-    inversedLine: {x: 28, y: 29}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 0
   - vertex:
       point: {x: 4.5277824, y: 14.806426}
-      horizontal_UV: 25.114082
+      uvX: 0
     line: {x: 15, y: 16}
-    inversedLine: {x: 26, y: 27}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
   - vertex:
       point: {x: 8.763891, y: 14.807296}
-      horizontal_UV: 29.350191
+      uvX: 0
     line: {x: 16, y: 17}
-    inversedLine: {x: 24, y: 25}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
   - vertex:
       point: {x: 13.111364, y: 14.149825}
-      horizontal_UV: 33.747097
+      uvX: 0
     line: {x: 18, y: 19}
-    inversedLine: {x: 22, y: 23}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 0
   - vertex:
       point: {x: 13, y: 13.583333}
-      horizontal_UV: 34.324432
+      uvX: 0
     line: {x: 20, y: 21}
-    inversedLine: {x: 21, y: 22}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 0
   - vertex:
       point: {x: 8.763893, y: 14.223962}
-      horizontal_UV: 38.608707
+      uvX: 0
     line: {x: 21, y: 22}
-    inversedLine: {x: 20, y: 21}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
   - vertex:
       point: {x: 4.52778, y: 14.223093}
-      horizontal_UV: 42.844822
+      uvX: 0
     line: {x: 22, y: 23}
-    inversedLine: {x: 18, y: 19}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
   - vertex:
       point: {x: 2.0972223, y: 13.583333}
-      horizontal_UV: 45.358166
+      uvX: 0
     line: {x: 24, y: 25}
-    inversedLine: {x: 16, y: 17}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 0
   - vertex:
       point: {x: 2.0972223, y: 11.666667}
-      horizontal_UV: 47.274834
+      uvX: 0
     line: {x: 26, y: 27}
-    inversedLine: {x: 15, y: 16}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 0
   - vertex:
       point: {x: 5, y: 11.666667}
-      horizontal_UV: 50.177612
+      uvX: 0
     line: {x: 28, y: 29}
-    inversedLine: {x: 14, y: 15}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 0
   - vertex:
       point: {x: 12, y: 6}
-      horizontal_UV: 59.183784
+      uvX: 0
     line: {x: 30, y: 31}
-    inversedLine: {x: 12, y: 13}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 0
   - vertex:
       point: {x: 12, y: 7.5}
-      horizontal_UV: 60.683784
+      uvX: 0
     line: {x: 32, y: 33}
-    inversedLine: {x: 10, y: 11}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 0
   - vertex:
       point: {x: 15, y: 7.5}
-      horizontal_UV: 63.683784
+      uvX: 0
     line: {x: 34, y: 35}
-    inversedLine: {x: 8, y: 9}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 0
   - vertex:
       point: {x: 15, y: 6}
-      horizontal_UV: 65.183784
+      uvX: 0
     line: {x: 36, y: 37}
-    inversedLine: {x: 6, y: 7}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 0
   - vertex:
       point: {x: 14, y: 5}
-      horizontal_UV: 66.598
+      uvX: 0
     line: {x: 38, y: 39}
-    inversedLine: {x: 4, y: 5}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 0
   - vertex:
       point: {x: 14, y: 2}
-      horizontal_UV: 69.598
+      uvX: 0
     line: {x: 40, y: 41}
-    inversedLine: {x: 2, y: 3}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 0
   - vertex:
       point: {x: 12, y: 2.0281732e-10}
-      horizontal_UV: 72.42643
+      uvX: 0
     line: {x: 41, y: 0}
-    inversedLine: {x: 0, y: 1}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
   meshResolution: 7
@@ -203,9 +224,10 @@ MonoBehaviour:
   materials:
   - {fileID: 2100000, guid: 78058c775a0521f4399085e1e9bc65ee, type: 2}
   variableMaterials:
-  - {fileID: 2100000, guid: 5d43259724dede643b66b5acd325f246, type: 2}
   - {fileID: 2100000, guid: 9ed8e9e1ed6d9354aa4fb9838e17df17, type: 2}
+  - {fileID: 2100000, guid: 5d43259724dede643b66b5acd325f246, type: 2}
   - {fileID: 2100000, guid: 7e34396a90028d5409b6829ec5282c95, type: 2}
+  - {fileID: 2100000, guid: f8f7091fa06b5474da76a63946b29531, type: 2}
   meshIsClosed: 0
   meshtaskPoolingObjects:
   - meshtaskPoolType: 2
@@ -226,12 +248,3 @@ MonoBehaviour:
     position: {x: 0, y: 0}
     curveTime: 0
     noiseChannel: 0
-  small:
-    smokeAmount: 1
-    smokeSpawnPercentage: 25
-  medium:
-    smokeAmount: 2
-    smokeSpawnPercentage: 20
-  large:
-    smokeAmount: 3
-    smokeSpawnPercentage: 25

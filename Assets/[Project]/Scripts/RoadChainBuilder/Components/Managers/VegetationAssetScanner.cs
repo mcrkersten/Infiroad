@@ -11,12 +11,11 @@ public class VegetationAssetScanner : MonoBehaviour
     public int amountOfAssetsOnPoint;
     public float spawnRadius;
 
-    [HideInInspector] public bool multiPool;
     public VegetationScannerTypeTag scannerType;
 
     private ObjectPooler objectPooler;
 
-    private void Start()
+    private void Awake()
     {
         objectPooler = ObjectPooler.Instance;
         this.transform.DOScale(Vector3.one, 3f);
@@ -37,9 +36,7 @@ public class VegetationAssetScanner : MonoBehaviour
         //Search in pool for sub-pool with tag
         if (assetTag.scanableByScannerType.Contains(scannerType))
         {
-            if (multiPool)
-                ActivateSingleFromMultiPoolAssetPool(assetTag);
-            else if (singleAssetOnPoint)
+            if (singleAssetOnPoint)
                 ActivateSingleFromAssetPool(assetTag);
             else
                 ActivateGroupFromAssetPool(assetTag, Random.Range(0, amountOfAssetsOnPoint));
@@ -69,17 +66,6 @@ public class VegetationAssetScanner : MonoBehaviour
         {
             Vector3 position = aspt.transform.position;
             objectPooler.ActivateAssetFromAssetQueue(scannerType.ToString(), aspt.gameObject.name, position, Quaternion.Euler(0, Random.Range(0f, 360f), 0));
-        }
-    }
-
-    //Activate a single asset from the assetpool
-    private void ActivateSingleFromMultiPoolAssetPool(AssetTrigger aspt)
-    {
-        int i = Random.Range(0, 10);
-        if (i < spawnProbability)
-        {
-            Vector3 position = aspt.transform.position;
-            objectPooler.ActivateAssetFromAssetQueue(aspt.gameObject.name, "Zero", position, Quaternion.Euler(0, Random.Range(0f, 360f), 0));
         }
     }
 }

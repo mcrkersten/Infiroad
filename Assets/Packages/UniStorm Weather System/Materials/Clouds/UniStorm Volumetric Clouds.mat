@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: UniStorm Volumetric Clouds
   m_Shader: {fileID: 4800000, guid: ddbd4e4baca832d458d83c6a67016a80, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - MEDIUM
   - VOLUMETRIC
@@ -19,6 +21,7 @@ Material:
   m_CustomRenderQueue: 2450
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -91,7 +94,7 @@ Material:
     - _uCloudsBaseScale: 1.72
     - _uCloudsBottom: 600
     - _uCloudsBottomSoftness: 0.4
-    - _uCloudsCoverage: 0.475
+    - _uCloudsCoverage: 0.473
     - _uCloudsCoverageBias: 0.02
     - _uCloudsDensity: 1
     - _uCloudsDetailScale: 1000
