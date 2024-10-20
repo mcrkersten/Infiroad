@@ -36,7 +36,6 @@ public class ResetScreen : MonoBehaviour
 
     public void ActivateResetScreen(InputAction.CallbackContext obj)
     {
-        Debug.Log("WORK");
         blackImage.DOColor(new Color(0, 0, 0, 255), .5f).SetEase(DG.Tweening.Ease.InCubic).OnComplete(DeactivateResetScreen);
     }
 

@@ -270,7 +270,7 @@ public class SegmentChainBuilder : MonoBehaviour
     #region InstantiatePools
     private void InstantiateAssetPools()
     {
-        Debug.Log("Uhh");
+        //Debug.Log("Uhh");
         if(objectPooler != null)
             objectPooler.OnDestroy();
 
@@ -422,7 +422,7 @@ public class SegmentChainBuilder : MonoBehaviour
 
     private void CreateSegmentMesh(RoadSegment segment)
     {
-        Debug.Log(chainIndex);
+        //Debug.Log(chainIndex);
         RoadSettings roadSettting = road.roadSettings[chainIndex];
         currentSegmentChain.CreateSegmentMesh(roadSettting, segment);
 

@@ -57,7 +57,7 @@ public class SectorTimeManager : MonoBehaviour
                 }
                 currentSector = sectors.Dequeue();
                 currentSector.SelectSector();
-                Debug.Log(currentSector);
+                //Debug.Log(currentSector);
                 break;
         }
     }
