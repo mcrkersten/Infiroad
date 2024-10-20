@@ -19,4 +19,9 @@ public class ReturnButton : MonoBehaviour
     {
         returnPressed?.Invoke(index);
     }
+
+    public void OnDestroy()
+    {
+        button.onClick.RemoveAllListeners();
+    }
 }

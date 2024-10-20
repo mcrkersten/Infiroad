@@ -2624,7 +2624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
-  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatDelay: 0.2
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
@@ -7305,6 +7305,10 @@ PrefabInstance:
     - target: {fileID: 6738163014169812975, guid: ede97cf81c0a7d14fb4f0b080b5d8588, type: 3}
       propertyPath: antiDive
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392826541777377976, guid: ede97cf81c0a7d14fb4f0b080b5d8588, type: 3}
+      propertyPath: m_TimeSlicingMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7525335881053306165, guid: ede97cf81c0a7d14fb4f0b080b5d8588, type: 3}
       propertyPath: m_IsActive
@@ -15054,6 +15058,10 @@ PrefabInstance:
     - target: {fileID: 5644326289412650512, guid: f34dc3329ef619544b52e1fa60f88110, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5644326289412650513, guid: f34dc3329ef619544b52e1fa60f88110, type: 3}
+      propertyPath: m_Resolution
+      value: 1024
       objectReference: {fileID: 0}
     - target: {fileID: 5644326289412650513, guid: f34dc3329ef619544b52e1fa60f88110, type: 3}
       propertyPath: m_CullingMask.m_Bits

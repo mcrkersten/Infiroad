@@ -12,7 +12,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - HIGH
+  - MEDIUM
   - VOLUMETRIC
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -94,7 +94,7 @@ Material:
     - _uCloudsBaseScale: 1.72
     - _uCloudsBottom: 600
     - _uCloudsBottomSoftness: 0.4
-    - _uCloudsCoverage: 0.471
+    - _uCloudsCoverage: 0.451
     - _uCloudsCoverageBias: 0.02
     - _uCloudsDensity: 1
     - _uCloudsDetailScale: 1000
