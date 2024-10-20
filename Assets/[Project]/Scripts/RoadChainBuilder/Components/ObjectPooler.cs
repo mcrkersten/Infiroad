@@ -105,6 +105,7 @@ public class ObjectPooler
         meshtaskObjectQueueDictionary = null;
 
         GameObject.Destroy(parent);
+        Instance = null;
         parent = null;
     }
     /// Instantiate all decorations in dedicated pools

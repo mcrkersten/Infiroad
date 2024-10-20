@@ -61,6 +61,13 @@ public class SegmentChainBuilder : MonoBehaviour
         PositionStartSegment();
     }
 
+    private void OnDestroy()
+    {
+        instance = null;
+        EventTriggerManager.roadChainTrigger -= OnRoadTriggerEvent;
+        EventTriggerManager.segmentTrigger -= OnSegmentTriggerEvent;
+    }
+
     private void CreateLambda()
     {
         GetChainSettings = (randomize) =>
@@ -224,21 +231,25 @@ public class SegmentChainBuilder : MonoBehaviour
             fixedSegmentChains.Enqueue(s.segmentChain);
         InstantiateAssetPools();
 
-        EventTriggerManager.roadChainTrigger += (GameObject trigger) => {
-            currentSegmentChain.activatedPooledObjects.Remove(trigger);
-            currentSegmentChain.SegmentIndex = 0;
-            CreateNextFixedSector_Trigger();
-        };
+        EventTriggerManager.roadChainTrigger += OnRoadTriggerEvent;
         CreateNextFixedSector_Trigger();
 
-        EventTriggerManager.segmentTrigger += (GameObject trigger) => {
-            InstigateSegment(currentSegmentChain.SegmentIndex++);
-        };
+        EventTriggerManager.segmentTrigger += OnSegmentTriggerEvent;
         for (int i = 0; i < segmentsToGenerateOnStart; i++)
             InstigateSegment(currentSegmentChain.SegmentIndex++);
         //Build first sector
+    }
 
+    private void OnRoadTriggerEvent(GameObject trigger)
+    {
+        currentSegmentChain.activatedPooledObjects.Remove(trigger);
+        currentSegmentChain.SegmentIndex = 0;
+        CreateNextFixedSector_Trigger();
+    }
 
+    private void OnSegmentTriggerEvent(GameObject trigger)
+    {
+        InstigateSegment(currentSegmentChain.SegmentIndex++);
     }
 
     /// <summary>

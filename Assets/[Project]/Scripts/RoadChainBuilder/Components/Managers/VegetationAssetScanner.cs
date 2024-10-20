@@ -18,6 +18,10 @@ public class VegetationAssetScanner : MonoBehaviour
     private void Awake()
     {
         objectPooler = ObjectPooler.Instance;
+    }
+
+    private void Start()
+    {
         this.transform.DOScale(Vector3.one, 3f);
     }
 

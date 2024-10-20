@@ -152,6 +152,8 @@ public class SectorTimeManager : MonoBehaviour
     private void OnDestroy()
     {
         EventTriggerManager.timerTrigger -= UpdateTimer;
+        SectorTiming.sectorTimingUpdate -= OnScreenTiming;
+        GameManager.onStartGame -= StartTimer;
     }
 
     private void OnScreenTiming(float sectorInterval, float lap, SectorTiming.LapType laptype)
