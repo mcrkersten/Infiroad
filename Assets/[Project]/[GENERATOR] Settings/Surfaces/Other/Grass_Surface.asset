@@ -12,37 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ca3054f3958454899d9facee8e2a86, type: 3}
   m_Name: Grass_Surface
   m_EditorClassIdentifier: 
-  slip:
+  gripped:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2.4496849
-      outSlope: 2.4496849
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.07813086
-    - serializedVersion: 3
-      time: 0.81449586
-      value: 0.66350937
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1.5154114
-      value: 0.48206294
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  useSlip: 0
+  unGripped:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  SlipValue: 0
+  UnSlipValue: 0
   material: {fileID: 2100000, guid: baaa49d68808b0347a0c6359f5f3c845, type: 2}
+  UV_mirrored: 0
+  UImaterial: {r: 0.10617697, g: 1, b: 0, a: 1}

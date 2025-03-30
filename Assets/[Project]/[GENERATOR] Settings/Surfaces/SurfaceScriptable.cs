@@ -12,4 +12,5 @@ public class SurfaceScriptable : ScriptableObject
     public float UnSlipValue;
     public Material material;
     public bool UV_mirrored;
+    public Color UImaterial;
 }

@@ -39,9 +39,9 @@ MonoBehaviour:
   doorPrefab: {fileID: 919132149155446097, guid: 304db5523e5c892469ebc9daaab938e6, type: 3}
   doorHeight: 2
   doorPercentChance: 1
-  rows: 5
+  rows: 15
   columns: 5
   randomizeRows: 0
   randomizeColumns: 0
   cellUnitSize: 1
-  numberOfFloors: 50
+  numberOfFloors: 20

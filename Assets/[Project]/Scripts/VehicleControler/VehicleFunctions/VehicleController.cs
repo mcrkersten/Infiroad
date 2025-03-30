@@ -210,7 +210,7 @@ public class VehicleController : MonoBehaviour
     void Update()
     {
         LogitechGSDK.LogiUpdate();
-        Debug.DrawLine(centerOfMass.position, centerOfMass.transform.position + rb.velocity.normalized, Color.red);
+        Debug.DrawLine(centerOfMass.position, centerOfMass.transform.position + rb.linearVelocity.normalized, Color.red);
 
         if(userInputType == InputType.Gamepad)
             feedbackSystem.GamepadFeedbackLoop();
@@ -245,7 +245,7 @@ public class VehicleController : MonoBehaviour
         float wheelSlip  = 0f;
         float physicsWobble = ApplyForceToWheels(brakeInput, out wheelSlip);
 
-        float localForwardVelocity = transform.InverseTransformDirection(rb.velocity).z;
+        float localForwardVelocity = transform.InverseTransformDirection(rb.linearVelocity).z;
         engineForce = engine.Run(localForwardVelocity, accelerationInput, clutchInput, brakeInput, physicsWobble, wheelSlip);
 
         SetUserInterface(accelerationInput, brakeInput);
@@ -256,7 +256,7 @@ public class VehicleController : MonoBehaviour
         SetSteeringWheelModelRotation(-playerSteeringForce);
         SetSteeringFrontWheels();
 
-        radio.SetRadioQuality((Mathf.Clamp(rb.velocity.magnitude * 3f, 0f, 200f) / 200f) * 100f);
+        radio.SetRadioQuality((Mathf.Clamp(rb.linearVelocity.magnitude * 3f, 0f, 200f) / 200f) * 100f);
     }
 
     private void SetSteeringWheelModelRotation(float rotation)

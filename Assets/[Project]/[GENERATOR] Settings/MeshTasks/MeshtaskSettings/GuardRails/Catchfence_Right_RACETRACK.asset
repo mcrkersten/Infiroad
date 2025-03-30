@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EDITOR_offSetPosition: {x: 0, y: 0, z: 0}
   dataKey: 861763
-  UV_scale: 1
   meshTaskType: 1
   meshtaskPosition: 1
   meshtaskStyle: 2
@@ -62,10 +61,10 @@ MonoBehaviour:
     uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
-  meshResolution: 7
+  meshResolution: 5
   meshtaskContinues: 1
   noiseChannel: 0
-  maxChamfer: 5
+  maxChamfer: 10
   extrusionSize: 10
   minimalCornerRadius: 0
   maximumCornerRadius: 0

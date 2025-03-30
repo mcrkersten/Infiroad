@@ -16,21 +16,21 @@ MonoBehaviour:
   mainCurveTime: 0.5
   decor:
   - meshtaskPoolType: 0
-    unitsInPool: 0
+    unitsInPool: 5
     prefab: {fileID: 4854968495057723592, guid: 1a5ccd4094bd75f4fb0d2dcb4f82a12a, type: 3}
     position: {x: -7.88, y: 0}
     curveTime: -0.04
     noiseChannel: 0
   - meshtaskPoolType: 0
-    unitsInPool: 0
+    unitsInPool: 5
     prefab: {fileID: 6456369933486743038, guid: af0e460bda3c63d468755c6386a220db, type: 3}
     position: {x: -7.88, y: 0}
     curveTime: 0
     noiseChannel: 0
   - meshtaskPoolType: 0
-    unitsInPool: 0
+    unitsInPool: 5
     prefab: {fileID: 7423333018299760618, guid: 751000634f781e641bff3c66ccb80f1c, type: 3}
     position: {x: -7.88, y: 0}
     curveTime: 0.04
     noiseChannel: 0
-  poolIndex: 3
+  poolIndex: 4

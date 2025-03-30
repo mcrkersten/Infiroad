@@ -12,7 +12,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - MEDIUM
+  - HIGH
   - VOLUMETRIC
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -94,7 +94,7 @@ Material:
     - _uCloudsBaseScale: 1.72
     - _uCloudsBottom: 600
     - _uCloudsBottomSoftness: 0.4
-    - _uCloudsCoverage: 0.451
+    - _uCloudsCoverage: 0.466
     - _uCloudsCoverageBias: 0.02
     - _uCloudsDensity: 1
     - _uCloudsDetailScale: 1000
@@ -151,3 +151,4 @@ Material:
     - _uSunColor: {r: 0.59762347, g: 0.48826176, b: 0.4237041, a: 1}
     - _uSunDir: {r: -0.34202015, g: -0.39713135, b: -0.851651, a: 0}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1

@@ -73,9 +73,9 @@ public class MinimapBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 local = new Vector3(localStartPosition.x, Mathf.Lerp(minZoom, maxZoom, (rb.velocity.magnitude) / maxSpeed), localStartPosition.z);
+        Vector3 local = new Vector3(localStartPosition.x, Mathf.Lerp(minZoom, maxZoom, (rb.linearVelocity.magnitude) / maxSpeed), localStartPosition.z);
         minimapCamera.transform.localPosition = local;
-        minimapCamera.orthographicSize = Mathf.Lerp(minZoom, maxZoom, (rb.velocity.magnitude) / maxSpeed);
+        minimapCamera.orthographicSize = Mathf.Lerp(minZoom, maxZoom, (rb.linearVelocity.magnitude) / maxSpeed);
     }
 
     public void ScaleMinimap(InputAction.CallbackContext obj)

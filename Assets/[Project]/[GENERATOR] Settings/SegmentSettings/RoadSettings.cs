@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,9 @@ public class RoadSettings : ScriptableObject
     public VertexPoint[] points;
 	[SerializeField] private SurfaceScriptableSector surfaceSettings;
 	public int PointCount => points.Length;
+
+	[Header("UI Color")]
+	public Material UIMaterial;
 
 	[Header("Meshtasks")]
 	public List<MeshtaskObject> meshtaskObjects = new List<MeshtaskObject>();
@@ -180,13 +184,14 @@ public class SegmentChainSettings
     [Space]
     [Tooltip("Amount of points on the side of a RoadchainBlock")]
     public int sidePointAmount;
+	public int cornerBuffer;
     public int gridSize;//Unity UnitSize
 
     public int straight_NpointsBetween;
     public int corner_NpointsBetween;
 
     [Header("New segment settings")]
-    [Range(0f, 75f)]
+    [Range(0f, 300f)]
     public float segmentXaxisVariation;
 
     [Range(0f, 25f)]

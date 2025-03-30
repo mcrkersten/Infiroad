@@ -18,6 +18,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  useSlip: 0
   unGripped:
     serializedVersion: 2
     m_Curve: []
@@ -28,3 +29,4 @@ MonoBehaviour:
   UnSlipValue: 0
   material: {fileID: 2100000, guid: c583ac3c822c0024093c1874d326e459, type: 2}
   UV_mirrored: 0
+  UImaterial: {r: 1, g: 0.90058327, b: 0, a: 1}

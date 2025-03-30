@@ -101,3 +101,4 @@ Material:
     - _SkyTint: {r: 0.6886792, g: 0.6345687, b: 0.5165094, a: 1}
     - _SunColor: {r: 1, g: 0.7870808, b: 0.41037738, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da5b658009ba4d547a0020df58e6cc1d, type: 3}
+  m_Name: Forest-Basic
+  m_EditorClassIdentifier: 
+  layers:
+  - {fileID: 11400000, guid: 703cef44cc738ef479f351d37d7afea5, type: 2}
+  - {fileID: 11400000, guid: 6eacfa60d5cb2d441899a4f7894638dd, type: 2}
+  - {fileID: 11400000, guid: a1990b02ff0e4ab47a8bb34d41533b25, type: 2}
+  runoffMaterial: {fileID: 11400000, guid: 9913d07f23f03c844bdd446da8bff5b7, type: 2}

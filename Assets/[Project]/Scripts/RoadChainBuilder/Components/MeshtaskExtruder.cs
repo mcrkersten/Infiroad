@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Experimental.Rendering.RayTracingAccelerationStructure;
+using static UnityEngine.Rendering.RayTracingAccelerationStructure;
 
 public class MeshtaskExtruder
 {

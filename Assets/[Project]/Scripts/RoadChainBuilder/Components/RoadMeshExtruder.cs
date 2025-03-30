@@ -77,8 +77,9 @@ public class RoadMeshExtruder {
 			for (int i = 0; i < roadSettings.PointCount; i++) {
 				//Calculate corner extrusion
 				float offsetCurve = 0f;
+				bool isLeft = roadSettings.points[i].vertex_1.point.x < 0f;
 				if (roadSettings.points[i].scalesWithCorner)
-					offsetCurve = (roadSettings.points[i].vertex_1.point.x < 0f ? Mathf.Min(0f, roadChainBuilder.roadFormVariables.leftExtrusion) : Mathf.Max(0f, roadChainBuilder.roadFormVariables.rightExtrusion)) * roadSettings.extrusionSize;
+					offsetCurve = (isLeft ? Mathf.Min(0f, roadChainBuilder.roadFormVariables.leftExtrusion) : Mathf.Max(0f, roadChainBuilder.roadFormVariables.rightExtrusion)) * roadSettings.extrusionSize;
 
                 //Create noise coordinates for vertex
                 Vector2Int noiseCoordinate = new Vector2Int(i, roadChainBuilder.generatedRoadEdgeloops);
@@ -96,10 +97,14 @@ public class RoadMeshExtruder {
 					assetPointOpen = false;
 				}
 				//Asset points
+				bool extrusionBlock = ((!(offsetCurve < -.5f || offsetCurve > .5f)) && roadSettings.points[i].extrudePoint);
 				if (!assetPointOpen && roadSettings.points[i].assetSpawnPoint.Count > 0) {
-					openAssetPoint = segment.transform.TransformPoint(globalPoint);
-					assetPointOpen = true;
-					assetTypes = roadSettings.points[i].assetSpawnPoint;
+					if (!extrusionBlock)
+					{
+						openAssetPoint = segment.transform.TransformPoint(globalPoint);
+						assetPointOpen = true;
+						assetTypes = roadSettings.points[i].assetSpawnPoint;
+					}
 				}
 
 				// Prepare UV coordinates. This branches lots based on type

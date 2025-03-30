@@ -95,6 +95,7 @@ public class FixedSectorLogic : MonoBehaviour
     {
         //Create line renderer
         LineRenderer line = Instantiate(roadLinerenderPrefab).GetComponent<LineRenderer>();
+        line.material = roadChainBuilder.road.roadSettings[sector.segmentChain.ChainIndex].UIMaterial;
         sector.segmentChain.line = line;
         line.transform.parent = sector.segmentChain.transform;
         line.transform.localPosition = Vector3.zero;

@@ -4,12 +4,19 @@ using UnityEngine;
 using UnityEditor;
 using System;
 using System.Linq;
-
 [CustomEditor(typeof(RoadSettings))]
 public class RoadSettingsInspector : Editor
 {
+	private List<Color> colors = new List<Color>();
+
 	void OnEnable()
 	{
+		EditorUtility.SetDirty(target);
+		RoadSettings t = target as RoadSettings;
+		colors.Clear();
+		foreach (SurfaceScriptable surface in t.GetAllSurfaceSettings())
+			colors.Add(surface.UImaterial);
+
 		SceneView.duringSceneGui += OnSceneGUI;
 	}
 
@@ -83,7 +90,7 @@ public class RoadSettingsInspector : Editor
 		for (int i = 0; i < t.PointCount; i++)
 		{
 			//Draw 2D Shapes
-			for (int row = 0; row < 10; row++)
+			for (int row = 0; row < 10 * t.edgeLoopsPerMeter; row++)
 			{
 				float offsetCurve = 0f;
 				Vector3 point_0 = Vector3.zero;
@@ -93,25 +100,28 @@ public class RoadSettingsInspector : Editor
                 {
 					if (t.points[i].scalesWithCorner)
 						offsetCurve = CalculateRadiiOffSet(t.points[i].vertex_1.point, t.debugRoadCurveStrenght);
-					point_0 = new Vector3(t.points[i].vertex_1.point.x + offsetCurve, t.points[i].vertex_1.point.y, row * 3);
+					point_0 = new Vector3(t.points[i].vertex_1.point.x + offsetCurve, t.points[i].vertex_1.point.y, row * t.edgeLoopsPerMeter);
 					offsetCurve = 0f;
 					if (t.points[0].scalesWithCorner)
 						offsetCurve = CalculateRadiiOffSet(t.points[0].vertex_1.point, t.debugRoadCurveStrenght);
-					point_1 = new Vector3(t.points[0].vertex_1.point.x + offsetCurve, t.points[0].vertex_1.point.y, row * 3);
+					point_1 = new Vector3(t.points[0].vertex_1.point.x + offsetCurve, t.points[0].vertex_1.point.y, row * t.edgeLoopsPerMeter);
 				}
 
 				if (i < t.PointCount - 1)
 				{
 					if (t.points[i].scalesWithCorner)
 						offsetCurve = CalculateRadiiOffSet(t.points[i].vertex_1.point, t.debugRoadCurveStrenght);
-					point_0 = new Vector3(t.points[i].vertex_1.point.x + offsetCurve, t.points[i].vertex_1.point.y, row * 3);
+					point_0 = new Vector3(t.points[i].vertex_1.point.x + offsetCurve, t.points[i].vertex_1.point.y, row * t.edgeLoopsPerMeter);
 					offsetCurve = 0f;
 					if (t.points[i + 1].scalesWithCorner)
 						offsetCurve = CalculateRadiiOffSet(t.points[i + 1].vertex_1.point, t.debugRoadCurveStrenght);
-					point_1 = new Vector3(t.points[i + 1].vertex_1.point.x + offsetCurve, t.points[i + 1].vertex_1.point.y, row * 3);
-				}
+					point_1 = new Vector3(t.points[i + 1].vertex_1.point.x + offsetCurve, t.points[i + 1].vertex_1.point.y, row * t.edgeLoopsPerMeter);
+                }
 
-				if (t.points[i].assetSpawnPoint.Count > 0)
+				bool isLeft = t.points[i].vertex_1.point.x < 0f;
+				bool isOutsideRange = (t.debugRoadCurveStrenght < -1f && isLeft) || (t.debugRoadCurveStrenght > 1f && !isLeft);
+				bool extrusionBlock = t.points[i].extrudePoint && !isOutsideRange;
+				if (t.points[i].assetSpawnPoint.Count > 0 && !extrusionBlock)
 				{
 					Handles.color = Color.red;
 
@@ -134,6 +144,7 @@ public class RoadSettingsInspector : Editor
 					}
 				}
 
+				Handles.color = colors[t.points[i].materialIndex];
 				Handles.DrawLine(point_0, point_1, 1f);
 				Handles.color = Color.white;
 			}
@@ -155,9 +166,8 @@ public class RoadSettingsInspector : Editor
 					point_0 = new Vector3(t.points[i].vertex_1.point.x + offsetCurve, t.points[i].vertex_1.point.y, row * 3);
 					point_1 = new Vector3(t.points[i].vertex_1.point.x + offsetCurve, t.points[i].vertex_1.point.y, ((row + 1) * 3));
 				}
-
+				Handles.color = colors[t.points[i].materialIndex];
 				Handles.DrawDottedLine(point_0, point_1, 1f);
-				Handles.color = Color.white;
 			}
 
 			//t.roadSetting.points[i].vertex_1.point = position - t.transform.position;
@@ -248,4 +258,17 @@ public class RoadSettingsInspector : Editor
 			return Mathf.Min(0f, curveStrenght);
 		return 0f;
 	}
+
+	private Color GetAverageColor(Texture2D texture)
+    {
+        Color[] pixels = texture.GetPixels();
+        Color sum = Color.black;
+
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            sum += pixels[i];
+        }
+
+        return sum / pixels.Length;
+    }
 }

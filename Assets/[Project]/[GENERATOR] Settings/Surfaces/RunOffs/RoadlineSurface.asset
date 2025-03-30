@@ -92,3 +92,4 @@ MonoBehaviour:
   UnSlipValue: 1.4
   material: {fileID: 2100000, guid: eaee3dfef472c254dab862718d469c01, type: 2}
   UV_mirrored: 1
+  UImaterial: {r: 1, g: 0, b: 0.76034164, a: 1}

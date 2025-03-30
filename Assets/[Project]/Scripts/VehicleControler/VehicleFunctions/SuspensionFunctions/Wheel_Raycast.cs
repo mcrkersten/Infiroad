@@ -185,7 +185,7 @@ public class Wheel_Raycast : MonoBehaviour
         main.duration = smokeDuration / 3f;
 
         var LvelOverLt = ps.limitVelocityOverLifetime;
-        LvelOverLt.limit = rb.velocity.magnitude;
+        LvelOverLt.limit = rb.linearVelocity.magnitude;
         LvelOverLt.dampen = .2f;
         ps.Play();
         smokeDuration = 0f;
@@ -202,7 +202,7 @@ public class Wheel_Raycast : MonoBehaviour
         emission.rateOverDistance = (1f - slipPercentage) * 30f;
 
         var LvelOverLt = slipSmokeParticleSystem.limitVelocityOverLifetime;
-        LvelOverLt.limit = rb.velocity.magnitude;
+        LvelOverLt.limit = rb.linearVelocity.magnitude;
         LvelOverLt.dampen = .2f;
         slipSmokeParticleSystem.Play();
     }

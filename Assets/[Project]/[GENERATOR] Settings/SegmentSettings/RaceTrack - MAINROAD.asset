@@ -340,6 +340,7 @@ MonoBehaviour:
     extrudePoint: 0
     assetSpawnPoint: []
   surfaceSettings: {fileID: 0}
+  UIMaterial: {fileID: 0}
   meshtaskObjects: []
   guardRailMinimalCornerRadius: 0
   roadTypeTag: FOREST-BASIC
@@ -442,6 +443,7 @@ MonoBehaviour:
   hardEdges: 0
   segmentChainSettings:
     sidePointAmount: 0
+    cornerBuffer: 0
     gridSize: 0
     straight_NpointsBetween: 0
     corner_NpointsBetween: 0

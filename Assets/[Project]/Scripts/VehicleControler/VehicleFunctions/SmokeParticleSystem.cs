@@ -16,6 +16,6 @@ public class SmokeParticleSystem : MonoBehaviour
     {
         //Sets velocity of particles as vehicle velocity;
         var main = pSystem.main;
-        main.emitterVelocity = rb.velocity;
+        main.emitterVelocity = rb.linearVelocity;
     }
 }

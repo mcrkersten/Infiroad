@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78480d6fd9e273940bfa19342d1b589a, type: 3}
-  m_Name: ModernRaceTrack - GREEN
+  m_Name: ModernRaceTrack - PURPLE
   m_EditorClassIdentifier: 
   points:
   - vertex_1:
@@ -261,7 +261,8 @@ MonoBehaviour:
     scalesWithCorner: 0
     extrudePoint: 0
     assetSpawnPoint: []
-  surfaceSettings: {fileID: 11400000, guid: e0e142aa438c6ab459f8e42e56c0a2d4, type: 2}
+  surfaceSettings: {fileID: 11400000, guid: 7720e660b846ed44d960d2dc4814fc5e, type: 2}
+  UIMaterial: {fileID: 2100000, guid: f1742df367e862944a3d319a1b1f98c5, type: 2}
   meshtaskObjects:
   - meshtaskSettings: {fileID: 11400000, guid: c6ac27b7a992e3447b438a99c9b17772, type: 2}
     position: {x: -6.786511, y: -0.03, z: 0}
@@ -280,12 +281,12 @@ MonoBehaviour:
   - meshtaskSettings: {fileID: 11400000, guid: 5aeae0f2b2ff68b4da6c98720ecc1cb8, type: 2}
     position: {x: 27.40662, y: -4.818567, z: 0}
   guardRailMinimalCornerRadius: 0
-  roadTypeTag: GREEN
+  roadTypeTag: PURPLE
   assetPools:
   - tag: 1
     prefabs:
-    - {fileID: 6390541770965817990, guid: 247f93ccef389b1419bfebb563d98c1b, type: 3}
-    - {fileID: 6583596778410102861, guid: 6305f2862102f394d8fef1073fa4cc58, type: 3}
+    - {fileID: 6390541770965817990, guid: 99f97bfa5adea234db067b7d62c80b89, type: 3}
+    - {fileID: 6583596778410102861, guid: 2c9649ec75a3b42409017407bc873e78, type: 3}
     size: 200
   rotationEasing: 3
   edgeLoopsPerMeter: 1
@@ -369,11 +370,11 @@ MonoBehaviour:
   uSpan: 55.15396
   hardEdges: 17
   segmentChainSettings:
-    sidePointAmount: 10
-    gridSize: 500
-    straight_NpointsBetween: 4
-    corner_NpointsBetween: 4
-    segmentXaxisVariation: 2
-    segmentHeightRange: 6
+    sidePointAmount: 3
+    gridSize: 350
+    straight_NpointsBetween: 2
+    corner_NpointsBetween: 2
+    segmentXaxisVariation: 75
+    segmentHeightRange: 2
     isFixedBetweenRange: 0
     segmentDeletionProximity: 30

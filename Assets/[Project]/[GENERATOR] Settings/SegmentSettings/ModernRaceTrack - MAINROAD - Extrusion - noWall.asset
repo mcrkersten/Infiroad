@@ -262,6 +262,7 @@ MonoBehaviour:
     extrudePoint: 0
     assetSpawnPoint: []
   surfaceSettings: {fileID: 11400000, guid: 1c0e656d9d11c2745a76ac8d9da21217, type: 2}
+  UIMaterial: {fileID: 0}
   meshtaskObjects:
   - meshtaskSettings: {fileID: 11400000, guid: c6ac27b7a992e3447b438a99c9b17772, type: 2}
     position: {x: -6.786511, y: -0.03, z: 0}
@@ -380,6 +381,7 @@ MonoBehaviour:
   hardEdges: 17
   segmentChainSettings:
     sidePointAmount: 10
+    cornerBuffer: 0
     gridSize: 500
     straight_NpointsBetween: 4
     corner_NpointsBetween: 4

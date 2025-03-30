@@ -25,7 +25,7 @@ public class CameraBehaviour : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Vector3 velocity = cameraTransform.InverseTransformDirection(rb.velocity);
+        Vector3 velocity = cameraTransform.InverseTransformDirection(rb.linearVelocity);
         velocity[2] = 0f;
         velocity[0] = 0f;
         //cameraTransform.localPosition = Vector3.Lerp(cameraStartPosition, cameraStartPosition + velocity, .01f);
@@ -33,7 +33,7 @@ public class CameraBehaviour : MonoBehaviour
 
     private Vector3 CameraShake()
     {
-        speed = rb.velocity.magnitude * 3.6f;
+        speed = rb.linearVelocity.magnitude * 3.6f;
         speed = (speed * speed) / 1000000f;
         float m = (transform.root.GetComponent<VehicleController>().vehicleInputActions.SteeringWheel.Acceleration.ReadValue<float>() + 1f) / 2;
         float yaw = maxAngle.y * speed * Random.Range(0f, 1f) * m;

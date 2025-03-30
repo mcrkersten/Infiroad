@@ -57,7 +57,7 @@ namespace UniStorm.CharacterController
                     targetVelocity *= runSpeed;
 
                     // Apply a force that attempts to reach our target velocity
-                    velocity = rb.velocity;
+                    velocity = rb.linearVelocity;
                     velocityChange = (targetVelocity - velocity);
                     velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
                     velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
@@ -85,7 +85,7 @@ namespace UniStorm.CharacterController
                     targetVelocity *= walkSpeed;
 
                     // Apply a force that attempts to reach our target velocity
-                    velocity = rb.velocity;
+                    velocity = rb.linearVelocity;
                     velocityChange = (targetVelocity - velocity);
                     velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
                     velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
@@ -108,7 +108,7 @@ namespace UniStorm.CharacterController
                 // Jump
                 if (canJump && Input.GetButton("Jump"))
                 {
-                    rb.velocity = new Vector3(velocity.x, CalculateJumpVerticalwalkSpeed(), velocity.z);
+                    rb.linearVelocity = new Vector3(velocity.x, CalculateJumpVerticalwalkSpeed(), velocity.z);
                 }
             }
 

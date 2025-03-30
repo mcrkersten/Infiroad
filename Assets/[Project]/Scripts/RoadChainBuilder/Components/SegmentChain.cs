@@ -21,6 +21,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using Unity.Collections;
+using static UnityEngine.Rendering.RayTracingAccelerationStructure;
 
 // This is the parent container for all the road segments
 public class SegmentChain : MonoBehaviour {
@@ -36,9 +37,7 @@ public class SegmentChain : MonoBehaviour {
 
 	[HideInInspector] public List<GameObject> activatedPooledObjects = new List<GameObject>();
 	[HideInInspector] public Road road;
-
-	//For dev UI
-	[HideInInspector] public List<RoadSettings> devSettings = new List<RoadSettings>();
+	[HideInInspector] public RoadSettings roadSettings;
 
 	//public void InitializeAllSegments(RoadSettings settings, List<RoadSegment> roadSegments)
  //   {
@@ -68,7 +67,7 @@ public class SegmentChain : MonoBehaviour {
 
 	public void CreateSegmentMesh(RoadSettings settings, RoadSegment roadSegment)
     {
-		devSettings.Add(settings);
+		roadSettings = settings;
 		CreateMesh(settings, roadSegment);
 		ActivateVegetationAssetTriggersOnAssetSpawnEdge(settings, roadSegment);
 	}
@@ -80,6 +79,7 @@ public class SegmentChain : MonoBehaviour {
 
 	public OrientedPoint GetOrientedPointOnRoad(float percentage, int segmentIndex, Ease ease)
     {
+		Debug.Log(segmentIndex);
 		return organizedSegments[segmentIndex].bezier.GetOrientedPoint(percentage, .01f, ease);
 	}
 

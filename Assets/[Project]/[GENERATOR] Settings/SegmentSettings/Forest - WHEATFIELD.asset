@@ -257,9 +257,8 @@ MonoBehaviour:
     scalesWithCorner: 1
     extrudePoint: 0
     assetSpawnPoint: []
-  surfaceSettings:
-  - {fileID: 0}
-  - {fileID: 0}
+  surfaceSettings: {fileID: 0}
+  UIMaterial: {fileID: 0}
   meshtaskObjects: []
   guardRailMinimalCornerRadius: 0
   roadTypeTag: WHEATFIELD-BASIC
@@ -327,6 +326,7 @@ MonoBehaviour:
   hardEdges: 0
   segmentChainSettings:
     sidePointAmount: 0
+    cornerBuffer: 0
     gridSize: 0
     straight_NpointsBetween: 0
     corner_NpointsBetween: 0

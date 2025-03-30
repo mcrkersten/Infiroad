@@ -69,7 +69,7 @@ MonoBehaviour:
     uvLastDistance: 0
     isHardEdge: 1
     materialIndex: 1
-  meshResolution: 4
+  meshResolution: 7
   meshtaskContinues: 1
   noiseChannel: 0
   maxChamfer: 10

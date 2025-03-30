@@ -13,61 +13,67 @@ MonoBehaviour:
   m_Name: TecproBarrier_Left_RACETRACK
   m_EditorClassIdentifier: 
   EDITOR_offSetPosition: {x: 0, y: 0, z: -4.1137085}
-  dataKey: 977153
-  calculatedUs: []
-  uvLenght: 2.3447418
-  UV_scale: 1
+  dataKey: 611430
   meshTaskType: 3
   meshtaskPosition: 0
   meshtaskStyle: 1
+  PointsFile: {fileID: 0}
+  fileOffset: {x: 0, y: 0}
+  fileReverse: 0
   points:
   - vertex:
       point: {x: -0.3, y: 0}
-      horizontal_UV: 0
-    line: {x: 5, y: 0}
-    inversedLine: {x: 4, y: 5}
+      uvX: 0
+    line: {x: 0, y: 1}
+    uvDistance: 0
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
   - vertex:
       point: {x: -0.3, y: 0.85}
-      horizontal_UV: 0.85
-    line: {x: 0, y: 1}
-    inversedLine: {x: 3, y: 4}
+      uvX: 0
+    line: {x: 1, y: 2}
+    uvDistance: 0.085
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
   - vertex:
       point: {x: -0.25, y: 0.9}
-      horizontal_UV: 0.9207107
-    line: {x: 1, y: 2}
-    inversedLine: {x: 2, y: 3}
+      uvX: 0
+    line: {x: 2, y: 3}
+    uvDistance: 0.092071064
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
   - vertex:
       point: {x: 0.25, y: 0.9}
-      horizontal_UV: 1.4207107
-    line: {x: 2, y: 3}
-    inversedLine: {x: 1, y: 2}
+      uvX: 0
+    line: {x: 3, y: 4}
+    uvDistance: 0.14207107
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
   - vertex:
       point: {x: 0.3, y: 0.86}
-      horizontal_UV: 1.4847419
-    line: {x: 3, y: 4}
-    inversedLine: {x: 0, y: 1}
+      uvX: 0
+    line: {x: 4, y: 5}
+    uvDistance: 0.14847419
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
   - vertex:
       point: {x: 0.3, y: 0}
-      horizontal_UV: 2.3447418
-    line: {x: 4, y: 5}
-    inversedLine: {x: 5, y: 0}
+      uvX: 0
+    line: {x: 5, y: 0}
+    uvDistance: 0.23447418
+    uvLastDistance: 0
     isHardEdge: 0
     materialIndex: 0
-  meshResolution: 3
+  meshResolution: 2
   meshtaskContinues: 0
   noiseChannel: 0
-  maxChamfer: 5
-  extrusionSize: 15
+  maxChamfer: 10
+  extrusionSize: 10
   minimalCornerRadius: 0
   maximumCornerRadius: 0
   minimalExtrusionSize: 0.25
