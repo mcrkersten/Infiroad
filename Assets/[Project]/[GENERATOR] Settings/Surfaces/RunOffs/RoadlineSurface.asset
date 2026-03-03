@@ -45,7 +45,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  useSlip: 0
+  useSlip: 1
   unGripped:
     serializedVersion: 2
     m_Curve:

@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 public class Engine2
 {
     private int currentSelectedGear = 0;
+    public int CurrentSelectedGear => currentSelectedGear;
+    public bool IsReverseGear => currentSelectedGear == -1;
 
     public int maxRPM;
     public AnimationCurve engineTorqueProfile;
@@ -19,6 +21,7 @@ public class Engine2
 
     public float[] gearRatios;
     public float finalDriveRatio = 6.49f;
+    public float reverseGearRatio = 2.5f;
 
     public List<Wheel_Raycast> driveWheels = new List<Wheel_Raycast>();
     private float driveWheelRadiusInMeter;
@@ -41,7 +44,16 @@ public class Engine2
     public void InitializeEngine()
     {
         //General settings
-        driveWheelRadiusInMeter = driveWheels[0].wheelRadius;
+        if (driveWheels == null || driveWheels.Count == 0)
+        {
+            Debug.LogError("Engine2 has no drive wheels assigned. Falling back to default wheel radius.");
+            driveWheelRadiusInMeter = 0.33f;
+        }
+        else
+        {
+            driveWheelRadiusInMeter = Mathf.Max(0.01f, driveWheels[0].wheelRadius);
+        }
+
         rollingCircumference = driveWheelRadiusInMeter * 2f * Mathf.PI;
 
         //Audio
@@ -62,10 +74,12 @@ public class Engine2
 
         // Calculate mechanical force
         float mechanicalForce = CalculateMechanicalFriction(currentForwardVelocity, throttle, clutch);
-        mechanicalForce = 0;
-        // Calculate effective gear ratio and wheel RPM
+        // Calculate effective gear ratio and wheel RPM.
+        // Wheelspin should only increase effective wheel RPM, never suppress it.
         float effectiveGearRatio = GetCurrentGearRatio();
-        float wheelRPM = (currentForwardVelocity / (rollingCircumference / 60f)) * wheelSpin;
+        float baseWheelRPM = currentForwardVelocity / (rollingCircumference / 60f);
+        float wheelSpinMultiplier = Mathf.Max(1f, wheelSpin);
+        float wheelRPM = baseWheelRPM * wheelSpinMultiplier;
 
         // Calculate engine RPM and velocity
         float engineRPM = (wheelRPM * effectiveGearRatio) - (physicsWobble * physicsImpact);
@@ -103,7 +117,7 @@ public class Engine2
     private float GetCurrentGearRatio()
     {
         if (currentSelectedGear == -1)
-            return 0f; // neutral gear, output 0 gear ratio
+            return -reverseGearRatio * finalDriveRatio; // reverse gear
         else if (currentSelectedGear >= 0 && currentSelectedGear < gearRatios.Length)
             return gearRatios[currentSelectedGear] * finalDriveRatio;
         else
@@ -120,9 +134,10 @@ public class Engine2
 
     private float SemiAutomaticClutch(float clutch)
     {
+        float shiftDuration = Mathf.Max(0.0001f, ShiftTime);
         if (isShifting)
         {
-            Mathf.Clamp(clutch = shiftTime / ShiftTime, 0f, 1f);
+            clutch = Mathf.Clamp(shiftTime / shiftDuration, 0f, 1f);
             shiftTime -= Time.deltaTime / 2f;
             if (shiftTime < 0)
             {
@@ -135,7 +150,7 @@ public class Engine2
         {
             if (shiftTime < ShiftTime)
             {
-                Mathf.Clamp(clutch = shiftTime / ShiftTime, 0f, 1f);
+                clutch = Mathf.Clamp(shiftTime / shiftDuration, 0f, 1f);
                 shiftTime += Time.deltaTime / 2f;
             }
         }
@@ -145,7 +160,7 @@ public class Engine2
     float CalculateMechanicalFriction(float currentForwardSpeed, float throttle, float clutch)
     {
         if (currentSelectedGear == -1)
-            return 0f; // neutral gear, output 0 gear ratio
+            return 0f;
 
         float effectiveGearRatio = gearRatios[currentSelectedGear] * finalDriveRatio;
         float wheelRPM = currentForwardSpeed / (rollingCircumference / 60f);

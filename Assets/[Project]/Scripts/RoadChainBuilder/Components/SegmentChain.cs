@@ -69,7 +69,7 @@ public class SegmentChain : MonoBehaviour {
     {
 		roadSettings = settings;
 		CreateMesh(settings, roadSegment);
-		ActivateVegetationAssetTriggersOnAssetSpawnEdge(settings, roadSegment);
+		SpawnAssetTriggers(settings, roadSegment);
 	}
 
 	public void CreateMesh(RoadSettings roadSettings, RoadSegment segment)
@@ -79,7 +79,6 @@ public class SegmentChain : MonoBehaviour {
 
 	public OrientedPoint GetOrientedPointOnRoad(float percentage, int segmentIndex, Ease ease)
     {
-		Debug.Log(segmentIndex);
 		return organizedSegments[segmentIndex].bezier.GetOrientedPoint(percentage, .01f, ease);
 	}
 
@@ -149,7 +148,7 @@ public class SegmentChain : MonoBehaviour {
     }
 
     #region Initialize VegetationAssetTriggers
-    public void ActivateVegetationAssetTriggersOnAssetSpawnEdge(RoadSettings roadSettings, RoadSegment segment)
+    public void SpawnAssetTriggers(RoadSettings roadSettings, RoadSegment segment)
     {
         foreach (AssetSpawnEdge spawnEdge in segment.assetSpawnEdges)
         {
@@ -167,13 +166,15 @@ public class SegmentChain : MonoBehaviour {
 				{
 					Vector3 point = Vector3.Lerp(spawnEdge.leftPoint, spawnEdge.rightPoint, (float)i / item.spawnPointsBetweenAmount);
 					AssetTrigger x = ObjectPooler.Instance.ActivateAssetTrigger(point, item.assetPointType);
-					x.gameObject.name = road.roadTypeTag;
+					if (x != null)
+						x.gameObject.name = road.roadTypeTag;
 				}
             }
             else
             {
 				AssetTrigger x = ObjectPooler.Instance.ActivateAssetTrigger(spawnEdge.leftPoint, item.assetPointType);
-				x.gameObject.name = road.roadTypeTag;
+				if (x != null)
+					x.gameObject.name = road.roadTypeTag;
 			}
 		}
 	}

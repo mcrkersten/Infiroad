@@ -77,44 +77,57 @@ public class Suspension : MonoBehaviour
         return result;
     }
     bool slip;
-    public AnimationCurve slipCurve = new AnimationCurve(
-        new Keyframe(0, 0),
-        new Keyframe(0.2f, 0.1f),
-        new Keyframe(0.4f, 0.3f),
-        new Keyframe(0.6f, 0.5f),
-        new Keyframe(0.8f, 0.8f),
-        new Keyframe(1, 1)
-        );
+    [Header("Grip Tuning")]
+    [SerializeField, Range(0.1f, 2f)] private float lateralDemandScale = 0.45f;
+
     private Vector3 CalculateForces(float accelerationForce, float brakeForce, float downForce, out float wheelSpin)
     {
-        Vector2 sideways = new Vector2(-wheel.wheelVelocityLocalSpace.x * downForce, 0f);
+        float safeDownForce = Mathf.Max(Mathf.Abs(downForce), 0.001f);
+        Vector2 sideways = new Vector2(-wheel.wheelVelocityLocalSpace.x * downForce * lateralDemandScale, 0f);
         Vector2 forward = new Vector2(0f, accelerationForce + brakeForce);
         Vector2 rawForce = forward + sideways;
 
         //Normal force | No accelation or brake influence on sideforce
         float distance = Vector2.Distance(Vector2.zero, rawForce);
-        float time = Mathf.Clamp(distance / downForce, 0f, 25f);
-        time = float.IsNaN(time) ? 25f : time;
+        float forceDemandRatio = Mathf.Clamp(distance / safeDownForce, 0f, 25f);
+        forceDemandRatio = float.IsNaN(forceDemandRatio) ? 25f : forceDemandRatio;
 
-        float gripPercentage = 0F;
-        if(time > wheel.currentSurface.SlipValue && !slip)
-            slip = true;
-        if (time < wheel.currentSurface.UnSlipValue && slip)
+        bool useSurfaceSlipCurve = wheel.currentSurface != null && wheel.currentSurface.useSlip;
+        float gripPercentage;
+
+        if (useSurfaceSlipCurve)
+        {
+            if (forceDemandRatio > wheel.currentSurface.SlipValue && !slip)
+                slip = true;
+            if (forceDemandRatio < wheel.currentSurface.UnSlipValue && slip)
+                slip = false;
+
+            float surfaceGrip = slip
+                ? wheel.currentSurface.unGripped.Evaluate(Mathf.Abs(forceDemandRatio))
+                : wheel.currentSurface.gripped.Evaluate(Mathf.Abs(forceDemandRatio));
+            // Surface curves own grip behavior when enabled; avoid double-penalizing with fallback curve.
+            float minSurfaceGrip = slip ? 0.75f : 0.9f;
+            gripPercentage = Mathf.Clamp(Mathf.Clamp01(surfaceGrip), minSurfaceGrip, 1f);
+        }
+        else
+        {
             slip = false;
+            // When no surface slip curve is active, keep neutral grip scaling.
+            gripPercentage = 1f;
+        }
 
-        gripPercentage = slip ? wheel.currentSurface.unGripped.Evaluate(Mathf.Abs(time)) : wheel.currentSurface.gripped.Evaluate(Mathf.Abs(time));
-        gripPercentage = slipCurve.Evaluate(Mathf.Abs(time));
+        gripPercentage = Mathf.Clamp01(gripPercentage);
 
         float gripForce = downForce * gripPercentage;
         Vector3 clampedGripForce = ClampForce(rawForce, gripForce);
 
-        Vector2 slipForces = new Vector2(Mathf.Abs(brakeForce / downForce), Mathf.Abs(accelerationForce / downForce));
+        Vector2 slipForces = new Vector2(Mathf.Abs(brakeForce / safeDownForce), Mathf.Abs(accelerationForce / safeDownForce));
         Vector2 spinLockForce = wheel.RotateWheelModel(slipForces);
         wheelSpin = spinLockForce.y;
 
         wheel.grip_UI = Mathf.Max(.01f, gripPercentage);
-        wheel.gripTime_UI = time;
-        float horizontalForce = clampedGripForce.x / downForce;
+        wheel.gripTime_UI = forceDemandRatio;
+        float horizontalForce = clampedGripForce.x / safeDownForce;
         horizontalForce = float.IsNaN(horizontalForce) ? 0f : horizontalForce;
         wheel.steeringWheelForce = horizontalForce;
         return clampedGripForce;
@@ -122,7 +135,18 @@ public class Suspension : MonoBehaviour
 
     private Vector3 ClampForce(Vector2 rawForce, float absoluteClampValue)
     {
-        return new Vector3(Mathf.Clamp(rawForce.x, -absoluteClampValue, absoluteClampValue), 0f, Mathf.Clamp(rawForce.y, -absoluteClampValue, absoluteClampValue));
+        // Prioritize lateral stability, then spend remaining grip on longitudinal force.
+        // This reduces snap oversteer when throttle is applied at speed.
+        float maxMagnitude = Mathf.Max(0f, absoluteClampValue);
+        if (maxMagnitude <= 0.0001f)
+            return Vector3.zero;
+
+        float maxLateral = maxMagnitude * 0.9f;
+        float lateral = Mathf.Clamp(rawForce.x, -maxLateral, maxLateral);
+        float longitudinalBudget = Mathf.Sqrt(Mathf.Max(0f, (maxMagnitude * maxMagnitude) - (lateral * lateral)));
+        float longitudinal = Mathf.Clamp(rawForce.y, -longitudinalBudget, longitudinalBudget);
+
+        return new Vector3(lateral, 0f, longitudinal);
     }
 
     private Vector3 CalculateSuspensionForce(RaycastHit hit, out float suspensionCompresssion)

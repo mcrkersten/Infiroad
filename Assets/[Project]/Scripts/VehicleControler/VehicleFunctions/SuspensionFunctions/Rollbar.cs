@@ -20,9 +20,9 @@ public class Rollbar : MonoBehaviour
     {
         float antiRollForce = (leftSpring - rightSpring) * antiRoll;
         if (suspensionPosition == SuspensionPosition.FrontLeft || suspensionPosition == SuspensionPosition.RearLeft)
-            return -antiRollForce * antiRoll;
+            return -antiRollForce;
         if (suspensionPosition == SuspensionPosition.FrontRight || suspensionPosition == SuspensionPosition.RearRight)
-            return antiRollForce * antiRoll;
+            return antiRollForce;
         return 0f;
     }
 }

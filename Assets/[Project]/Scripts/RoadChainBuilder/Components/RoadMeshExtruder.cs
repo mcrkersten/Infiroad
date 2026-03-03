@@ -37,132 +37,20 @@ public class RoadMeshExtruder {
 		Mesh mesh, 
 		RoadSettings roadSettings, 
 		OrientedCubicBezier3D bezier, 
-		UVMode uvMode, 
-		Vector2 nrmCoordStartEnd, 
+		UVMode uvMode,
 		float edgeLoopsPerMeter, 
-		float tilingAspectRatio, 
-		int surfaceIndex) 
+		float tilingAspectRatio) 
 	{
 
 		ClearMesh(mesh);
 		roadChainBuilder = SegmentChainBuilder.instance;
 
-		// UVs/Texture fitting
-		LengthTable table = uvMode == UVMode.TiledDeltaCompensated ? new LengthTable(bezier, 12) : null;
-
+		LengthTable table = CreateLengthTable(uvMode, bezier);
 		float curveArcLength = bezier.GetArcLength(); // lenght of bezier
 		float tiling = CalculateTiling(roadSettings.uSpan, uvMode, tilingAspectRatio, curveArcLength);
 		int edgeLoopCount = CalculateEdgeloopCount(segment, edgeLoopsPerMeter, curveArcLength);
 
-		OrientedPoint op = new OrientedPoint();
-		for (int ring = 0; ring < edgeLoopCount; ring++) {
-
-			float time = ring / (edgeLoopCount - 1f);
-			op = bezier.GetOrientedPoint(time, roadSettings.rotationEasing);
-
-			//Calculate the radius of the corner.
-			CalculateRoadFormVariables(roadSettings,ring, time, bezier);
-			//Calculate corner chamfer based on radius of the corner
-			Quaternion chamferAngle = CalculateCornerChamfer(roadSettings);
-
-
-			CreateMeshTasksOnEdgeloop(roadSettings, ring, segment, op);
-
-
-			// Foreach vertex in the 2D shape
-			bool assetPointOpen = false;
-			Vector3 openAssetPoint = Vector3.positiveInfinity;
-			List<AssetSpawnPoint> assetTypes = new List<AssetSpawnPoint>();
-
-			for (int i = 0; i < roadSettings.PointCount; i++) {
-				//Calculate corner extrusion
-				float offsetCurve = 0f;
-				bool isLeft = roadSettings.points[i].vertex_1.point.x < 0f;
-				if (roadSettings.points[i].scalesWithCorner)
-					offsetCurve = (isLeft ? Mathf.Min(0f, roadChainBuilder.roadFormVariables.leftExtrusion) : Mathf.Max(0f, roadChainBuilder.roadFormVariables.rightExtrusion)) * roadSettings.extrusionSize;
-
-                //Create noise coordinates for vertex
-                Vector2Int noiseCoordinate = new Vector2Int(i, roadChainBuilder.generatedRoadEdgeloops);
-                Vector2 noise = GetCoordinateNoise(roadSettings.points[i].noiseChannel, roadSettings, noiseCoordinate);
-
-				//Create positional coordinates for vertex
-				Vector2 localPoint = new Vector2(roadSettings.points[i].vertex_1.point.x + offsetCurve, roadSettings.points[i].vertex_1.point.y);
-				Vector3 globalPoint = op.LocalToWorldPos(chamferAngle * (localPoint + noise));
-
-				if (assetPointOpen)
-				{
-					Vector3 closeGrassPoint = segment.transform.TransformPoint(globalPoint);
-					segment.assetSpawnEdges.Add(new AssetSpawnEdge(openAssetPoint, closeGrassPoint, assetTypes));
-					openAssetPoint = Vector3.positiveInfinity;
-					assetPointOpen = false;
-				}
-				//Asset points
-				bool extrusionBlock = ((!(offsetCurve < -.5f || offsetCurve > .5f)) && roadSettings.points[i].extrudePoint);
-				if (!assetPointOpen && roadSettings.points[i].assetSpawnPoint.Count > 0) {
-					if (!extrusionBlock)
-					{
-						openAssetPoint = segment.transform.TransformPoint(globalPoint);
-						assetPointOpen = true;
-						assetTypes = roadSettings.points[i].assetSpawnPoint;
-					}
-				}
-
-				// Prepare UV coordinates. This branches lots based on type
-				Vector2 currentUV_MinMax = roadSettings.calculatedUs[roadSettings.points[i].materialIndex];
-				Vector2 localUVPoint = roadSettings.points[i].vertex_1.point;
-
-				float tUv = uvMode == UVMode.TiledDeltaCompensated ? table.TToPercentage(time) : time;
-				float y_UV = tUv * tiling;
-				float x_UV = 0;
-				List<SurfaceScriptable> sf = roadSettings.GetAllSurfaceSettings();
-				bool isMirrored = sf[roadSettings.points[i].materialIndex].UV_mirrored;
-
-				{//Place vertices
-					float vpY = roadSettings.points[i].vertex_1.point.y;
-					float uvPoint = isMirrored ? Mathf.Abs(localUVPoint.x + vpY) : localUVPoint.x - vpY;
-					//closing edge of UV extrusion
-					if (i != 0 && roadSettings.points[i - 1].extrudePoint)
-					{
-						x_UV = 0f;
-						uvs.Add(new Vector2(x_UV, y_UV));
-						verts.Add(globalPoint);
-					}
-					//If different material
-					else if (i != 0 && roadSettings.points[i].materialIndex != roadSettings.points[i - 1].materialIndex && !roadSettings.points[i].extrudePoint)
-					{
-						Vector2 prev_currentUV_MinMax = roadSettings.calculatedUs[roadSettings.points[i - 1].materialIndex];
-						bool prev_isMirrored = sf[roadSettings.points[i - 1].materialIndex].UV_mirrored;
-						float prev_uvPoint = prev_isMirrored ? Mathf.Abs(localUVPoint.x + vpY) : localUVPoint.x + vpY;
-						x_UV = Mathf.InverseLerp(prev_currentUV_MinMax.x, prev_currentUV_MinMax.y, prev_uvPoint);
-						uvs.Add(new Vector2(x_UV, y_UV));
-						verts.Add(globalPoint);
-					}
-					else if (roadSettings.points[i].ishardEdge)
-					{
-						x_UV = Mathf.InverseLerp(currentUV_MinMax.x, currentUV_MinMax.y, uvPoint);
-						uvs.Add(new Vector2(x_UV, y_UV));
-						verts.Add(globalPoint);
-					}
-
-					//MAIN MESH VERTEX
-					x_UV = Mathf.InverseLerp(currentUV_MinMax.x, currentUV_MinMax.y, uvPoint);
-					uvs.Add(new Vector2(x_UV, y_UV));
-					verts.Add(globalPoint);
-
-					//Opening edge of UV extrusion
-					if (roadSettings.points[i].extrudePoint)
-					{
-						float curve = roadSettings.points[i].vertex_1.point.x < 0f ? Mathf.Min(0f, roadChainBuilder.roadFormVariables.leftExtrusion) : Mathf.Max(0f, roadChainBuilder.roadFormVariables.rightExtrusion);
-						x_UV = Mathf.Abs(curve) /10f;
-						uvs.Add(new Vector2(Mathf.Abs(x_UV), y_UV));
-						verts.Add(globalPoint);
-					}
-				}
-			}
-
-			if (ring != edgeLoopCount - 1)
-				roadChainBuilder.generatedRoadEdgeloops++;
-		}
+		OrientedPoint op = BuildRoadRings(segment, roadSettings, bezier, uvMode, table, tiling, edgeLoopCount);
 
 		CloseMeshtasks(roadSettings, op, segment);
 
@@ -186,9 +74,179 @@ public class RoadMeshExtruder {
 		//Debug.Log(surfaceIndex);
 
 		List<Material> mat = new List<Material>();
-        foreach (SurfaceScriptable item in m)
+	        foreach (SurfaceScriptable item in m)
 			mat.Add(item.material);
 		segment.GetComponent<MeshRenderer>().materials = mat.ToArray();
+	}
+
+	private LengthTable CreateLengthTable(UVMode uvMode, OrientedCubicBezier3D bezier)
+	{
+		return uvMode == UVMode.TiledDeltaCompensated ? new LengthTable(bezier, 12) : null;
+	}
+
+	private class RingAssetState
+	{
+		public bool AssetPointOpen = false;
+		public Vector3 OpenAssetPoint = Vector3.positiveInfinity;
+		public List<AssetSpawnPoint> AssetTypes = new List<AssetSpawnPoint>();
+	}
+
+	private OrientedPoint BuildRoadRings(
+		RoadSegment segment,
+		RoadSettings roadSettings,
+		OrientedCubicBezier3D bezier,
+		UVMode uvMode,
+		LengthTable table,
+		float tiling,
+		int edgeLoopCount)
+	{
+		OrientedPoint op = new OrientedPoint();
+		for (int ring = 0; ring < edgeLoopCount; ring++)
+		{
+			float time = ring / (edgeLoopCount - 1f);
+			op = bezier.GetOrientedPoint(time, roadSettings.rotationEasing);
+
+			CalculateRoadFormVariables(roadSettings, ring, time, bezier);
+			Quaternion chamferAngle = CalculateCornerChamfer(roadSettings);
+
+			CreateMeshTasksOnEdgeloop(roadSettings, ring, segment, op);
+			ProcessRingVertices(segment, roadSettings, uvMode, table, tiling, ring, time, op, chamferAngle);
+
+			if (ring != edgeLoopCount - 1)
+				roadChainBuilder.generatedRoadEdgeloops++;
+		}
+
+		return op;
+	}
+
+	private void ProcessRingVertices(
+		RoadSegment segment,
+		RoadSettings roadSettings,
+		UVMode uvMode,
+		LengthTable table,
+		float tiling,
+		int ring,
+		float time,
+		OrientedPoint op,
+		Quaternion chamferAngle)
+	{
+		List<SurfaceScriptable> surfaces = roadSettings.GetAllSurfaceSettings();
+		RingAssetState assetState = new RingAssetState();
+		int assetTriggerResolution = Mathf.Max(1, segment.roadSetting.assetTriggerResolution);
+		bool spawnAssetTriggers = ring % assetTriggerResolution == 0;
+
+		for (int i = 0; i < roadSettings.PointCount; i++)
+		{
+			float offsetCurve = GetOffsetCurve(roadSettings, i);
+			Vector2 noise = GetNoiseForPoint(roadSettings, i);
+			Vector2 localPoint = new Vector2(roadSettings.points[i].vertex_1.point.x + offsetCurve, roadSettings.points[i].vertex_1.point.y);
+			Vector3 globalPoint = op.LocalToWorldPos(chamferAngle * (localPoint + noise));
+
+			if (spawnAssetTriggers)
+				ProcessAssetSpawnEdge(segment, roadSettings, i, globalPoint, offsetCurve, assetState);
+
+			EmitRingVertex(roadSettings, surfaces, uvMode, table, tiling, i, time, globalPoint);
+		}
+	}
+
+	private float GetOffsetCurve(RoadSettings roadSettings, int pointIndex)
+	{
+		float offsetCurve = 0f;
+		bool isLeft = roadSettings.points[pointIndex].vertex_1.point.x < 0f;
+		if (roadSettings.points[pointIndex].scalesWithCorner)
+			offsetCurve = (isLeft ? Mathf.Min(0f, roadChainBuilder.roadFormVariables.leftExtrusion) : Mathf.Max(0f, roadChainBuilder.roadFormVariables.rightExtrusion)) * roadSettings.extrusionSize;
+
+		return offsetCurve;
+	}
+
+	private Vector2 GetNoiseForPoint(RoadSettings roadSettings, int pointIndex)
+	{
+		Vector2Int noiseCoordinate = new Vector2Int(pointIndex, roadChainBuilder.generatedRoadEdgeloops);
+		return GetCoordinateNoise(roadSettings.points[pointIndex].noiseChannel, roadSettings, noiseCoordinate);
+	}
+
+	private void ProcessAssetSpawnEdge(
+		RoadSegment segment,
+		RoadSettings roadSettings,
+		int pointIndex,
+		Vector3 globalPoint,
+		float offsetCurve,
+		RingAssetState assetState)
+	{
+		if (assetState.AssetPointOpen)
+		{
+			Vector3 closeGrassPoint = segment.transform.TransformPoint(globalPoint);
+			segment.assetSpawnEdges.Add(new AssetSpawnEdge(assetState.OpenAssetPoint, closeGrassPoint, assetState.AssetTypes));
+			assetState.OpenAssetPoint = Vector3.positiveInfinity;
+			assetState.AssetPointOpen = false;
+		}
+
+		bool extrusionBlock = ((!(offsetCurve < -.5f || offsetCurve > .5f)) && roadSettings.points[pointIndex].extrudePoint);
+		if (!assetState.AssetPointOpen && roadSettings.points[pointIndex].assetSpawnPoint.Count > 0)
+		{
+			if (!extrusionBlock)
+			{
+				assetState.OpenAssetPoint = segment.transform.TransformPoint(globalPoint);
+				assetState.AssetPointOpen = true;
+				assetState.AssetTypes = roadSettings.points[pointIndex].assetSpawnPoint;
+			}
+		}
+	}
+
+	private void EmitRingVertex(
+		RoadSettings roadSettings,
+		List<SurfaceScriptable> surfaces,
+		UVMode uvMode,
+		LengthTable table,
+		float tiling,
+		int pointIndex,
+		float time,
+		Vector3 globalPoint)
+	{
+		Vector2 currentUV_MinMax = roadSettings.calculatedUs[roadSettings.points[pointIndex].materialIndex];
+		Vector2 localUVPoint = roadSettings.points[pointIndex].vertex_1.point;
+
+		float tUv = uvMode == UVMode.TiledDeltaCompensated ? table.TToPercentage(time) : time;
+		float y_UV = tUv * tiling;
+		float x_UV = 0f;
+		bool isMirrored = surfaces[roadSettings.points[pointIndex].materialIndex].UV_mirrored;
+
+		float vpY = roadSettings.points[pointIndex].vertex_1.point.y;
+		float uvPoint = isMirrored ? Mathf.Abs(localUVPoint.x + vpY) : localUVPoint.x - vpY;
+
+		if (pointIndex != 0 && roadSettings.points[pointIndex - 1].extrudePoint)
+		{
+			x_UV = 0f;
+			uvs.Add(new Vector2(x_UV, y_UV));
+			verts.Add(globalPoint);
+		}
+		else if (pointIndex != 0 && roadSettings.points[pointIndex].materialIndex != roadSettings.points[pointIndex - 1].materialIndex && !roadSettings.points[pointIndex].extrudePoint)
+		{
+			Vector2 prev_currentUV_MinMax = roadSettings.calculatedUs[roadSettings.points[pointIndex - 1].materialIndex];
+			bool prev_isMirrored = surfaces[roadSettings.points[pointIndex - 1].materialIndex].UV_mirrored;
+			float prev_uvPoint = prev_isMirrored ? Mathf.Abs(localUVPoint.x + vpY) : localUVPoint.x + vpY;
+			x_UV = Mathf.InverseLerp(prev_currentUV_MinMax.x, prev_currentUV_MinMax.y, prev_uvPoint);
+			uvs.Add(new Vector2(x_UV, y_UV));
+			verts.Add(globalPoint);
+		}
+		else if (roadSettings.points[pointIndex].ishardEdge)
+		{
+			x_UV = Mathf.InverseLerp(currentUV_MinMax.x, currentUV_MinMax.y, uvPoint);
+			uvs.Add(new Vector2(x_UV, y_UV));
+			verts.Add(globalPoint);
+		}
+
+		x_UV = Mathf.InverseLerp(currentUV_MinMax.x, currentUV_MinMax.y, uvPoint);
+		uvs.Add(new Vector2(x_UV, y_UV));
+		verts.Add(globalPoint);
+
+		if (roadSettings.points[pointIndex].extrudePoint)
+		{
+			float curve = roadSettings.points[pointIndex].vertex_1.point.x < 0f ? Mathf.Min(0f, roadChainBuilder.roadFormVariables.leftExtrusion) : Mathf.Max(0f, roadChainBuilder.roadFormVariables.rightExtrusion);
+			x_UV = Mathf.Abs(curve) / 10f;
+			uvs.Add(new Vector2(Mathf.Abs(x_UV), y_UV));
+			verts.Add(globalPoint);
+		}
 	}
 
 	#region Mesh-shape calculations

@@ -123,22 +123,24 @@ public class RoadSettingsInspector : Editor
 				bool extrusionBlock = t.points[i].extrudePoint && !isOutsideRange;
 				if (t.points[i].assetSpawnPoint.Count > 0 && !extrusionBlock)
 				{
-					Handles.color = Color.red;
-
-					foreach (AssetSpawnPoint item in t.points[i].assetSpawnPoint)
+					int length = t.points[i].assetSpawnPoint.Count;
+					for (int assetPoint = 0; assetPoint < length; assetPoint++)
 					{
-                        if (item.spawnBetweenPoints)
+						AssetPool pool = t.assetPools.Where(x => x.tag == t.points[i].assetSpawnPoint[assetPoint].assetPointType[0]).First();
+						Handles.color = pool.color;
+						AssetSpawnPoint aPoint = t.points[i].assetSpawnPoint[assetPoint];
+                        if (aPoint.spawnBetweenPoints)
                         {
-							for (float z = .5f; z <= item.spawnPointsBetweenAmount; z++)
+							for (float z = .5f; z <= aPoint.spawnPointsBetweenAmount; z++)
 							{
-								Vector3 point = Vector3.Lerp(point_0, point_1, (float)z / item.spawnPointsBetweenAmount);
-								Handles.DrawWireDisc(point, Vector3.up, item.spawnRadius);
+								Vector3 point = Vector3.Lerp(point_0, point_1, (float)z / aPoint.spawnPointsBetweenAmount);
+								Handles.DrawWireDisc(point, Vector3.up, aPoint.spawnRadius);
 							}
                         }
                         else
                         {
 							Vector3 point = point_0;
-							Handles.DrawWireDisc(point, Vector3.up, item.spawnRadius);
+							Handles.DrawWireDisc(point, Vector3.up, aPoint.spawnRadius);
 							Handles.color = Color.white;
 						}
 					}

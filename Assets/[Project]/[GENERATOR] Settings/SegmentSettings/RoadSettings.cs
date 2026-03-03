@@ -21,6 +21,7 @@ public class RoadSettings : ScriptableObject
 
 	[Space]
 	public string roadTypeTag;
+	public int assetTriggerResolution;
 	public List<AssetPool> assetPools = new List<AssetPool>();
 
 	public Ease rotationEasing = Ease.InOut;
@@ -44,7 +45,7 @@ public class RoadSettings : ScriptableObject
 
 	public SegmentChainSettings segmentChainSettings;
 
-	public void InitializeRoadSettings()
+    public void InitializeRoadSettings()
     {
 		CalculateUs();
 		hardEdges = CalculateLine();

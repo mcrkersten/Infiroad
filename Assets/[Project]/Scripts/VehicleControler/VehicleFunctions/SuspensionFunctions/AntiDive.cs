@@ -18,11 +18,11 @@ public class AntiDive : MonoBehaviour
 
     public float CalculateAntiDiveForce(SuspensionPosition suspensionPosition)
     {
-        float antiRollForce = (frontSpring - rearSpring) * antiDive;
+        float antiDiveForce = (frontSpring - rearSpring) * antiDive;
         if (suspensionPosition == SuspensionPosition.FrontLeft || suspensionPosition == SuspensionPosition.FrontRight)
-            return antiRollForce * antiDive;
+            return antiDiveForce;
         if (suspensionPosition == SuspensionPosition.RearLeft || suspensionPosition == SuspensionPosition.RearRight)
-            return -antiRollForce * antiDive;
+            return -antiDiveForce;
         return 0f;
     }
 }

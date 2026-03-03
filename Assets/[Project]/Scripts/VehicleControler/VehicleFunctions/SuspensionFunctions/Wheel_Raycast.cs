@@ -74,14 +74,21 @@ public class Wheel_Raycast : MonoBehaviour
             lastHitPosition = hitPoint.point;
             hit = hitPoint;
 
-            //Material m = GetMaterialFromRaycastHit(hit, hit.transform.GetComponent<Mesh>());
-            //currentSurface = hit.transform.GetComponent<RoadSegment>()?.surfaceSettings.First(s => s.material == m);
+            Material m = GetMaterialFromRaycastHit(hit, hit.transform.GetComponent<Mesh>());
+            RoadSegment roadSegment = hit.transform.GetComponentInParent<RoadSegment>();
+            if (roadSegment != null && m != null)
+            {
+                SurfaceScriptable matchedSurface = roadSegment.surfaceSettings.FirstOrDefault(s => s != null && s.material == m);
+                if (matchedSurface != null)
+                    currentSurface = matchedSurface;
+            }
 
             if(slipSmokeParticleSystem != null)
                 slipSmokeParticleSystem.transform.position = hit.point;
             return true;
         }
-        slipSmokeParticleSystem.transform.position = this.transform.position;
+        if (slipSmokeParticleSystem != null)
+            slipSmokeParticleSystem.transform.position = this.transform.position;
         //suspensionTransform.transform.localPosition = suspensionLocalStartPosition + (-this.transform.up * maxLenght);
         hit = new RaycastHit();
         return false;
@@ -95,6 +102,8 @@ public class Wheel_Raycast : MonoBehaviour
 
         mesh = meshCollider.sharedMesh;
         Renderer renderer = hit.collider.GetComponent<MeshRenderer>();
+        if (renderer == null)
+            return null;
 
         int[] hitTriangle = new int[]
         {
@@ -142,7 +151,7 @@ public class Wheel_Raycast : MonoBehaviour
             tireWheelAssembly.Rotate(Vector3.right, rotation, Space.Self);
 
         float meterPerSecond = wheelVelocityLocalSpace.z;
-        RPM = meterPerSecond / wheelRadius;
+        RPM = tireCircumference > 0f ? (meterPerSecond / tireCircumference) * 60f : 0f;
 
         TyreLockSmoke(wheelLockPercentage, lastHitPosition);
 
@@ -193,6 +202,9 @@ public class Wheel_Raycast : MonoBehaviour
 
     public void SlipSmoke(float slipPercentage)
     {
+        if (slipSmokeParticleSystem == null)
+            return;
+
         var main = slipSmokeParticleSystem.main;
         main.stopAction = ParticleSystemStopAction.None;
         main.simulationSpace = ParticleSystemSimulationSpace.World;

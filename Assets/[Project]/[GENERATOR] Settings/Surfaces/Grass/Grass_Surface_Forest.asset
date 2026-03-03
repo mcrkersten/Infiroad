@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22ca3054f3958454899d9facee8e2a86, type: 3}
+  m_Name: Grass_Surface_Forest
+  m_EditorClassIdentifier: 
+  gripped:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0009719953
+      value: -0.0026753028
+      inSlope: 0.30478474
+      outSlope: 0.30478474
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.041636154
+    - serializedVersion: 3
+      time: 10
+      value: 1.2
+      inSlope: 0.00025632774
+      outSlope: 0.00025632774
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 34.978485
+      value: 0.49766183
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.7989667
+      outWeight: 0.062429193
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  useSlip: 1
+  unGripped:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0009765625
+      value: 0.0018920898
+      inSlope: 0.7349414
+      outSlope: 0.7349414
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.11198387
+    - serializedVersion: 3
+      time: 3.2590408
+      value: 0.8983188
+      inSlope: 0.002334617
+      outSlope: 0.002334617
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 6
+      value: 0.90043557
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 25
+      value: 0.9
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  SlipValue: 6
+  UnSlipValue: 1.4
+  material: {fileID: 2100000, guid: 2df79b1fe7b608f4db5328dc5577b211, type: 2}
+  UV_mirrored: 1
+  UImaterial: {r: 0.15843514, g: 0.38679248, b: 0, a: 1}

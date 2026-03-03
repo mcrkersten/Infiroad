@@ -256,12 +256,14 @@ MonoBehaviour:
   meshtaskObjects: []
   guardRailMinimalCornerRadius: 0
   roadTypeTag: FOREST-BASIC
+  assetTriggerResolution: 0
   assetPools:
   - tag: 0
     prefabs:
     - {fileID: 6583596778410102861, guid: 6305f2862102f394d8fef1073fa4cc58, type: 3}
     - {fileID: 6390541770965817990, guid: 247f93ccef389b1419bfebb563d98c1b, type: 3}
     size: 500
+    color: {r: 1, g: 0, b: 0, a: 1}
   rotationEasing: 3
   edgeLoopsPerMeter: 2
   debugRoadCurveStrenght: 0

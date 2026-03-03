@@ -7,6 +7,7 @@ using DG.Tweening;
 
 public class VehicleController : MonoBehaviour
 {
+    private const float SeaLevelAirDensity = 1.225f; // kg/m^3 at sea level
     public bool useBindingManager;
 
     [HideInInspector] public float distanceTraveled = 0f;
@@ -222,7 +223,7 @@ public class VehicleController : MonoBehaviour
         lastFramePosition = transform.position;
         foreach (DownForceWing wing in downforceWing)
         {
-            float downforce = wing.CalculateLiftforce(29.92f);
+            float downforce = wing.CalculateLiftforce(SeaLevelAirDensity);
             Vector3 downForceVector = (downforce + donwforceincreasement) * -wing.transform.up;
             Vector3 dragForceVector = (downforce * dragReduction) * -wing.transform.forward;
             rb.AddForceAtPosition(downForceVector, wing.transform.position);
@@ -236,16 +237,26 @@ public class VehicleController : MonoBehaviour
         float clutchInput = ReadClutchInput(userInputType);
         float brakeInput = ReadBrakeInput(userInputType);
         float steerInput = ReadSteeringInput(userInputType);
+        float localForwardVelocity = transform.InverseTransformDirection(rb.linearVelocity).z;
 
-        float steerStrenght = Mathf.Clamp(steerInput, -1f + accelerationInput, 1f - accelerationInput);
+        // In reverse gear, allow "backward"/brake input to launch the car backwards
+        // when nearly stopped. This avoids reverse torque being canceled by brake force.
+        if (engine.IsReverseGear && accelerationInput <= 0.001f && brakeInput > 0f && localForwardVelocity > -0.5f)
+        {
+            accelerationInput = brakeInput;
+            brakeInput = 0f;
+        }
 
-        if(BindingManager.Instance.selectedInputType != InputType.Wheel)
+        // Keep full steering range independent of throttle input.
+        // Throttle-based steering lockout made steering impossible at high acceleration.
+        steerInput = Mathf.Clamp(steerInput, -1f, 1f);
+
+        if (userInputType != InputType.Wheel)
             steerInput = steerInput * gamepadInputWeakener.Evaluate(Mathf.Abs(steerInput));
 
         float wheelSlip  = 0f;
         float physicsWobble = ApplyForceToWheels(brakeInput, out wheelSlip);
 
-        float localForwardVelocity = transform.InverseTransformDirection(rb.linearVelocity).z;
         engineForce = engine.Run(localForwardVelocity, accelerationInput, clutchInput, brakeInput, physicsWobble, wheelSlip);
 
         SetUserInterface(accelerationInput, brakeInput);
@@ -410,38 +421,56 @@ public class VehicleController : MonoBehaviour
 
     private float ApplyForceToWheels(float brakeInput, out float wheelSlip)
     {
-        float physicsWobble = 0f;
-        wheelSlip = 0f;
+        float physicsWobbleTotal = 0f;
+        int physicsWobbleSamples = 0;
+        float wheelSlipTotal = 0f;
+        int wheelSlipSamples = 0;
+        wheelSlip = 1f;
         List<Vector3> physics = new List<Vector3>();
         List<RaycastHit?> hits = new List<RaycastHit?>();
+        int drivenWheelCount = 0;
+        foreach (Suspension s in suspensions)
+            if (IsDrivenWheel(s))
+                drivenWheelCount++;
+
+        float perWheelDriveForce = drivenWheelCount > 0 ? engineForce / drivenWheelCount : 0f;
+
         foreach (Suspension s in suspensions)
         {
             RaycastHit? hit = null;
+            float currentWheelSlip = 0f;
+            float currentPhysicsWobble = 0f;
             switch (driveType)
             {
                 case DriveType.rearWheelDrive:
                     if (s.suspensionPosition == SuspensionPosition.RearLeft || s.suspensionPosition == SuspensionPosition.RearRight)
-                        physics.Add(s.SimulatePhysics(brakeInput, ApplyTorqueWithLimitedSlip(s, engineForce), out wheelSlip, out physicsWobble, out hit));
+                        physics.Add(s.SimulatePhysics(brakeInput, ApplyTorqueWithLimitedSlip(s, perWheelDriveForce), out currentWheelSlip, out currentPhysicsWobble, out hit));
                     else
-                    {
-                        float d;
-                        physics.Add(s.SimulatePhysics(brakeInput, 0, out d, out physicsWobble, out hit));
-                    }
+                        physics.Add(s.SimulatePhysics(brakeInput, 0, out currentWheelSlip, out currentPhysicsWobble, out hit));
                     break;
                 case DriveType.frontWheelDrive:
                     if (s.suspensionPosition == SuspensionPosition.FrontLeft || s.suspensionPosition == SuspensionPosition.FrontRight)
-                        physics.Add(s.SimulatePhysics(brakeInput, ApplyTorqueWithLimitedSlip(s, engineForce), out wheelSlip, out physicsWobble, out hit));
+                        physics.Add(s.SimulatePhysics(brakeInput, ApplyTorqueWithLimitedSlip(s, perWheelDriveForce), out currentWheelSlip, out currentPhysicsWobble, out hit));
                     else
-                    {
-                        float d;
-                        physics.Add(s.SimulatePhysics(brakeInput, 0, out d, out physicsWobble, out hit));
-                    }
+                        physics.Add(s.SimulatePhysics(brakeInput, 0, out currentWheelSlip, out currentPhysicsWobble, out hit));
                     break;
                 case DriveType.allWheelDrive:
-                    physics.Add(s.SimulatePhysics(brakeInput, ApplyTorqueWithLimitedSlip(s, engineForce), out wheelSlip, out physicsWobble, out hit));
+                    physics.Add(s.SimulatePhysics(brakeInput, ApplyTorqueWithLimitedSlip(s, perWheelDriveForce), out currentWheelSlip, out currentPhysicsWobble, out hit));
                     break;
                 default:
+                    physics.Add(Vector3.zero);
                     break;
+            }
+
+            if (IsDrivenWheel(s) && !float.IsNaN(currentWheelSlip) && !float.IsInfinity(currentWheelSlip))
+            {
+                wheelSlipTotal += currentWheelSlip;
+                wheelSlipSamples++;
+            }
+            if (!float.IsNaN(currentPhysicsWobble) && !float.IsInfinity(currentPhysicsWobble))
+            {
+                physicsWobbleTotal += currentPhysicsWobble;
+                physicsWobbleSamples++;
             }
             hits.Add(hit);
         }
@@ -454,22 +483,42 @@ public class VehicleController : MonoBehaviour
                 rb.AddForceAtPosition(physics[i], Vector3.Lerp(s.transform.position, hits[i].Value.point, 1f));
             i++;
         }
-        return physicsWobble / suspensions.Count;
+        wheelSlip = wheelSlipSamples > 0 ? wheelSlipTotal / wheelSlipSamples : 1f;
+        return physicsWobbleSamples > 0 ? physicsWobbleTotal / physicsWobbleSamples : 0f;
     }
 
     private float maxSpeedDifference = 50f; // Max speed difference for limited-slip effect
     private float limitedSlipCoefficient = 0.8f; // Coefficient for limited-slip effect
     private float ApplyTorqueWithLimitedSlip(Suspension suspension, float torque)
     {
-        // Calculate slip ratio
-        float slipRatio = suspension.wheel.RPM * 2 * Mathf.PI * suspension.wheel.wheelRadius / suspension.wheel.wheelVelocityLocalSpace.magnitude;
+        float wheelLinearSpeed = suspension.wheel.RPM * 2f * Mathf.PI * suspension.wheel.wheelRadius / 60f;
+        float vehicleForwardSpeed = suspension.wheel.wheelVelocityLocalSpace.z;
+        float speedDifference = wheelLinearSpeed - vehicleForwardSpeed;
+        if (float.IsNaN(speedDifference) || float.IsInfinity(speedDifference))
+            return torque;
 
-        // Apply limited-slip effect
-        float limitedSlipEffect = 1f - Mathf.Clamp01(Mathf.Abs(slipRatio) / maxSpeedDifference);
+        // Only reduce torque for wheelspin in the same direction as commanded torque.
+        float signedSlip = Mathf.Sign(torque) * speedDifference;
+        float limitedSlipEffect = Mathf.Clamp01(signedSlip / maxSpeedDifference);
         float limitedSlipTorque = limitedSlipCoefficient * limitedSlipEffect * torque;
 
         // Apply torque to the wheel
         return torque - limitedSlipTorque;
+    }
+
+    private bool IsDrivenWheel(Suspension suspension)
+    {
+        switch (driveType)
+        {
+            case DriveType.rearWheelDrive:
+                return suspension.suspensionPosition == SuspensionPosition.RearLeft || suspension.suspensionPosition == SuspensionPosition.RearRight;
+            case DriveType.frontWheelDrive:
+                return suspension.suspensionPosition == SuspensionPosition.FrontLeft || suspension.suspensionPosition == SuspensionPosition.FrontRight;
+            case DriveType.allWheelDrive:
+                return true;
+            default:
+                return false;
+        }
     }
 
     private void OnDisable()
@@ -481,9 +530,10 @@ public class VehicleController : MonoBehaviour
         acceleration?.Disable();
         clutch?.Disable();
 
-        if (vehicleInputActions == null) return;
+        if (!useBindingManager || vehicleInputActions == null)
+            return;
 
-        switch (BindingManager.Instance.selectedInputType)
+        switch (userInputType)
         {
             case InputType.Wheel:
                 vehicleInputActions.SteeringWheel.ShiftUP.started -= engine.ShiftUp;
@@ -551,6 +601,12 @@ public class VehicleController : MonoBehaviour
 
     private void ResetVehicle()
     {
+        if (resetPosition == null)
+        {
+            Debug.LogWarning("Reset requested but no reset point is available yet.");
+            return;
+        }
+
         Debug.Log("Reset");
         LockPhysicsLock();
         foreach (Suspension sus in suspensions)

@@ -8,7 +8,11 @@ public class DecorationTriggerTest : MonoBehaviour
     {
         if (other.transform.CompareTag("AssetPoint"))
         {
-            other.gameObject.SetActive(false);
+            AssetTrigger assetTrigger = other.GetComponent<AssetTrigger>();
+            if (assetTrigger != null && ObjectPooler.Instance != null)
+                ObjectPooler.Instance.ReturnAssetTrigger(assetTrigger);
+            else
+                other.gameObject.SetActive(false);
         }
     }
 }

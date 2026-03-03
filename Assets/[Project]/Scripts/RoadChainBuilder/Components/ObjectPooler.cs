@@ -8,6 +8,7 @@ public class ObjectPooler
 {
     private Dictionary<int, Queue<GameObject>> skyDecorations = new Dictionary<int, Queue<GameObject>>();
     private Queue<AssetTrigger> assetTriggerQueue = new Queue<AssetTrigger>();
+    private HashSet<AssetTrigger> activeAssetTriggers = new HashSet<AssetTrigger>();
     private Dictionary<string, Dictionary<string, Queue<GameObject>>> assetQueueDictionaries = new Dictionary<string, Dictionary<string, Queue<GameObject>>>();
     private Dictionary<int, Queue<List<GameObject>>> roadDecorationQueueDictionary = new Dictionary<int, Queue<List<GameObject>>>();
     private Dictionary<string, Queue<GameObject>> meshtaskObjectQueueDictionary = new Dictionary<string, Queue<GameObject>>();
@@ -77,7 +78,7 @@ public class ObjectPooler
                 return;
 
             //Instantiate new random prefab for each iteration of pool.size
-            Queue<GameObject> objectPool = new Queue<GameObject>();
+            Queue<GameObject> assetQueue = new Queue<GameObject>();
             for (int i = 0; i < pool.size; i++)
             {
                 //Select random prefab from prefab-pool
@@ -90,9 +91,9 @@ public class ObjectPooler
                 obj.SetActive(false);
                 obj.transform.parent = parent.transform;
                 if(timer) obj.AddComponent<ObjectDespawn>();
-                objectPool.Enqueue(obj);
+                assetQueue.Enqueue(obj);
             }
-            localDictionary.Add(pool.tag.ToString(), objectPool);
+            localDictionary.Add(pool.tag.ToString(), assetQueue);
         }
         assetQueueDictionaries.Add(segmentTag, localDictionary);
     }
@@ -101,6 +102,7 @@ public class ObjectPooler
         assetQueueDictionaries = null;
         skyDecorations = null;
         assetTriggerQueue = null;
+        activeAssetTriggers = null;
         roadDecorationQueueDictionary = null;
         meshtaskObjectQueueDictionary = null;
 
@@ -180,7 +182,14 @@ public class ObjectPooler
     /// <returns></returns>
     public AssetTrigger ActivateAssetTrigger(Vector3 position, List<VegetationScannerTypeTag> tags)
     {
+        if (assetTriggerQueue.Count == 0)
+        {
+            Debug.LogError("POOL PANIC: AssetTrigger pool exhausted.");
+            return null;
+        }
+
         AssetTrigger objectToSpawn = assetTriggerQueue.Dequeue();
+        objectToSpawn.scannedBy.Clear();
         objectToSpawn.scanableByScannerType.Clear();
         foreach (VegetationScannerTypeTag at in tags)
         {
@@ -189,8 +198,22 @@ public class ObjectPooler
 
         objectToSpawn.gameObject.SetActive(true);
         objectToSpawn.transform.position = position;
-        assetTriggerQueue.Enqueue(objectToSpawn);
+        activeAssetTriggers.Add(objectToSpawn);
         return objectToSpawn;
+    }
+
+    public void ReturnAssetTrigger(AssetTrigger trigger)
+    {
+        if (trigger == null || activeAssetTriggers == null)
+            return;
+
+        if (!activeAssetTriggers.Remove(trigger))
+            return;
+
+        trigger.scannedBy.Clear();
+        trigger.scanableByScannerType.Clear();
+        trigger.gameObject.SetActive(false);
+        assetTriggerQueue.Enqueue(trigger);
     }
 
     /// <summary>
@@ -275,6 +298,7 @@ public class AssetPool
     public VegetationScannerTypeTag tag;
     public List<GameObject> prefabs = new List<GameObject>();
     public int size;
+    public Color color = Color.red;
 }
 public enum VegetationScannerTypeTag
 {

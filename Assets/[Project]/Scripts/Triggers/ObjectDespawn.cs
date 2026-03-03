@@ -19,6 +19,12 @@ public class ObjectDespawn : MonoBehaviour
     public IEnumerator DisableAfterTime(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
+        if (TryGetComponent<AssetTrigger>(out AssetTrigger assetTrigger) && ObjectPooler.Instance != null)
+        {
+            ObjectPooler.Instance.ReturnAssetTrigger(assetTrigger);
+            yield break;
+        }
+
         this.gameObject.SetActive(false);
     }
 

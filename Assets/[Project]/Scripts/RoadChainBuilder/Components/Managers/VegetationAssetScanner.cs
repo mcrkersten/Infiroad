@@ -46,7 +46,10 @@ public class VegetationAssetScanner : MonoBehaviour
                 ActivateGroupFromAssetPool(assetTag, Random.Range(0, amountOfAssetsOnPoint));
 
             assetTag.scannedBy.Add(scannerType);
-            other.gameObject.SetActive(false);
+            if (ObjectPooler.Instance != null)
+                ObjectPooler.Instance.ReturnAssetTrigger(assetTag);
+            else
+                other.gameObject.SetActive(false);
         }
     }
 

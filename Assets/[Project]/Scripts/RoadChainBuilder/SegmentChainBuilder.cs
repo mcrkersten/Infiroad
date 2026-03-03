@@ -137,6 +137,9 @@ public class SegmentChainBuilder : MonoBehaviour
 
     public void CreateNextFixedSector_Trigger()
     {
+        if(currentSegmentChain != null)
+            currentSegmentChain.SegmentIndex = 0;
+
         SegmentChain next = SelectAndPositionNextFixedRoadChain();
         next.SetOrganizedSegments(next.organizedSegments);
         currentSegmentChain = next;
@@ -178,7 +181,9 @@ public class SegmentChainBuilder : MonoBehaviour
         CreateNextRandomSegmentChain(lastEdgePoint);
         worldBuilder.PopulateWorld(GetChainSettings(false).segmentChainSettings, currentSegmentChain);
         //worldBuilder.CreateLineCollider(currentSegmentChain);
-        if (createdSegmentChains.Count == 5)
+
+        //This is for now clean way of disposing chunks.
+        if (createdSegmentChains.Count == 3)
             DeleteSegmentChain();
     }
 
@@ -235,7 +240,7 @@ public class SegmentChainBuilder : MonoBehaviour
             fixedSegmentChains.Enqueue(s.segmentChain);
         InstantiateAssetPools();
 
-        EventTriggerManager.roadChainTrigger += OnRoadTriggerEvent;
+        //EventTriggerManager.roadChainTrigger += OnRoadTriggerEvent;
         CreateNextFixedSector_Trigger();
 
         EventTriggerManager.segmentTrigger += OnSegmentTriggerEvent;
@@ -247,13 +252,14 @@ public class SegmentChainBuilder : MonoBehaviour
     private void OnRoadTriggerEvent(GameObject trigger)
     {
         currentSegmentChain.activatedPooledObjects.Remove(trigger);
-        currentSegmentChain.SegmentIndex = 0;
         CreateNextFixedSector_Trigger();
     }
 
     private void OnSegmentTriggerEvent(GameObject trigger)
     {
         InstigateSegment(currentSegmentChain.SegmentIndex++);
+        if(currentSegmentChain.SegmentIndex == currentSegmentChain.organizedSegments.Count - 1)
+            CreateNextFixedSector_Trigger();
     }
 
     /// <summary>
@@ -314,18 +320,13 @@ public class SegmentChainBuilder : MonoBehaviour
     }
     #endregion
 
-    int Rindex = 0;
     private List<RoadSegment> CreateNextRandomSegmentChain(EdgePoint lastExitPoint)
     {
         //Instantiate
         SegmentChain newSegmentChain = InstantiateSegmentChain();
         GetChainSettings(true);
         currentSegmentChain = newSegmentChain;
-
-        if(Rindex >= road.roadSettings.Count)
-            Rindex = 0;
-        newSegmentChain.ChainIndex = Rindex;
-        Rindex++;
+        newSegmentChain.ChainIndex = chainIndex;
 
         Vector3 position = CalculateRoadChainObjectPosition(lastExitPoint);
         newSegmentChain.transform.position = position;
@@ -406,6 +407,7 @@ public class SegmentChainBuilder : MonoBehaviour
 
     private void InstigateSegment(int segmentIndex)
     {
+        Debug.Log(segmentIndex);
         RoadSegment currentSegment = currentSegmentChain.organizedSegments[segmentIndex];
 
         if(currentSegment == null) return;
@@ -417,13 +419,6 @@ public class SegmentChainBuilder : MonoBehaviour
 
         //We need to spawn the next segment trigger before we spawn the decoration
         SpawnSegmentTrigger(currentSegmentChain, currentSegment);
-
-        //If we are last segment, spawn chain trigger.
-        if(segmentIndex == currentSegmentChain.organizedSegments.Count - 2)
-            SpawnSegmentChainTrigger(currentSegmentChain, currentSegment);
-
-        if(segmentIndex == currentSegmentChain.organizedSegments.Count - 2)
-            SpawnTimerTrigger(currentSegmentChain, currentSegment);
 
         //If we are first segment in this chain, spawn start decoration
         if (segmentIndex == 0)
@@ -510,6 +505,7 @@ public class SegmentChainBuilder : MonoBehaviour
     /// <returns></returns>
     private List<RoadSegment> CreateSegments(EdgePoint lastExitPoint)
     {
+        bool shouldDeleteConsumedExitPoint = lastExitPoint.gameObject != null && lastExitPoint.gameObject.name == "ExitPoint";
         EdgePoint entryPoint = CreateEntry(lastExitPoint);
         EdgePoint exitPoint = CreateExit(entryPoint);
 
@@ -517,11 +513,21 @@ public class SegmentChainBuilder : MonoBehaviour
         int nPoints = GetPointAmount(entryPoint, exitPoint);
         //List<RoadSegment> unOrganized = CreatePointsbetweenEntryStart(entryPoint, exitPoint, nPoints);
         //List<RoadSegment> organized = OrganizeSegments(unOrganized, entryPoint, exitPoint);
-        //lastEdgePoint = exitPoint;
-
         List<RoadSegment> segments = CreateSmoothTrack(entryPoint, exitPoint, nPoints);
+        PositionSegments(segments);
         OrientSegments(segments);
         SetTangentLenght(segments);
+
+        for (int i = 0; i < segments.Count; i++)
+            segments[i].isExitSegment = false;
+        if (segments.Count > 0)
+            segments[segments.Count - 1].isExitSegment = true;
+
+        if (shouldDeleteConsumedExitPoint)
+            Destroy(lastExitPoint.gameObject);
+
+        lastEdgePoint = exitPoint;
+
         return segments;
     }
 
@@ -552,7 +558,6 @@ public class SegmentChainBuilder : MonoBehaviour
         }
 
         controlPoints.Add(exitPoint); // End point
-
         // Generate smooth curve using Catmull-Rom spline
         return GenerateCatmullRomSpline(controlPoints);
     }
@@ -570,8 +575,11 @@ public class SegmentChainBuilder : MonoBehaviour
 
             // Subdivide segment into smaller smooth sections
             int subdivisions = 3; // Adjust for smoother curves
-            for (int j = 0; j < subdivisions; j++)
+            for (int j = 0; j <= subdivisions; j++)
             {
+                if (i > 0 && j == 0)
+                    continue;
+
                 float t = j / (float)subdivisions;
                 Vector3 position = CatmullRom(p0, p1, p2, p3, t);
 
@@ -624,12 +632,7 @@ public class SegmentChainBuilder : MonoBehaviour
     private EdgePoint CreateEntry(EdgePoint exitPoint)
     {
         EdgeLocation location = GetInversedEdgeLocation(exitPoint.edgeLocation);
-        GameObject segment = Instantiate(segmentPrefab);
-        EdgePoint point = new EdgePoint(location, exitPoint.edgePointPositionIndex, segment);
-        segment.transform.position = exitPoint.gameObject.transform.position;
-        segment.transform.rotation = exitPoint.gameObject.transform.rotation;
-        segment.name = "EntrySegment";
-        return point;
+        return new EdgePoint(location, exitPoint.edgePointPositionIndex, exitPoint.gameObject);
     }
 
     private EdgePoint CreateExit(EdgePoint entryPoint)
@@ -637,12 +640,10 @@ public class SegmentChainBuilder : MonoBehaviour
         EdgeLocation entryLocation = entryPoint.edgeLocation;
         EdgeLocation exitLocation = GetRandomExitLocation(entryPoint);
 
-        GameObject segment = Instantiate(segmentPrefab);
+        GameObject segment = new GameObject("ExitPoint");
         EdgePoint point = new EdgePoint(exitLocation, GetRandomExitPointIndex(entryLocation, exitLocation), segment);
         segment.transform.position = GetEdgePointLocalPosition(point) + this.transform.position;
         segment.transform.rotation = point.edgeRotation;
-        segment.name = "ExitSegment";
-        segment.GetComponent<RoadSegment>().isExitSegment = true;
         return point;
     }
 
@@ -681,7 +682,7 @@ public class SegmentChainBuilder : MonoBehaviour
         {
             if (entryPoint.edgePointPositionIndex == 0)
                 possibility.Remove(EdgeLocation.Bottom);
-            if (entryPoint.edgePointPositionIndex == 4)
+            if (entryPoint.edgePointPositionIndex == GetChainSettings(false).segmentChainSettings.sidePointAmount - 1)
                 possibility.Remove(EdgeLocation.Top);
         }
 
@@ -689,7 +690,7 @@ public class SegmentChainBuilder : MonoBehaviour
         {
             if (entryPoint.edgePointPositionIndex == 0)
                 possibility.Remove(EdgeLocation.Left);
-            if (entryPoint.edgePointPositionIndex == 4)
+            if (entryPoint.edgePointPositionIndex == GetChainSettings(false).segmentChainSettings.sidePointAmount - 1)
                 possibility.Remove(EdgeLocation.Right);
         }
         return possibility;
@@ -895,7 +896,8 @@ public class SegmentChainBuilder : MonoBehaviour
             {
                 float baseHeight = fromZero ? 0f : lastSegment.transform.position.y;
                 float calculatedHeight = baseHeight + UnityEngine.Random.Range(-heightRange, heightRange);
-                Vector3 position = currentSegment.transform.position + (Vector3.up * calculatedHeight);
+                Vector3 position = currentSegment.transform.position;
+                position.y = calculatedHeight;
                 currentSegment.transform.position = position;
             }
             lastSegment = currentSegment;

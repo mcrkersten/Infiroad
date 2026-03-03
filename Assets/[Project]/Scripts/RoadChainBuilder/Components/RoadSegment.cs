@@ -19,6 +19,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer) )]
 public class RoadSegment : UniqueMesh {
@@ -39,7 +40,7 @@ public class RoadSegment : UniqueMesh {
 	public SegmentChain SegmentChain => transform.parent == null ? null : transform.parent.GetComponent<SegmentChain>();
 
 	[HideInInspector]public RoadSettings roadSetting;
-    [HideInInspector]public int index;
+    [ReadOnly]public int index;
 
     public Vector2Int startEndEdgeLoop;
 
@@ -49,6 +50,10 @@ public class RoadSegment : UniqueMesh {
 	// x = start coordinate, y = end coordinate
 	public void CreateMesh( Vector2 nrmCoordStartEnd, RoadSettings settings , int segmentIndex , int chainIndex = 0)
 	{
+		// This segment can be reused/repositioned across chain generations.
+		// Clear per-build caches so we don't keep world-space spawn edges from a previous position.
+		assetSpawnEdges.Clear();
+		surfaceSettings.Clear();
 		surfaceSettings.AddRange(settings.GetAllSurfaceSettings());
 		roadSetting = settings;
 		index = segmentIndex;
@@ -62,10 +67,8 @@ public class RoadSegment : UniqueMesh {
 				roadSettings: settings,
 				bezier: this.bezier,
 				uvMode: SegmentChain.uvMode,
-				nrmCoordStartEnd: nrmCoordStartEnd,
 				edgeLoopsPerMeter: settings.edgeLoopsPerMeter,
-				tilingAspectRatio: GetTextureAspectRatio(),
-				chainIndex
+				tilingAspectRatio: GetTextureAspectRatio()
 			);
 		} 
 		else if( meshCached != null ) 
