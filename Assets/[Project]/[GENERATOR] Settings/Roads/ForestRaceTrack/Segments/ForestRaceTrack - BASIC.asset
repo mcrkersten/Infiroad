@@ -391,10 +391,14 @@ MonoBehaviour:
   segmentChainSettings:
     sidePointAmount: 5
     cornerBuffer: 2
-    gridSize: 1000
+    gridSize: 500
     straight_NpointsBetween: 2
     corner_NpointsBetween: 2
     segmentXaxisVariation: 30
+    segmentBendStrength: 0.6
+    segmentBendFrequency: 1.2
+    segmentMicroBendRatio: 0.1
+    segmentBendBias: 0.6
     segmentHeightRange: 1.2
     isFixedBetweenRange: 0
     segmentDeletionProximity: 30

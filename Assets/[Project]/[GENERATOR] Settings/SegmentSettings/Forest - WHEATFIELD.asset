@@ -335,6 +335,10 @@ MonoBehaviour:
     straight_NpointsBetween: 0
     corner_NpointsBetween: 0
     segmentXaxisVariation: 0
+    segmentBendStrength: 0.6
+    segmentBendFrequency: 1.2
+    segmentMicroBendRatio: 0.1
+    segmentBendBias: 0.6
     segmentHeightRange: 0
     isFixedBetweenRange: 0
     segmentDeletionProximity: 0

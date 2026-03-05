@@ -194,6 +194,14 @@ public class SegmentChainSettings
     [Header("New segment settings")]
     [Range(0f, 300f)]
     public float segmentXaxisVariation;
+    [Range(0f, 2f)]
+    public float segmentBendStrength = .6f;
+    [Range(0.1f, 6f)]
+    public float segmentBendFrequency = 1.2f;
+    [Range(0f, 1f)]
+    public float segmentMicroBendRatio = 0.1f;
+    [Range(0f, 1f)]
+    public float segmentBendBias = 0.6f;
 
     [Range(0f, 25f)]
     public float segmentHeightRange;
