@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.coffee.softmask-for-ugui": "https://github.com/mob-sakai/SoftMaskForUGUI.git",
+    "com.coplaydev.unity-mcp": "https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#main",
     "com.llcheesell.led_screen_shader": "https://github.com/llcheesell/LEDScreenShader.git?path=/Assets/LEDScreenShader#v0.0.6",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ai.navigation": "2.0.10",

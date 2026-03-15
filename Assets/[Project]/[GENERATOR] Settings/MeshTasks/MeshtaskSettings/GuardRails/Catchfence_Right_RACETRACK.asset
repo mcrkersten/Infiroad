@@ -75,7 +75,7 @@ MonoBehaviour:
   meshIsClosed: 0
   meshtaskPoolingObjects:
   - meshtaskPoolType: 1
-    unitsInPool: 125
+    unitsInPool: 350
     prefab: {fileID: 8594070437465435305, guid: 69167b2b72e68c046981abca42e7d523, type: 3}
     position: {x: 0, y: 0}
     curveTime: 0

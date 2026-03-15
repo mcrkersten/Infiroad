@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using Sirenix.OdinInspector.Editor;
 using System;
 using System.Linq;
 [CustomEditor(typeof(RoadSettings))]
-public class RoadSettingsInspector : Editor
+public class RoadSettingsInspector : OdinEditor
 {
 	private List<Color> colors = new List<Color>();
 

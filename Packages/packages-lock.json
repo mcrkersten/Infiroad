@@ -7,6 +7,16 @@
       "dependencies": {},
       "hash": "b870d64b5704a764fd03aaccb11f2dbe652b1756"
     },
+    "com.coplaydev.unity-mcp": {
+      "version": "https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.2",
+        "com.unity.test-framework": "1.1.31"
+      },
+      "hash": "1bd9e163adf6078da206d7761e7f2cdef10441ef"
+    },
     "com.llcheesell.led_screen_shader": {
       "version": "https://github.com/llcheesell/LEDScreenShader.git?path=/Assets/LEDScreenShader#v0.0.6",
       "depth": 0,

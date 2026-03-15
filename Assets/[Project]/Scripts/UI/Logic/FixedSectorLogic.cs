@@ -12,7 +12,6 @@ public class FixedSectorLogic : MonoBehaviour
     [Header("Track generator")]
     [SerializeField] private Camera trackRenderCamera;
     [SerializeField] private SegmentChainBuilder roadChainBuilder;
-    [SerializeField] private int segmtentAmount;
     [SerializeField] private int resolution;
     private List<Sector> sectors = new List<Sector>();
     private Sector createdSector;
@@ -26,6 +25,7 @@ public class FixedSectorLogic : MonoBehaviour
     [SerializeField] private TextMeshProUGUI sectorLenght;
     [SerializeField] private Transform sectorList;
     private bool connectedViewActive;
+    [SerializeField] private LineRendererOrthoFramer lineRendererOrthoFramer;
 
     [SerializeField] private TextMeshProUGUI startGuide;
     [SerializeField] private TextMeshProUGUI generateGuide;
@@ -120,6 +120,7 @@ public class FixedSectorLogic : MonoBehaviour
                 line.SetPosition((i * resolution) + x, sector.beziers[i].GetOrientedPoint((float)x / (float)resolution, Ease.Linear).pos);
             }
         }
+        lineRendererOrthoFramer.FitNow(line);
     }
 
     private void CreateEntryAndExitSprite(Sector sector)
@@ -136,29 +137,43 @@ public class FixedSectorLogic : MonoBehaviour
 
     private void PositionCameraOnSector(Sector sector)
     {
-        Vector3 first = sector.segmentChain.organizedSegments[0].transform.position;
-        Vector3 last = sector.segmentChain.organizedSegments[sector.segmentChain.organizedSegments.Count - 1].transform.position;
-        Vector3 position = Vector3.zero;
-        position = Vector3.Lerp(first, last, .5f);
-        trackRenderCamera.transform.position = position + (Vector3.up * 50f);
-        trackRenderCamera.transform.rotation = Quaternion.LookRotation(first - last) * Quaternion.Euler(new Vector3(90, 0, 90));
-        trackRenderCamera.orthographicSize = 160f;
+        if (lineRendererOrthoFramer == null || sector == null || sector.segmentChain == null)
+        {
+            return;
+        }
+
+        lineRendererOrthoFramer.FitNow(sector.segmentChain.line);
     }
 
     private void PositionCameraOnConnectedView()
     {
-        Vector3 average = Vector3.zero;
+        if (lineRendererOrthoFramer == null)
+        {
+            return;
+        }
+
+        List<LineRenderer> targetLines = new List<LineRenderer>(sectors.Count);
         for (int i = 0; i < sectors.Count; i++)
-            average += sectors[i].segmentChain.organizedSegments[sectors[i].segmentChain.organizedSegments.Count / 2].transform.position;
+        {
+            if (sectors[i] == null || sectors[i].segmentChain == null || sectors[i].segmentChain.line == null)
+            {
+                continue;
+            }
 
-        average = average / sectors.Count;
+            targetLines.Add(sectors[i].segmentChain.line);
+        }
 
-        Vector3 first = sectors[0].segmentChain.organizedSegments[0].transform.position;
-        Vector3 last = sectors[sectors.Count - 1].segmentChain.organizedSegments[sectors[sectors.Count - 1].segmentChain.organizedSegments.Count - 1].transform.position;
-        trackRenderCamera.transform.position = average + (Vector3.up * 50f);
+        if (targetLines.Count == 0)
+        {
+            return;
+        }
 
-        trackRenderCamera.transform.rotation = Quaternion.LookRotation(first - last) * Quaternion.Euler(new Vector3(90, 0, 90));
-        trackRenderCamera.orthographicSize = Vector3.Distance(first,last)/3.5f;
+        if (!TryGetConnectedViewAnchors(targetLines, out Vector3 startAnchor, out Vector3 endAnchor))
+        {
+            return;
+        }
+
+        lineRendererOrthoFramer.FitNow(targetLines.ToArray(), startAnchor, endAnchor);
     }
 
     private void OnSectorSelection(Sector sector)
@@ -244,6 +259,63 @@ public class FixedSectorLogic : MonoBehaviour
         }
         connectedViewActive = false;
 
+    }
+
+    private bool TryGetConnectedViewAnchors(List<LineRenderer> targetLines, out Vector3 startAnchor, out Vector3 endAnchor)
+    {
+        startAnchor = Vector3.zero;
+        endAnchor = Vector3.zero;
+        bool hasStartAnchor = false;
+        bool hasEndAnchor = false;
+
+        if (targetLines == null || targetLines.Count == 0)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < targetLines.Count; i++)
+        {
+            if (TryGetLinePointWorld(targetLines[i], 0, out startAnchor))
+            {
+                hasStartAnchor = true;
+                break;
+            }
+        }
+
+        for (int i = targetLines.Count - 1; i >= 0; i--)
+        {
+            LineRenderer line = targetLines[i];
+            if (line == null)
+            {
+                continue;
+            }
+
+            if (TryGetLinePointWorld(line, line.positionCount - 1, out endAnchor))
+            {
+                hasEndAnchor = true;
+                break;
+            }
+        }
+
+        return hasStartAnchor && hasEndAnchor;
+    }
+
+    private bool TryGetLinePointWorld(LineRenderer line, int pointIndex, out Vector3 worldPoint)
+    {
+        worldPoint = Vector3.zero;
+
+        if (line == null || line.positionCount < 2 || pointIndex < 0 || pointIndex >= line.positionCount)
+        {
+            return false;
+        }
+
+        worldPoint = line.GetPosition(pointIndex);
+        if (!line.useWorldSpace)
+        {
+            worldPoint = line.transform.TransformPoint(worldPoint);
+        }
+
+        return true;
     }
 
     private void OnDestroy()

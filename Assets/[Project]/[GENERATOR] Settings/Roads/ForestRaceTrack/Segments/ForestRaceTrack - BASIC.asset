@@ -391,14 +391,33 @@ MonoBehaviour:
   segmentChainSettings:
     sidePointAmount: 5
     cornerBuffer: 2
-    gridSize: 500
+    gridSize: 750
     straight_NpointsBetween: 2
     corner_NpointsBetween: 2
-    segmentXaxisVariation: 30
-    segmentBendStrength: 0.6
-    segmentBendFrequency: 1.2
-    segmentMicroBendRatio: 0.1
-    segmentBendBias: 0.6
-    segmentHeightRange: 1.2
+    cornerOutsideBias: 0.5
+    straightIndexJitter: 1
+    cornerIndexJitter: 1
+    edgeMarginNormalized: 0.12
+    edgeTJitterStraight: 0.08
+    edgeTJitterCorner: 0.14
+    edgeInwardOffset: 0
+    segmentXaxisVariation: 150
+    segmentBendStrength: 1.8
+    segmentBendFrequency: 6
+    segmentMicroBendRatio: 1
+    segmentBendBias: 0.83
+    segmentEndpointStraightFraction: 0
+    segmentEndpointEasePower: 1
+    segmentBoundaryTangentFraction: 0.14
+    segmentBoundaryTangentMinDistance: 30
+    segmentNoisePhaseJitter: 300
+    segmentBendBiasJitter: 0.4
+    segmentHeightRange: 25
     isFixedBetweenRange: 0
+    useVerticalProfile: 1
+    verticalMaxGradePercent: 40
+    verticalMaxGradeChangePercent: 40
+    verticalMidpointJitter: 0.988
+    verticalEndGradeReturn: 1
+    verticalMaxChainElevationDelta: 50
     segmentDeletionProximity: 30

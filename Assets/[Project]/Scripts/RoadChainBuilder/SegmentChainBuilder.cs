@@ -102,6 +102,20 @@ public class SegmentChainBuilder : MonoBehaviour
         chainIndex = UnityEngine.Random.Range(0, road.roadSettings.Count);
     }
 
+    public static int GetActiveSidePointAmountOrDefault()
+    {
+        const int fallback = 5;
+        if (instance == null || instance.road == null || instance.road.roadSettings == null || instance.road.roadSettings.Count == 0)
+            return fallback;
+
+        int safeIndex = Mathf.Clamp(instance.chainIndex, 0, instance.road.roadSettings.Count - 1);
+        RoadSettings settings = instance.road.roadSettings[safeIndex];
+        if (settings == null || settings.segmentChainSettings == null)
+            return fallback;
+
+        return Mathf.Max(2, settings.segmentChainSettings.sidePointAmount);
+    }
+
     private void InitializeSinglePoolGenerator()
     {
         meshtaskTypeHandler = new MeshtaskTypeHandler();
@@ -533,7 +547,7 @@ public class SegmentChainBuilder : MonoBehaviour
     /// <param name="lastExitPoint"></param>
     /// <param name="roadShape"></param>
     /// <returns></returns>
-    private List<RoadSegment> CreateSegments(EdgePoint lastExitPoint)
+private List<RoadSegment> CreateSegments(EdgePoint lastExitPoint)
     {
         bool shouldDeleteConsumedExitPoint = lastExitPoint.gameObject != null && lastExitPoint.gameObject.name == "ExitPoint";
         EdgePoint entryPoint = CreateEntry(lastExitPoint);
@@ -541,11 +555,11 @@ public class SegmentChainBuilder : MonoBehaviour
 
         //Create random points between entry and exit
         int nPoints = GetPointAmount(entryPoint, exitPoint);
-        //List<RoadSegment> unOrganized = CreatePointsbetweenEntryStart(entryPoint, exitPoint, nPoints);
-        //List<RoadSegment> organized = OrganizeSegments(unOrganized, entryPoint, exitPoint);
         List<RoadSegment> segments = CreateSmoothTrack(entryPoint, exitPoint, nPoints);
-        //PositionSegments(segments);
+
+        // Endpoint rotations are part of the curve definition for the final segment pair.
         OrientSegments(segments);
+        AlignExitPointToTrack(exitPoint, segments);
         SetTangentLenght(segments);
 
         MarkExitSegment(segments);
@@ -558,6 +572,47 @@ public class SegmentChainBuilder : MonoBehaviour
         return segments;
     }
 
+private void AlignExitPointToTrack(EdgePoint exitPoint, List<RoadSegment> segments)
+    {
+        if (exitPoint == null || exitPoint.gameObject == null || segments == null || segments.Count == 0)
+            return;
+
+        int lastIndex = segments.Count - 1;
+        Vector3 lastPosition = segments[lastIndex].transform.position;
+        Vector3 dynamicForward = segments[lastIndex].transform.forward;
+        dynamicForward.y = 0f;
+        float travelGrade = exitPoint.edgeTravelGrade;
+
+        if (segments.Count >= 2)
+        {
+            Vector3 previousPosition = segments[lastIndex - 1].transform.position;
+            Vector3 segmentDelta = lastPosition - previousPosition;
+            Vector3 planarDelta = new Vector3(segmentDelta.x, 0f, segmentDelta.z);
+
+            if (dynamicForward.sqrMagnitude < 0.0001f)
+                dynamicForward = planarDelta;
+
+            float horizontalDistance = planarDelta.magnitude;
+            if (horizontalDistance > 0.0001f)
+            {
+                SegmentChainSettings settings = GetChainSettings(false).segmentChainSettings;
+                float maxGrade = settings == null ? 0.06f : Mathf.Max(0f, settings.verticalMaxGradePercent) / 100f;
+                travelGrade = Mathf.Clamp(segmentDelta.y / horizontalDistance, -maxGrade, maxGrade);
+            }
+        }
+
+        if (dynamicForward.sqrMagnitude < 0.0001f)
+            dynamicForward = GetEdgeOutwardDirection(exitPoint.edgeLocation);
+
+        exitPoint.SetEdgeForward(dynamicForward);
+        exitPoint.edgeTravelGrade = travelGrade;
+        Vector3 snappedExitPosition = exitPoint.gameObject.transform.position;
+        snappedExitPosition.y = lastPosition.y;
+        exitPoint.gameObject.transform.position = snappedExitPosition;
+        exitPoint.gameObject.transform.rotation = exitPoint.edgeRotation;
+    }
+
+
     private static void MarkExitSegment(List<RoadSegment> segments)
     {
         // The last segment is a handoff/placeholder point, so exit is the segment before it, that is why 2 and not 1.
@@ -568,7 +623,7 @@ public class SegmentChainBuilder : MonoBehaviour
             segments[i].isExitSegment = i == exitIndex;
     }
 
-    private List<RoadSegment> CreateSmoothTrack(EdgePoint entry, EdgePoint exit, int nOfPoints)
+private List<RoadSegment> CreateSmoothTrack(EdgePoint entry, EdgePoint exit, int nOfPoints)
     {
         Vector3 entryPoint = entry.gameObject.transform.position;
         Vector3 exitPoint = exit.gameObject.transform.position;
@@ -579,6 +634,43 @@ public class SegmentChainBuilder : MonoBehaviour
         };
 
         Vector3 direction = (exitPoint - entryPoint).normalized;
+        Vector3 entryOutward = entry.edgeForward;
+        Vector3 exitOutward = exit.edgeForward;
+        if (entryOutward.sqrMagnitude < 0.0001f)
+            entryOutward = GetEdgeOutwardDirection(entry.edgeLocation);
+        if (exitOutward.sqrMagnitude < 0.0001f)
+            exitOutward = GetEdgeOutwardDirection(exit.edgeLocation);
+
+        Vector3 entryTangent = -entryOutward.normalized; // Inward from entry edge.
+        Vector3 exitTangent = exitOutward.normalized;    // Outward toward exit edge.
+
+        float chainDistance = Vector3.Distance(entryPoint, exitPoint);
+        float tangentFraction = Mathf.Clamp(chainSettings.segmentBoundaryTangentFraction, 0f, 0.45f);
+        float tangentMinDistance = Mathf.Max(0f, chainSettings.segmentBoundaryTangentMinDistance);
+        float tangentDistance = Mathf.Clamp(
+            chainDistance * tangentFraction,
+            tangentMinDistance,
+            chainDistance * 0.45f);
+
+        // Prevent boundary anchors from overpowering short/sparse chains.
+        float densityDistanceCap = chainDistance / Mathf.Max(3f, nOfPoints + 3f);
+        tangentDistance = Mathf.Min(tangentDistance, densityDistanceCap);
+
+        // If boundary tangents are poorly aligned with global chain direction, shorten them.
+        float entryAlignment = Mathf.Clamp01(Vector3.Dot(entryTangent, direction));
+        float exitAlignment = Mathf.Clamp01(Vector3.Dot(exitTangent, direction));
+        float alignmentScale = Mathf.Lerp(0.35f, 1f, Mathf.Min(entryAlignment, exitAlignment));
+        tangentDistance *= alignmentScale;
+
+        bool useBoundaryAnchors = tangentDistance > 0.001f;
+        Vector3 exitAnchor = Vector3.zero;
+        if (useBoundaryAnchors)
+        {
+            Vector3 entryAnchor = entryPoint + entryTangent * tangentDistance;
+            exitAnchor = exitPoint - exitTangent * tangentDistance;
+            controlPoints.Add(entryAnchor);
+        }
+
         Vector3 perpendicular = Vector3.Cross(direction, Vector3.up);
         if (perpendicular.sqrMagnitude < 0.0001f)
             perpendicular = Vector3.right;
@@ -595,20 +687,36 @@ public class SegmentChainBuilder : MonoBehaviour
             exitPoint.z * 0.311f +
             (chainIndex + 1) * 1.618f);
         float seedY = seedX + 37.17f;
-        float bendBias = Mathf.PerlinNoise(seedX, 0.23f) * 2f - 1f;
+
+        // Optional per-chain jitter to avoid recurring template-like duplicates.
+        float phaseJitterRange = Mathf.Max(0f, chainSettings.segmentNoisePhaseJitter);
+        float phaseJitter = UnityEngine.Random.Range(-phaseJitterRange, phaseJitterRange);
+        float bendBiasJitter = Mathf.Clamp(chainSettings.segmentBendBiasJitter, 0f, 0.4f);
+        float effectiveBendBias = Mathf.Clamp01(
+            chainSettings.segmentBendBias +
+            UnityEngine.Random.Range(-bendBiasJitter, bendBiasJitter));
+
+        float noiseSeedX = seedX + phaseJitter;
+        float noiseSeedY = seedY + (phaseJitter * 0.73f);
+        float bendBias = Mathf.PerlinNoise(noiseSeedX, 0.23f) * 2f - 1f;
+
+        float endpointStraightFraction = Mathf.Clamp(chainSettings.segmentEndpointStraightFraction, 0f, 0.45f);
+        float endpointEasePower = Mathf.Max(1f, chainSettings.segmentEndpointEasePower);
 
         for (int i = 1; i <= nOfPoints; i++)
         {
             float t = (float)i / (nOfPoints + 1);
             Vector3 segmentPosition = Vector3.Lerp(entryPoint, exitPoint, t);
 
-            // Fade offsets to zero at entry/exit so bends form long arcs through the middle.
-            float endpointEnvelope = Mathf.Sin(t * Mathf.PI);
+            // Keep a straighter run-in/run-out and delay bend buildup near both ends.
+            float endpointT = Mathf.InverseLerp(endpointStraightFraction, 1f - endpointStraightFraction, t);
+            endpointT = Mathf.Clamp01(endpointT);
+            float endpointEnvelope = Mathf.Pow(Mathf.Sin(endpointT * Mathf.PI), endpointEasePower);
 
-            float macroNoise = Mathf.PerlinNoise(seedX + t * macroFrequency, seedY) * 2f - 1f;
-            float microNoise = Mathf.PerlinNoise(seedX + 113f + t * microFrequency, seedY + 71f) * 2f - 1f;
+            float macroNoise = Mathf.PerlinNoise(noiseSeedX + t * macroFrequency, noiseSeedY) * 2f - 1f;
+            float microNoise = Mathf.PerlinNoise(noiseSeedX + 113f + t * microFrequency, noiseSeedY + 71f) * 2f - 1f;
 
-            float longBend = Mathf.Lerp(macroNoise, bendBias, chainSettings.segmentBendBias);
+            float longBend = Mathf.Lerp(macroNoise, bendBias, effectiveBendBias);
             float combinedNoise = longBend + (microNoise * chainSettings.segmentMicroBendRatio);
             float lateralOffset = combinedNoise * maxLateralOffset * endpointEnvelope;
             segmentPosition += perpendicular * lateralOffset;
@@ -616,9 +724,103 @@ public class SegmentChainBuilder : MonoBehaviour
             controlPoints.Add(segmentPosition);
         }
 
+        if (useBoundaryAnchors)
+            controlPoints.Add(exitAnchor);
+
         controlPoints.Add(exitPoint); // End point
+        ApplyVerticalProfileToControlPoints(controlPoints, entry, chainSettings);
         // Generate smooth curve using Catmull-Rom spline
         return GenerateCatmullRomSpline(controlPoints);
+    }
+
+    private void ApplyVerticalProfileToControlPoints(List<Vector3> controlPoints, EdgePoint entry, SegmentChainSettings settings)
+    {
+        if (settings == null || !settings.useVerticalProfile || controlPoints == null || controlPoints.Count < 2)
+            return;
+
+        float maxGrade = Mathf.Max(0f, settings.verticalMaxGradePercent) / 100f;
+        if (maxGrade <= 0f)
+            return;
+
+        float maxGradeChange = Mathf.Max(0f, settings.verticalMaxGradeChangePercent) / 100f;
+        float midpointJitter = Mathf.Clamp(settings.verticalMidpointJitter, 0f, 0.45f);
+        float endGradeReturn = Mathf.Clamp01(settings.verticalEndGradeReturn);
+        float maxChainElevationDelta = Mathf.Max(0f, settings.verticalMaxChainElevationDelta);
+
+        float[] cumulativeS = new float[controlPoints.Count];
+        for (int i = 1; i < controlPoints.Count; i++)
+        {
+            Vector3 from = controlPoints[i - 1];
+            Vector3 to = controlPoints[i];
+            float dx = to.x - from.x;
+            float dz = to.z - from.z;
+            cumulativeS[i] = cumulativeS[i - 1] + Mathf.Sqrt((dx * dx) + (dz * dz));
+        }
+
+        float totalLength = cumulativeS[controlPoints.Count - 1];
+        if (totalLength < 0.001f)
+            return;
+
+        float yStart = controlPoints[0].y;
+        float gStart = Mathf.Clamp(entry != null ? entry.edgeTravelGrade : 0f, -maxGrade, maxGrade);
+
+        float midpointShift = UnityEngine.Random.Range(-midpointJitter, midpointJitter);
+        float midpointFraction = Mathf.Clamp(0.5f + midpointShift, 0.2f, 0.8f);
+        float sMid = Mathf.Clamp(totalLength * midpointFraction, totalLength * 0.15f, totalLength * 0.85f);
+
+        float gMidRandom = UnityEngine.Random.Range(-maxGrade, maxGrade);
+        float gMid = Mathf.Clamp(gMidRandom, gStart - maxGradeChange, gStart + maxGradeChange);
+        gMid = Mathf.Clamp(gMid, -maxGrade, maxGrade);
+
+        float gEndTarget = Mathf.Lerp(gMid, 0f, endGradeReturn);
+        float gEnd = Mathf.Clamp(gEndTarget, gMid - maxGradeChange, gMid + maxGradeChange);
+        gEnd = Mathf.Clamp(gEnd, -maxGrade, maxGrade);
+
+        float yEndRaw = EvaluateParabolicVerticalProfile(totalLength, yStart, sMid, totalLength, gStart, gMid, gEnd);
+        float endCorrection = 0f;
+        if (maxChainElevationDelta > 0f)
+        {
+            float elevationDelta = yEndRaw - yStart;
+            float clampedDelta = Mathf.Clamp(elevationDelta, -maxChainElevationDelta, maxChainElevationDelta);
+            endCorrection = clampedDelta - elevationDelta;
+        }
+
+        for (int i = 0; i < controlPoints.Count; i++)
+        {
+            float s = cumulativeS[i];
+            float y = EvaluateParabolicVerticalProfile(s, yStart, sMid, totalLength, gStart, gMid, gEnd);
+
+            if (Mathf.Abs(endCorrection) > 0.0001f)
+            {
+                float u = s / totalLength;
+                y += endCorrection * u * u;
+            }
+
+            Vector3 p = controlPoints[i];
+            p.y = y;
+            controlPoints[i] = p;
+        }
+    }
+
+    private static float EvaluateParabolicVerticalProfile(float s, float yStart, float sMid, float totalLength, float gStart, float gMid, float gEnd)
+    {
+        if (totalLength <= 0.0001f)
+            return yStart;
+
+        float clampedS = Mathf.Clamp(s, 0f, totalLength);
+        float firstLength = Mathf.Max(0.0001f, sMid);
+        float secondLength = Mathf.Max(0.0001f, totalLength - sMid);
+
+        if (clampedS <= sMid)
+        {
+            float gradeSlope = (gMid - gStart) / firstLength;
+            return yStart + (gStart * clampedS) + (0.5f * gradeSlope * clampedS * clampedS);
+        }
+
+        float yMid = yStart + (0.5f * (gStart + gMid) * sMid);
+        float ds = clampedS - sMid;
+        float gradeSlope2 = (gEnd - gMid) / secondLength;
+        return yMid + (gMid * ds) + (0.5f * gradeSlope2 * ds * ds);
     }
 
     private List<RoadSegment> GenerateCatmullRomSpline(List<Vector3> controlPoints)
@@ -688,23 +890,54 @@ public class SegmentChainBuilder : MonoBehaviour
         return roadChain;
     }
 
-    private EdgePoint CreateEntry(EdgePoint exitPoint)
+private EdgePoint CreateEntry(EdgePoint exitPoint)
     {
         EdgeLocation location = GetInversedEdgeLocation(exitPoint.edgeLocation);
-        return new EdgePoint(location, exitPoint.edgePointPositionIndex, exitPoint.gameObject);
+        Vector3 entryForward = -exitPoint.edgeForward;
+        if (entryForward.sqrMagnitude < 0.0001f)
+            entryForward = GetEdgeOutwardDirection(location);
+
+        return new EdgePoint(location, exitPoint.edgePointT, entryForward, exitPoint.edgeTravelGrade, exitPoint.gameObject);
     }
 
-    private EdgePoint CreateExit(EdgePoint entryPoint)
+private EdgePoint CreateExit(EdgePoint entryPoint)
     {
-        EdgeLocation entryLocation = entryPoint.edgeLocation;
         EdgeLocation exitLocation = GetRandomExitLocation(entryPoint);
 
         GameObject segment = new GameObject("ExitPoint");
-        EdgePoint point = new EdgePoint(exitLocation, GetRandomExitPointIndex(entryLocation, exitLocation), segment);
+        EdgePoint point = new EdgePoint(exitLocation, GetSmartExitPointT(entryPoint, exitLocation), segment);
         segment.transform.position = GetEdgePointLocalPosition(point) + this.transform.position;
+
+        Vector3 edgeOutward = GetEdgeOutwardDirection(exitLocation);
+        Vector3 chainDirection = segment.transform.position - entryPoint.gameObject.transform.position;
+        chainDirection.y = 0f;
+        if (chainDirection.sqrMagnitude < 0.0001f)
+            chainDirection = edgeOutward;
+
+        chainDirection.Normalize();
+        Vector3 blendedForward = Vector3.Slerp(edgeOutward, chainDirection, 0.45f);
+        if (Vector3.Dot(blendedForward, edgeOutward) < 0f)
+            blendedForward = edgeOutward;
+
+        point.SetEdgeForward(blendedForward);
+        point.edgeTravelGrade = entryPoint.edgeTravelGrade;
         segment.transform.rotation = point.edgeRotation;
         return point;
     }
+
+private static Vector3 GetEdgeOutwardDirection(EdgeLocation edgeLocation)
+    {
+        return edgeLocation switch
+        {
+            EdgeLocation.Left => Vector3.left,
+            EdgeLocation.Right => Vector3.right,
+            EdgeLocation.Top => Vector3.forward,
+            EdgeLocation.Bottom => Vector3.back,
+            EdgeLocation.none => Vector3.forward,
+            _ => Vector3.forward
+        };
+    }
+
 
     private void SetTangentLenght(List<RoadSegment> segments)
     {
@@ -734,22 +967,28 @@ public class SegmentChainBuilder : MonoBehaviour
         List<EdgeLocation> possibility = new List<EdgeLocation> { (EdgeLocation)0, (EdgeLocation)1, (EdgeLocation)2, (EdgeLocation)3 };
         possibility.Remove(entryPoint.edgeLocation);
 
+        SegmentChainSettings settings = GetChainSettings(false).segmentChainSettings;
+        float margin = Mathf.Clamp01(settings.edgeMarginNormalized);
+        float t = Mathf.Clamp01(entryPoint.edgePointT);
+        bool nearLow = t <= margin;
+        bool nearHigh = t >= 1f - margin;
+
         if (entryPoint.edgeLocation == EdgeLocation.none)
             possibility.Remove(EdgeLocation.Bottom);
 
         if(entryPoint.edgeLocation == EdgeLocation.Left || entryPoint.edgeLocation == EdgeLocation.Right)
         {
-            if (entryPoint.edgePointPositionIndex == 0)
+            if (nearLow)
                 possibility.Remove(EdgeLocation.Bottom);
-            if (entryPoint.edgePointPositionIndex == GetChainSettings(false).segmentChainSettings.sidePointAmount - 1)
+            if (nearHigh)
                 possibility.Remove(EdgeLocation.Top);
         }
 
         if (entryPoint.edgeLocation == EdgeLocation.Top || entryPoint.edgeLocation == EdgeLocation.Bottom)
         {
-            if (entryPoint.edgePointPositionIndex == 0)
+            if (nearLow)
                 possibility.Remove(EdgeLocation.Left);
-            if (entryPoint.edgePointPositionIndex == GetChainSettings(false).segmentChainSettings.sidePointAmount - 1)
+            if (nearHigh)
                 possibility.Remove(EdgeLocation.Right);
         }
         return possibility;
@@ -794,25 +1033,20 @@ public class SegmentChainBuilder : MonoBehaviour
     {
         SegmentChainSettings settings = GetChainSettings(false).segmentChainSettings;
         float side = settings.gridSize / 2f;
-
-        float offset = settings.gridSize / settings.sidePointAmount;
-        float normalize = -side;  // Center based on grid size
-
-        // Ensure edgePointPositionIndex is within bounds
-        int clampedIndex = Mathf.Clamp(exitPoint.edgePointPositionIndex, 0, settings.sidePointAmount - 1);
-        float addition = offset * clampedIndex;
-        float pointPosition = normalize + addition;
+        float pointT = Mathf.Clamp01(exitPoint.edgePointT);
+        float pointPosition = Mathf.Lerp(-side, side, pointT);
+        float inwardOffset = Mathf.Clamp(settings.edgeInwardOffset, 0f, side);
 
         switch (exitPoint.edgeLocation)
         {
             case EdgeLocation.Left:
-                return new Vector3(-side, 0, pointPosition);
+                return new Vector3(-side + inwardOffset, 0, pointPosition);
             case EdgeLocation.Right:
-                return new Vector3(side, 0, pointPosition);
+                return new Vector3(side - inwardOffset, 0, pointPosition);
             case EdgeLocation.Top:
-                return new Vector3(pointPosition, 0, side);
+                return new Vector3(pointPosition, 0, side - inwardOffset);
             case EdgeLocation.Bottom:
-                return new Vector3(pointPosition, 0, -side);
+                return new Vector3(pointPosition, 0, -side + inwardOffset);
             case EdgeLocation.none:
                 return Vector3.zero;
         }
@@ -845,35 +1079,75 @@ public class SegmentChainBuilder : MonoBehaviour
         return p;
     }
 
-    private int GetRandomExitPointIndex(EdgeLocation entry, EdgeLocation exit)
+    private float GetSmartExitPointT(EdgePoint entryPoint, EdgeLocation exit)
     {
         SegmentChainSettings settings = GetChainSettings(false).segmentChainSettings;
-        int max = settings.sidePointAmount;
-        int buffer = settings.cornerBuffer;
-        int min = 0;
+        float min = 0f;
+        float max = 1f;
+        float bufferNormalized = settings.sidePointAmount <= 1
+            ? 0f
+            : settings.cornerBuffer / (float)(settings.sidePointAmount - 1);
+        float edgeMargin = Mathf.Clamp(settings.edgeMarginNormalized, 0f, 0.45f);
 
-        switch (entry)
+        switch (entryPoint.edgeLocation)
         {
             case EdgeLocation.Left:
                 if (exit != EdgeLocation.Right)
-                    min += buffer;
+                    min += bufferNormalized;
                 break;
             case EdgeLocation.Right:
                 if (exit != EdgeLocation.Left)
-                    max -= buffer;
+                    max -= bufferNormalized;
                 break;
             case EdgeLocation.Top:
                 if (exit != EdgeLocation.Bottom)
-                    max -= buffer;
+                    max -= bufferNormalized;
                 break;
             case EdgeLocation.Bottom:
                 if (exit != EdgeLocation.Top)
-                    min += buffer;
+                    min += bufferNormalized;
                 break;
             default:
                 break;
         }
-        return UnityEngine.Random.Range(min, max);
+
+        min = Mathf.Clamp(min, edgeMargin, 1f - edgeMargin);
+        max = Mathf.Clamp(max, min + 0.0001f, 1f - edgeMargin);
+
+        bool isStraight = IsStraightTransition(entryPoint.edgeLocation, exit);
+        float clampedEntryT = Mathf.Clamp01(entryPoint.edgePointT);
+        float normalizedEntryT = Mathf.Clamp(clampedEntryT, min, max);
+
+        float targetNormalizedT = normalizedEntryT;
+        if (!isStraight)
+        {
+            float outsideT = PrefersHighCornerIndex(entryPoint.edgeLocation) ? 1f : 0f;
+            targetNormalizedT = Mathf.Lerp(normalizedEntryT, outsideT, settings.cornerOutsideBias);
+        }
+
+        float targetT = Mathf.Clamp(targetNormalizedT, min, max);
+
+        float jitter = isStraight ? settings.edgeTJitterStraight : settings.edgeTJitterCorner;
+        float randomMin = Mathf.Clamp(targetT - jitter, min, max);
+        float randomMax = Mathf.Clamp(targetT + jitter, min, max);
+
+        if (randomMin >= randomMax)
+            return targetT;
+
+        return UnityEngine.Random.Range(randomMin, randomMax);
+    }
+
+    private static bool IsStraightTransition(EdgeLocation entry, EdgeLocation exit)
+    {
+        return (entry == EdgeLocation.Left && exit == EdgeLocation.Right) ||
+               (entry == EdgeLocation.Right && exit == EdgeLocation.Left) ||
+               (entry == EdgeLocation.Top && exit == EdgeLocation.Bottom) ||
+               (entry == EdgeLocation.Bottom && exit == EdgeLocation.Top);
+    }
+
+    private static bool PrefersHighCornerIndex(EdgeLocation entry)
+    {
+        return entry == EdgeLocation.Left || entry == EdgeLocation.Bottom;
     }
 
     private List<RoadSegment> CreatePointsbetweenEntryStart(EdgePoint entry, EdgePoint exit, int nOfPoints)
@@ -926,19 +1200,37 @@ public class SegmentChainBuilder : MonoBehaviour
     /// Rotate segments to average between front and behind segments
     /// </summary>
     /// <param name="segments"></param>
-    private void OrientSegments(List<RoadSegment> segments)
+private void OrientSegments(List<RoadSegment> segments)
     {
+        if (segments == null || segments.Count == 0)
+            return;
+
+        if (segments.Count == 1)
+            return;
+
+        // First point: use forward difference.
+        Vector3 firstDirection = segments[1].transform.position - segments[0].transform.position;
+        if (firstDirection.sqrMagnitude > 0.0001f)
+            segments[0].transform.rotation = Quaternion.LookRotation(firstDirection, Vector3.up);
+
+        // Middle points: use centered difference.
         for (int i = 1; i < segments.Count - 1; i++)
         {
             Vector3 infront = segments[i + 1].transform.position;
             Vector3 behind = segments[i - 1].transform.position;
-            segments[i].transform.rotation = Quaternion.LookRotation(infront - behind);
+            Vector3 direction = infront - behind;
+
+            if (direction.sqrMagnitude > 0.0001f)
+                segments[i].transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
         }
 
-        //segments[0].transform.rotation = Quaternion.LookRotation(segments[1].transform.position - segments[0].transform.position);
-
-        //Quaternion rotationNormal = Quaternion.LookRotation(segments[segments.Count - 1].transform.position - segments[segments.Count - 2].transform.position);
-        //segments[segments.Count - 1].transform.rotation = rotationNormal * Quaternion.Euler(0, UnityEngine.Random.Range(-90, 90), 0);
+        // Last point: use backward difference.
+        int lastIndex = segments.Count - 1;
+        Vector3 lastDirection = segments[lastIndex].transform.position - segments[lastIndex - 1].transform.position;
+        if (lastDirection.sqrMagnitude > 0.0001f)
+            segments[lastIndex].transform.rotation = Quaternion.LookRotation(lastDirection, Vector3.up);
+        else
+            segments[lastIndex].transform.rotation = segments[lastIndex - 1].transform.rotation;
     }
 
     /// <summary>
@@ -1017,49 +1309,85 @@ public class SegmentChainBuilder : MonoBehaviour
 }
 
 [System.Serializable]
+
 public class EdgePoint
 {
     public EdgeLocation edgeLocation = EdgeLocation.none;
-    public int edgePointPositionIndex = 99; //Point on side.
-    public Quaternion edgeRotation { get { return GetEdgeRotation(); } }
-    public GameObject gameObject { get { return GO; } }
-    private GameObject GO;
-    public EdgePoint(EdgeLocation edge ,int index, GameObject gameObject)
+    public float edgePointT = 0.5f; // Normalized position on side (0..1).
+    public float edgeTravelGrade = 0f; // Signed rise/run grade carried between chains.
+    public Quaternion edgeRotation { get { return Quaternion.LookRotation(edgeForward, Vector3.up); } }
+    public Vector3 edgeForward
     {
-        this.edgePointPositionIndex = index;
-        this.edgeLocation = edge;
-        this.GO = gameObject;
+        get
+        {
+            if (_edgeForward.sqrMagnitude < 0.0001f)
+                _edgeForward = GetDefaultEdgeForward(edgeLocation);
+            return _edgeForward.normalized;
+        }
+    }
+    public GameObject gameObject { get { return GO; } }
+
+    private GameObject GO;
+    private Vector3 _edgeForward;
+
+    public EdgePoint(EdgeLocation edge, float t, Vector3 forward, float travelGrade, GameObject gameObject)
+    {
+        edgePointT = Mathf.Clamp01(t);
+        edgeLocation = edge;
+        edgeTravelGrade = travelGrade;
+        GO = gameObject;
+        SetEdgeForward(forward);
+    }
+
+    public EdgePoint(EdgeLocation edge, float t, Vector3 forward, GameObject gameObject)
+        : this(edge, t, forward, 0f, gameObject)
+    {
+    }
+
+    public EdgePoint(EdgeLocation edge, float t, GameObject gameObject)
+        : this(edge, t, GetDefaultEdgeForward(edge), 0f, gameObject)
+    {
+    }
+
+    public EdgePoint(EdgeLocation edge, int index, GameObject gameObject)
+    {
+        int sidePointAmount = SegmentChainBuilder.GetActiveSidePointAmountOrDefault();
+        float denominator = Mathf.Max(1f, sidePointAmount - 1f);
+        edgePointT = Mathf.Clamp01(index / denominator);
+        edgeLocation = edge;
+        edgeTravelGrade = 0f;
+        GO = gameObject;
+        _edgeForward = GetDefaultEdgeForward(edge);
     }
 
     public EdgePoint(GameObject gameObject)
     {
-        this.GO = gameObject;
+        edgePointT = 0.5f;
+        edgeTravelGrade = 0f;
+        GO = gameObject;
+        _edgeForward = GetDefaultEdgeForward(EdgeLocation.none);
     }
 
-    private Quaternion GetEdgeRotation()
+    public void SetEdgeForward(Vector3 forward)
     {
-        Quaternion rotation = Quaternion.identity;
-        switch (edgeLocation)
+        forward.y = 0f;
+        if (forward.sqrMagnitude < 0.0001f)
+            forward = GetDefaultEdgeForward(edgeLocation);
+
+        _edgeForward = forward.normalized;
+    }
+
+    private static Vector3 GetDefaultEdgeForward(EdgeLocation edgeLocation)
+    {
+        return edgeLocation switch
         {
-            case EdgeLocation.Left:
-                rotation = Quaternion.Euler(0, -90, 0);
-                break;
-            case EdgeLocation.Right:
-                rotation = Quaternion.Euler(0, 90, 0);
-                break;
-            case EdgeLocation.Top:
-                rotation = Quaternion.Euler(0, 0, 0);
-                break;
-            case EdgeLocation.Bottom:
-                rotation = Quaternion.Euler(0, 180, 0);
-                break;
-            case EdgeLocation.none:
-                rotation = Quaternion.Euler(0, 0, 0);
-                break;
-            default:
-                break;
-        }
-        return rotation;
+            EdgeLocation.Left => Vector3.left,
+            EdgeLocation.Right => Vector3.right,
+            EdgeLocation.Top => Vector3.forward,
+            EdgeLocation.Bottom => Vector3.back,
+            EdgeLocation.none => Vector3.forward,
+            _ => Vector3.forward
+        };
     }
 }
 
@@ -1091,55 +1419,55 @@ public class RoadFormVariables
         this.lerpSpeed = lerpSpeed;
     }
 
-public void UpdateDelay(float extrusion)
-{
-    // Smoothly adjust the extrusion velocity using linear interpolation (Lerp)
-    extrusionVelocity = Mathf.Lerp(extrusionVelocity, extrusion, lerpSpeed);
-    MainExtrusion = Mathf.Lerp(MainExtrusion, extrusionVelocity, lerpSpeed);
-
-    // Update the left and right extrusions based on the new MainExtrusion value
-    if (extrusionVelocity < 0f && MainExtrusion <= leftExtrusion)
+    public void UpdateDelay(float extrusion)
     {
-        // If the extrusion velocity is negative and MainExtrusion is less than or equal to the left extrusion,
-        // set the left extrusion to MainExtrusion and reset the left reduction velocity to zero. 
-        leftExtrusion = MainExtrusion;
-        leftReductionVelocity = 0f;
+        // Smoothly adjust the extrusion velocity using linear interpolation (Lerp)
+        extrusionVelocity = Mathf.Lerp(extrusionVelocity, extrusion, lerpSpeed);
+        MainExtrusion = Mathf.Lerp(MainExtrusion, extrusionVelocity, lerpSpeed);
 
-        // If the absolute value of leftExtrusion is greater than 0.05f, set maxRightExtrusion to zero
-        if (Mathf.Abs(leftExtrusion) > 0.05f)
+        // Update the left and right extrusions based on the new MainExtrusion value
+        if (extrusionVelocity < 0f && MainExtrusion <= leftExtrusion)
         {
-            maxRightExtrusion = 0f;
+            // If the extrusion velocity is negative and MainExtrusion is less than or equal to the left extrusion,
+            // set the left extrusion to MainExtrusion and reset the left reduction velocity to zero. 
+            leftExtrusion = MainExtrusion;
+            leftReductionVelocity = 0f;
+
+            // If the absolute value of leftExtrusion is greater than 0.05f, set maxRightExtrusion to zero
+            if (Mathf.Abs(leftExtrusion) > 0.05f)
+            {
+                maxRightExtrusion = 0f;
+            }
+        }
+        else if ((maxLeftExtrusion == 0f || extrusion == 0f) && leftExtrusion != 0f)
+        {
+            // If maxLeftExtrusion is zero or extrusion is zero and leftExtrusion is not already zero,
+            // smoothly reduce leftExtrusion towards zero using leftReductionVelocity and increment leftReductionVelocity by 0.0001f.
+            leftExtrusion = Mathf.Lerp(leftExtrusion, 0f, leftReductionVelocity);
+            leftReductionVelocity += 0.001f;
+        }
+
+        if (extrusionVelocity > 0f && MainExtrusion >= rightExtrusion)
+        {
+            // If the extrusion velocity is positive and MainExtrusion is greater than or equal to the right extrusion,
+            // set the right extrusion to MainExtrusion and reset the right reduction velocity to zero. 
+            rightExtrusion = MainExtrusion;
+            righReductiontVelocity = 0f;
+
+            // If the absolute value of rightExtrusion is greater than 0.05f, set maxLeftExtrusion to zero
+            if (Mathf.Abs(rightExtrusion) > 0.05f)
+            {
+                maxLeftExtrusion = 0f;
+            }
+        }
+        else if ((maxRightExtrusion == 0f || extrusion == 0f) && rightExtrusion != 0f)
+        {
+            // If maxRightExtrusion is zero or extrusion is zero and rightExtrusion is not already zero,
+            // smoothly reduce rightExtrusion towards zero using righReductiontVelocity and increment righReductiontVelocity by 0.0001f.
+            rightExtrusion = Mathf.Lerp(rightExtrusion, 0f, righReductiontVelocity);
+            righReductiontVelocity += 0.001f;
         }
     }
-    else if ((maxLeftExtrusion == 0f || extrusion == 0f) && leftExtrusion != 0f)
-    {
-        // If maxLeftExtrusion is zero or extrusion is zero and leftExtrusion is not already zero,
-        // smoothly reduce leftExtrusion towards zero using leftReductionVelocity and increment leftReductionVelocity by 0.0001f.
-        leftExtrusion = Mathf.Lerp(leftExtrusion, 0f, leftReductionVelocity);
-        leftReductionVelocity += 0.001f;
-    }
-
-    if (extrusionVelocity > 0f && MainExtrusion >= rightExtrusion)
-    {
-        // If the extrusion velocity is positive and MainExtrusion is greater than or equal to the right extrusion,
-        // set the right extrusion to MainExtrusion and reset the right reduction velocity to zero. 
-        rightExtrusion = MainExtrusion;
-        righReductiontVelocity = 0f;
-
-        // If the absolute value of rightExtrusion is greater than 0.05f, set maxLeftExtrusion to zero
-        if (Mathf.Abs(rightExtrusion) > 0.05f)
-        {
-            maxLeftExtrusion = 0f;
-        }
-    }
-    else if ((maxRightExtrusion == 0f || extrusion == 0f) && rightExtrusion != 0f)
-    {
-        // If maxRightExtrusion is zero or extrusion is zero and rightExtrusion is not already zero,
-        // smoothly reduce rightExtrusion towards zero using righReductiontVelocity and increment righReductiontVelocity by 0.0001f.
-        rightExtrusion = Mathf.Lerp(rightExtrusion, 0f, righReductiontVelocity);
-        righReductiontVelocity += 0.001f;
-    }
-}
 
     private void UpdateCornerCamber(float extrusion)
     {

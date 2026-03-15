@@ -55,6 +55,16 @@ public class VehicleController : MonoBehaviour
 
     [Header("Controll settings")]
     public float steeringStrenght;
+    [SerializeField] private AnimationCurve keyboardSteeringLimitBySpeedKmh = new AnimationCurve(
+        new Keyframe(0f, 1f),
+        new Keyframe(60f, 0.8f),
+        new Keyframe(120f, 0.55f),
+        new Keyframe(180f, 0.35f),
+        new Keyframe(250f, 0.25f)
+    );
+    [SerializeField] private float keyboardTurnInRate = 2.5f;
+    [SerializeField] private float keyboardCounterSteerRate = 5f;
+    [SerializeField] private float keyboardRecenterRate = 6f;
 
     public VehicleUserInterfaceData userInterface;
     private FeedbackSystem feedbackSystem;
@@ -247,11 +257,9 @@ public class VehicleController : MonoBehaviour
             brakeInput = 0f;
         }
 
-        // Keep full steering range independent of throttle input.
-        // Throttle-based steering lockout made steering impossible at high acceleration.
         steerInput = Mathf.Clamp(steerInput, -1f, 1f);
 
-        if (userInputType != InputType.Wheel)
+        if (userInputType == InputType.Gamepad)
             steerInput = steerInput * gamepadInputWeakener.Evaluate(Mathf.Abs(steerInput));
 
         float wheelSlip  = 0f;
@@ -261,8 +269,7 @@ public class VehicleController : MonoBehaviour
 
         SetUserInterface(accelerationInput, brakeInput);
 
-        float fibrationCompensation = localForwardVelocity * Time.deltaTime;
-        float playerSteeringForce = CalculateSteeringInputForce(steerInput, userInputType, fibrationCompensation);
+        float playerSteeringForce = CalculateSteeringInputForce(steerInput, userInputType, localForwardVelocity);
         ApplySteeringDirection(playerSteeringForce);
         SetSteeringWheelModelRotation(-playerSteeringForce);
         SetSteeringFrontWheels();
@@ -360,18 +367,23 @@ public class VehicleController : MonoBehaviour
         userInterface.brake = brakeInput;
     }
 
-    private float gamePadSteering = 0f;
-    private float CalculateSteeringInputForce(float steerInput, InputType inputType, float power)
+    private float filteredKeyboardSteering = 0f;
+    private float filteredGamepadSteering = 0f;
+
+    private float CalculateSteeringInputForce(float steerInput, InputType inputType, float localForwardVelocity)
     {
-        steerPull = CalculateSteerWeight() / steeringStrenght;
+        steerPull = CalculateSteerWeight() / Mathf.Max(steeringStrenght, 0.0001f);
         switch (inputType)
         {
             case InputType.Keyboard:
-                gamePadSteering = Mathf.Lerp(gamePadSteering, steerInput - (steerPull), Time.fixedDeltaTime);
-                return gamePadSteering;
+                float speedKmh = Mathf.Abs(localForwardVelocity) * 3.6f;
+                float keyboardSteeringLimit = EvaluateKeyboardSteeringLimit(speedKmh);
+                float targetKeyboardSteer = Mathf.Clamp(steerInput, -1f, 1f) * keyboardSteeringLimit;
+                filteredKeyboardSteering = MoveKeyboardSteeringTowards(filteredKeyboardSteering, targetKeyboardSteer);
+                return ApplySteerPullWithoutDirectionFlip(filteredKeyboardSteering, targetKeyboardSteer);
             case InputType.Gamepad:
-                gamePadSteering = Mathf.Lerp(gamePadSteering, steerInput - (steerPull), Time.fixedDeltaTime);
-                return gamePadSteering;
+                filteredGamepadSteering = Mathf.Lerp(filteredGamepadSteering, steerInput - steerPull, Time.fixedDeltaTime);
+                return filteredGamepadSteering;
             case InputType.Wheel:
                 //Steering wheel input
                 steeringInput.SetInputWheelForce(Mathf.RoundToInt(steerPull * 100f));
@@ -379,6 +391,56 @@ public class VehicleController : MonoBehaviour
             default:
                 return steerInput;
         }
+    }
+
+    private float EvaluateKeyboardSteeringLimit(float speedKmh)
+    {
+        if (keyboardSteeringLimitBySpeedKmh == null || keyboardSteeringLimitBySpeedKmh.length == 0)
+        {
+            return 1f;
+        }
+
+        Keyframe[] keys = keyboardSteeringLimitBySpeedKmh.keys;
+        float clampedSpeed = Mathf.Clamp(speedKmh, keys[0].time, keys[keys.Length - 1].time);
+        return Mathf.Clamp01(keyboardSteeringLimitBySpeedKmh.Evaluate(clampedSpeed));
+    }
+
+    private float MoveKeyboardSteeringTowards(float currentSteer, float targetSteer)
+    {
+        float steerRate = keyboardTurnInRate;
+        if (Mathf.Approximately(targetSteer, 0f))
+        {
+            steerRate = keyboardRecenterRate;
+        }
+        else if (!Mathf.Approximately(currentSteer, 0f) && Mathf.Sign(currentSteer) != Mathf.Sign(targetSteer))
+        {
+            steerRate = keyboardCounterSteerRate;
+        }
+
+        return Mathf.MoveTowards(currentSteer, targetSteer, Mathf.Max(0f, steerRate) * Time.fixedDeltaTime);
+    }
+
+    private float ApplySteerPullWithoutDirectionFlip(float currentSteer, float targetSteer)
+    {
+        float correctedSteer = currentSteer - steerPull;
+
+        if (!Mathf.Approximately(targetSteer, 0f))
+        {
+            if (Mathf.Sign(correctedSteer) != Mathf.Sign(targetSteer))
+            {
+                return 0f;
+            }
+
+            float maxMagnitude = Mathf.Abs(currentSteer);
+            return Mathf.Clamp(correctedSteer, -maxMagnitude, maxMagnitude);
+        }
+
+        if (!Mathf.Approximately(currentSteer, 0f) && Mathf.Sign(correctedSteer) != Mathf.Sign(currentSteer))
+        {
+            return 0f;
+        }
+
+        return correctedSteer;
     }
 
     /// <summary>
@@ -479,7 +541,7 @@ public class VehicleController : MonoBehaviour
         int i = 0;
         foreach (Suspension s in suspensions)
         {
-            if(hits[i] != null)
+            if(hits.Count > 0 && hits[i] != null)
                 rb.AddForceAtPosition(physics[i], Vector3.Lerp(s.transform.position, hits[i].Value.point, 1f));
             i++;
         }

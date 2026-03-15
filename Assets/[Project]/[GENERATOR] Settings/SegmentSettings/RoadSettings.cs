@@ -182,31 +182,116 @@ public class RoadSettings : ScriptableObject
 [System.Serializable]
 public class SegmentChainSettings
 {
-    [Space]
-    [Tooltip("Amount of points on the side of a RoadchainBlock")]
+    [FoldoutGroup("Grid"), LabelText("Side Point Amount"), MinValue(1)]
+    [Tooltip("Amount of points on each side of a road-chain block.")]
     public int sidePointAmount;
+    [FoldoutGroup("Grid"), LabelText("Corner Buffer"), MinValue(0)]
+    [Tooltip("Excludes edge indices near corners to avoid extreme turns.")]
 	public int cornerBuffer;
+    [FoldoutGroup("Grid"), LabelText("Grid Size"), MinValue(1)]
+    [Tooltip("World-space size of one chain block.")]
     public int gridSize;//Unity UnitSize
 
+    [FoldoutGroup("Point Density"), LabelText("Straight Points"), MinValue(0)]
     public int straight_NpointsBetween;
+    [FoldoutGroup("Point Density"), LabelText("Corner Points"), MinValue(0)]
     public int corner_NpointsBetween;
 
-    [Header("New segment settings")]
-    [Range(0f, 300f)]
+    [FoldoutGroup("Exit Index"), PropertyRange(0f, 1f)]
+    [LabelText("Corner Outside Bias")]
+    [Tooltip("0 keeps closer to entry index, 1 pushes corners toward the outside.")]
+    public float cornerOutsideBias = 0.65f;
+    [FoldoutGroup("Exit Index"), PropertyRange(0, 4)]
+    [LabelText("Straight Jitter")]
+    public int straightIndexJitter = 1;
+    [FoldoutGroup("Exit Index"), PropertyRange(0, 6)]
+    [LabelText("Corner Jitter")]
+    public int cornerIndexJitter = 2;
+    [FoldoutGroup("Exit Index"), PropertyRange(0f, 0.45f)]
+    [LabelText("Edge Margin")]
+    [Tooltip("Normalized margin from edge corners reserved to avoid clipping turns.")]
+    public float edgeMarginNormalized = 0.12f;
+    [FoldoutGroup("Exit Index"), PropertyRange(0f, 0.5f)]
+    [LabelText("Straight T Jitter")]
+    [Tooltip("Normalized randomization of exit t for straight transitions.")]
+    public float edgeTJitterStraight = 0.08f;
+    [FoldoutGroup("Exit Index"), PropertyRange(0f, 0.5f)]
+    [LabelText("Corner T Jitter")]
+    [Tooltip("Normalized randomization of exit t for corner transitions.")]
+    public float edgeTJitterCorner = 0.14f;
+    [FoldoutGroup("Exit Index"), PropertyRange(0f, 300f)]
+    [LabelText("Edge Inward Offset")]
+    [Tooltip("Pushes entry/exit points inward from the tile border in world units.")]
+    public float edgeInwardOffset = 0f;
+
+    [FoldoutGroup("Path Shape"), PropertyRange(0f, 300f)]
+    [LabelText("Lateral Variation")]
     public float segmentXaxisVariation;
-    [Range(0f, 2f)]
+    [FoldoutGroup("Path Shape"), PropertyRange(0f, 2f)]
+    [LabelText("Bend Strength")]
     public float segmentBendStrength = .6f;
-    [Range(0.1f, 6f)]
+    [FoldoutGroup("Path Shape"), PropertyRange(0.1f, 6f)]
+    [LabelText("Bend Frequency")]
     public float segmentBendFrequency = 1.2f;
-    [Range(0f, 1f)]
+    [FoldoutGroup("Path Shape"), PropertyRange(0f, 1f)]
+    [LabelText("Micro Bend Ratio")]
     public float segmentMicroBendRatio = 0.1f;
-    [Range(0f, 1f)]
+    [FoldoutGroup("Path Shape"), PropertyRange(0f, 1f)]
+    [LabelText("Bend Bias")]
     public float segmentBendBias = 0.6f;
+    [FoldoutGroup("Path Shape"), PropertyRange(0f, 0.4f)]
+    [LabelText("Endpoint Straight Fraction")]
+    public float segmentEndpointStraightFraction = 0.14f;
+    [FoldoutGroup("Path Shape"), PropertyRange(1f, 4f)]
+    [LabelText("Endpoint Ease Power")]
+    public float segmentEndpointEasePower = 1.8f;
+    [FoldoutGroup("Path Shape"), PropertyRange(0f, 0.45f)]
+    [LabelText("Boundary Tangent Fraction")]
+    [Tooltip("Fraction of chain length used to force entry/exit tangent alignment.")]
+    public float segmentBoundaryTangentFraction = 0.2f;
+    [FoldoutGroup("Path Shape"), PropertyRange(0f, 200f)]
+    [LabelText("Boundary Tangent Min Dist")]
+    [Tooltip("Minimum world-space tangent anchor distance from the entry/exit point.")]
+    public float segmentBoundaryTangentMinDistance = 20f;
+    [FoldoutGroup("Path Shape"), PropertyRange(0f, 300f)]
+    [LabelText("Noise Phase Jitter")]
+    [Tooltip("Random phase shift per generated chain. Higher values reduce duplicate track templates.")]
+    public float segmentNoisePhaseJitter = 120f;
+    [FoldoutGroup("Path Shape"), PropertyRange(0f, 0.4f)]
+    [LabelText("Bend Bias Jitter")]
+    [Tooltip("Random per-chain variation around Bend Bias.")]
+    public float segmentBendBiasJitter = 0.08f;
 
-    [Range(0f, 25f)]
+    [FoldoutGroup("Height"), PropertyRange(0f, 25f)]
+    [LabelText("Height Range")]
     public float segmentHeightRange;
+    [FoldoutGroup("Height"), LabelText("Fixed Around Zero")]
     public bool isFixedBetweenRange;
+    [FoldoutGroup("Height"), LabelText("Use Vertical Profile")]
+    [Tooltip("Uses civil-style grade shaping instead of random per-point heights.")]
+    public bool useVerticalProfile = true;
+    [FoldoutGroup("Height"), PropertyRange(0f, 40f)]
+    [LabelText("Max Grade %")]
+    [Tooltip("Absolute maximum longitudinal grade in percent.")]
+    public float verticalMaxGradePercent = 6f;
+    [FoldoutGroup("Height"), PropertyRange(0f, 40f)]
+    [LabelText("Max Grade Change %")]
+    [Tooltip("Maximum allowed grade delta between profile nodes in percent.")]
+    public float verticalMaxGradeChangePercent = 4f;
+    [FoldoutGroup("Height"), PropertyRange(0f, 1f)]
+    [LabelText("Midpoint Jitter")]
+    [Tooltip("Normalized midpoint offset around chain center for crest/sag placement.")]
+    public float verticalMidpointJitter = 0.12f;
+    [FoldoutGroup("Height"), PropertyRange(0f, 1f)]
+    [LabelText("End Grade Return")]
+    [Tooltip("How strongly the end grade trends back toward flat (0..1).")]
+    public float verticalEndGradeReturn = 0.55f;
+    [FoldoutGroup("Height"), PropertyRange(0f, 50f)]
+    [LabelText("Max Chain Elevation Delta")]
+    [Tooltip("Caps total elevation change from chain start to chain end in world units.")]
+    public float verticalMaxChainElevationDelta = 8f;
 
-    [Range(10, 50)]
+    [FoldoutGroup("Cleanup"), PropertyRange(10, 50)]
+    [LabelText("Deletion Proximity")]
     public int segmentDeletionProximity;
 }

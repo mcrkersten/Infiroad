@@ -74,7 +74,7 @@ public class Wheel_Raycast : MonoBehaviour
             lastHitPosition = hitPoint.point;
             hit = hitPoint;
 
-            Material m = GetMaterialFromRaycastHit(hit, hit.transform.GetComponent<Mesh>());
+            Material m = GetMaterialFromRaycastHit(hit);
             RoadSegment roadSegment = hit.transform.GetComponentInParent<RoadSegment>();
             if (roadSegment != null && m != null)
             {
@@ -94,34 +94,51 @@ public class Wheel_Raycast : MonoBehaviour
         return false;
     }
 
-    private Material GetMaterialFromRaycastHit(RaycastHit hit, Mesh mesh)
+    private Material GetMaterialFromRaycastHit(RaycastHit hit)
     {
         MeshCollider meshCollider = hit.collider as MeshCollider;
         if (meshCollider == null || meshCollider.sharedMesh == null)
             return null;
 
-        mesh = meshCollider.sharedMesh;
+        Mesh mesh = meshCollider.sharedMesh;
         Renderer renderer = hit.collider.GetComponent<MeshRenderer>();
-        if (renderer == null)
+        if (renderer == null || mesh == null)
+            return null;
+
+        if (hit.triangleIndex < 0)
+            return null;
+
+        int[] triangles = mesh.triangles;
+        if (triangles == null || triangles.Length < 3)
+            return null;
+
+        int triIndexStart = hit.triangleIndex * 3;
+        if (triIndexStart + 2 >= triangles.Length)
             return null;
 
         int[] hitTriangle = new int[]
         {
-                    mesh.triangles[hit.triangleIndex * 3],
-                    mesh.triangles[hit.triangleIndex * 3 + 1],
-                    mesh.triangles[hit.triangleIndex * 3 + 2]
+                    triangles[triIndexStart],
+                    triangles[triIndexStart + 1],
+                    triangles[triIndexStart + 2]
         };
 
-        for (int i = 0; i < mesh.subMeshCount; i++)
+        Material[] materials = renderer.sharedMaterials;
+        int maxSubMesh = Mathf.Min(mesh.subMeshCount, materials.Length);
+
+        for (int i = 0; i < maxSubMesh; i++)
         {
             int[] subMeshTris = mesh.GetTriangles(i);
-            for (int j = 0; j < subMeshTris.Length; j += 3)
+            if (subMeshTris == null || subMeshTris.Length < 3)
+                continue;
+
+            for (int j = 0; j <= subMeshTris.Length - 3; j += 3)
             {
                 if (subMeshTris[j] == hitTriangle[0] &&
                     subMeshTris[j + 1] == hitTriangle[1] &&
                     subMeshTris[j + 2] == hitTriangle[2])
                 {
-                    return renderer.sharedMaterials[i];
+                    return materials[i];
                 }
             }
         }

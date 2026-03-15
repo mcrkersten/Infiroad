@@ -282,12 +282,14 @@ MonoBehaviour:
     position: {x: 27.40662, y: -4.818567, z: 0}
   guardRailMinimalCornerRadius: 0
   roadTypeTag: PURPLE
+  assetTriggerResolution: 3
   assetPools:
   - tag: 1
     prefabs:
     - {fileID: 6390541770965817990, guid: 99f97bfa5adea234db067b7d62c80b89, type: 3}
     - {fileID: 6583596778410102861, guid: 2c9649ec75a3b42409017407bc873e78, type: 3}
-    size: 200
+    size: 300
+    color: {r: 1, g: 0, b: 0, a: 1}
   rotationEasing: 3
   edgeLoopsPerMeter: 1
   debugRoadCurveStrenght: 0
@@ -371,10 +373,34 @@ MonoBehaviour:
   hardEdges: 17
   segmentChainSettings:
     sidePointAmount: 3
+    cornerBuffer: 0
     gridSize: 350
     straight_NpointsBetween: 2
     corner_NpointsBetween: 2
+    cornerOutsideBias: 0.65
+    straightIndexJitter: 1
+    cornerIndexJitter: 2
+    edgeMarginNormalized: 0.12
+    edgeTJitterStraight: 0.08
+    edgeTJitterCorner: 0.14
+    edgeInwardOffset: 0
     segmentXaxisVariation: 75
-    segmentHeightRange: 2
+    segmentBendStrength: 0.6
+    segmentBendFrequency: 1.2
+    segmentMicroBendRatio: 0.1
+    segmentBendBias: 0.6
+    segmentEndpointStraightFraction: 0.14
+    segmentEndpointEasePower: 1.8
+    segmentBoundaryTangentFraction: 0.2
+    segmentBoundaryTangentMinDistance: 20
+    segmentNoisePhaseJitter: 120
+    segmentBendBiasJitter: 0.08
+    segmentHeightRange: 25
     isFixedBetweenRange: 0
+    useVerticalProfile: 1
+    verticalMaxGradePercent: 40
+    verticalMaxGradeChangePercent: 40
+    verticalMidpointJitter: 1
+    verticalEndGradeReturn: 1
+    verticalMaxChainElevationDelta: 8
     segmentDeletionProximity: 30
