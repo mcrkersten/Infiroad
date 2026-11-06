@@ -16,9 +16,10 @@
 // Freya
 //
 
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
-#if UNITY_EDITOR
+
 public static class Gizmosfs {
 
 	// Drawing a wireframe circle

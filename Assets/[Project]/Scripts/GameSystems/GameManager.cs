@@ -120,23 +120,18 @@ namespace GameSystems {
         private void GameOver()
         {
             isRunning = false;
-            Debug.Log("GAME OVER");
-            if (bestRun != null)
-            {
-                if (vehicleController.distanceTraveled > bestRun.distance)
-                {
-                    FileManager.SaveRaceData(currentRun);
-                }
-            }
-            else
-            {
+            if (currentRun == null)
+                return;
+
+            currentRun.distance = (int)vehicleController.distanceTraveled;
+            if (bestRun == null || currentRun.distance > bestRun.distance)
                 FileManager.SaveRaceData(currentRun);
-            }
         }
 
         private void OnDestroy()
         {
             CountdownClock.timerFinished -= GO_Timer;
+            CountdownClock.timerFinished -= Game_Timer;
         }
     }
 }

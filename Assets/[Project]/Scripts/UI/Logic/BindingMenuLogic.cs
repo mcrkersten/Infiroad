@@ -322,6 +322,9 @@ public class BindingMenuLogic : MonoBehaviour
     #region UI_ButtonFunctions
     private void StartRemapProcess(InputType type)
     {
+        // Select the map before loading, otherwise the overrides of the previously selected type get loaded
+        bindingManager.selectedInputType = type;
+        bindingManager.currentSelectedInputActionMap = bindingManager.vehicleInputActions.asset.actionMaps[(int)type];
         bindingManager.LoadActionmap(bindingManager.vehicleInputActions);
         switch (type)
         {
@@ -338,8 +341,6 @@ public class BindingMenuLogic : MonoBehaviour
 
         CreateBindingKeyList(type);
         returnToDefaultButton.onClick.AddListener(() => ReturnToDefaultButton());
-        bindingManager.selectedInputType = type;
-        bindingManager.currentSelectedInputActionMap = bindingManager.vehicleInputActions.asset.actionMaps[(int)type];
     }
     private void StartGame(int i)
     {

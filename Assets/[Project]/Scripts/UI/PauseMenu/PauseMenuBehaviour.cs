@@ -19,28 +19,28 @@ public class PauseMenuBehaviour : MonoBehaviour
 
     public void OnStartMenu(InputAction.CallbackContext obj)
     {
-        if (!isPaused)
-        {
-            Debug.Log("GAME PAUSED");
-            pauseMenuPlane.gameObject.SetActive(true);
-            isPaused = true;
-            buttons.buttons[0].Select();
-            Time.timeScale = 0;
-        }
-        else
-        {
-            Debug.Log("GAME UN-PAUSED");
-            pauseMenuPlane.gameObject.SetActive(false);
-            Time.timeScale = 1;
-            isPaused = false;
-        }
+        SetPaused(!isPaused);
     }
 
     private void OnResume()
     {
-        Debug.Log("GAME UN-PAUSED");
-        pauseMenuPlane.gameObject.SetActive(false);
-        isPaused = false;
+        SetPaused(false);
+    }
+
+    private void SetPaused(bool paused)
+    {
+        isPaused = paused;
+        pauseMenuPlane.gameObject.SetActive(paused);
+        Time.timeScale = paused ? 0 : 1;
+        if (paused)
+            buttons.buttons[0].Select();
+    }
+
+    private void OnDestroy()
+    {
+        // Never leave the next scene frozen if this menu is destroyed while paused
+        if (isPaused)
+            Time.timeScale = 1;
     }
 
     private void LoadMainMenu()

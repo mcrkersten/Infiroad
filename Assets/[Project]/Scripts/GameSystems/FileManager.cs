@@ -7,28 +7,46 @@ using System.Runtime.Serialization.Formatters.Binary;
 [System.Serializable]
 public class FileManager
 {
+    private static string RaceDataPath => Path.Combine(Application.persistentDataPath, "RaceData.run");
+
     public static void SaveRaceData(RaceData data)
     {
-        BinaryFormatter formatter = new BinaryFormatter();
-
-        string path = Application.persistentDataPath + "/RaceData.run";
-        FileStream stream = new FileStream(path, FileMode.Create);
-        formatter.Serialize(stream, data);
-        stream.Close();
+        string path = RaceDataPath;
+        string tempPath = path + ".tmp";
+        try
+        {
+            // Write to a temp file first so a failed save never corrupts the existing best run
+            using (FileStream stream = new FileStream(tempPath, FileMode.Create))
+            {
+                new BinaryFormatter().Serialize(stream, data);
+            }
+            if (File.Exists(path))
+                File.Delete(path);
+            File.Move(tempPath, path);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogWarning($"Could not save race data to {path}: {e.Message}");
+        }
     }
 
     public static RaceData LoadRaceData()
     {
-        string path = Application.persistentDataPath + "/RaceData.run";
-        if (File.Exists(path))
+        string path = RaceDataPath;
+        if (!File.Exists(path))
+            return null;
+
+        try
         {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-            RaceData data = formatter.Deserialize(stream) as RaceData;
-            return data;
+            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                return new BinaryFormatter().Deserialize(stream) as RaceData;
+            }
         }
-        else
+        catch (System.Exception e)
         {
+            // Corrupt or outdated file: treat as "no best run yet" instead of breaking the game mode
+            Debug.LogWarning($"Could not load race data from {path}: {e.Message}");
             return null;
         }
     }
@@ -55,6 +73,8 @@ public class RaceData
 
     public int ReadDistance(int index)
     {
+        if (distances == null || distances.Count == 0)
+            return 0;
         if(index < distances.Count)
             return distances[index];
         else

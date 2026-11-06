@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 public class ObjectPooler
 {
