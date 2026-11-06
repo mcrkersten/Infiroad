@@ -65,16 +65,13 @@ public class OrientedCubicBezier3D {
 	// So we instead subdivide the curve into linear segments,
 	// and sum the length of each segment
 	public float GetArcLength( int precision = 16 ) {
-		Vector3[] points = new Vector3[precision];
-		for( int i = 0; i < precision; i++ ) {
-			float t = i / (precision-1);
-			points[i] = GetPoint( t );
-		}
+		precision = Mathf.Max( 2, precision );
 		float dist = 0;
-		for( int i = 0; i < precision - 1; i++ ) {
-			Vector3 a = points[i];
-			Vector3 b = points[i+1];
-			dist += Vector3.Distance( a, b );
+		Vector3 previous = GetPoint( 0 );
+		for( int i = 1; i < precision; i++ ) {
+			Vector3 current = GetPoint( i / (precision - 1f) );
+			dist += Vector3.Distance( previous, current );
+			previous = current;
 		}
 		return dist;
 	}
@@ -127,10 +124,10 @@ public class OrientedCubicBezier3D {
 	{
 		float t2 = t * t;
 		Vector3 velocity =
-			points[0] * (-3f * t2 * 6f * t - 3f) +
+			points[0] * (-3f * t2 + 6f * t - 3f) +
 			points[1] * (9f * t2 - 12f * t + 3f) +
 			points[2] * (-9f * t2 + 6f * t) +
-			points[3] * (3f * t);
+			points[3] * (3f * t2);
 
 		Vector2 solution = new Vector2(velocity.x, velocity.z);
 		return solution;

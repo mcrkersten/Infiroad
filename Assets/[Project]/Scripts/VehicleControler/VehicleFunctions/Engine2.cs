@@ -86,10 +86,10 @@ public class Engine2
         float deltaRPM = (engineRPM * clutch) + (Mathf.Lerp(1000f, maxRPM, throttle) * (1f - clutch)) - lastRPM;
         lastRPM = Mathf.Lerp(lastRPM + deltaRPM, engineRPM, clutch);
         lastRPM = Mathf.Clamp(lastRPM, 0, maxRPM);
+        // Difference between engine and wheel-driven RPM, only used for clutch-slip rumble
         float velocityRPM = lastRPM - engineRPM;
-        lastRPM += velocityRPM;
 
-        if(float.IsNaN(velocityRPM))
+        if(float.IsNaN(lastRPM) || float.IsNaN(velocityRPM))
         { 
             lastRPM = 1f;
             return 0f; 

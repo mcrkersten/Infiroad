@@ -164,8 +164,8 @@ public class Suspension : MonoBehaviour
         float springForce = springConstant * springCompression;
         suspensionCompresssion = springCompression;
 
-        //Spring velocity calculation
-        float compressionVelocity = Mathf.Clamp((lastSpringCompression - springCompression) / Time.fixedDeltaTime, 0, 1f);
+        //Spring velocity calculation (signed: negative while compressing, positive while extending, so both directions are damped)
+        float compressionVelocity = Mathf.Clamp((lastSpringCompression - springCompression) / Time.fixedDeltaTime, -1f, 1f);
         lastSpringCompression = springCompression;
 
         //Spring damper calculation

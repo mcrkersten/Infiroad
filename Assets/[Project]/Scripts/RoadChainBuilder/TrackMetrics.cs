@@ -63,9 +63,9 @@ public static class TrackMetricsUtility
             if (a < Epsilon || b < Epsilon || c < Epsilon)
                 continue;
 
-            // Curvature approximation for 3 points in a plane.
+            // Curvature of the circle through 3 points: 4 * area / (a*b*c), and area2 is twice the area.
             float area2 = Mathf.Abs((p1.x - p0.x) * (p2.y - p0.y) - (p1.y - p0.y) * (p2.x - p0.x));
-            float curvature = area2 / (a * b * c);
+            float curvature = 2f * area2 / (a * b * c);
             float absCurvature = Mathf.Abs(curvature);
 
             absoluteCurvatures.Add(absCurvature);

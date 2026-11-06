@@ -10,7 +10,7 @@ public static class BezierCurveDerivatives
             p[0] * (-3f * Mathf.Pow(t, 2f) + 6f * t - 3f) +
             p[1] * (9f * Mathf.Pow(t, 2f) - 12f * t + 3f) +
             p[2] * (-9f * Mathf.Pow(t, 2f) + 6f * t) +
-            p[3] * (3f * t);
+            p[3] * (3f * Mathf.Pow(t, 2f));
         return result;
     }
 

@@ -26,7 +26,7 @@ public static class ExtensionMethods {
 	}
 
 	public static float AspectRatio( this Texture texture ) {
-		return texture.width / texture.height;
+		return (float)texture.width / texture.height;
 	}
 
 	// Clamp bottom
