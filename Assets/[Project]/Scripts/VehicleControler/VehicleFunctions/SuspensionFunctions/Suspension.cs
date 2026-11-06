@@ -164,8 +164,9 @@ public class Suspension : MonoBehaviour
         float springForce = springConstant * springCompression;
         suspensionCompresssion = springCompression;
 
-        //Spring velocity calculation (signed: negative while compressing, positive while extending, so both directions are damped)
-        float compressionVelocity = Mathf.Clamp((lastSpringCompression - springCompression) / Time.fixedDeltaTime, -1f, 1f);
+        //Spring velocity calculation
+        // Only rebound is damped. Full-strength compression damping (-1f lower bound) made the steering shake violently while driving.
+        float compressionVelocity = Mathf.Clamp((lastSpringCompression - springCompression) / Time.fixedDeltaTime, 0f, 1f);
         lastSpringCompression = springCompression;
 
         //Spring damper calculation
